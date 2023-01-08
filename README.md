@@ -1,30 +1,29 @@
 <h1 align = "center"> Pepole's budget :dollar: </h1>
 
-<h3> Introduction </h3>
+<h2> Introduction </h2>
 
 <p>Citizens have little influence over the division of the national budget today, since the
 link between the budget and the citizens has become looser.
 “People’s Budget” offers a convenient service to influence the country’s budget, by
 enabling direct voting. </p>
 
-   ```
-<h4> Compile & Run: </h4>
 
-<h5> Open 2 terminals</h5>
+<h3> Compile & Run: </h3>
 
-<p> Server: </p>
+* Open 2 terminals
+
+<h4> Server: </h4>
 
 ```sh
    flask run
    ```
 
-   <p>OR:</p>
+   <p>Or:</p>
 
    ```sh
    python app.py
    ```
-<p> Client: </p>
-
-    ```sh
-   npm start
+<h4> Client: </h4>
+  
    ```
+    npm start
