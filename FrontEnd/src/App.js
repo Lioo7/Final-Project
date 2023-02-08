@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import HomeScreen from './components/Home/HomeScreen'
+import Login from './components/Login/Login'
+import SignUp from './components/SignUp/SignUp'
+
 
 function App() {
 
@@ -17,15 +21,9 @@ function App() {
 
   return (
     <div>
-
-      {(typeof data.members == 'undefined') ? (
-        <p> Loading... </p>
-      ) : (
-        data.members.map((member, i) => (
-          <p key={i}>{member}</p>
-        ))
-      )}
-
+       <HomeScreen /> 
+       {/* <Login /> */}
+       {/* <SignUp /> */}
     </div>
   )
 }

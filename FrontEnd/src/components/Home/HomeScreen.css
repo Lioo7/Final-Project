@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.home-main{
+    width: 100%;
+    /* background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%); */
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.home-navbar{
+    width: 100%;
+    height: 75px;
+    margin: auto;
+    background:  rgb(0, 0, 0);
+}
+
+.home-icon{
+    width: 200px;
+    float: left;
+    height: 70px;
+}
+
+.home-logo{
+    color: #ff7200;
+    font-size: 25px;
+    font-family: Arial;
+    padding-left: 20px;
+    float: left;
+    padding-top: 10px;
+    margin-top: 5px
+}
+
+.home-menu{
+    width: 400px;
+    float: left;
+    height: 70px;
+}
+
+ul{
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul li{
+    list-style: none;
+    margin-left: 62px;
+    margin-top: 27px;
+    font-size: 15px;
+    border: solid rgb(59, 49, 49) 3px;
+    border-radius: 5px;
+    background: black;
+    padding: 2px;
+}
+
+ul li:hover{
+    border-color: #fff; 
+}
+
+ul li a{
+    text-decoration: none;
+    color: #fff;
+    font-family: Arial;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+}
+
+ul li a:hover{
+    color: #ff7200;
+    border-color: #fff; 
+}
+
+.home-content{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+}
+
+.home-content .home-par{
+    padding-left: 20px;
+    padding-bottom: 25px;
+    font-family: Arial;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+    color: black;
+}
+
+.home-content h1{
+    font-family: 'Times New Roman';
+    font-size: 50px;
+    padding-left: 20px;
+    margin-top: 9%;
+    letter-spacing: 2px;
+    color: black;
+}
