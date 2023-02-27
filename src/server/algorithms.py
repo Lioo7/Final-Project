@@ -4,7 +4,7 @@ This file contains the algorithms that will be used in the project for calculati
 
 import logging
 
-__all__ = ['median_algorithm', 'generalized_median_algorithm']
+__all__ = ["median_algorithm", "generalized_median_algorithm"]
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
@@ -13,22 +13,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger()
 
+
 def median_algorithm(votes: dict) -> dict:
     """
     Calculate the median of the votes for the budget and return the budget according to the median votes.
 
     Args
     ----
-    votes (dict): A nested dictionary representing the votes of all citizens for the budget. 
+    votes (dict): A nested dictionary representing the votes of all citizens for the budget.
 
     Returns
     -------
     budget (dict): A nested dictionary representing the budget according to the median votes of all citizens.
-    
+
     References
     ----------
     https://en.wikipedia.org/wiki/Median
-    
+
     Example
     -------
     >>> votes = {
@@ -77,9 +78,10 @@ def median_algorithm(votes: dict) -> dict:
     ... }
     True
     """
-    
-    # Empty implementation 
+
+    # Empty implementation
     return 0
+
 
 def generalized_median_algorithm(votes: dict) -> dict:
     """
@@ -87,7 +89,7 @@ def generalized_median_algorithm(votes: dict) -> dict:
 
     Args
     ----
-    votes (dict): A nested dictionary representing the votes of all citizens for the budget. 
+    votes (dict): A nested dictionary representing the votes of all citizens for the budget.
 
     Returns
     -------
@@ -167,5 +169,5 @@ def generalized_median_algorithm(votes: dict) -> dict:
     True
     """
 
-    # Empty implementation 
+    # Empty implementation
     return 0
