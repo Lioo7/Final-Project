@@ -4,10 +4,10 @@ This file contains the algorithms that will be used in the project for calculati
 
 import logging
 
-__all__ = ['median_algorithm', 'median_algorithm_with_linear_functions']
+__all__ = ['median_algorithm', 'generalized_median_algorithm']
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
-# create and configure logger
+# Create and configure logger
 logging.basicConfig(
     filename="algorithms_logging.log", level=logging.DEBUG, filemode="w"
 )
@@ -28,10 +28,6 @@ def median_algorithm(votes: dict) -> dict:
     References
     ----------
     https://en.wikipedia.org/wiki/Median
-    
-    Programmers
-    -----------
-    Stu L.Akirav, O.Ovadia & E.Mansbach
     
     Example
     -------
@@ -74,8 +70,7 @@ def median_algorithm(votes: dict) -> dict:
     ...     },
     ...     "Department of Education": {
     ...         "Schools": 25,
-    ...         "Higher education": {
-    ...             "new_value": 30,
+    ...         "Higher education": 30,
     ...         "total": 55
     ...     },
     ...         "total": 100
@@ -83,5 +78,94 @@ def median_algorithm(votes: dict) -> dict:
     True
     """
     
+    # Empty implementation 
+    return 0
+
+def generalized_median_algorithm(votes: dict) -> dict:
+    """
+    Calculate the budget according to the median algorithm of Hervé Moulin, using linear functions by using the given votes.
+
+    Args
+    ----
+    votes (dict): A nested dictionary representing the votes of all citizens for the budget. 
+
+    Returns
+    -------
+    budget (dict): A nested dictionary representing the budget according to the median algorithm of Hervé Moulin.
+
+    References
+    ----------
+    Hervé Moulin. "Fair Division and Collective Welfare". MIT Press, 2003.
+
+    Example
+    -------
+    >>> votes = {
+    ...     "user1": {
+    ...         "Department of Defense": {
+    ...             "Army": 2,
+    ...             "total": 2
+    ...         },
+    ...         "Department of Education": {
+    ...             "Schools": 0,
+    ...             "total": 0
+    ...         },
+    ...         "Department of Interior": {
+    ...             "immigration": 0,
+    ...             "total": 0
+    ...         },
+    ...         "total": 2
+    ...     },
+    ...     "user2": {
+    ...         "Department of Defense": {
+    ...             "Army": 0,
+    ...             "total": 0
+    ...         },
+    ...         "Department of Education": {
+    ...             "Schools": 1,
+    ...             "total": 1
+    ...         },
+    ...         "Department of Interior": {
+    ...             "immigration": 1,
+    ...             "total": 1
+    ...         },
+    ...         "total": 2
+    ...     }
+    ...     "user3": {
+    ...         "Department of Defense": {
+    ...             "Army": 1,
+    ...             "total": 1
+    ...         },
+    ...         "Department of Education": {
+    ...             "Schools": 1,
+    ...             "total": 1
+    ...         },
+    ...         "Department of Interior": {
+    ...             "immigration": 0,
+    ...             "total": 0
+    ...         },
+    ...         "total": 2
+    ...     }
+    ... }
+
+    >>> budget_data = generalized_median_algorithm(votes)
+
+    >>> budget_data == {
+    ...     "Department of Defense": {
+    ...         "Army": 0.8,
+    ...         "total": 0.8
+    ...     },
+    ...     "Department of Education": {
+    ...         "Schools": 0.8,
+    ...         "total": 0.8
+    ...     },
+    ...     "Department of Interior": {
+    ...         "immigration": 0.4,
+    ...         "total": 0.4
+    ...     },
+    ...     "total": 2
+    ... }
+    True
+    """
+
     # Empty implementation 
     return 0
