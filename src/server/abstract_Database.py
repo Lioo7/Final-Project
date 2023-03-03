@@ -1,15 +1,21 @@
 ''' Abstruct class for handling data base '''
 
-class data():
+from abc import ABC, abstractmethod
+
+class Abstract_Database(ABC):
     
+    @abstractmethod
     def connect():
         pass
     
+    @abstractmethod
     def disconnect():
         pass
     
+    @abstractmethod
     def reconnect():
         pass
     
+    @abstractmethod
     def execute_query():
         pass
