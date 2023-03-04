@@ -1,10 +1,11 @@
-''' Handling MySQL database'''
 
 import mysql.connector
 from abstract_Database import Abstract_Database
 import os
 
 class SQL_database(Abstract_Database):
+    
+    ''' Handling MySQL database'''
     
     def __init__(self, config:dict):
         self.config = config
@@ -19,39 +20,33 @@ class SQL_database(Abstract_Database):
     def disconnect(self):
         self.cursor.close()
         self.db.close()
+
+    def reconnect(self):
+        self.disconnect()
+        self.connect()
     
-    def execute_query(self, query):
+    def _execute_query(self, query):
         try:
             self.cursor.execute(query)
             return self.cursor.fetchall()
         except mysql.connector.Error as err:
             print(f"An error occurred while executing the query: {err}")
 
-    def reconnect(self):
-        self.disconnect()
-        self.connect()
-    
-    
-    
-# Independent functions:
 
-def create_data_base(database_name : str) -> None:
-    return "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(database_name) # db_budget_system
+    # TODO: Adding specific functions dealing with the database such as : insert table 
 
 
-def create_table(table_name : str) -> None:
-    return f"CREATE TABLE {table_name} (project_id INT PRIMARY KEY,budget_amount DOUBLE)"
-
-    
-def create_config() -> dict:
-        configuration = {
-            'host': 'localhost',
-            'user':  os.environ.get('user_budget_system'),
-            'password': os.environ.get('system_budget_password'),
-            'database': 'db_budget_system',
-            'raise_on_warnings' : True
-        }
-        return configuration
+    @staticmethod
+    def create_config() -> dict:
+            configuration = {
+                'host': 'localhost',
+                'user':  os.environ.get('user_budget_system'),
+                'password': os.environ.get('system_budget_password'),
+                'database': 'db_budget_system',
+                'raise_on_warnings' : True,
+                'charset' : 'utf8'
+            }
+            return configuration
 
 
 
@@ -60,11 +55,11 @@ def create_config() -> dict:
 if __name__ == "__main__":
     '''
     EXAMPLE OF USE:
-    sql_handler = data_handler(sql_database(create_config()))
+    sql_handler = data_handler(sql_database(SQL_database.create_config()))
     sql_handler.database.connect()
-    sql_handler.database.execute_query("string of query")
-    sql_handler.database.execute_query("string of query")
-    sql_handler.database.execute_query("string of query")
+    sql_handler.database._execute_query("string of query")
+    sql_handler.database._execute_query("string of query")
+    sql_handler.database._execute_query("string of query")
     sql_handler.database.disconnect()
     '''
    
