@@ -12,9 +12,30 @@ export default function LoginForm() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleClick = () => {
+  // const handleClick = () => {
+  //   navigate('/peoples_budget/home', { replace: true });
+  // };
+
+  const handleClick = async () => {
+    const url = 'http://localhost:3000/peoples_budget/login';
+    // const data = { id, password };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: 'john', password: 'doe' })
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+
+    }
+    catch (e) { console.log(e, "something") }
+
     navigate('/peoples_budget/home', { replace: true });
-  };
+  }
+
 
   return (
     <>
