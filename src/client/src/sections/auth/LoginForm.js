@@ -12,13 +12,8 @@ export default function LoginForm() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  // const handleClick = () => {
-  //   navigate('/peoples_budget/home', { replace: true });
-  // };
-
   const handleClick = async () => {
-    const url = 'http://localhost:3000/peoples_budget/login';
-    // const data = { id, password };
+    const url = 'http://localhost:5000/peoples_budget/login';
 
     try {
       const response = await fetch(url, {
@@ -29,13 +24,21 @@ export default function LoginForm() {
 
       const responseData = await response.json();
       console.log(responseData);
+      if (responseData.status === "succeed") {
+        navigate('/peoples_budget/home', { replace: true });
+      }
+      else {
+        throw new Error('Error!, User was not successfully registered');
+      }
+
+      navigate('/peoples_budget/home', { replace: true });
 
     }
-    catch (e) { console.log(e, "something") }
+    catch (error) {
+      console.log(error, "something")
+    }
 
-    navigate('/peoples_budget/home', { replace: true });
   }
-
 
   return (
     <>
