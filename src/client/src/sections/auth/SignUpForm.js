@@ -20,8 +20,42 @@ export default function SignUpForm() {
 
   // const todayDate = format(startOfToday(), 'yyyy-MM-dd');
 
-  const handleClick = () => {
-    navigate('/peoples_budget/home', { replace: true });
+  // const handleClick = () => {
+  //   navigate('/peoples_budget/home', { replace: true });
+  // };
+
+  const url = 'http://localhost:5000/peoples_budget/sign_up';
+
+  const handleClick = async () => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          id,
+          birthDate,
+          gender,
+          email,
+          password,
+        })
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+      if (responseData.status === 'succeed') {
+        navigate('/peoples_budget/home', { replace: true });
+      }
+      else {
+        throw new Error('Error!, User was not successfully registered');
+      }
+    } catch (error) {
+      console.error(error);
+      // TODO: throw message to the user
+    }
   };
 
   return (
@@ -57,8 +91,7 @@ export default function SignUpForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} /></IconButton>
               </InputAdornment>
             ),
           }}
