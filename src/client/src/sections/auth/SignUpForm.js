@@ -29,7 +29,7 @@ export default function SignUpForm() {
       <Stack spacing={2}>
         <TextField id="fName" label="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
         <TextField id="lName" label="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-        <TextField id="id" label="ID" value={id} onChange={(e) => setId(e.target.value)} />
+        <TextField id="signId" label="ID" value={id} onChange={(e) => setId(e.target.value)} />
         <TextField
           id="date"
           label="Birth Date"
@@ -48,7 +48,7 @@ export default function SignUpForm() {
         </TextField>
         <TextField id="email" label="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
         <TextField
-          id="password"
+          id="signPassword"
           label="Password"
           type={showPassword ? 'text' : 'password'}
           value={password}

@@ -12,29 +12,19 @@ import Stack from '@mui/material/Stack';
 import Row from './Row';
 
 export default function ChildTable(props) {
-  // const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem('childTableData')) || props.tableData);
-  const [tableData, setTableData] = useState( props.tableData);
+  const [tableData, setTableData] = useState(props.tableData);
+  console.log('ChildTable: render', tableData);
+
   // Calculate the sum of the budget of the children
   const totalChildBudget = tableData.reduce((total, item) => total + Number(item.budget), 0);
 
-  // const childHandleVote = (id, value) => {
-  //   console.log('childHandleVote')
-  //   setTableData((prevTableData) => {
-  //     const updatedTableData = prevTableData.map((row) => {
-  //       if (row.id === id) {
-  //         return { ...row, budget: value };
-  //       }
-  //       return row;
-  //     });
-  //     return updatedTableData;
-  //   });
-  // };
   const childHandleVote = (id, value) => {
     const diff = value - tableData.find((row) => row.id === id).budget;
     const updatedTableData = tableData.map((row) => {
       if (row.id === id) {
         return { ...row, budget: value };
-      } if (row.parentId === id) {
+      } 
+      if (row.parentId === id) {
         const childBudget = row.budget - diff / (tableData.length - 1);
         return { ...row, budget: childBudget };
       }
@@ -42,15 +32,13 @@ export default function ChildTable(props) {
     });
     setTableData(updatedTableData);
   };
-  
-
 
   useEffect(() => {
     setTableData(props.tableData);
-    // localStorage.setItem('childTableData', JSON.stringify(tableData));
   }, [props.tableData]);
 
   console.log('render childTable', tableData)
+  
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
       <TableContainer sx={{ maxHeight: '400px', maxWidth: '1000px' }} component={Paper}>
@@ -70,9 +58,8 @@ export default function ChildTable(props) {
                 row={row}
                 handleVote={childHandleVote}
                 totalBudget={totalChildBudget}
-                totalChildBudget ={totalChildBudget}
+                // totalChildBudget ={totalChildBudget}
                 maxBudget={props.maxBudget}
-                fromChild={1}
               />
             ))}
           </TableBody>
@@ -83,43 +70,14 @@ export default function ChildTable(props) {
 }
 
 ChildTable.propTypes = {
-  tableData: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    subject: PropTypes.string.isRequired,
-    budget: PropTypes.number.isRequired,
-    children: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        subject: PropTypes.string.isRequired,
-        budget: PropTypes.number.isRequired,
-      })
-    ),
-  }),
+  tableData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      subject: PropTypes.string.isRequired,
+      budget: PropTypes.number.isRequired,
+      parentId: PropTypes.number,
+    })
+  ),
+  maxBudget: PropTypes.number.isRequired,
 };
 
- // const { tableData, totalBudget } = props;
-  // const [updatedTableData, setUpdatedTableData] = useState(tableData);
-
-  // useEffect(() => {
-  //   setUpdatedTableData(tableData);
-  // }, [tableData]);
-
-  // const childHandleVote = (id, value) => {
-  //   const diff = value - updatedTableData.find((row) => row.id === id).budget;
-  //   const updatedChildren = updatedTableData
-  //     .filter((row) => row.parentId === id)
-  //     .map((row) => {
-  //       const childBudget = row.budget + diff / row.childrenCount;
-  //       return { ...row, budget: childBudget };
-  //     });
-  //   const updatedTable = updatedTableData.map((row) => {
-  //     if (row.id === id) {
-  //       return { ...row, budget: value };
-  //     }
-  //     if (row.parentId === id) {
-  //       return updatedChildren.find((child) => child.id === row.id);
-  //     }
-  //     return row;
-  //   });
-  //   setUpdatedTableData(updatedTable);
-  // };

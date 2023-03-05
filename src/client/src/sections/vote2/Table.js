@@ -37,7 +37,11 @@ const table = [
        children:[{ 
         id: 2.31,
         subject: 'מייק',
-        budget: '12',}]
+        budget: '6',},
+        { 
+          id: 2.32,
+          subject: 'מייקי',
+          budget: '6',}]
      }
    ]
     },

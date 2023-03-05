@@ -43,6 +43,7 @@
     "@faker-js/faker": "^7.6.0",
     "@iconify/react": "^4.0.0",
     "@mui/icons-material": "^5.11.9",
+    "@mui/joy": "^5.0.0-alpha.69",
     "@mui/lab": "^5.0.0-alpha.103",
     "@mui/material": "^5.10.9",
     "@mui/x-data-grid-premium": "^5.17.24",
