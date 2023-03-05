@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,7 +15,16 @@ import table from './Table';
 
 export default function CollapsibleTable() {
   const [tableData, setTableData] = useState(table);
-  const totalBudget = tableData.reduce((total, item) => total + item.budget, 0);
+  const totalBudget = tableData.reduce((total, item) => total + Number(item.budget), 0);
+  const maxBudget = 100
+
+  // useEffect(() => {
+  //   setTableData(tableData);
+  //   console.log('useEffect tableData')
+
+  //   // localStorage.setItem('childTableData', JSON.stringify(tableData));
+    
+  // }, [tableData]);
 
   const handleSubmit = () => {
     if (totalBudget !== 1000) {
@@ -25,14 +34,20 @@ export default function CollapsibleTable() {
     }
   };
 
-  const handleVote = (id, value) => {
+
+  const handleVote = (id, value,diff) => {
+    console.log('handleVote')
     setTableData((prevTableData) => {
       const updatedTableData = prevTableData.map((row) => {
         if (row.id === id) {
           return { ...row, budget: value };
         }
-        return row;
+        const newAmount = Number(row.budget) - diff / (tableData.length - 1);
+        const diffPerChild = newAmount > 0 ? newAmount : 0;
+        return { ...row, budget: diffPerChild};
       });
+      console.log(updatedTableData)
+
       return updatedTableData;
     });
   };
@@ -52,7 +67,7 @@ export default function CollapsibleTable() {
           </TableHead>
           <TableBody>
             {tableData.map((row) => (
-              <Row key={row.id} row={row} handleVote={handleVote}/>
+              <Row key={row.id} row={row} parent={tableData} handleVote={handleVote} totalBudget={totalBudget} maxBudget={maxBudget} />
             ))}
           </TableBody>
         </Table>

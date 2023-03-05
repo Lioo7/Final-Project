@@ -53,7 +53,7 @@ export default function Nav({ openNav, onCloseNav }) {
       }}
     >
       <Box sx={{ py: 3, textAlign: 'center' }}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>People's Budget</Typography>
+        <Typography sx={{ fontWeight: 'bold', fontSize: '22px' }}>People's Budget</Typography>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>

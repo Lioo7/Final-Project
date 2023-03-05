@@ -1,11 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-
 // @mui
 import { styled } from '@mui/material/styles';
 import { Link, Container, Typography } from '@mui/material';
 // sections
-import  LoginForm  from '../sections/auth/LoginForm';
+import LoginForm from '../sections/auth/LoginForm';
 
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -48,7 +47,7 @@ export default function LoginPage() {
             <Typography variant="body2" sx={{ mb: 5 }}>
               Don’t have an account?
               <br />
-              <Link variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+              <Link id="toSgin" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
                 Sign up
               </Link>{' '}
               here.

@@ -19,10 +19,10 @@ export default function LoginForm() {
   return (
     <>
       <Stack spacing={3}>
-        <TextField id="id" label="ID" value={id} onChange={(e) => setId(e.target.value)} />
+        <TextField id="logId" label="ID" value={id} onChange={(e) => setId(e.target.value)} />
 
         <TextField
-          id="password"
+          id="logPassword"
           label="Password"
           type={showPassword ? 'text' : 'password'}
           value={password}

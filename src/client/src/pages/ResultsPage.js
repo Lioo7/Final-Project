@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import ResultsForm from '../sections/results/ResultsForm';
 
 export default function ResultsPage() {
   return (
@@ -6,8 +7,7 @@ export default function ResultsPage() {
       <Helmet>
         <title> Results </title>
       </Helmet>
-
+      <ResultsForm />
     </>
   );
 }
-
