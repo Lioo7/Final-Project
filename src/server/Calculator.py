@@ -10,11 +10,11 @@ class Calculator:
         return 0
     
     @staticmethod
-    def get_voter_count_by_gender():
+    def get_voter_count_by_gender() -> float:
         pass
     
     @staticmethod
-    def get_voter_count_by_age():
+    def get_voter_count_by_age() ->float :
         pass
     
     @staticmethod
@@ -22,4 +22,5 @@ class Calculator:
         '''The transfer of the 
         budget amounts to the leaves'''
         pass
+    
     
