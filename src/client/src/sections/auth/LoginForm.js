@@ -12,33 +12,33 @@ export default function LoginForm() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
+  // const handleClick = () => {
+  //   navigate('/peoples_budget/home', { replace: true });
+  // };
+
   const handleClick = async () => {
     const url = 'http://localhost:5000/peoples_budget/login';
+    navigate('/peoples_budget/home', { replace: true });
 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: 'john', password: 'doe' })
+        body: JSON.stringify({ id: { id }, password: {password} }),
       });
 
       const responseData = await response.json();
       console.log(responseData);
-      if (responseData.status === "succeed") {
+      if (responseData.status === 'succeed') {
         navigate('/peoples_budget/home', { replace: true });
-      }
-      else {
+      } else {
         throw new Error('Error!, User was not successfully registered');
       }
 
-      navigate('/peoples_budget/home', { replace: true });
-
+    } catch (error) {
+      console.log(error, 'something');
     }
-    catch (error) {
-      console.log(error, "something")
-    }
-
-  }
+  };
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
+      <LoadingButton id='loginBtn' fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
         Login
       </LoadingButton>
     </>

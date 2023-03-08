@@ -24,32 +24,33 @@ export default function SignUpForm() {
   //   navigate('/peoples_budget/home', { replace: true });
   // };
 
-  const url = 'http://localhost:5000/peoples_budget/sign_up';
-
   const handleClick = async () => {
+    const url = 'http://localhost:5000/peoples_budget/sign_up';
+    navigate('/peoples_budget/home', { replace: true });
+
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          firstname: firstName,
-          lastname: lastName,
-          id,
-          birthDate,
-          gender,
-          email,
-          password,
-        })
+          firstname: { firstName },
+          lastname: { lastName },
+          id: { id },
+          birthDate: { birthDate },
+          gender: { gender },
+          email: { email },
+          password: { password },
+        }),
       });
 
+      console.log({firstName}, {lastName}, {id},  {birthDate}, {gender}, {email}, {password})
       const responseData = await response.json();
       console.log(responseData);
       if (responseData.status === 'succeed') {
         navigate('/peoples_budget/home', { replace: true });
-      }
-      else {
+      } else {
         throw new Error('Error!, User was not successfully registered');
       }
     } catch (error) {
@@ -91,7 +92,8 @@ export default function SignUpForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} /></IconButton>
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
               </InputAdornment>
             ),
           }}
@@ -99,7 +101,7 @@ export default function SignUpForm() {
       </Stack>
 
       <Stack sx={{ marginTop: 2 }}>
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
+        <LoadingButton id='signBtn' fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
           Sign Up
         </LoadingButton>
       </Stack>

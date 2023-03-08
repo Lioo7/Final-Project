@@ -50,13 +50,13 @@ export default function ResultsForm() {
         <Typography variant="h5">Select an option:</Typography>
         <Box>
           <ButtonGroup size="large" variant="contained" aria-label="large button group">
-            <Button sx={{ width: '200px', height: '50px', fontSize: '20px' }} fullWidth onClick={handleButtonClick1}>
+            <Button id='algo1' sx={{ width: '200px', height: '50px', fontSize: '20px' }} fullWidth onClick={handleButtonClick1}>
               Algo 1
             </Button>
-            <Button sx={{ width: '200px', height: '50px', fontSize: '20px' }} fullWidth onClick={handleButtonClick2}>
+            <Button id='algo2' sx={{ width: '200px', height: '50px', fontSize: '20px' }} fullWidth onClick={handleButtonClick2}>
               Algo 2
             </Button>
-            <Button sx={{ width: '200px', height: '50px', fontSize: '20px' }} fullWidth onClick={handleButtonClick3}>
+            <Button id='both' sx={{ width: '200px', height: '50px', fontSize: '20px' }} fullWidth onClick={handleButtonClick3}>
               Both
             </Button>
           </ButtonGroup>

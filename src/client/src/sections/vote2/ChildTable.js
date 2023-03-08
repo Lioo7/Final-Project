@@ -12,11 +12,10 @@ import Stack from '@mui/material/Stack';
 import Row from './Row';
 
 export default function ChildTable(props) {
-  const [tableData, setTableData] = useState(props.tableData);
-  console.log('ChildTable: render', tableData);
+  const [tableData, setTableData] = useState(props.row);
+  console.log('ChildTable: render', tableData, props.totalBudget);
 
   // Calculate the sum of the budget of the children
-  const totalChildBudget = tableData.reduce((total, item) => total + Number(item.budget), 0);
 
   const childHandleVote = (id, value) => {
     const diff = value - tableData.find((row) => row.id === id).budget;
@@ -37,7 +36,6 @@ export default function ChildTable(props) {
     setTableData(props.tableData);
   }, [props.tableData]);
 
-  console.log('render childTable', tableData)
   
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
@@ -56,9 +54,8 @@ export default function ChildTable(props) {
               <Row
                 key={row.id}
                 row={row}
-                handleVote={childHandleVote}
-                totalBudget={totalChildBudget}
-                // totalChildBudget ={totalChildBudget}
+                handleVote={props.handleVote}
+                totalBudget={props.totalBudget}
                 maxBudget={props.maxBudget}
               />
             ))}

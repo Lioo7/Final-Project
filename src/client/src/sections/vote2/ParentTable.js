@@ -20,36 +20,57 @@ export default function ParentTable() {
   const totalBudget = tableData.reduce((total, item) => total + Number(item.budget), 0);
   const maxBudget = 100;
 
-  const handleVote = (id, value) => {
-    console.log('ParentTable: handleVote', id, value, totalBudget);
+  const handleSubmit = () => {
+    console.log('Total budget is ', maxBudget);
+
+    if (totalBudget !== maxBudget) {
+      window.alert("Error: Total budget must be 100.");
+    } else {
+      console.log('Total budget is ',totalBudget);
+    }
+  };
+
+  const handleVote = (id, value,diff) => {
+    const currSum= value
+    console.log('ParentTable: handleVote', id, value, diff);
     const updatedTableData = tableData.map((row) => {
       if (row.id === id) {
         return { ...row, budget: value };
       }
-      if (row.parentId === id) {
-        const childBudget = row.budget + (value - tableData.find((r) => r.id === id).budget) / row.childrenCount;
+      const siblingBudget = parseInt(row.budget,10) - (diff) / (tableData.length-1);
+      const finalBudget = siblingBudget > 0 ? siblingBudget : 0;
+      // console.log('ParentTable: handleVote (sibling)',Math.round(Math.min(finalBudget, row.budget), 2))
 
-        return { ...row, budget: childBudget };
-      }
+      return { ...row, budget: finalBudget };
 
-      return row;
     });
+    console.log(currSum)
     setTableData(updatedTableData);
   };
 
-  // const handleBudget = (id, value) => {
-  //   const updatedTableData = tableData.map((row) => {
-  //     if (row.id === id) {
-  //       return { ...row, budget: value };
-  //     }
-  //     if (row.parentId === id) {
-  //       const childBudget = row.budget + (value - tableData.find((r) => r.id === id).budget) / row.childrenCount;
-  //       return { ...row, budget: childBudget };
-  //     }
-  //     return row;
-  //   });
-  //   setTableData(updatedTableData);
-  // };
+  const calcBudget = (id,value,diff)=> {
+    // let currSum = value;
+    // while (currSum !== maxBudget){
+    const updatedTableData = tableData.map((row) => {
+      if (row.id === id) {
+        return { ...row, budget: value };
+      }
+
+      const siblingBudget = parseInt(row.budget,10) - (diff) / (tableData.length-1);
+      const finalBudget = siblingBudget > 0 ? siblingBudget : 0;
+      // if (finalBudget === 0){
+      //   currSum = parseInt(row.budget,10)
+      // }
+      console.log('ParentTable: handleVote (sibling)',Math.round(Math.min(finalBudget, row.budget), 2))
+
+      return { ...row, budget: finalBudget };
+
+      // return { ...row, budget: childBudget };
+});
+  // }
+}
+
+
 
   // useEffect(() => {
   //   setTableData(tableData);
@@ -75,7 +96,7 @@ export default function ParentTable() {
                 key={row.id}
                 row={row}
                 handleVote={handleVote}
-                // handleBudget={handleBudget}
+                calcBudget={calcBudget}
                 totalBudget={totalBudget}
                 maxBudget={maxBudget}
               />
@@ -87,7 +108,8 @@ export default function ParentTable() {
         <Button
           variant="outlined"
           sx={{ width: '300px', height: '60px', fontWeight: 'bold', fontSize: '25px' }}
-        >
+          onClick={handleSubmit}
+          >
           Submit
         </Button>
       </Box>

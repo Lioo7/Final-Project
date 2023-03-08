@@ -47,7 +47,7 @@ export default function LoginPage() {
             <Typography variant="body2" sx={{ mb: 5 }}>
               Don’t have an account?
               <br />
-              <Link id="toSgin" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+              <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
                 Sign up
               </Link>{' '}
               here.

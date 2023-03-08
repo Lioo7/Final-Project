@@ -19,7 +19,7 @@ export default function Cards() {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <CardStructure title="Viewers" color="error" icon={'ic:outline-remove-red-eye'} val={'12520'}/>
+              <CardStructure title="Popular city" color="error" icon={'game-icons:modern-city'} val={'אשקלון'}/>
             </Grid>
 
           </Grid>

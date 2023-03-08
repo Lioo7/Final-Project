@@ -22,12 +22,14 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ChildTable from './ChildTable'
 
 export default function Row(props) {
-  const { row, handleVote, totalBudget, maxBudget } = props;
-  console.log('Row: render', row);
+  const { row, handleVote,calcBudget, totalBudget, maxBudget } = props;
+  console.log('Row: render', row,totalBudget, maxBudget);
   const [open, setOpen] = useState(false);
   const { id, subject, budget, children } = row;
-  
-  console.log('Row: render', id, subject, budget, children);
+  // const [totalChildBudget,setTotalChildBudget] = useState(children ? children.reduce((total, item) => total + Number(item.budget), 0) : 0)
+
+
+  // console.log('Row: render', id, subject, budget, children);
 
   const handleChange = (event) => {
     console.log('Row: handleChange', event.target.value);
@@ -38,7 +40,19 @@ export default function Row(props) {
     } else if (value < 0) {
       event.target.value = 0;
     }
-    handleVote(id, parseInt(event.target.value, 10));
+    event.target.value = parseInt(event.target.value, 10)
+    // const budgetPerRow = calcBudget(id, event.target.value,diff)
+    const diff =  event.target.value - budget
+    handleVote(id, event.target.value,diff);
+    
+    // if (children){
+    //   children.forEach(item => {
+    //     console.log("child:", item.id);
+    //     const childBudget =  parseInt(item.budget,10) + diff/ children.length;
+    //     handleVote(item.id, childBudget,1);
+
+    //   });
+    // }
     // handleBudget(id, parseInt(event.target.value, 10));
   };
 
@@ -106,8 +120,8 @@ export default function Row(props) {
                         key={child.id}
                         row={child}
                         handleVote={handleVote}
-                        totalBudget={totalBudget}
-                        maxBudget={maxBudget}
+                        totalBudget={children.reduce((total, item) => total + Number(item.budget), 0)}
+                        maxBudget={budget}
                       />
                     ))}
                   </TableBody>

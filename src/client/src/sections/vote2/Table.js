@@ -2,11 +2,11 @@ const table = [
     {
       id: 1,
       subject: 'ביטחון',
-      budget: '50',
+      budget: '40',
       children: [{     
          id: 1.1,
          subject: 'צה"ל',
-        budget: '28',
+        budget: '18',
       },
       {
         id: 1.2,
@@ -45,12 +45,11 @@ const table = [
      }
    ]
     },
-    // {
-    //   id: 3,
-    //   subject: 'משרד הפנים',
-    //   last_name: 'Bowart',
-    //   budget: '85',
-    // },
+    {
+      id: 3,
+      subject: 'משרד הפנים',
+      budget: '10',
+    }
     // {
     //   id: 4,
     //   subject: 'Bert',

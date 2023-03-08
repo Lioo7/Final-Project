@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import InfoForm from '../sections/info/InfoForm';
 
 export default function InfoPage() {
   return (
@@ -6,8 +7,8 @@ export default function InfoPage() {
       <Helmet>
         <title> Information </title>
       </Helmet>
-      hi
-      
+
+      <InfoForm/>
     </>
   );
 }
