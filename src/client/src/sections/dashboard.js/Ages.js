@@ -5,7 +5,7 @@ export default function Ages(props) {
   const originalColors = ['#4CAF50', '#FFC107', '#2196F3', '#E91E63', '#9C27B0'];
   const newColors = [...originalColors, '#00BCD4'];
   const [chartData, _setChartData] = useState({
-    series: [5 ,13 ,15 ,18 , 24, 25],
+    series: [5, 13, 15, 18, 24, 25],
     options: {
       chart: {
         width: props.width,

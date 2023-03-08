@@ -126,3 +126,9 @@ class Node:
             return
         
         raise ValueError(f"No child node with id {child_id} was found") 
+    
+    def to_dict(self) ->dict:
+        pass
+    
+    def to_json(self):
+        pass
