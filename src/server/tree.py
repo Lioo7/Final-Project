@@ -1,4 +1,5 @@
 from node import Node
+import json
 
 class Tree:    
     '''This class present the tree of subjects and projects (container of Nodes)'''
@@ -140,3 +141,14 @@ class Tree:
             return True
         else:
             return False
+        
+    def load_tree_from_dict(self,json_tree:str) -> 'Tree':
+        pass
+    
+    def to_dict(self) -> dict:
+        pass
+    
+    def to_json(self) -> json:
+        pass
+    
+        

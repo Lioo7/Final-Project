@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts';
 
 export default function Gender(props) {
   const [chartData, _setChartData] = useState({
-    series: [5 ,10 ],
+    series: [5, 10],
     options: {
       chart: {
         width: props.width,
