@@ -2,36 +2,38 @@ import unittest
 import sys
 sys.path.append('../..')
 from src.server.calculator import Calculator
-from src.server.node import Node
-from src.server.tree import Tree
+from src.server.data_handler import data_handler
+from src.server.sql_database import SQL_database
 
 class Test_calculator(unittest.TestCase):
     
+    
+    def setUpClass(cls):
+        cls.database = data_handler(SQL_database(SQL_database.create_config()))
+        cls.database.database.connect()
+    
+    def tearDown(self):
+        self.database.database.disconnect()
+    
+    
     def test_get_voter_count(self):
-        self.assertEqual(Calculator.amount_of_votes(), 0)
-    
-    
-    def test_transferring_the_money_to_the_leaves(self):
-        root = Node(1, "Root", "The root node", None, 100)
-        child1 = Node(2, "Child 1", "The first child", 1, 50)
-        child2 = Node(3, "Child 2", "The second child", 1, 50)
-        tree = Tree(root)
-        tree.add_node(1, child1)
-        tree.add_node(1, child2)
-        Calculator.transferring_the_money_to_the_leaves(tree)
-        self.assertEqual(child1.get_allocated_budget_amount(), 50)
-        self.assertEqual(child2.get_allocated_budget_amount(), 50)
-    
+        
+        query = ""
+        select_from_db = self.database.database.execute_query(query) 
+        self.assertEqual(Calculator.amount_of_votes(), select_from_db)
+        
     
     def test_get_voter_count_by_gender(self):
+        query = ""
+        select_from_db = self.database.database.execute_query(query)
+        self.assertEqual(Calculator.get_voter_count_by_gender(), select_from_db)
         
-        # TODO: Implement test case
-        pass
-    
     
     def test_get_voter_count_by_age(self):
-        # TODO: Implement test case
-        pass
+        query = ""
+        select_from_db = self.database.database.execute_query(query)
+        self.assertEqual(Calculator.test_get_voter_count_by_age(), select_from_db)
+
 
 if __name__ == '__main__':
     unittest.main()

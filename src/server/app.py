@@ -1,11 +1,16 @@
 from flask import Flask ,request, jsonify
-from abstract_Database import Abstract_Database
 from waitress import serve
 from flask_cors import CORS
 from tree import Tree
+from algorithms import median_algorithm , generalized_median_algorithm
+import json
+from data_handler import data_handler
+from sql_database import SQL_database
 
 app = Flask(__name__)
 CORS(app)
+
+database = data_handler(SQL_database(SQL_database.create_config()))
 
 #  --- Login ---  
 @app.route('/peoples_budget/login', methods=['POST'])
@@ -50,8 +55,17 @@ def dashboard():
 
 @app.route('/peoples_budget/results', methods=['GET'])
 def algorithms_results():
-    return jsonify({'algo1': 1 ,
-                    'algo2': 1})
+    # TODO: select from DB the input voting
+    median_tree = Tree()
+    median_tree.load_from_db()
+    median_algorithm_result = median_algorithm(median_tree.to_dict())
+    
+    generalized_median_tree = Tree()
+    generalized_median_tree.load_from_db()
+    generalized_median_result = generalized_median_algorithm(generalized_median_tree.to_dict())
+    
+    return jsonify({'median_algorithm':json.dump(median_algorithm_result) ,
+                    'generalized_median_algorithm': json.dump(generalized_median_result)})
 
 
 @app.route('/peoples_budget/voting', methods=['POST'])

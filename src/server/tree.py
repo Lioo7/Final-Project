@@ -151,4 +151,7 @@ class Tree:
     def to_json(self) -> json:
         pass
     
+    def load_from_db(self):
+        pass
+    
         

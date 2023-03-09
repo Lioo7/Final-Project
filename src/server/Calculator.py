@@ -1,10 +1,14 @@
 from tree import Tree
-
+from data_handler import data_handler
+from sql_database import *
+from abstract_Database import Abstract_Database
 class Calculator:
     '''This static class performing all the calculations'''
     
+    
+    
     @staticmethod
-    def get_voter_count(self) -> int:
+    def get_voter_count(db:Abstract_Database) -> int:
         '''
         How much people votes
         
@@ -19,7 +23,7 @@ class Calculator:
     
     
     @staticmethod
-    def get_voter_count_by_gender() -> list[int]:
+    def get_voter_count_by_gender(db:Abstract_Database) -> list[int]:
         '''
         Get the number of voters by gender
         
@@ -35,7 +39,7 @@ class Calculator:
 
     
     @staticmethod
-    def get_voter_count_by_age() -> list[int]:
+    def get_voter_count_by_age(db:Abstract_Database) -> list[int]:
         '''
         Get the number of voters by age group
         
