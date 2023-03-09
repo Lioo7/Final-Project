@@ -25,10 +25,10 @@ export default function Row(props) {
   const [open, setOpen] = useState(false);
   const { id, subject, budget, children } = row;
 
-  console.log('Row: render', row, totalBudget, maxBudget);
+  // console.log('Row: render', row, totalBudget, maxBudget);
 
   const handleChange = (event) => {
-    console.log('Row: handleChange', event.target.value);
+    // console.log('Row: handleChange', event.target.value);
 
     const { value } = event.target;
     if (value > maxBudget) {
