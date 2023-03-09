@@ -91,7 +91,7 @@ def subjects_and_projects_tree():
     #TODO : object = take data from DB
     json_tree = tree.to_json()
     
-    return jsonify(json_tree)
+    return jsonify({"json_tree": "json_tree"})
 
 
 

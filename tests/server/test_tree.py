@@ -12,7 +12,7 @@ class Test_tree(unittest.TestCase):
         child = Node(1, "project", "description", 0, 50)
         tree.add_node(0, child)
         
-        self.assertEqual(len(tree.get_node(0).Children), 1)
+        self.assertEqual(len(tree.get_node(0).get_children()), 1)
         self.assertEqual(tree.node_amount, 2)
         
         for i in range(2,100):
@@ -29,7 +29,9 @@ class Test_tree(unittest.TestCase):
         tree.add_node(0, child)
         tree.remove_node(0, child)
         
-        self.assertEqual(len(tree.get_node(0).Children), 0)
+        founded_node = tree.get_node(0)
+        children_node = founded_node.get_children()
+        self.assertEqual(len(children_node), 0)
         self.assertEqual(tree.node_amount, 1)
         
         # Add nodes until the tree has 100 nodes
@@ -43,7 +45,7 @@ class Test_tree(unittest.TestCase):
             tree.remove_node(i,node)
             i = i-1
         
-        self.assertEqual(len(tree._root.Children), 0)
+        self.assertEqual(len(tree._root.get_children()), 0)
         self.assertEqual(tree.node_amount, 1)
             
 

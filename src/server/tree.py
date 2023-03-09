@@ -64,7 +64,7 @@ class Tree:
         return self._node_amount
     
     
-    def get_node(self,node_id:int, root:Node) -> Node:
+    def get_node(self,node_id:int) -> Node:
         '''
         Returns the node object with the given id.
         
@@ -81,18 +81,8 @@ class Tree:
         >>> founded_node.tree.get_name()
         project2
         '''
-        if root is None:
-            root = self._root
         
-        if root.get_id() == node_id:
-            return root
-        
-        for child in root.get_children():
-            result = self.get_node(node_id, child)
-            if result is not None:
-                return result
-        
-        return None
+        return Node()
     
     
     def get_budget_amount(self) -> float:
@@ -137,10 +127,10 @@ class Tree:
         node = self.get_node(id_node)
         
         # if this node doesn't have children
-        if not node.Children:
+        if not node.get_children():
             return True
-        else:
-            return False
+        
+        return False
         
     def load_tree_from_dict(self,json_tree:str) -> 'Tree':
         pass
