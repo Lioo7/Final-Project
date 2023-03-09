@@ -17,5 +17,5 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def execute_query():
+    def execute_query(query:str):
         pass

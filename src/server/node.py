@@ -2,7 +2,7 @@
 class Node:
     '''This class present node in the tree of subjects/projects'''
 
-    def __init__(self, id:int, name:str, description:str, parent:int, budget_amount:float):
+    def __init__(self, id:int=None, name:str="", description:str="", parent:int=None, budget_amount:float=None):
         self._id = id or None
         self._name = name or None
         self._description = description or None

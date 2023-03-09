@@ -25,7 +25,7 @@ class SQL_database(Abstract_Database):
         self.disconnect()
         self.connect()
     
-    def _execute_query(self, query):
+    def execute_query(self, query):
         
         try:
             self.cursor.execute(query)
