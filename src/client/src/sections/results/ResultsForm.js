@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, ButtonGroup, Box, Button } from '@mui/material';
 import Loading from './Loading';
 import Algo1 from './Algo1';
@@ -10,6 +10,32 @@ export default function ResultsForm() {
   const [displayGraph1, setDisplayGraph1] = useState(false);
   const [displayGraph2, setDisplayGraph2] = useState(false);
   const [displayGraph3, setDisplayGraph3] = useState(false);
+
+  const [data, setData] = useState({});
+  const url = 'http://localhost:5000/peoples_budget/results';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const information = await response.json();
+        console.log(information);
+        setData(information);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setData(data)
+  }, [data]);
 
   const handleButtonClick1 = () => {
     setDisplayGraph1(false);

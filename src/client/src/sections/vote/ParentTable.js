@@ -1,4 +1,4 @@
-import * as React from 'react';
+// import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
@@ -19,20 +19,61 @@ export default function ParentTable() {
   const [tableData, setTableData] = useState(data);
   
 
-  console.log('ParentTable: render', tableData);
+  // console.log('ParentTable: render', tableData);
   const totalBudget = tableData.reduce((total, item) => total + Number(item.budget), 0);
   const maxBudget = 100;
 
-  const handleSubmit = () => {
-    navigate('/peoples_budget/results', { replace: true });
-    // console.log('Total budget is ', maxBudget);
+  const [tree, setTree] = useState({});
+  const url = 'http://localhost:5000/peoples_budget/voting';
 
-    // if (totalBudget !== maxBudget) {
-    //   window.alert('Error: Total budget must be 100.');
-    // } else {
-    //   console.log('Total budget is ', totalBudget);
-    // }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const information = await response.json();
+        console.log(information);
+        setTree(information);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setTree(tree)
+  }, [tree]);
+
+
+  const handleSubmit = async () => {
+    navigate('/peoples_budget/results', { replace: true });
+    const url = 'http://localhost:5000/peoples_budget/voting';  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          maxBudget: { maxBudget },
+        }),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      if (responseData.status === 'succeed') {
+        navigate('/peoples_budget/results', { replace: true });
+      } else {
+        throw new Error('Error!, User was not successfully registered');
+      }
+    } catch (error) {
+      console.error(error);
+      // TODO: throw message to the user
+    }
+};
 
   const handleVote = (id, value, diff) => {
     console.log('ParentTable: handleVote', id, value, diff);
