@@ -1,150 +1,122 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
+
+import TableCell from '@mui/material/TableCell';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableContainer from '@mui/material/TableContainer';
+import TableBody from '@mui/material/TableBody';
+
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
 import Slider from '@mui/material/Slider';
+
+import TextField from '@mui/material/TextField';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import ChildTable from './ChildTable';
+// import ChildTable from './ChildTable';
 
 export default function Row(props) {
-  const { row } = props;
-  // const [row, setRow] = useState(props.row);
-
+  const { row, handleVote, totalBudget, maxBudget } = props;
   const [open, setOpen] = useState(false);
-  const [budget, setBudget] = useState(row.budget);
-  const [childs, setChilds] = useState(row.children);
-  const [sumDiff, setSumDiff] = useState(0);
-  const [siblings, setSiblings] = useState(props.parent)
+  const { id, subject, budget, children } = row;
 
-  console.log('render Row', row.id)
-  
-  // useEffect(() => {
-  //   setRow(props.row);
-  //   console.log('useEffect Row')
+  console.log('Row: render', row, totalBudget, maxBudget);
 
-  //   // localStorage.setItem('childTableData', JSON.stringify(tableData));
-    
-  // }, [props.parent]);
+  const handleChange = (event) => {
+    console.log('Row: handleChange', event.target.value);
 
-  const handleBudgetChange = (_event, value) => {
-    const diff = value - budget;
-    const totalBudget = props.totalBudget + diff;
-
-    // if (totalBudget <= props.maxBudget && totalBudget >= 0 && !open) {
-    //   console.log('totalBudget: ', totalBudget);
-    //   console.log('props: ', props.totalBudget);
-    //   console.log('maxBudget: ', props.maxBudget);
-
-    //   // update the table (budget column)
-    //   props.handleVote(row.id, value);
-    //   // update the slider
-    //   setBudget(value);
-    //   setSumDiff(sumDiff+diff)
-    // }
-    if (totalBudget !== props.maxBudget && !open) {
-      console.log('totalBudget: ', totalBudget);
-      console.log('props: ', props.totalBudget);
-      console.log('maxBudget: ', props.maxBudget);
-
-      // update the table (budget column)
-      props.handleVote(row.id, value,diff);
-      // update the slider
-      setBudget(value);
-      setSumDiff(sumDiff + diff);
-      // updateSiblingsBudget(diff,value);
+    const { value } = event.target;
+    if (value > maxBudget) {
+      event.target.value = maxBudget;
+    } else if (value < 0) {
+      event.target.value = 0;
     }
+    event.target.value = parseInt(event.target.value, 10);
+    const diff = event.target.value - budget;
+    handleVote(id, event.target.value, diff);
   };
-
-  const updateBudgetChilds = () => {
-    if (sumDiff !== 0 && childs.length > 0) {
-      if (budget === 0) {
-        setChilds((prevChild) => {
-          const updatedChild = prevChild.map((child) => {
-            return { ...child, budget: 0 };
-          });
-          setSumDiff(0);
-          return updatedChild;
-        });
-      } else {
-        setChilds((prevChild) => {
-          const updatedChild = prevChild.map((child) => {
-            const newAmount = Number(child.budget) + sumDiff / childs.length;
-            const diffPerChild = newAmount > 0 ? newAmount : 0;
-            return { ...child, budget: Math.round(Math.min(diffPerChild, budget), 2) };
-          });
-          setSumDiff(0);
-          return updatedChild;
-        });
-      }
-    }
-  };
-  const updateSiblingsBudget = (diff, value) => {
-    setSiblings((prevS) => {
-      const updatedSiblings = prevS.map((s) => {
-        if (s.id !== row.id) {
-          const newAmount = Number(s.budget) - diff / (siblings.length - 1);
-          const diffPerChild = newAmount > 0 ? newAmount : 0;
-          return { ...s, budget: Math.round(Math.min(diffPerChild, budget), 2) };
-        } 
-          return { ...s, budget: value };
-        
-      });
-      props.handleVote(updatedSiblings.find((s) => s.id === row.id));
-      return updatedSiblings;
-    });
-  };
-  
 
   return (
-    <>
-      <TableRow key={props.key}>
+    <React.Fragment key={row.id}>
+      <TableRow>
         <TableCell>
           <IconButton
-            aria-label="expand row"
-            size="small"
+            id='iconTree'
+            aria-label='expand row'
+            size='small'
             onClick={() => {
-              console.log('SumDiff: ', sumDiff);
-              updateBudgetChilds();
-              setOpen(childs && childs.length > 0 ? !open : false);
+              setOpen(children && children.length > 0 ? !open : false);
             }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.subject}
+
+        <TableCell component='th' scope='row'>
+          {subject}
         </TableCell>
-        <TableCell align="center">{budget}</TableCell>
-        <TableCell align="right">
+        <TableCell align='center'>
+          <TextField
+            id='budgetText'
+            type='number'
+            variant='outlined'
+            value={budget}
+            defaultValue={budget}
+            InputProps={{ inputProps: { min: 0, max: maxBudget } }}
+            onChange={handleChange}
+          />
+        </TableCell>
+        <TableCell align='right'>
           {' '}
           <Slider
-            // value={sliderValue}
             value={budget}
-            onChange={handleBudgetChange}
-            // onChange={(e) => props.handleVote(row.id, e.target.value)}
-            // defaultValue={row.budget}
-            valueLabelDisplay="auto"
-            aria-label="Default"
+            onChange={handleChange}
+            valueLabelDisplay='auto'
+            aria-label='Default'
             max={100}
             sx={{ mt: 1.2 }}
           />
         </TableCell>
+        <TableCell align='center'>{((budget / totalBudget) * 100).toFixed(1)}%</TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <ChildTable tableData={childs} parent={row} maxBudget={Number(budget)} />
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
+      {children && (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout='auto' unmountOnExit>
+              <TableContainer sx={{ maxHeight: '400px', maxWidth: '1000px' }} component={Paper}>
+                <Table stickyHeader aria-label='children table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell>Subject</TableCell>
+                      <TableCell align='left'> Budget</TableCell>
+                      <TableCell align='left'>Vote</TableCell>
+                      <TableCell align='center'>Precent</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {children.map((child) => (
+                      <Row
+                        key={child.id}
+                        row={child}
+                        handleVote={handleVote}
+                        totalBudget={children.reduce((total, item) => total + Number(item.budget), 0)}
+                        maxBudget={budget}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      )}
+    </React.Fragment>
   );
 }
 
@@ -161,6 +133,9 @@ Row.propTypes = {
       })
     ),
   }),
-  key: PropTypes.number.isRequired,
   handleVote: PropTypes.func.isRequired,
+  totalBudget: PropTypes.number.isRequired,
+  totalChildBudget: PropTypes.number.isRequired,
+  maxBudget: PropTypes.number.isRequired,
+  fromChild: PropTypes.number,
 };

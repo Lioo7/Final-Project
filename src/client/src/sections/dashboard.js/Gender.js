@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 
 export default function Gender(props) {
-  const [chartData, _setChartData] = useState({
-    series: [5, 10],
+  const [chartData, setChartData] = useState({
+    // series: [5 ,10 ],
+    series: props.gender,
     options: {
       chart: {
         width: props.width,
@@ -25,6 +26,13 @@ export default function Gender(props) {
       ],
     },
   });
+
+  useEffect(() => {
+    setChartData(prevChartData => ({
+      ...prevChartData,
+      series: props.gender, 
+    }));
+  }, [props.gender]);
 
   return (
     <>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import CardStructure from './CardStructure';
 
-export default function Cards() {
+export default function Cards(props) {
   return (
     <div>
           <Grid container spacing={3} display="flex" >
@@ -11,7 +11,7 @@ export default function Cards() {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <CardStructure title="Votes amount" color="info" icon={'game-icons:vote'} val={'6.m'} />
+              <CardStructure title="Votes amount" color="info" icon={'game-icons:vote'} val={props.voters} />
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
