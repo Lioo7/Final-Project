@@ -26,6 +26,7 @@ class SQL_database(Abstract_Database):
         self.connect()
     
     def _execute_query(self, query):
+        
         try:
             self.cursor.execute(query)
             return self.cursor.fetchall()
@@ -55,7 +56,7 @@ class SQL_database(Abstract_Database):
 if __name__ == "__main__":
     '''
     EXAMPLE OF USE:
-    sql_handler = data_handler(sql_database(SQL_database.create_config()))
+    sql_handler = data_handler(SQL_database(SQL_database.create_config()))
     sql_handler.database.connect()
     sql_handler.database._execute_query("string of query")
     sql_handler.database._execute_query("string of query")
