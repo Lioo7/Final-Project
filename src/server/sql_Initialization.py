@@ -31,7 +31,8 @@ if __name__ == "__main__":
     db = SQL_init.connect_database()
     cursor = db.cursor()
     SQL_init.create_data_base(cursor,SQL_init.data_base_name)
-    
+
     # TODO: create tables
+    # TODO: to_load()
 
         
