@@ -8,7 +8,7 @@ class Calculator:
     
     
     @staticmethod
-    def get_voter_count(db:Abstract_Database) -> int:
+    def get_voter_count(db:Abstract_Database) -> int: 
         '''
         How much people votes
         
@@ -23,7 +23,7 @@ class Calculator:
     
     
     @staticmethod
-    def get_voter_count_by_gender(db:Abstract_Database) -> list[int]:
+    def get_voter_count_by_gender(db:Abstract_Database) -> list[int]:  # [male,female]
         '''
         Get the number of voters by gender
         
