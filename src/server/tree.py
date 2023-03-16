@@ -11,7 +11,32 @@ class Tree:
         if self._root is not None:
             self.node_amount = 1
 
+    
+    
+    def get_root(self) -> Node:
+        '''
+        Return the root node of the tree.
 
+        >>> node1 = Node(1, 'Node 1', 'This is node 1', None, 100)
+        >>> tree = Tree(node1)
+        >>> tree.get_root().get_id()
+        1
+        '''
+        return self._root
+
+    def set_root(self, new_root: Node) -> None:
+        '''
+        Set the root node of the tree to the given node.
+
+        >>> node1 = Node(1, 'Node 1', 'This is node 1', None, 100)
+        >>> node2 = Node(2, 'Node 2', 'This is node 2', 1, 50)
+        >>> tree = Tree(node1)
+        >>> tree.set_root(node2)
+        >>> tree.get_root().get_id()
+        2
+        '''
+        self._root = new_root
+    
     def add_node(self, parent_id:int, child_node:Node) -> None:
         '''
         Add a new node to the tree with the specified parent id.
@@ -132,16 +157,6 @@ class Tree:
         
         return False
         
-    def load_tree_from_dict(self,json_tree:str) -> 'Tree':
-        pass
     
-    def to_dict(self) -> dict:
-        pass
-    
-    def to_json(self) -> json:
-        pass
-    
-    def load_from_db(self):
-        pass
     
         

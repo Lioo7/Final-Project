@@ -1,21 +1,27 @@
-''' Abstruct class for handling data base '''
 
 from abc import ABC, abstractmethod
+from tree import Tree
 
 class Abstract_Database(ABC):
     
+    ''' Abstruct class for handling data base '''
+    
     @abstractmethod
-    def connect():
+    def connect(self):
         pass
     
     @abstractmethod
-    def disconnect():
+    def disconnect(self):
         pass
     
     @abstractmethod
-    def reconnect():
+    def reconnect(self):
         pass
     
     @abstractmethod
-    def execute_query(query:str):
+    def execute_query(self,query:str):
+        pass
+    
+    @abstractmethod
+    def build_tree(self, tree:Tree):
         pass
