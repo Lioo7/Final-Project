@@ -2,6 +2,7 @@ from tree import Tree
 from data_handler import data_handler
 from sql_database import *
 from abstract_Database import Abstract_Database
+
 class Calculator:
     '''This static class performing all the calculations'''
     

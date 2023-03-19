@@ -40,7 +40,7 @@ class Node:
         '''
         return self._description
 
-    def get_parent(self) -> int:
+    def get_parent_id(self) -> int:
         '''
         Return the id of the parent node.
 
@@ -60,7 +60,7 @@ class Node:
         '''
         return self._allocated_budget_amount
 
-    def get_children(self) -> list:
+    def get_children(self) -> list['Node']:
         '''
         Return the list of children nodes.
 
@@ -72,6 +72,13 @@ class Node:
         2
         '''
         return self._children
+    
+    
+    def set_parent_id(self, new_parent_id:int) -> None:
+        '''
+        Set node parent.
+        '''
+        self._parent = new_parent_id
 
     def set_description(self,new_description:str) -> None:
         '''
