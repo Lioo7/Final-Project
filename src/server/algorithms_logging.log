@@ -1,2 +1,19 @@
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 393-296-313
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:37:38] "OPTIONS /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:37:39] "POST /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:39:26] "OPTIONS /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:39:26] "GET /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:42:28] "OPTIONS /peoples_budget/results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:42:28] "[35m[1mGET /peoples_budget/results HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:42:55] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:42:55] "[35m[1mGET /peoples_budget/voting HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:16] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:16] "[35m[1mGET /peoples_budget/voting HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:17] "OPTIONS /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:17] "GET /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:17] "OPTIONS /peoples_budget/results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:17] "[35m[1mGET /peoples_budget/results HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:18] "GET /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:29] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [21/Mar/2023 19:44:30] "[35m[1mGET /peoples_budget/voting HTTP/1.1[0m" 500 -

@@ -19,7 +19,7 @@ class SQL_init():
         return db
         
     @staticmethod
-    def create_data_base(cursor,database_name : str) -> None:
+    def create_database(cursor,database_name : str) -> None:
         cursor.execute("CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARACTER SET 'utf8'".format(database_name)) # db_budget_system
 
     @staticmethod
@@ -34,7 +34,7 @@ class SQL_init():
 if __name__ == "__main__":
     db = SQL_init.connect_database()
     cursor = db.cursor()
-    SQL_init.create_data_base(cursor,SQL_init.data_base_name)
+    SQL_init.create_database(cursor,SQL_init.data_base_name)
     SQL_init.create_table(cursor, 'current_budget', 'id, name, description, parent_id, budget_amount')
     
     # TODO: create tables

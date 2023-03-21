@@ -9,7 +9,7 @@ class Test_user(unittest.TestCase):
 
     def setUp(self):
         # Initialize user object for testing
-        self.user = User(1234, "ofir", "ovadia", date(2000, 1, 1), "ofir@example.com", "password", False, Gender.MALE)
+        self.user = User(1234, "ofir", "ovadia", date(2000, 1, 1), "ofir@example.com", "password", 1, False)
 
 
     def test_id(self):
@@ -77,11 +77,14 @@ class Test_user(unittest.TestCase):
 
     def test_gender(self):
         # Test get_gender() function
-        self.assertEqual(self.user.get_gender(), Gender.MALE)
+        
+        self.assertEqual(self.user.get_gender_value(), Gender.MALE.value)
+        self.assertEqual(self.user.get_gender_name(), Gender.MALE.name)
 
         # Test set_gender() function
-        self.user.set_gender(Gender.FEMALE)
-        self.assertEqual(self.user.get_gender(), Gender.FEMALE)
+        self.user.set_gender(2)
+        self.assertEqual(self.user.get_gender_value(), Gender.FEMALE.value)
+        self.assertEqual(self.user.get_gender_name(), Gender.FEMALE.name)
     
     
     def test_may_vote(self):
