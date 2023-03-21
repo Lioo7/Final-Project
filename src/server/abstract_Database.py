@@ -23,5 +23,5 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def build_tree(self, tree:Tree):
+    def create_tree_from_database(self) -> Tree:
         pass

@@ -37,7 +37,7 @@ class Tree:
         '''
         self._root = new_root
     
-    def add_node(self, parent_id:int, child_node:Node) -> None:
+    def add_node(self, parent_id:int, new_node:Node) -> bool:
         '''
         Add a new node to the tree with the specified parent id.
         
@@ -50,9 +50,29 @@ class Tree:
         >>> tree.get_node(1,root_node).get_id()
         1
         '''
-        pass
+        if new_node is None:
+            print("New Node that inserted is None.")
+            return False
+        
+        if parent_id is None:
+            print("Parent id that inserted is None.")
+            return False
+            
+        else:
+            parent_node = self.get_node(parent_id)
+            if parent_node is None:
+                print(f"There is no Node with id ''{parent_id}'' in the tree")
+                return False
+            
+        parent_node.add_child(new_node)
+        self._node_amount += 1
+        
+        return True
+    
+        
+        
 
-    def remove_node(self, parent_id:int, child_id:int) -> None:
+    def remove_node(self, parent_id:int, node_id:int) -> bool:
         '''
         Removes a node from the tree with the given parent id and child id
         
@@ -70,7 +90,28 @@ class Tree:
         >>> tree.get_node(3,root)
         None
         '''
-        pass
+        node = self.get_node(node_id)
+        
+        if node is None:
+            print(f"Error!, There is no node in the tree that has the id {node_id}")
+            return False
+        
+        # Remove children
+        for child in node.get_children():
+            child.set_parent_id(None)
+        
+        # Remove node from beeing child of his parent
+        parent_id = node.get_parent_id()
+        parent_node = self.get_node(parent_id)
+        parent_node.remove_child(node.get_id())
+        
+        # Remove parent id from this node
+        node.set_parent_id(None)
+        
+        self._node_amount -= 1
+        
+        return True
+        
 
 
     def get_size(self) -> int:
@@ -91,7 +132,8 @@ class Tree:
     
     def get_node(self,node_id:int) -> Node:
         '''
-        Returns the node object with the given id.
+        Returns the node object with the given id,
+        If there is no node with such an id it will return None
         
         >>> root = Node(1, "root", "I am root", None, 1000)
         >>> node1 = Node(2, "project1", "I am project1", None, 250)
@@ -106,8 +148,25 @@ class Tree:
         >>> founded_node.tree.get_name()
         project2
         '''
+        if self._root is None:
+            print("Error!, Empty tree")
+            return None
+
+        current_node = self._root
+        return self._get_node_recursive(current_node, node_id)
+       
+    
+    def _get_node_recursive(self, current_node:Node, target_node_id:int) -> Node:
         
-        return Node()
+        if target_node_id == current_node.get_id():
+            return current_node
+        
+        else:
+            for child in current_node.get_children():
+                found_node = self._get_node_recursive(child, target_node_id)
+                if found_node:
+                    return found_node
+        return None
     
     
     def get_budget_amount(self) -> float:
@@ -125,8 +184,22 @@ class Tree:
         >>> tree.get_budget_amount()
         80
         '''
-        pass
+        if self._root is None:
+            print("Error!, Empty tree")
+            return 0
+        
+        current_node = self._root
+        return self._get_budget_amount_recursive(current_node,current_node.get_allocated_budget_amount())
+        
     
+    def _get_budget_amount_recursive(self,current_node:Node, total_budget:float) -> float:
+        if current_node is None:
+            return total_budget
+                
+        for child in current_node.get_children():
+            total_budget += self._get_budget_amount_recursive(child, total_budget)
+
+        return total_budget
     
     def is_project(self, id_node:int) ->bool:
         '''
@@ -150,9 +223,12 @@ class Tree:
         True
         '''
         node = self.get_node(id_node)
+        if node is None:
+            print(f"Error!, There is no node with {id_node} in the tree")
+            return False
         
         # if this node doesn't have children
-        if not node.get_children():
+        if not node.get_children() or node.get_children() is None:
             return True
         
         return False

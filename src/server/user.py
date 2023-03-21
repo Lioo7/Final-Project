@@ -5,14 +5,14 @@ class User:
     '''This class present regested user in the system'''
 
     def __init__(self, id:int, first_name:int ,last_name:int, date_of_birth:date, mail:str,
-                 password:str,gender:Gender, is_admin:bool):
+                 password:str,gender:int, is_admin:bool):
         self._id = id
         self._first_name = first_name
         self._last_name = last_name
         self._date_of_birth = date_of_birth
         self._mail = mail
         self._password = password
-        self._gender = gender
+        self._gender = Gender(gender) or 1
         self._is_admin = is_admin or False
         self._allowed_to_vote = True
 
@@ -139,7 +139,7 @@ class User:
         '''
         self._is_admin = is_admin
 
-    def get_gender(self):
+    def get_gender_value(self)-> int:
         '''
         >>> user = User(123456789,'Ofir','Ovadia',date(2000,1,1),'example@mail.com','123123',Gender.MALE,False)
         >>> user.get_gender().name
@@ -147,9 +147,19 @@ class User:
         >>> user.get_gender().value
         1
         '''
-        return self._gender
+        return self._gender.value
 
-    def set_gender(self, gender:Gender):
+    def get_gender_name(self) -> str:
+        '''
+        >>> user = User(123456789,'Ofir','Ovadia',date(2000,1,1),'example@mail.com','123123',Gender.MALE,False)
+        >>> user.get_gender_name()
+        MALE
+        >>> user.get_gender_value()
+        1
+        '''
+        return self._gender.name
+        
+    def set_gender(self, new_gender:int):
         '''
         >>> user = User(123456789,'Ofir','Ovadia',date(2000,1,1),'example@mail.com','123123',Gender.MALE,False)
         >>> user.set_gender()
@@ -158,7 +168,7 @@ class User:
         >>> user.get_gender().value
         2
         '''
-        self._gender = gender
+        self._gender = Gender(new_gender)
     
     def get_allowed_to_vote(self):
         '''

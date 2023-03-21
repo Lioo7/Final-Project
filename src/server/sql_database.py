@@ -27,7 +27,7 @@ class SQL_database(Abstract_Database):
         self.disconnect()
         self.connect()
     
-    def execute_query(self, query):
+    def execute_query(self, query): 
         
         try:
             self.cursor.execute(query)
@@ -38,7 +38,8 @@ class SQL_database(Abstract_Database):
             
     def create_tree_from_database(self) -> Tree:
         rows = self.cursor.execute("SELECT * FROM current_budget")
-        nodes = {}
+        nodes = {} # dict
+        
         for row in rows:
             id = row[0]
             name = row[1]
