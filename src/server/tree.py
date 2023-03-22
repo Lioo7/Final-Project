@@ -4,15 +4,13 @@ import json
 class Tree:    
     '''This class present the tree of subjects and projects (container of Nodes)'''
     
-    def __init__(self, root:Node):
+    def __init__(self, root:Node) -> None:
         self._root = root
         self._node_amount = 0
         
         if self._root is not None:
             self.node_amount = 1
 
-    
-    
     def get_root(self) -> Node:
         '''
         Return the root node of the tree.
@@ -113,7 +111,6 @@ class Tree:
         return True
         
 
-
     def get_size(self) -> int:
         '''
         Returns the size of the tree
@@ -128,7 +125,6 @@ class Tree:
         2
         '''
         return self._node_amount
-    
     
     def get_node(self,node_id:int) -> Node:
         '''
@@ -158,15 +154,7 @@ class Tree:
     
     def _get_node_recursive(self, current_node:Node, target_node_id:int) -> Node:
         
-        if target_node_id == current_node.get_id():
-            return current_node
-        
-        else:
-            for child in current_node.get_children():
-                found_node = self._get_node_recursive(child, target_node_id)
-                if found_node:
-                    return found_node
-        return None
+        return Node()
     
     
     def get_budget_amount(self) -> float:
@@ -233,6 +221,53 @@ class Tree:
         
         return False
         
-    
+    @staticmethod
+    def from_dict(data):
+        """
+        Build a tree from a nested dictionary.
+
+        Args:
+            data (dict): A nested dictionary.
+
+        Returns:
+            Tree: A tree object with the root node being the top-level dictionary key.
+        """
+        def _build_tree(data) -> Node:
+            """
+            Recursive function to build a tree from a nested dictionary.
+
+            Args:
+                data (dict): A nested dictionary.
+
+            Returns:
+                Node: A node object representing the root of the tree.
+            """
+            if isinstance(data, dict):
+                # create a root node for the dictionary
+                node = Node('root')
+                # for each key-value pair, create a child node and add it to the root node
+                for key, value in data.items():
+                    child_node = _build_tree(value)
+                    child_node._name = key
+                    node.add_child(child_node)
+            else:
+                # create a leaf node for the value
+                node = Node('leaf', data)
+            return node
+
+        # create a tree object from the root node
+        root_node = _build_tree(data)
+        return Tree(root_node)
+
+    def print_tree(self) -> None:
+        """
+        Print the tree in a hierarchical format with each node's name and value (if any).
+
+        Returns:
+            None
+        """
+        if self._root is not None:
+            # print the root node and its children
+            Node._print_node(self._root)
     
         

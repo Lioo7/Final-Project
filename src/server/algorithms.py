@@ -2,7 +2,8 @@
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
 
-import logging
+from tree import Tree
+import logging 
 
 __all__ = ["median_algorithm", "generalized_median_algorithm"]
 
@@ -78,10 +79,15 @@ def median_algorithm(votes: dict) -> dict:
     ... }
     True
     """
+    
+    num_of_users = len(votes)
+    # {department: project_lvl_1: project_lvl_2: [values]}
+    # {Department of Defense: Army: [40, 10]}
+    
+
 
     # Empty implementation
     return 0
-
 
 def generalized_median_algorithm(votes: dict) -> dict:
     """
@@ -171,3 +177,37 @@ def generalized_median_algorithm(votes: dict) -> dict:
 
     # Empty implementation
     return 0
+
+if __name__ == "__main__":
+    votes = {
+     "user1": {
+         "Department of Defense": {
+             "Army": 40,
+             "Police": 30,
+             "total": 70
+         },
+         "Department of Education": {
+             "Schools": 20,
+             "Higher education": 10,
+              "total": 30
+          },
+         "total": 100
+     },
+     "user2": {
+         "Department of Defense": {
+             "Army": 10,
+             "Police": 10,
+             "total": 20
+          },
+         "Department of Education": {
+             "Schools": 30,
+             "Higher education": 50,
+             "total": 80
+         },
+         "total": 100
+     }
+ }
+
+
+tree = Tree.from_dict(votes)
+tree.print_tree()
