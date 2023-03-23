@@ -244,7 +244,7 @@ class Tree:
             """
             if isinstance(data, dict):
                 # create a root node for the dictionary
-                node = Node('root')
+                node = Node(name='root')
                 # for each key-value pair, create a child node and add it to the root node
                 for key, value in data.items():
                     child_node = _build_tree(value)
@@ -252,7 +252,7 @@ class Tree:
                     node.add_child(child_node)
             else:
                 # create a leaf node for the value
-                node = Node('leaf', data)
+                node = Node(name='leaf', value=data)
             return node
 
         # create a tree object from the root node

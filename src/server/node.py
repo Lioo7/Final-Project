@@ -2,7 +2,7 @@
 class Node:
     '''This class present node in the tree of subjects/projects'''
 
-    def __init__(self, name:str, value=None, id:int=None, description:str="", parent:int=None, budget_amount:float=None) -> None:
+    def __init__(self, id:int=None, name:str="", description:str="", parent:int=None, budget_amount:float=None, value=None) -> None:
         self._id = id or None
         self._name = name or None
         self._value = value
@@ -153,5 +153,9 @@ class Node:
         for i, child in enumerate(node._children):
             is_last_child = i == children_count - 1
             Node._print_node(child, level + 1, is_last_child)
+            
+    def __str__(self):
+        return f'id: {self._id} | name: {self._name} | value: {self._value} | description: {self._description}\
+            parent: {self._parent} | allocated_budget_amount: {self._allocated_budget_amount} | children: {self._children}'
 
     
