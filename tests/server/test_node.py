@@ -24,7 +24,7 @@ class TestNode(unittest.TestCase):
         self.assertEqual(node.get_id(), id)
         self.assertEqual(node.get_name(), name)
         self.assertEqual(node.get_description(), description)
-        self.assertEqual(node.get_parent(), parent)
+        self.assertEqual(node.get_parent_id(), parent)
         self.assertEqual(node.get_allocated_budget_amount(), budget_amount)
         self.assertEqual(node.get_children(), [])
         
@@ -49,7 +49,7 @@ class TestNode(unittest.TestCase):
         self.assertEqual(node.get_id(), id)
         self.assertEqual(node.get_name(), name)
         self.assertEqual(node.get_description(), description)
-        self.assertEqual(node.get_parent(), parent)
+        self.assertEqual(node.get_parent_id(), parent)
         self.assertEqual(node.get_allocated_budget_amount(), budget_amount)
         self.assertEqual(node.get_children(), [])
     
@@ -66,8 +66,8 @@ class TestNode(unittest.TestCase):
         self.assertEqual(self.node.get_description(), "This is a node")
         
         
-    def test_get_parent(self):
-        self.assertEqual(self.node.get_parent(), None)
+    def test_get_parent_id(self):
+        self.assertEqual(self.node.get_parent_id(), None)
         
         
     def test_get_allocated_budget_amount(self):

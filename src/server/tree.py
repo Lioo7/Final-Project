@@ -51,17 +51,17 @@ class Tree:
         1
         '''
         if new_node is None:
-            print("New Node that inserted is None.")
+            print("Error!, New Node that inserted is None.")
             return False
         
         if parent_id is None:
-            print("Parent id that inserted is None.")
+            print("Error!, Parent id that inserted is None.")
             return False
             
         else:
             parent_node = self.get_node(parent_id)
             if parent_node is None:
-                print(f"There is no Node with id ''{parent_id}'' in the tree")
+                print(f"Error!, There is no Node with id ''{parent_id}'' in the tree")
                 return False
             
         parent_node.add_child(new_node)
