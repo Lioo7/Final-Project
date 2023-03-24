@@ -2,9 +2,10 @@
 class Node:
     '''This class present node in the tree of subjects/projects'''
 
-    def __init__(self, id:int=None, name:str="", description:str="", parent:int=None, budget_amount:float=None):
+    def __init__(self, id:int=None, name:str="", description:str="", parent:int=None, budget_amount:float=None, value=None) -> None:
         self._id = id or None
         self._name = name or None
+        self._value = value
         self._description = description or None
         self._parent = parent or None
         self._allocated_budget_amount = budget_amount or None
@@ -133,4 +134,28 @@ class Node:
             return
         
         raise ValueError(f"No child node with id {child_id} was found") 
+    
+    def _print_node(node, level=0, is_last=False) -> None:
+        """
+        Print the current node and its children in a hierarchical format.
+
+        Args:
+            node (Node): The node to print.
+            level (int): The current depth level of the tree. Default is 0.
+            is_last (bool): Indicates whether the node is the last child of its parent. Default is False.
+        """
+        # print the name and value (if any) of the current node
+        prefix = '└' if is_last else '├'
+        value_str = f': {node._value}' if node._value is not None else ''
+        print(' ' * level * 2 + prefix + '─ ' + node._name + value_str)
+        # recursively print the children nodes
+        children_count = len(node._children)
+        for i, child in enumerate(node._children):
+            is_last_child = i == children_count - 1
+            Node._print_node(child, level + 1, is_last_child)
+            
+    def __str__(self):
+        return f'id: {self._id} | name: {self._name} | value: {self._value} | description: {self._description}\
+            parent: {self._parent} | allocated_budget_amount: {self._allocated_budget_amount} | children: {self._children}'
+
     

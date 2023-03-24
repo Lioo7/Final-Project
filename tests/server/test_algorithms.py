@@ -1,4 +1,6 @@
-from src.server.algorithms import median_algorithm, generalized_median_algorithm
+import sys
+sys.path.append('../..')
+from server.algorithms import median_algorithm, generalized_median_algorithm
 import pytest
 
 
