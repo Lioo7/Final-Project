@@ -2,6 +2,7 @@
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
 
+from numpy import empty
 from tree import Tree
 import logging 
 
@@ -81,13 +82,17 @@ def median_algorithm(votes: dict) -> dict:
     """
     
     num_of_users = len(votes)
-    # {department: project_lvl_1: project_lvl_2: [values]}
-    # {Department of Defense: Army: [40, 10]}
+    # convert the given dictionary to a tree
+    tree = Tree.from_dict(votes)
+    leaves_values = {} # {user_number: list_of_its_values}
     
+    for i in range (0, num_of_users):
+        root = tree._root
+        node = root._children[i]
+        leaves = find_leaves(node)
+        leaves_values[i] = leaves 
 
-
-    # Empty implementation
-    return 0
+    calculate_median(leaves_values)
 
 def generalized_median_algorithm(votes: dict) -> dict:
     """
@@ -178,6 +183,59 @@ def generalized_median_algorithm(votes: dict) -> dict:
     # Empty implementation
     return 0
 
+def find_leaves(node) -> list:
+    """"Returns all the leaves of the given node"""
+    if not node._children:
+        return [node._value]
+    leaves = []
+    for child in node._children:
+        # ignore leaves named 'total'
+        if child._name != "total":
+            leaves += find_leaves(child)
+        
+    return leaves
+
+def calculate_median(dict):
+    dict_values = {} # {leaf_number (project): its_values (budget)}
+    median_values = {} # {leaf_number (project): its_median_value}
+    
+    # add each value of project (leave) to the dictionary 
+    for user in dict.keys():
+        for count, value in enumerate(list(dict.values())[user]):
+            if count not in dict_values:
+                dict_values[count] = []
+            dict_values[count].append(value)
+    
+    for key, values in dict_values.items():
+        if key not in median_values:
+            median_values[key] = []
+        median = find_median(values)
+        median_values[key] = median
+    
+    return median_values
+    
+def find_median(lst) -> float:
+    """
+    The function returns the median value.
+
+    Args:
+        lst (List of int): a list of integers.
+    
+    Returns:
+        The median number.
+    """
+    median = 0
+    lst_length = len(lst)
+    median_index = lst_length // 2
+    if lst_length % 2 != 0:
+        median = lst[median_index]
+    else:
+        first_median = lst[median_index - 1] 
+        second_median = lst[median_index] 
+        median = (first_median + second_median) / 2
+        
+    return median
+        
 if __name__ == "__main__":
     votes = {
      "user1": {
@@ -210,4 +268,6 @@ if __name__ == "__main__":
 
 
 tree = Tree.from_dict(votes)
-tree.print_tree()
+# tree.print_tree()
+ans = median_algorithm(votes)
+print(ans)
