@@ -20,7 +20,7 @@ class Calculator:
         >>> Calculator.get_voter_count()
         200
         '''
-        return 0
+        return db.get_row_count("USERS")
     
     
     @staticmethod
@@ -36,7 +36,7 @@ class Calculator:
         >>> Calculator.get_voter_count_by_gender()
         [2,0]
         '''
-        return [0, 0]
+        return db.get_row_count_by_gender("USERS")
 
     
     @staticmethod
@@ -52,6 +52,6 @@ class Calculator:
         >>> Calculator.get_voter_count_by_age()
         [2, 0, 0, 0, 0, 0]
         '''
-        return [0, 0, 0, 0, 0, 0]
+        return db.get_row_count_by_age("USERS")
         
     
