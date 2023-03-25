@@ -81,6 +81,11 @@ def median_algorithm(votes: dict) -> dict:
     True
     """
     
+    # an edge case: empty dictionary (no votes)
+    if not bool(votes):
+        print("The dictionary is empty")
+        return votes
+    
     num_of_users = len(votes)
     # convert the given dictionary to a tree
     tree = Tree.from_dict(votes)
@@ -145,7 +150,7 @@ def generalized_median_algorithm(votes: dict) -> dict:
     ...             "total": 1
     ...         },
     ...         "total": 2
-    ...     }
+    ...     },
     ...     "user3": {
     ...         "Department of Defense": {
     ...             "Army": 1,
@@ -348,37 +353,18 @@ def _calculate_totals(budget: dict) -> float:
     return total
 
 
-
 if __name__ == "__main__":
     votes = {
-     "user1": {
-         "Department of Defense": {
-             "Army": 40,
-             "Police": 30,
-             "total": 70
-         },
-         "Department of Education": {
-             "Schools": 20,
-             "Higher education": 10,
-              "total": 30
-          },
-         "total": 100
-     },
-     "user2": {
-         "Department of Defense": {
-             "Army": 10,
-             "Police": 10,
-             "total": 20
-          },
-         "Department of Education": {
-             "Schools": 30,
-             "Higher education": 50,
-             "total": 80
-         },
-         "total": 100
-     }
- }
-
+    "user1": {
+        "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
+        "Department of Education": {
+            "Schools": 1,
+            "Higher education": 1,
+            "total": 2
+        },
+        "total": 4
+    }
+}
 
 tree = Tree.from_dict(votes)
 # tree.print_tree()
