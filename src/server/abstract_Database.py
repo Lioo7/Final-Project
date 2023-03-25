@@ -25,3 +25,15 @@ class Abstract_Database(ABC):
     @abstractmethod
     def create_tree_from_database(self) -> Tree:
         pass
+    
+    @abstractmethod
+    def get_row_count(self, table_name: str) -> int:
+        pass
+    
+    @abstractmethod
+    def get_row_count_by_gender(self, table_name: str) -> list[int]:
+        pass
+    
+    @abstractmethod
+    def get_row_count_by_age(self, table_name: str) -> list[int]:
+        pass
