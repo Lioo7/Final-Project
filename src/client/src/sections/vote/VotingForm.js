@@ -18,33 +18,138 @@ export default function VotingForm() {
   const navigate = useNavigate();
 
   const [tableData, setTableData] = useState(table);
-  const totalBudget = tableData.reduce((total, item) => total + Number(item.budget), 0);
+  const [totalBudget, _setTotalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
+  const [newMaxBudget, setNewMaxBudget] = useState(0);
   const maxBudget = 100;
+
+  const findPathById = (idToFind, data, path = []) => {
+    for (let i = 0; i < data.length; i += 1) {
+      if (data[i].id === idToFind) {
+        return path;
+      }
+      if (data[i].children) {
+        const childResult = findPathById(idToFind, data[i].children, [...path, data[i].id]);
+        if (childResult) {
+          return childResult;
+        }
+      }
+    }
+    return null;
+  };
+
+  const clearAll = () => {
+    const tableClear = clear(tableData);
+    // console.log('clear All', tableClear);
+    setTableData(tableClear);
+  };
+
+  const clear = (data) => {
+    return data.map((row) => {
+      if (row.children) {
+        return { ...row, checked: false, children: clear(row.children) };
+      }
+      return { ...row, checked: false };
+    });
+  };
+
+  const TotalBudget = (data) => {
+    const newTotalBudget = data.reduce((total, item) => {
+      if (item.checked) {
+        return total;
+      }
+      return total + Number(item.budget);
+    }, 0);
+    setNewMaxBudget(newTotalBudget)
+    return newTotalBudget
+  };
+
+  // const childTotalBudget = (data) => {
+  //   const newTotalBudget = data.reduce((total, item) => {
+  //     if (item.checked) {
+  //       return total;
+  //     }
+  //     return total + Number(item.budget);
+  //   }, 0);
+  //   // setNewMaxBudget(newTotalBudget)
+  //   return newTotalBudget
+  // };
+
+  useEffect(() => {
+    TotalBudget(tableData);
+    // const item = findPathById(12, tableData);
+    // console.log(item)
+    // console.log('useEffect:', tableData);
+  }, [tableData]);
+
+  const handleCheckBox = (data, id, status) => {
+    const updatedTable = data.map((row) => {
+      if (row.id === id) {
+        if (row.children) {
+          return { ...row, checked: status, children: helperHandleCheck(row.children, status) };
+        }
+        return { ...row, checked: status };
+      }
+      return { ...row };
+    });
+
+    const path = findPathById(id, tableData);
+    if (path.length === 0) {
+      setTableData(updatedTable);
+    } else {
+      const allTableData = tableData.map((row) => {
+        if (row.id === path[0]) {
+          return recHandleParentTrue(row, path.slice(1), updatedTable);
+        }
+        return { ...row };
+      });
+      setTableData(allTableData);
+    }
+  };
+
+  const recHandleParentTrue = (data, path, updateTableData) => {
+    if (path.length === 0) {
+      return { ...data, checked: true, children: updateTableData };
+    }
+    const newData = data.children.map((row) => {
+      if (row.id === path[0]) {
+        return recHandleParentTrue(row, path.slice(1), updateTableData);
+      }
+      return { ...row };
+    });
+    return { ...data, checked: true, children: newData };
+  };
+
+  const helperHandleCheck = (table, status) => {
+    return table.map((row) => {
+      if (row.children) {
+        return { ...row, checked: status, children: helperHandleCheck(row.children, status) };
+      }
+      return { ...row, checked: status };
+    });
+  };
 
   const handleSubmit = () => {
     navigate('/peoples_budget/results', { replace: true });
   };
 
-  // const handleVote = (id, value, diff) => {
-  //   // Update siblings budget
-  //   let updatedTableData = updateBudget(tableData, id, value, diff, maxBudget, 0);
+  const recHandle = (data, path, updateTableData) => {
+    if (path.length === 0) {
+      return { ...data, children: updateTableData };
+    }
+    const newData = data.children.map((row) => {
+      if (row.id === path[0]) {
+        return recHandle(row, path.slice(1), updateTableData);
+      }
+      return { ...row };
+    });
+    return { ...data, children: newData };
+  };
 
-  //   // Update childs1 budget
-  //   updatedTableData = updatedTableData.map((row) => {
-  //     if (!row.children) {
-  //       return { ...row };
-  //     }
-  //     const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
-  //     const budgetDiff = row.budget - totalChildBudget;
-  //     const childrens = updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
-  //     return { ...row, children: childrens };
-  //   });
-  //   setTableData(updatedTableData);
-  // };
-
-  const handleVote = (id, value, diff) => {
+  const handleVote = (data, id, value, diff) => {
     // Update siblings budget
-    let updatedTableData = updateBudget(tableData, id, value, diff, maxBudget, 0);
+    const max = TotalBudget(data)
+    let updatedTableData = updateBudget(data, id, value, diff, max, 0);
+    console.log('totalBudget', max)
 
     // Update childs1 budget
     updatedTableData = updatedTableData.map((row) => {
@@ -52,6 +157,8 @@ export default function VotingForm() {
         return { ...row };
       }
       const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
+      // const totalChildBudget = childTotalBudget(row.children)
+      // console.log('totalChildBudget',totalChildBudget)
       const budgetDiff = row.budget - totalChildBudget;
       const childrens = updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
       return { ...row, children: childrens };
@@ -73,20 +180,32 @@ export default function VotingForm() {
       });
       return { ...row, children: children2 };
     });
-    setTableData(updatedTableData);
+
+    const path = findPathById(id, tableData);
+    if (path.length === 0) {
+      setTableData(updatedTableData);
+    } else {
+      const allTableData = tableData.map((row) => {
+        if (row.id === path[0]) {
+          return recHandle(row, path.slice(1), updatedTableData);
+        }
+        return { ...row };
+      });
+      setTableData(allTableData);
+    }
   };
 
   const updateBudget = (data, id, value, diff, currMaxBudget, isChilds) => {
-    // - data (array): An array of objects representing the current budget data for the table.
-    // - id (number): The ID of the row to update.
-    // - value (number): The new budget value for the row.
-    // - diff (number): The difference between the old and new budget values for the row.
-    // - currMaxBudget (number): The maximum allowed budget for a row.
-    // - isChilds (boolean): A flag indicating whether to update child rows as well.
-
+    // console.log('updateBudget', id);
     let updatedTableData = data.slice(); // create a copy of tableData
     let countRows = isChilds ? data.length : data.length - 1; // count of rows to update
-    const rowsIds = data.map((row) => row.id); // array of row IDs
+    // const rowsIds = data.map((row) => row.id); // array of row IDs
+
+    const downRows = data.filter((row) => row.checked);
+    countRows -= downRows.length;
+    const checkedRows = data.filter((row) => !row.checked);
+    const rowsIds = checkedRows.map((row) => row.id);
+    // const checkedRows = rowsIds-downRows;
     let times = 1; // limit the while loop (not to stuck in inifinte loop)
 
     while (diff !== 0 && times < 20 && countRows > 0) {
@@ -95,7 +214,13 @@ export default function VotingForm() {
       let remain = 0; // remaining difference to distribute among rows
       const budgetPerRow = diff / countRows;
       updatedTableData = updatedTableData.map((row) => {
+        if (row.checked) {
+          return { ...row };
+        }
         if (isChilds === 0 && row.id === id) {
+          if (value > currMaxBudget) {
+            return { ...row, budget: currMaxBudget };
+          }
           return { ...row, budget: value };
         }
         if (!rowsIds.includes(row.id)) {
@@ -129,13 +254,27 @@ export default function VotingForm() {
       <TableContainer sx={{ maxHeight: '500px', maxWidth: '1000px' }} component={Paper}>
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ fontWeight: 'bold' }}>
               <TableCell />
+              <TableCell align="center">
+                <Button onClick={clearAll} sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+                  🫵🏽
+                </Button>
+              </TableCell>
               {/* sx={{ backgroundColor: '#000', color: 'white', fontWeight: 'bold', fontSize: '25px' }} */}
-              <TableCell>Subject</TableCell>
-              <TableCell align="center">Budget</TableCell>
-              <TableCell align="center">Vote</TableCell>
-              <TableCell align="center">Precent</TableCell>
+
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Subject
+              </TableCell>
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Budget
+              </TableCell>
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Vote
+              </TableCell>
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Precent
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -143,12 +282,16 @@ export default function VotingForm() {
               <Row
                 // key={row.id}
                 level={0}
+                parent={tableData}
                 row={row}
                 table={tableData}
                 handleVote={handleVote}
                 updateBudget={updateBudget}
+                handleCheckBox={handleCheckBox}
                 totalBudget={totalBudget}
+                newMaxBudget={newMaxBudget}
                 maxBudget={maxBudget}
+                // updateData={updateData}
               />
             ))}
           </TableBody>
@@ -156,7 +299,7 @@ export default function VotingForm() {
       </TableContainer>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
         <Button
-          id ='voteSubmit'
+          id="voteSubmit"
           variant="outlined"
           sx={{ width: '300px', height: '60px', fontWeight: 'bold', fontSize: '25px' }}
           onClick={handleSubmit}

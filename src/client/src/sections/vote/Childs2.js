@@ -77,7 +77,7 @@ export default function Childs2(props) {
 Childs2.propTypes = {
   tableChilds: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    subject: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     budget: PropTypes.number.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({

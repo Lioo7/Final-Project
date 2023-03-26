@@ -21,45 +21,9 @@ export default function Childs1(props) {
     setTableChilds(props.childrens);
   }, [props.childrens]);
 
-  console.log('Childs1: ', tableChilds);
-
-  const handleVote = (id, value, diff) => {
-    // Update siblings budget
-    let updatedTableData = props.updateBudget(tableChilds, id, value, diff, props.maxBudget, 0);
-    // Update childs budget
-    updatedTableData = updatedTableData.map((row) => {
-      if (!row.children) {
-        return { ...row };
-      }
-      const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
-      const budgetDiff = row.budget - totalChildBudget;
-      const childrens = props.updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
-      return { ...row, children: childrens };
-    });
-
-    // Update childs2 budget
-    updatedTableData = updatedTableData.map((row) => {
-      if (!row.children) {
-        return { ...row };
-      }
-      const children2 = row.children.map((child2) => {
-        if (!child2.children) {
-          return { ...child2 };
-        }
-        const totalChildBudget = child2.children.reduce((total, item) => total + Number(item.budget), 0);
-        const budgetDiff = child2.budget - totalChildBudget;
-        const childrens = props.updateBudget(child2.children, id, value, budgetDiff, child2.budget, 1);
-        return { ...child2, children: childrens };
-      });
-      return { ...row, children: children2 };
-    });
-
-    setTableChilds(updatedTableData);
-  };
-
   // const handleVote = (id, value, diff) => {
   //   // Update siblings budget
-  //   let updatedTableData = props.updateBudget (tableChilds, id,value,diff, props.maxBudget,0);
+  //   let updatedTableData = props.updateBudget(tableChilds, id, value, diff, props.maxBudget, 0);
   //   // Update childs budget
   //   updatedTableData = updatedTableData.map((row) => {
   //     if (!row.children) {
@@ -67,12 +31,29 @@ export default function Childs1(props) {
   //     }
   //     const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
   //     const budgetDiff = row.budget - totalChildBudget;
-  //     const childrens =  props.updateBudget (row.children, id,value,budgetDiff, row.budget,1);
+  //     const childrens = props.updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
   //     return { ...row, children: childrens };
   //   });
-  //   console.log("Child1:handleVote ", updatedTableData)
+
+  //   // Update childs2 budget
+  //   updatedTableData = updatedTableData.map((row) => {
+  //     if (!row.children) {
+  //       return { ...row };
+  //     }
+  //     const children2 = row.children.map((child2) => {
+  //       if (!child2.children) {
+  //         return { ...child2 };
+  //       }
+  //       const totalChildBudget = child2.children.reduce((total, item) => total + Number(item.budget), 0);
+  //       const budgetDiff = child2.budget - totalChildBudget;
+  //       const childrens = props.updateBudget(child2.children, id, value, budgetDiff, child2.budget, 1);
+  //       return { ...child2, children: childrens };
+  //     });
+  //     return { ...row, children: children2 };
+  //   });
 
   //   setTableChilds(updatedTableData);
+  //   props.updateData(tableChilds, props.parent.id)
   // };
 
   return (
@@ -81,8 +62,13 @@ export default function Childs1(props) {
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell>Subject</TableCell>
+              <TableCell align="center" >
+              {/* <Button sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+                  🫵🫵🏽
+                </Button> */}
+              </TableCell>
+              <TableCell align="center" >Done</TableCell>
+              <TableCell align="center">Subject</TableCell>
               <TableCell align="center">Budget</TableCell>
               <TableCell align="center">Vote</TableCell>
               <TableCell align="center">Precent</TableCell>
@@ -93,11 +79,13 @@ export default function Childs1(props) {
               <Row
                 level={0}
                 row={child1}
-                handleVote={handleVote}
+                parent = {tableChilds}
+                handleVote={props.handleVote}
                 updateBudget={props.updateBudget}
                 totalBudget={totalChildBudget}
                 maxBudget={props.maxBudget}
                 table={props.table}
+                handleCheckBox={props.handleCheckBox}
               />
             ))}
           </TableBody>
@@ -110,7 +98,7 @@ export default function Childs1(props) {
 Childs1.propTypes = {
   tableChilds: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    subject: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     budget: PropTypes.number.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({
