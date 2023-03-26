@@ -94,7 +94,7 @@ def median_algorithm(votes: dict) -> dict:
     for i in range (0, num_of_users):
         root = tree._root
         node = root._children[i]
-        leaves = find_leaves(node)
+        leaves = _find_leaves(node)
         leaves_values[i] = leaves 
 
     median_values = _calculate_median(leaves_values)
@@ -191,7 +191,7 @@ def generalized_median_algorithm(votes: dict) -> dict:
     # Empty implementation
     return 0
 
-def find_leaves(node) -> list:
+def _find_leaves(node) -> list:
     """"Returns all the leaves of the given node"""
     if not node._children:
         return [node._value]
@@ -199,7 +199,7 @@ def find_leaves(node) -> list:
     for child in node._children:
         # ignore leaves named 'total'
         if child._name != "total":
-            leaves += find_leaves(child)
+            leaves += _find_leaves(child)
         
     return leaves
 
@@ -278,8 +278,6 @@ def _create_result(votes: dict, new_values: list[float]) -> dict:
     first_key = next(iter(votes))
     # extracts the vote of the first user
     first_user_vote = votes[first_key]
-    print(first_user_vote)
-    
     # create an empty dictionary to hold the final result
     result = {}
     # point the current index in the new_values
@@ -344,8 +342,8 @@ def _calculate_totals(budget: dict) -> float:
             sub_dept_budget = _calculate_totals(value)
             budget[key]['total'] = sub_dept_budget
             total += sub_dept_budget
-        elif isinstance(value, float):
-            # if the value is a float, add it to the total budget
+        elif isinstance(value, (int, float)):
+            # if the value is an integer or a float, add it to the total budget
             total += value
     # assign the total budget to the 'total' key of the current level
     budget['total'] = total
@@ -353,20 +351,20 @@ def _calculate_totals(budget: dict) -> float:
     return total
 
 
-if __name__ == "__main__":
-    votes = {
-    "user1": {
-        "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
-        "Department of Education": {
-            "Schools": 1,
-            "Higher education": 1,
-            "total": 2
-        },
-        "total": 4
-    }
-}
+# if __name__ == "__main__":
+#     votes = {
+#     "user1": {
+#         "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
+#         "Department of Education": {
+#             "Schools": 1,
+#             "Higher education": 1,
+#             "total": 2
+#         },
+#         "total": 4
+#     }
+# }
 
-tree = Tree.from_dict(votes)
-# tree.print_tree()
-ans = median_algorithm(votes)
-print(ans)
+# tree = Tree.from_dict(votes)
+# # tree.print_tree()
+# ans = median_algorithm(votes)
+# print(ans)
