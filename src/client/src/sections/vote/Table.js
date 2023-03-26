@@ -80,13 +80,55 @@ const table = [
           {
             id: 13,
             name: 'מייק',
-            budget: '5',
+            budget: '3',
             checked: false,
+            children: [
+              {
+                id: 141,
+                name: 'תרבות',
+                budget: '1',
+                checked: false,
+                children: [
+                  {
+                    id: 151,
+                    name: 'בריאות',
+                    budget: '1',
+                    checked: false,
+                    children: [
+                      {
+                        id: 161,
+                        name: 'תרבות',
+                        budget: '1',
+                        checked: false,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: 142,
+                name: 'ספורט',
+                budget: '1',
+                checked: false,
+              },
+              {
+                id: 143,
+                name: 'אוצר',
+                budget: '1',
+                checked: false,
+              },
+            ],
           },
           {
             id: 131,
             name: 'ימייק',
-            budget: '0',
+            budget: '1',
+            checked: false,
+          },
+          {
+            id: 132,
+            name: 'חינוך',
+            budget: '1',
             checked: false,
           },
         ],

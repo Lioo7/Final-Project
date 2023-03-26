@@ -59,26 +59,12 @@ export default function VotingForm() {
       }
       return total + Number(item.budget);
     }, 0);
-    setNewMaxBudget(newTotalBudget)
-    return newTotalBudget
+    setNewMaxBudget(newTotalBudget);
+    return newTotalBudget;
   };
-
-  // const childTotalBudget = (data) => {
-  //   const newTotalBudget = data.reduce((total, item) => {
-  //     if (item.checked) {
-  //       return total;
-  //     }
-  //     return total + Number(item.budget);
-  //   }, 0);
-  //   // setNewMaxBudget(newTotalBudget)
-  //   return newTotalBudget
-  // };
 
   useEffect(() => {
     TotalBudget(tableData);
-    // const item = findPathById(12, tableData);
-    // console.log(item)
-    // console.log('useEffect:', tableData);
   }, [tableData]);
 
   const handleCheckBox = (data, id, status) => {
@@ -146,39 +132,81 @@ export default function VotingForm() {
   };
 
   const handleVote = (data, id, value, diff) => {
-    // Update siblings budget
-    const max = TotalBudget(data)
-    let updatedTableData = updateBudget(data, id, value, diff, max, 0);
-    console.log('totalBudget', max)
-
-    // Update childs1 budget
-    updatedTableData = updatedTableData.map((row) => {
-      if (!row.children) {
-        return { ...row };
-      }
-      const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
-      // const totalChildBudget = childTotalBudget(row.children)
-      // console.log('totalChildBudget',totalChildBudget)
-      const budgetDiff = row.budget - totalChildBudget;
-      const childrens = updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
-      return { ...row, children: childrens };
-    });
+    // Update siblings/childs1 budget
+    const maxBudget = TotalBudget(data);
+    let updatedTableData = updateBudget(data, id, value, diff, maxBudget, 0);
+    console.log('totalBudget', maxBudget);
 
     // Update childs2 budget
+    updatedTableData = handleChildBudget(updatedTableData, id, value);
+
+    // Update childs3 budget
     updatedTableData = updatedTableData.map((row) => {
-      if (!row.children) {
-        return { ...row };
+      if (row.children) {
+        return { ...row, children: handleChildBudget(row.children, id, value) };
       }
-      const children2 = row.children.map((child2) => {
-        if (!child2.children) {
-          return { ...child2 };
-        }
-        const totalChildBudget = child2.children.reduce((total, item) => total + Number(item.budget), 0);
-        const budgetDiff = child2.budget - totalChildBudget;
-        const childrens = updateBudget(child2.children, id, value, budgetDiff, child2.budget, 1);
-        return { ...child2, children: childrens };
-      });
-      return { ...row, children: children2 };
+      return { ...row };
+    });
+    console.log(updatedTableData);
+
+    // Update childs4 budget
+    updatedTableData = updatedTableData.map((row) => {
+      if (row.children) {
+        const children3 = row.children.map((child3) => {
+          if (child3.children) {
+            return { ...child3, children: handleChildBudget(child3.children, id, value) };
+          }
+          return { ...child3 };
+        });
+        return { ...row, children: children3 };
+      }
+      return { ...row };
+    });
+
+    // Update childs5 budget
+    updatedTableData = updatedTableData.map((row) => {
+      if (row.children) {
+        const children3 = row.children.map((child3) => {
+          if (child3.children) {
+            const children4 = child3.children.map((child4) => {
+              if (child4.children) {
+                return { ...child4, children: handleChildBudget(child4.children, id, value) };
+              }
+              return { ...child4 };
+            });
+            return { ...child3, children: children4 };
+          }
+          return { ...child3 };
+        });
+        return { ...row, children: children3 };
+      }
+      return { ...row };
+    });
+
+    // Update childs6 budget
+    updatedTableData = updatedTableData.map((row) => {
+      if (row.children) {
+        const children3 = row.children.map((child3) => {
+          if (child3.children) {
+            const children4 = child3.children.map((child4) => {
+              if (child4.children) {
+                const children5 = child4.children.map((child5) => {
+                  if (child5.children) {
+                    return { ...child5, children: handleChildBudget(child5.children, id, value) };
+                  }
+                  return { ...child5 };
+                });
+                return { ...child4, children: children5 };
+              }
+              return { ...child4 };
+            });
+            return { ...child3, children: children4 };
+          }
+          return { ...child3 };
+        });
+        return { ...row, children: children3 };
+      }
+      return { ...row };
     });
 
     const path = findPathById(id, tableData);
@@ -193,6 +221,19 @@ export default function VotingForm() {
       });
       setTableData(allTableData);
     }
+  };
+
+  const handleChildBudget = (data, id, value) => {
+    const updatedTableData = data.map((row) => {
+      if (!row.children) {
+        return { ...row };
+      }
+      const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
+      const budgetDiff = row.budget - totalChildBudget;
+      const childrens = updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
+      return { ...row, children: childrens };
+    });
+    return updatedTableData;
   };
 
   const updateBudget = (data, id, value, diff, currMaxBudget, isChilds) => {
@@ -255,14 +296,12 @@ export default function VotingForm() {
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow sx={{ fontWeight: 'bold' }}>
-              <TableCell />
+              <TableCell align="center" />
               <TableCell align="center">
-                <Button onClick={clearAll} sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+                <Button onClick={clearAll} sx={{ fontSize: '20px' }}>
                   🫵🏽
                 </Button>
               </TableCell>
-              {/* sx={{ backgroundColor: '#000', color: 'white', fontWeight: 'bold', fontSize: '25px' }} */}
-
               <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
                 Subject
               </TableCell>
@@ -280,18 +319,14 @@ export default function VotingForm() {
           <TableBody>
             {tableData.map((row) => (
               <Row
-                // key={row.id}
-                level={0}
                 parent={tableData}
                 row={row}
-                table={tableData}
                 handleVote={handleVote}
                 updateBudget={updateBudget}
                 handleCheckBox={handleCheckBox}
                 totalBudget={totalBudget}
                 newMaxBudget={newMaxBudget}
                 maxBudget={maxBudget}
-                // updateData={updateData}
               />
             ))}
           </TableBody>
