@@ -46,13 +46,13 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
                           budget_amount VARCHAR(255)''')
     SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
-                          last_name VARCHAR(255), birth_date DATETIME, mail VARCHAR(255), password VARCHAR(255),
+                          last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                           gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
     
     
     # TODO: to_load(csv) for CURRENT_BUDGET table
 
-    # Clean database
+    #Clean database
     # SQL_init.delete_table(cursor,'CURRENT_BUDGET')
     # SQL_init.delete_table(cursor,'USERS_VOTES')
     # SQL_init.delete_table(cursor,'USERS')
