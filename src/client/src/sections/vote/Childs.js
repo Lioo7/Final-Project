@@ -9,28 +9,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import RowChilds1 from './RowChilds1';
+import Row from './Row';
 
-export default function Childs4(props) {
+export default function Childs(props) {
   const [tableChilds, setTableChilds] = useState(props.childrens);
   // Calculate the sum of the budget of the children
   const totalChildBudget = tableChilds.reduce((total, item) => total + Number(item.budget), 0);
-  const [table, setTable] = useState(props.table);
-
-  const handleVote = (id, value, diff) => {
-    // console.log('ParentTable: handleVote', id, value, diff);
-    const updatedTableData = table.map((row) => {
-      if (row.id === id) {
-        return { ...row, budget: value };
-      }
-      const siblingBudget = parseInt(row.budget, 10) - diff / (table.length - 1);
-      const finalBudget = siblingBudget > 0 ? siblingBudget : 0;
-
-      return { ...row, budget: finalBudget };
-    });
-
-    setTable(updatedTableData);
-  };
+  
+  useEffect(() => {
+    setTableChilds(props.childrens);
+  }, [props.childrens]);
 
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
@@ -38,25 +26,24 @@ export default function Childs4(props) {
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell>Subject</TableCell>
+              <TableCell align="center" />
+              <TableCell align="center" >Done</TableCell>
+              <TableCell align="center">Subject</TableCell>
               <TableCell align="center">Budget</TableCell>
               <TableCell align="center">Vote</TableCell>
               <TableCell align="center">Precent</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableChilds.map((child1) => (
-              <RowChilds1
-                // key={child1.id}
-                row={child1}
-                // handleChange={props.handleChange}
-                handleVote={handleVote}
-                // handleVote={childHandleVote}
+            {tableChilds.map((childs) => (
+              <Row
+                row={childs}
+                parent = {tableChilds}
+                handleVote={props.handleVote}
+                updateBudget={props.updateBudget}
                 totalBudget={totalChildBudget}
                 maxBudget={props.maxBudget}
-                table={props.table}
-                // sibilingLength={props.sibilingLength}
+                handleCheckBox={props.handleCheckBox}
               />
             ))}
           </TableBody>
@@ -65,3 +52,18 @@ export default function Childs4(props) {
     </Stack>
   );
 }
+
+Childs.propTypes = {
+  tableChilds: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    budget: PropTypes.number.isRequired,
+    children: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        subject: PropTypes.string.isRequired,
+        budget: PropTypes.number.isRequired,
+      })
+    ),
+  }),
+};
