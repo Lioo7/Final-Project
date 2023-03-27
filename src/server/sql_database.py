@@ -90,7 +90,7 @@ class SQL_database(Abstract_Database):
         
         eighteen_years_ago = current_time - datetime.timedelta(days=18*365)
         eighteen_years_ago = eighteen_years_ago.strftime('%d/%m/%Y')
-
+       
         Twentyfive_years_ago = current_time - datetime.timedelta(days=25*365)
         Twentyfive_years_ago = Twentyfive_years_ago.strftime('%d/%m/%Y')
         
@@ -124,11 +124,27 @@ class SQL_database(Abstract_Database):
         sixtysix_years_ago = current_time - datetime.timedelta(days=66*365)
         sixtysix_years_ago = sixtysix_years_ago.strftime('%d/%m/%Y')
         
+        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
+                    allowed_to_vote) VALUES (4, "ofir", "ovadia", "2000-01-01", "ofir_ovadia@example.com",
+                    "password123", "male", 0, 1);''')
+        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
+                    allowed_to_vote) VALUES (2, "ofir", "ovadia", "1900-01-01", "ofir_ovadia@example.com",
+                    "password123", "male", 0, 1);''')
+        
+        print(eighteen_years_ago)
+        print(Twentyfive_years_ago)
+        
+        rows = self.execute_query(f"SELECT * FROM {table_name}")
+        for row in rows:
+            print(row)
+            
         
         eighteen_Twentyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN {eighteen_years_ago} AND {Twentyfive_years_ago}'''
+        # eighteen_Twentyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
+        #                             birth_date > 01/01/2005 AND birth_date < 01/01/1998 '''
         eighteen_Twentyfive_years_ago_result = self.execute_query(eighteen_Twentyfive_years_ago_query)
-        
+
         Twentysix_Thirtyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN {Twentysix_years_ago} AND {Thirtyfive_years_ago}'''
         Twentysix_Thirtyfive_years_ago_result = self.execute_query(Twentysix_Thirtyfive_years_ago_query)
@@ -141,28 +157,22 @@ class SQL_database(Abstract_Database):
                                     birth_date BETWEEN {fourtysix_years_ago} AND {fiftyfive_years_ago}'''
         fourtysix_fiftyfive_years_ago_result = self.execute_query(fourtysix_fiftyfive_years_ago_query)
         
-        
         fiftysix_sixtyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN {fiftysix_years_ago} AND {sixtyfive_years_ago}'''
         fiftysix_sixtyfive_years_ago_result = self.execute_query(fiftysix_sixtyfive_years_ago_query)
         
         sixtysix_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date>{sixtysix_years_ago} '''
+                                    birth_date<={sixtysix_years_ago} '''
         sixtysix_years_ago_result = self.execute_query(sixtysix_years_ago_query)
-        print(sixtysix_years_ago)
-        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-                    allowed_to_vote) VALUES (1, "ofir", "ovadia", "1990-01-01", "ofir_ovadia@example.com",
-                    "password123", "male", 0, 1);''')
-        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-                    allowed_to_vote) VALUES (2, "ofir", "ovadia", "1900-01-01", "ofir_ovadia@example.com",
-                    "password123", "male", 0, 1);''')
-        print(self.execute_query("SELECT COUNT(*) FROM USERS"))
+        
+        
         print([eighteen_Twentyfive_years_ago_result,Twentysix_Thirtyfive_years_ago_result,
                 Thirtysix_fourtyfive_years_ago_result,fourtysix_fiftyfive_years_ago_result,
                 fiftysix_sixtyfive_years_ago_result,sixtysix_years_ago_result])
-        return [eighteen_Twentyfive_years_ago_result[0][0],Twentysix_Thirtyfive_years_ago_result[0][0],
-                Thirtysix_fourtyfive_years_ago_result[0][0],fourtysix_fiftyfive_years_ago_result[0][0],
-                fiftysix_sixtyfive_years_ago_result[0][0],sixtysix_years_ago_result[0][0]]
+        # return [eighteen_Twentyfive_years_ago_result[0][0],Twentysix_Thirtyfive_years_ago_result[0][0],
+        #         Thirtysix_fourtyfive_years_ago_result[0][0],fourtysix_fiftyfive_years_ago_result[0][0],
+        #         fiftysix_sixtyfive_years_ago_result[0][0],sixtysix_years_ago_result[0][0]]
+        return []
 
 
     # TODO: Adding specific functions dealing with the database such as : insert table 
