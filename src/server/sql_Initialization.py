@@ -16,7 +16,6 @@ class SQL_init():
         password = os.environ.get('system_budget_password'),
         database= 'db_budget_system'
     )
-        
         return db
         
     @staticmethod
@@ -29,8 +28,6 @@ class SQL_init():
        # mycursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({table_columns})")
         mycursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({table_columns})")
 
-
-    
     @staticmethod
     def delete_table(mycursor, table_name:str) -> None:
         mycursor.execute(f"DROP TABLE IF EXISTS {table_name} ")

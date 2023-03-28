@@ -14,7 +14,6 @@ class SQL_database(Abstract_Database):
         self.config = config
         self.db = None
         self.cursor = None
-
     
     def connect(self):
         self.db = mysql.connector.connect(**self.config)
@@ -100,8 +99,17 @@ class SQL_database(Abstract_Database):
         
         return date_years_ago_str
     
-    def get_row_count_by_age(self, table_name: str) -> list[int]:
-        # [18-25, 26-35, 36-45, 46-55, 56-65, 66+]
+    def get_user_count_by_age_group(self, table_name: str) -> list[int]:
+        """
+        Returns a list containing the number of rows in the specified table grouped by age range.
+
+        Args:
+            table_name: A string representing the name of the table to retrieve the row counts from.
+
+        Returns:
+            A list of integers representing the row counts grouped by age range.
+            The age ranges are: [18-25, 26-35, 36-45, 46-55, 56-65, 66+].
+        """
         
         # get the dates
         eighteen_years_ago = SQL_database.get_date_years_ago(18)
@@ -115,19 +123,6 @@ class SQL_database(Abstract_Database):
         fiftysix_years_ago = SQL_database.get_date_years_ago(56)
         sixtyfive_years_ago = SQL_database.get_date_years_ago(65)
         sixtysix_years_ago = SQL_database.get_date_years_ago(66)
-        
-        # # temp code to test the function
-        # self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-        # allowed_to_vote) VALUES (4, "ofir", "ovadia", '2000-01-24', "ofir_ovadia@example.com",
-        # "password123", "male", 0, 1);''')
-        # self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-        #         allowed_to_vote) VALUES (2, "ofir", "ovadia", '1900-01-24', "ofir_ovadia@example.com",
-        #         "password123", "male", 0, 1);''')
-        
-        # # temp code to print all the rows in the table
-        # rows = self.execute_query(f"SELECT * FROM {table_name}")
-        # for row in rows:
-        #     print(f'row: {row}')
         
         # get the number of users by group age
         # 18-25
@@ -159,6 +154,21 @@ class SQL_database(Abstract_Database):
                 thirtysix_fourtyfive_years_ago_result,fourtysix_fiftyfive_years_ago_result,
                 fiftysix_sixtyfive_years_ago_result,sixtysix_years_ago_result]
 
+    def add_fake_data(self, table_name:str) -> None:
+        # temp code to test the function
+        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
+        allowed_to_vote) VALUES (4, "ofir", "ovadia", '2000-01-24', "ofir_ovadia@example.com",
+        "password123", "male", 0, 1);''')
+        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
+                allowed_to_vote) VALUES (2, "ofir", "ovadia", '1900-01-24', "ofir_ovadia@example.com",
+                "password123", "male", 0, 1);''')
+        
+    def print_table(self, table_name:str) -> None:
+         # temp code to print all the rows in the table
+        rows = self.execute_query(f"SELECT * FROM {table_name}")
+        for row in rows:
+            print(f'row: {row}')
+
     # TODO: Adding specific functions dealing with the database such as : insert table 
 
     @staticmethod
@@ -188,5 +198,5 @@ if __name__ == "__main__":
     '''
     sql = SQL_database(SQL_database.create_config())
     sql.connect()
-    sql.get_row_count_by_age("USERS")
+    sql.get_user_count_by_age_group("USERS")
    
