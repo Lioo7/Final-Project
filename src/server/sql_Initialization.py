@@ -16,6 +16,7 @@ class SQL_init():
         password = os.environ.get('system_budget_password'),
         database= 'db_budget_system'
     )
+        
         return db
         
     @staticmethod
