@@ -4,7 +4,8 @@ from abstract_Database import Abstract_Database
 import os
 from tree import Tree
 from node import Node
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+from user import User
 
 class SQL_database(Abstract_Database):
     
@@ -159,15 +160,6 @@ class SQL_database(Abstract_Database):
         return [eighteen_twentyfive_years_ago_result,twentysix_thirtyfive_years_ago_result,
                 thirtysix_fourtyfive_years_ago_result,fourtysix_fiftyfive_years_ago_result,
                 fiftysix_sixtyfive_years_ago_result,sixtysix_years_ago_result]
-
-    def add_fake_data(self, table_name:str) -> None:
-        # temp code to test the function
-        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-        allowed_to_vote) VALUES (4, "ofir", "ovadia", '2000-01-24', "ofir_ovadia@example.com",
-        "password123", "male", 0, 0);''')
-        self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-                allowed_to_vote) VALUES (2, "ofir", "ovadia", '1900-01-24', "ofir_ovadia@example.com",
-                "password123", "male", 0, 0);''')
         
     def print_table(self, table_name:str) -> None:
          # temp code to print all the rows in the table
@@ -175,7 +167,6 @@ class SQL_database(Abstract_Database):
         for row in rows:
             print(f'row: {row}')
 
-    # TODO: Adding specific functions dealing with the database such as : insert table 
 
     @staticmethod
     def create_config() -> dict:
@@ -189,21 +180,75 @@ class SQL_database(Abstract_Database):
             }
             return configuration
 
+    def check_if_user_exists(self, id, password):
+        query = f'''SELECT user_id FROM USERS WHERE user_id = '{id}' AND password = '{password}' '''
+        try:
+            self.cursor.execute(query)
+            
+        except mysql.connector.Error as err:
+            return False
+        
+        result = self.cursor.fetchone()
+        if result is not None:
+            return True
+        
+        return False
+    
+    
+    def user_id_exeisting(self, user:User) -> bool:
+        query = f'''SELECT user_id FROM USERS WHERE user_id={user.get_id()}'''
+        try:
+            self.cursor.execute(query)
+                    
+        except mysql.connector.Error as err:
+            return False
+        
+        result = self.cursor.fetchone()
+        if result is not None:
+            return True
+        
+        return False
+    
+    
+    def user_mail_exeisting(self, user:User) ->bool:
+        query = f'''SELECT mail FROM USERS WHERE mail='{user.get_mail()}' '''
+        try:
+            self.cursor.execute(query)            
+        
+        except mysql.connector.Error as err:
+            return False
+        
+        result = self.cursor.fetchone()
+        if result is not None:
+            return True
+        
+        return False
+    
+    def insert_new_user(self, new_user:User) -> bool:
+        
+        query = f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
+        allowed_to_vote) VALUES ({new_user.get_id()}, '{new_user.get_first_name()}', '{new_user.get_last_name}',
+        '{new_user.get_date_of_birth()}', '{new_user.get_mail()}', '{new_user.get_password()}',
+        '{new_user.get_gender_value()}','0', '1');'''
+        
+        try:
+            self.cursor.execute(query)
+        except mysql.connector.Error as err:
+            print("err")
+            return False
+        
+        result = self.cursor.fetchall()
+        print(result)
+        
+        if result is not None:
+            return True
+        
+        return False
+        
+        
 
-# from data_handler import data_handler
 
 if __name__ == "__main__":
-    '''
-    EXAMPLE OF USE:
-    sql_handler = data_handler(SQL_database(SQL_database.create_config()))
-    sql_handler.database.connect()
-    sql_handler.database._execute_query("string of query")
-    sql_handler.database._execute_query("string of query")
-    sql_handler.database._execute_query("string of query")
-    sql_handler.database.disconnect()
-    '''
+   
     sql = SQL_database(SQL_database.create_config())
     sql.connect()
-    sql.add_fake_data("USERS")
-    print(sql.get_row_count_by_age("USERS"))
-   
