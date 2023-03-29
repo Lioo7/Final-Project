@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import CardStructure from './CardStructure';
 
@@ -7,7 +8,7 @@ export default function Cards(props) {
     <div>
           <Grid container spacing={3} display="flex" >
             <Grid item xs={12} sm={6} md={3} >
-              <CardStructure title="Total budget" icon={'mdi:money'} val={'100.m'} />
+              <CardStructure title="Total budget" icon={'mdi:money'} val={'501.B'} />
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
@@ -15,7 +16,7 @@ export default function Cards(props) {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <CardStructure title="Popular office" color="warning" icon={'ep:office-building'} val={'ביטחון'}/>
+              <CardStructure title="Popular office" color="warning" icon={'ep:office-building'} val={'ש.חברתיים'}/>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
@@ -23,7 +24,7 @@ export default function Cards(props) {
             </Grid>
 
           </Grid>
-
     </div>
   );
 }
+Cards.propTypes = { voters: PropTypes.number.isRequired };
