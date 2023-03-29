@@ -35,7 +35,7 @@ export default function DashForm() {
 
   return (
     <>
-      <Cards voters={data.count}/>
+      <Cards voters={data.voter_count} />
       <Box display="flex" gap={30} ali gnItems="center" marginTop={5}>
         <Stack>
           <Typography variant="h6">Ages: </Typography>
@@ -44,7 +44,7 @@ export default function DashForm() {
 
         <Stack>
           <Typography variant="h6">Gender: </Typography>
-          <Gender width={350} gender={data.gender}/>
+          <Gender width={350} gender={data.genders} />
         </Stack>
       </Box>
 

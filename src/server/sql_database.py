@@ -71,16 +71,24 @@ class SQL_database(Abstract_Database):
     
     def get_row_count(self, table_name: str) -> int:
         query = f"SELECT COUNT(*) FROM {table_name}"
-        return self.execute_query(query)
+        result = self.execute_query(query)
+        return result[0][0]
 
     
     def get_row_count_by_gender(self, table_name: str) -> list[int]:
         male_query = f"SELECT COUNT(*) FROM {table_name} WHERE gender=1"
-        male_result = self.execute_query(male_query)
         female_query = f"SELECT COUNT(*) FROM {table_name} WHERE gender=2"
-        female_result = self.execute_query(female_query)
         
-        return [male_result,female_result]
+        try:
+            self.cursor.execute(male_query)
+            male_result = self.cursor.fetchone()
+            self.cursor.execute(female_query)
+            female_result = self.cursor.fetchone()
+        
+        except mysql.connector.Error as err:
+            print(f"An error occurred while executing the query: {err}")
+        
+        return [male_result[0],female_result[0]]
     
     @staticmethod
     def get_date_years_ago(years_ago):
@@ -156,16 +164,13 @@ class SQL_database(Abstract_Database):
                                     birth_date<='{sixtysix_years_ago}'
                                     AND allowed_to_vote = '0' '''
         sixtysix_years_ago_result = self.execute_query(sixtysix_years_ago_query)
+        print(eighteen_twentyfive_years_ago_result[0][0],twentysix_thirtyfive_years_ago_result[0][0],
+                thirtysix_fourtyfive_years_ago_result[0][0],fourtysix_fiftyfive_years_ago_result[0][0],
+                fiftysix_sixtyfive_years_ago_result[0][0],sixtysix_years_ago_result[0][0])
+        return [eighteen_twentyfive_years_ago_result[0][0],twentysix_thirtyfive_years_ago_result[0][0],
+                thirtysix_fourtyfive_years_ago_result[0][0],fourtysix_fiftyfive_years_ago_result[0][0],
+                fiftysix_sixtyfive_years_ago_result[0][0],sixtysix_years_ago_result[0][0]]
         
-        return [eighteen_twentyfive_years_ago_result,twentysix_thirtyfive_years_ago_result,
-                thirtysix_fourtyfive_years_ago_result,fourtysix_fiftyfive_years_ago_result,
-                fiftysix_sixtyfive_years_ago_result,sixtysix_years_ago_result]
-        
-    def print_table(self, table_name:str) -> None:
-         # temp code to print all the rows in the table
-        rows = self.execute_query(f"SELECT * FROM {table_name}")
-        for row in rows:
-            print(f'row: {row}')
 
 
     @staticmethod
@@ -234,22 +239,15 @@ class SQL_database(Abstract_Database):
         try:
             self.cursor.execute(query)
         except mysql.connector.Error as err:
-            print("err")
+            print(f"An error occurred while executing the query to insert new user: {err}")
             return False
         
         result = self.cursor.fetchall()
-        print(result)
         
         if result is not None:
             self.db.commit()
             return True
         
         return False
-        
-        
-
-
-if __name__ == "__main__":
-   
-    sql = SQL_database(SQL_database.create_config())
-    sql.connect()
+    
+    

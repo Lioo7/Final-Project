@@ -85,14 +85,16 @@ def signup():
     return jsonify({'status': 'Faild'})
     
 
-
+# --- Dashborad ---
 @app.route('/peoples_budget/dashboard', methods=['GET'])
 def dashboard():
+    database.handler.connect()
     return  jsonify({ 'voter_count': Calculator.get_voter_count(database.handler), 
                 'ages': Calculator.get_voter_count_by_age(database.handler), 
                 'genders': Calculator.get_voter_count_by_gender(database.handler) })
 
 
+# --- Results ---
 @app.route('/peoples_budget/results', methods=['GET'])
 def algorithms_results():
     # TODO: select from DB the input voting
@@ -108,6 +110,7 @@ def algorithms_results():
                     'generalized_median_algorithm': json.dump(generalized_median_result)})
 
 
+# --- Voting ---
 @app.route('/peoples_budget/voting', methods=['POST'])
 def voting_tree():
     try:
