@@ -305,8 +305,12 @@ export default function VotingForm() {
             <TableRow sx={{ fontWeight: 'bold' }}>
               <TableCell align="center" />
               <TableCell align="center">
-                <Button onClick={clearAll} sx={{ fontSize: '20px' }}>
-                  🫵🏽
+                <Button
+                  variant="outlined"
+                  onClick={clearAll}
+                  sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }}
+                >
+                  Clear All
                 </Button>
               </TableCell>
               <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">

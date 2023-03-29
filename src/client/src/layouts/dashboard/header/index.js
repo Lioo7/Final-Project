@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, IconButton,Typography } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // components
 import Iconify from '../../../components/iconify/Iconify';
 //
 import AccountPopover from './AccountPopover';
+// import { bindKey } from 'lodash';
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +55,7 @@ export default function Header({ onOpenNav }) {
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
 
+        {/* <Typography variant="h3" style={{marginLeft: '150px', color: 'black'}} >Your votes, your budget</Typography> */}
 
         <Box sx={{ flexGrow: 1 }} />
 

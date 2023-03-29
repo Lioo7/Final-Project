@@ -16,13 +16,13 @@ export default function HomePage() {
         <title> Home </title>
       </Helmet>
       <Typography variant="h2" style={{ textAlign: 'center' }}>
-        Your votes, your budget 💰
+        Your votes, your budget !
       </Typography>
 
       <Stack direction="column" alignItems="center" justifyContent="space-between" mb={1} style={styles}>
         {/* <HomeForm/> */}
       </Stack>
-      <Typography variant="body1">
+      {/* <Typography variant="body1">
         The site is a platform for citizens to participate in the division of the people's budget.
         <br />
         Citizens can view the current budget distribution and make changes based on their preferences.
@@ -31,7 +31,7 @@ export default function HomePage() {
         <br />
         The results will be published on the website.
         <br />
-      </Typography>
+      </Typography> */}
     </>
   );
 }

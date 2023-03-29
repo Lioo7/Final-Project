@@ -1,84 +1,47 @@
-import React, { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
+import { useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Algo1Row from './Algo1Row';
+import table from './Table';
 
-const Algo2 = () => {
-  const [options, _setOptions] = useState({
-    annotations: {
-      points: [{
-        x: '',
-        seriesIndex: 0,
-        label: {
-          borderColor: '#775DD0',
-          offsetY: 0,
-          style: {
-            color: '#fff',
-            background: '#775DD0',
-          },
-        }
-      }]
-    },
-    chart: {
-      height: 350,
-      type: 'bar',
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 15,
-        columnWidth: '50%',
-        color: '#fff',
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      width: 2
-    },
-    
-    grid: {
-      row: {
-        colors: ['#fff', '#f2f2f2']
-      }
-    },
-    xaxis: {
-      labels: {
-        rotate: -45
-      },
-      categories: ['תשתיות', 'החזרי חוב', 'ביטחון', 'קהילה', 'ענפי משק',
-      'פנסיה', 'משרדי מטה', 'הוצאות אחרות', 'חינוך', 'מכרזים', 'איכות הסביבה', 'פנסיה', 'תשתיות'],
-      tickPlacement: 'on'
-    },
-    // yaxis: {
-    //   title: {
-    //     text: 'Servings',
-    //   },
-    // },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'light',
-        type: "horizontal",
-        shadeIntensity: 0.25,
-        gradientToColors: undefined,
-        inverseColors: true,
-        opacityFrom: 0.85,
-        opacityTo: 0.85,
-        stops: [50, 0, 100]
-      },
-      colors: ['#20B2AA'],
-    }
-  });
-
-  const [series, _setSeries] = useState([{
-    name: 'Amount',
-    data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35]
-  }]);
+export default function Algo2() {
+  const [tableData] = useState(table);
+  const [totalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
 
   return (
-    <div id="chart">
-      <ReactApexChart options={options} series={series} type="bar" height={350} />
-    </div>
+    <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
+      <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
+        <Table stickyHeader aria-label="collapsible table">
+          <TableHead>
+            <TableRow sx={{ fontWeight: 'bold' }}>
+              <TableCell align="center" />
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Subject
+              </TableCell>
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Old Budget
+              </TableCell>
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                New Budget
+              </TableCell>
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+                Precent
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tableData.map((row) => (
+              <Algo1Row key={row.id} row={row} totalBudget={totalBudget} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Stack>
   );
-};
-
-export default Algo2;
+}
