@@ -75,15 +75,7 @@ export default function SignUpForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          firstname: { firstName },
-          lastname: { lastName },
-          id: { id },
-          birthDate: { birthDate },
-          gender: { gender },
-          email: { email },
-          password: { password },
-        }),
+        body: JSON.stringify({ firstName, lastName, id, birthDate, gender, email, password }),
       });
 
       console.log({ firstName }, { lastName }, { id }, { birthDate }, { gender }, { email }, { password });
