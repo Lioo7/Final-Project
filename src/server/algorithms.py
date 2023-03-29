@@ -16,14 +16,15 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def median_algorithm(votes: dict) -> dict:
+def median_algorithm(leaves_values: dict) -> dict:
     """
     Calculate the median of the votes for the budget and return the budget according to the median votes.
 
     Args
     ----
-    votes (dict): A nested dictionary representing the votes of all citizens for the budget.
-
+    leaves_values (dict): A dictionary where each key represents a user and the value is a list of budget votes 
+            (floats) for each leaf node (project).
+            
     Returns
     -------
     budget (dict): A nested dictionary representing the budget according to the median votes of all citizens.
@@ -80,35 +81,19 @@ def median_algorithm(votes: dict) -> dict:
     ... }
     True
     """
-    
-    # an edge case: empty dictionary (no votes)
-    if not bool(votes):
-        print("The dictionary is empty")
-        return votes
-    
-    num_of_users = len(votes)
-    # convert the given dictionary to a tree
-    tree = Tree.from_dict(votes)
-    leaves_values = {} # {user_number: list_of_its_values}
-    
-    for i in range (0, num_of_users):
-        root = tree._root
-        node = root._children[i]
-        leaves = _find_leaves(node)
-        leaves_values[i] = leaves 
 
     median_values = _calculate_median(leaves_values)
-    result = _create_result(votes, median_values)
     
-    return result
+    return median_values
 
-def generalized_median_algorithm(votes: dict) -> dict:
+def generalized_median_algorithm(leaves_values: dict) -> dict:
     """
     Calculate the budget according to the median algorithm of Hervé Moulin, using linear functions by using the given votes.
 
     Args
     ----
-    votes (dict): A nested dictionary representing the votes of all citizens for the budget.
+    leaves_values (dict): A dictionary where each key represents a user and the value is a list of budget votes 
+    (floats) for each leaf node (project).
 
     Returns
     -------
@@ -190,6 +175,56 @@ def generalized_median_algorithm(votes: dict) -> dict:
 
     # Empty implementation
     return 0
+
+def run_algorithm(votes: dict, algorithm_number: int) -> dict:
+    """
+    Runs a specific algorithm on the given votes and returns the result.
+
+    Args:
+        votes (dict): A nested dictionary representing the votes of all citizens for the budget.
+        algorithm_number (int): The number representing the algorithm to run. 
+                                1 for median_algorithm or 2 for generalized_median_algorithm.
+
+    Raises:
+        Exception: If the algorithm_number is not valid.
+
+    Returns:
+        dict: A dictionary representing the final result of the algorithm.
+    """
+    
+    # edge case: empty dictionary (no votes)
+    if not bool(votes):
+        print("The dictionary is empty")
+        return votes
+    
+    # get the number of users
+    num_of_users = len(votes)
+    
+    # convert the given dictionary to a tree
+    tree = Tree.from_dict(votes)
+    
+    # find the values of the leaves for each user and store them in a dictionary
+    leaves_values = {} # {user_number: list_of_its_values}
+    for i in range(0, num_of_users):
+        root = tree._root
+        node = root._children[i]
+        leaves = _find_leaves(node)
+        leaves_values[i] = leaves 
+
+    # choose the algorithm to run based on the input
+    if algorithm_number == 1: # median_algorithm
+        algo_values = median_algorithm(leaves_values)
+    elif algorithm_number == 2: # generalized_median_algorithm
+        algo_values = generalized_median_algorithm(leaves_values)
+    else: # wrong input
+        raise Exception("Invalid algorithm id!")
+    
+    # create the final result dictionary
+    result = _create_result(votes, algo_values)
+    
+    # return the final result dictionary
+    return result
+
 
 def _find_leaves(node) -> list:
     """"Returns all the leaves of the given node"""
