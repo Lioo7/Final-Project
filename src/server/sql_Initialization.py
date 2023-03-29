@@ -32,6 +32,12 @@ class SQL_init():
     def delete_table(mycursor, table_name:str) -> None:
         mycursor.execute(f"DROP TABLE IF EXISTS {table_name} ")
 
+    @staticmethod
+    def clean_database(cursor) -> None:
+        #Clean database
+        SQL_init.delete_table(cursor,'CURRENT_BUDGET')
+        SQL_init.delete_table(cursor,'USERS_VOTES')
+        SQL_init.delete_table(cursor,'USERS')
 
 if __name__ == "__main__":
     # Connect server
@@ -50,8 +56,5 @@ if __name__ == "__main__":
     
     # TODO: to_load(csv) for CURRENT_BUDGET table
 
-    #Clean database
-    # SQL_init.delete_table(cursor,'CURRENT_BUDGET')
-    # SQL_init.delete_table(cursor,'USERS_VOTES')
-    # SQL_init.delete_table(cursor,'USERS')
+    #SQL_init.clean_database(cursor)
         

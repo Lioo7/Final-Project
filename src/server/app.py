@@ -7,7 +7,7 @@ import json
 from data_handler import data_handler
 from sql_database import SQL_database
 from user import User
-import datetime
+from datetime import datetime, date
 
 app = Flask(__name__)
 CORS(app)
@@ -20,16 +20,18 @@ def login():
     try:
         id = request.json['id']
         password = request.json['password']
-        print(id , password)
     
     except: 
         print("error!")
     # TODO: Check validation with database
+    database.database.connect()
     result = database.database.check_if_user_exists(id,password)
     if result:
+        database.database.disconnect()        
         return jsonify({'status': 'Succeeded'})
     
     else: 
+        database.database.disconnect()
         return jsonify({'status': 'Faild'})
 
 
@@ -37,36 +39,50 @@ def login():
 @app.route('/peoples_budget/sign_up', methods=['POST'])
 def signup():
     try:
-        id = request.json['id']
         first_name = request.json['firstname']
         last_name = request.json['lastname']
+        id = request.json['id']
         birth_date = request.json['birthDate']
+        gender = request.json['gender']
         email = request.json['email']
         password = request.json['password']
-        gender = request.json['gender']
-            
+        
     except: 
         print("error!")
-    # Check validation with database
-    new_user = User(id, first_name, last_name, datetime(birth_date), email, password, gender, False)
     
+    # Check validation with database
+    converted_date = datetime.strptime(birth_date['birthDate'], "%Y-%m-%d").date()    
+    
+    if gender['gender'] == "male":
+        # MALE
+        gender = 1
+    else:
+        # FEMALE
+        gender = 2
+        
+    new_user = User(id['id'], first_name['firstName'], last_name['lastName'],
+                    converted_date, email['email'], password['password'], gender, False)
+    
+    database.database.connect()
     check_mail = database.database.user_mail_exeisting(new_user)
+    
     if check_mail:
+        database.database.disconnect()
         return jsonify({'status': f'user already exists by {new_user.get_mail()}'})    
     
     
     check_id = database.database.user_id_exeisting(new_user)
     if check_id:
+        database.database.disconnect()
         return jsonify({'status': f'user already exists by {new_user.get_id()}'})    
-    
     
     insert_result = database.database.insert_new_user(new_user)
     if insert_result:
-        return jsonify({'status': 'succeed'})
+        database.database.disconnect()
+        return jsonify({'status': 'Succeeded'})
     
-    
+    database.database.disconnect()
     return jsonify({'status': 'Faild'})
-    
     
 
 

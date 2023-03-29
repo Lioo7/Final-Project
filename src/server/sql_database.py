@@ -241,6 +241,7 @@ class SQL_database(Abstract_Database):
         print(result)
         
         if result is not None:
+            self.db.commit()
             return True
         
         return False
