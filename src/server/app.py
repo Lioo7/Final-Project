@@ -8,6 +8,7 @@ from data_handler import data_handler
 from sql_database import SQL_database
 from user import User
 from datetime import datetime, date
+from calculator import Calculator
 
 app = Flask(__name__)
 CORS(app)
@@ -24,14 +25,14 @@ def login():
     except: 
         print("error!")
     # TODO: Check validation with database
-    database.database.connect()
-    result = database.database.check_if_user_exists(id,password)
+    database.handler.connect()
+    result = database.handler.check_if_user_exists(id,password)
     if result:
-        database.database.disconnect()        
+        database.handler.disconnect()        
         return jsonify({'status': 'Succeeded'})
     
     else: 
-        database.database.disconnect()
+        database.handler.disconnect()
         return jsonify({'status': 'Faild'})
 
 
@@ -62,34 +63,34 @@ def signup():
         
     new_user = User(id, first_name, last_name,converted_date, email, password, gender, False)
     
-    database.database.connect()
-    check_mail = database.database.user_mail_exeisting(new_user)
+    database.handler.connect()
+    check_mail = database.handler.user_mail_exeisting(new_user)
     
     if check_mail:
-        database.database.disconnect()
+        database.handler.disconnect()
         return jsonify({'status': f'user already exists by {new_user.get_mail()}'})    
     
     
-    check_id = database.database.user_id_exeisting(new_user)
+    check_id = database.handler.user_id_exeisting(new_user)
     if check_id:
-        database.database.disconnect()
+        database.handler.disconnect()
         return jsonify({'status': f'user already exists by {new_user.get_id()}'})    
     
-    insert_result = database.database.insert_new_user(new_user)
+    insert_result = database.handler.insert_new_user(new_user)
     if insert_result:
-        database.database.disconnect()
+        database.handler.disconnect()
         return jsonify({'status': 'Succeeded'})
     
-    database.database.disconnect()
+    database.handler.disconnect()
     return jsonify({'status': 'Faild'})
     
 
 
 @app.route('/peoples_budget/dashboard', methods=['GET'])
 def dashboard():
-    return  jsonify({ 'count': 1, 
-                'ages': [2,2,2,2,2,2], 
-                'gender': [2,2] })
+    return  jsonify({ 'voter_count': Calculator.get_voter_count(database.handler), 
+                'ages': Calculator.get_voter_count_by_age(database.handler), 
+                'genders': Calculator.get_voter_count_by_gender(database.handler) })
 
 
 @app.route('/peoples_budget/results', methods=['GET'])

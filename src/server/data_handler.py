@@ -7,5 +7,4 @@ class data_handler():
     
     
     def __init__(self, the_database:Abstract_Database):
-        #TODO: change property name to "handler"
-        self.database = the_database
+        self.handler = the_database
