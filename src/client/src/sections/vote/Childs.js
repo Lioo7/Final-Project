@@ -15,7 +15,7 @@ export default function Childs(props) {
   const [tableChilds, setTableChilds] = useState(props.childrens);
   // Calculate the sum of the budget of the children
   const totalChildBudget = tableChilds.reduce((total, item) => total + Number(item.budget), 0);
-  
+
   useEffect(() => {
     setTableChilds(props.childrens);
   }, [props.childrens]);
@@ -27,7 +27,7 @@ export default function Childs(props) {
           <TableHead>
             <TableRow>
               <TableCell align="center" />
-              <TableCell align="center" >Done</TableCell>
+              <TableCell align="center">Done</TableCell>
               <TableCell align="center">Subject</TableCell>
               <TableCell align="center">Budget</TableCell>
               <TableCell align="center">Vote</TableCell>
@@ -37,8 +37,9 @@ export default function Childs(props) {
           <TableBody>
             {tableChilds.map((childs) => (
               <Row
+                key={childs.id}
                 row={childs}
-                parent = {tableChilds}
+                parent={tableChilds}
                 handleVote={props.handleVote}
                 updateBudget={props.updateBudget}
                 totalBudget={totalChildBudget}
@@ -54,16 +55,22 @@ export default function Childs(props) {
 }
 
 Childs.propTypes = {
-  tableChilds: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    budget: PropTypes.number.isRequired,
-    children: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        subject: PropTypes.string.isRequired,
-        budget: PropTypes.number.isRequired,
-      })
-    ),
-  }),
+  childrens: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      budget: PropTypes.number.isRequired,
+      children: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          budget: PropTypes.number.isRequired,
+        })
+      ),
+    })
+  ).isRequired,
+  handleVote: PropTypes.func.isRequired,
+  handleCheckBox: PropTypes.func.isRequired,
+  updateBudget: PropTypes.func.isRequired,
+  maxBudget: PropTypes.number.isRequired,
 };

@@ -18,7 +18,7 @@ export default function VotingForm() {
   const navigate = useNavigate();
 
   const [tableData, setTableData] = useState(table);
-  const [totalBudget, _setTotalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
+  const [totalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const maxBudget = 100;
 
@@ -39,17 +39,17 @@ export default function VotingForm() {
 
   const clearAll = () => {
     const tableClear = clear(tableData);
-    // console.log('clear All', tableClear);
     setTableData(tableClear);
   };
 
   const clear = (data) => {
-    return data.map((row) => {
+    const clearData = data.map((row) => {
       if (row.children) {
         return { ...row, checked: false, children: clear(row.children) };
       }
       return { ...row, checked: false };
     });
+    return clearData;
   };
 
   const TotalBudget = (data) => {
@@ -105,14 +105,21 @@ export default function VotingForm() {
     return { ...data, checked: true, children: newData };
   };
 
-  const helperHandleCheck = (table, status) => {
-    return table.map((row) => {
-      if (row.children) {
-        return { ...row, checked: status, children: helperHandleCheck(row.children, status) };
-      }
-      return { ...row, checked: status };
-    });
-  };
+  // const helperHandleCheck = (table, status) => {
+  //   return table.map((row) => {
+  //     if (row.children) {
+  //       return { ...row, checked: status, children: helperHandleCheck(row.children, status) };
+  //     }
+  //     return { ...row, checked: status };
+  //   });
+  // };
+
+  const helperHandleCheck = (table, status) =>
+    table.map((row) =>
+      row.children
+        ? { ...row, checked: status, children: helperHandleCheck(row.children, status) }
+        : { ...row, checked: status }
+    );
 
   const handleSubmit = () => {
     navigate('/peoples_budget/results', { replace: true });
@@ -292,7 +299,7 @@ export default function VotingForm() {
 
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
-      <TableContainer sx={{ maxHeight: '500px', maxWidth: '1000px' }} component={Paper}>
+      <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow sx={{ fontWeight: 'bold' }}>
@@ -319,6 +326,7 @@ export default function VotingForm() {
           <TableBody>
             {tableData.map((row) => (
               <Row
+                key={row.id}
                 parent={tableData}
                 row={row}
                 handleVote={handleVote}

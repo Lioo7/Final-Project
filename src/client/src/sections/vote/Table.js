@@ -137,8 +137,32 @@ const table = [
   },
   {
     id: 14,
-    name: 'ביטחון',
-    budget: '30',
+    name: 'כלכלה',
+    budget: '10',
+    checked: false,
+  },
+  {
+    id: 15,
+    name: 'סביבה',
+    budget: '5',
+    checked: false,
+  },
+  {
+    id: 16,
+    name: 'פנים',
+    budget: '5',
+    checked: false,
+  },
+  {
+    id: 17,
+    name: 'ספורט',
+    budget: '5',
+    checked: false,
+  },
+  {
+    id: 18,
+    name: 'דתות',
+    budget: '5',
     checked: false,
   },
   // {

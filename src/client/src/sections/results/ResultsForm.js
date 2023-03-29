@@ -56,7 +56,7 @@ export default function ResultsForm() {
     setTimeout(() => {
       setLoading(false);
       setDisplayGraph2(true);
-    }, 3000); // 5 seconds
+    }, 3000); 
   };
 
   const handleButtonClick3 = () => {
