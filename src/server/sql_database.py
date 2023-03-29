@@ -99,7 +99,7 @@ class SQL_database(Abstract_Database):
         
         return date_years_ago_str
     
-    def get_user_count_by_age_group(self, table_name: str) -> list[int]:
+    def get_row_count_by_age(self, table_name: str) -> list[int]:
         """
         Returns a list containing the number of rows in the specified table grouped by age range.
 
@@ -127,27 +127,33 @@ class SQL_database(Abstract_Database):
         # get the number of users by group age
         # 18-25
         eighteen_twentyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date BETWEEN '{twentyfive_years_ago}' AND '{eighteen_years_ago}' '''
+                                    birth_date BETWEEN '{twentyfive_years_ago}' AND '{eighteen_years_ago}'
+                                    AND allowed_to_vote = '0' '''
         eighteen_twentyfive_years_ago_result = self.execute_query(eighteen_twentyfive_years_ago_query)
         # 26-35
         twentysix_thirtyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date BETWEEN '{thirtyfive_years_ago}' AND '{twentysix_years_ago}' '''
+                                    birth_date BETWEEN '{thirtyfive_years_ago}' AND '{twentysix_years_ago}'
+                                    AND allowed_to_vote = '0' '''
         twentysix_thirtyfive_years_ago_result = self.execute_query(twentysix_thirtyfive_years_ago_query)
         # 36-45
         thirtysix_fourtyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date BETWEEN '{fourtyfive_years_ago}' AND '{thirtysix_years_ago}' '''
+                                    birth_date BETWEEN '{fourtyfive_years_ago}' AND '{thirtysix_years_ago}'
+                                    AND allowed_to_vote = '0' '''
         thirtysix_fourtyfive_years_ago_result = self.execute_query(thirtysix_fourtyfive_years_ago_query)
         # 46-55
         fourtysix_fiftyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date BETWEEN '{fiftyfive_years_ago}' AND '{fourtysix_years_ago}' '''
+                                    birth_date BETWEEN '{fiftyfive_years_ago}' AND '{fourtysix_years_ago}'
+                                    AND allowed_to_vote = '0' '''
         fourtysix_fiftyfive_years_ago_result = self.execute_query(fourtysix_fiftyfive_years_ago_query)
         # 55-65
         fiftysix_sixtyfive_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date BETWEEN '{sixtyfive_years_ago}' AND '{fiftysix_years_ago}' '''
+                                    birth_date BETWEEN '{sixtyfive_years_ago}' AND '{fiftysix_years_ago}'
+                                    AND allowed_to_vote = '0' '''
         fiftysix_sixtyfive_years_ago_result = self.execute_query(fiftysix_sixtyfive_years_ago_query)
         # 60+
         sixtysix_years_ago_query = f'''SELECT COUNT(*) FROM {table_name} WHERE
-                                    birth_date<='{sixtysix_years_ago}' '''
+                                    birth_date<='{sixtysix_years_ago}'
+                                    AND allowed_to_vote = '0' '''
         sixtysix_years_ago_result = self.execute_query(sixtysix_years_ago_query)
         
         return [eighteen_twentyfive_years_ago_result,twentysix_thirtyfive_years_ago_result,
@@ -158,10 +164,10 @@ class SQL_database(Abstract_Database):
         # temp code to test the function
         self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
         allowed_to_vote) VALUES (4, "ofir", "ovadia", '2000-01-24', "ofir_ovadia@example.com",
-        "password123", "male", 0, 1);''')
+        "password123", "male", 0, 0);''')
         self.execute_query(f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
                 allowed_to_vote) VALUES (2, "ofir", "ovadia", '1900-01-24', "ofir_ovadia@example.com",
-                "password123", "male", 0, 1);''')
+                "password123", "male", 0, 0);''')
         
     def print_table(self, table_name:str) -> None:
          # temp code to print all the rows in the table
@@ -198,5 +204,6 @@ if __name__ == "__main__":
     '''
     sql = SQL_database(SQL_database.create_config())
     sql.connect()
-    sql.get_user_count_by_age_group("USERS")
+    sql.add_fake_data("USERS")
+    print(sql.get_row_count_by_age("USERS"))
    

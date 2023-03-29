@@ -35,5 +35,5 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def get_user_count_by_age_group(self, table_name: str) -> list[int]:
+    def get_row_count_by_age(self, table_name: str) -> list[int]:
         pass
