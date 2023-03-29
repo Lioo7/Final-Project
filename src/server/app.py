@@ -39,8 +39,8 @@ def login():
 @app.route('/peoples_budget/sign_up', methods=['POST'])
 def signup():
     try:
-        first_name = request.json['firstname']
-        last_name = request.json['lastname']
+        first_name = request.json['firstName']
+        last_name = request.json['lastName']
         id = request.json['id']
         birth_date = request.json['birthDate']
         gender = request.json['gender']
@@ -51,17 +51,16 @@ def signup():
         print("error!")
     
     # Check validation with database
-    converted_date = datetime.strptime(birth_date['birthDate'], "%Y-%m-%d").date()    
+    converted_date = datetime.strptime(birth_date, "%Y-%m-%d").date()    
     
-    if gender['gender'] == "male":
+    if gender == "male":
         # MALE
         gender = 1
     else:
         # FEMALE
         gender = 2
         
-    new_user = User(id['id'], first_name['firstName'], last_name['lastName'],
-                    converted_date, email['email'], password['password'], gender, False)
+    new_user = User(id, first_name, last_name,converted_date, email, password, gender, False)
     
     database.database.connect()
     check_mail = database.database.user_mail_exeisting(new_user)
