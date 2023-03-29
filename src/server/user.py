@@ -4,15 +4,15 @@ from gender import Gender
 class User:
     '''This class present regested user in the system'''
 
-    def __init__(self, id:int, first_name:int ,last_name:int, date_of_birth:date, mail:str,
+    def __init__(self, id:int, first_name:str ,last_name:str, birth_date:date, mail:str,
                  password:str,gender:int, is_admin:bool):
         self._id = id
         self._first_name = first_name
         self._last_name = last_name
-        self._date_of_birth = date_of_birth
+        self._date_of_birth = birth_date
         self._mail = mail
         self._password = password
-        self._gender = Gender(gender) or 1
+        self._gender = Gender(gender) or Gender(1)
         self._is_admin = is_admin or False
         self._allowed_to_vote = True
 

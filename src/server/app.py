@@ -6,6 +6,8 @@ from algorithms import median_algorithm , generalized_median_algorithm
 import json
 from data_handler import data_handler
 from sql_database import SQL_database
+from user import User
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -23,27 +25,49 @@ def login():
     except: 
         print("error!")
     # TODO: Check validation with database
-  
-    return jsonify({'status': 'succeed'})
+    result = database.database.check_if_user_exists(id,password)
+    if result:
+        return jsonify({'status': 'Succeeded'})
+    
+    else: 
+        return jsonify({'status': 'Faild'})
 
 
 # --- Sign up ---
 @app.route('/peoples_budget/sign_up', methods=['POST'])
 def signup():
     try:
+        id = request.json['id']
         first_name = request.json['firstname']
         last_name = request.json['lastname']
-        id = request.json['id']
         birth_date = request.json['birthDate']
-        gender = request.json['gender']
         email = request.json['email']
         password = request.json['password']
-    
+        gender = request.json['gender']
+            
     except: 
         print("error!")
     # Check validation with database
-  
-    return jsonify({'status': 'succeed'})
+    new_user = User(id, first_name, last_name, datetime(birth_date), email, password, gender, False)
+    
+    check_mail = database.database.user_mail_exeisting(new_user)
+    if check_mail:
+        return jsonify({'status': f'user already exists by {new_user.get_mail()}'})    
+    
+    
+    check_id = database.database.user_id_exeisting(new_user)
+    if check_id:
+        return jsonify({'status': f'user already exists by {new_user.get_id()}'})    
+    
+    
+    insert_result = database.database.insert_new_user(new_user)
+    if insert_result:
+        return jsonify({'status': 'succeed'})
+    
+    
+    return jsonify({'status': 'Faild'})
+    
+    
 
 
 @app.route('/peoples_budget/dashboard', methods=['GET'])

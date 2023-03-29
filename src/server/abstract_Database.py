@@ -1,6 +1,7 @@
 
 from abc import ABC, abstractmethod
 from tree import Tree
+from user import User
 
 class Abstract_Database(ABC):
     
@@ -35,5 +36,21 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def get_user_count_by_age_group(self, table_name: str) -> list[int]:
+    def get_row_count_by_age(self, table_name: str) -> list[int]:
+        pass
+    
+    @abstractmethod
+    def check_if_user_exists(self, id, password) -> bool:
+        pass
+    
+    @abstractmethod
+    def user_mail_exeisting(self, user:User) -> bool:
+        pass
+    
+    @abstractmethod
+    def user_id_exeisting(self, user:User) -> bool:
+        pass
+    
+    @abstractmethod
+    def insert_new_user(new_user) -> bool:
         pass
