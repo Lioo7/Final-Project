@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Algo1Row from './Algo1Row';
-import table from './Table';
+import table from '../vote/Table';
 
 export default function Algo2() {
   const [tableData] = useState(table);
@@ -21,16 +21,16 @@ export default function Algo2() {
           <TableHead>
             <TableRow sx={{ fontWeight: 'bold' }}>
               <TableCell align="center" />
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Subject
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Old Budget
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 New Budget
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Precent
               </TableCell>
             </TableRow>

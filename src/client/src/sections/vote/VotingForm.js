@@ -308,21 +308,21 @@ export default function VotingForm() {
                 <Button
                   variant="outlined"
                   onClick={clearAll}
-                  sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }}
+                  sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }}
                 >
                   Clear All
                 </Button>
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Subject
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Budget
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Vote
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '20px' }} align="center">
+              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                 Precent
               </TableCell>
             </TableRow>
