@@ -1,5 +1,6 @@
 import mysql.connector
 import os
+import pandas
 
 class SQL_init():
     
@@ -57,4 +58,5 @@ if __name__ == "__main__":
     # TODO: to_load(csv) for CURRENT_BUDGET table
 
     #SQL_init.clean_database(cursor)
+    
         
