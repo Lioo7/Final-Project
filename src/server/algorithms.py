@@ -301,7 +301,7 @@ def _find_median(lst: list[float]) -> float:
         
     return median
 
-def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: int, min_search: float = 0, max_search: float = 1) -> list[float]:
+def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: int, min_search: float = 0, max_search: float = 1, max_iterations: int = 10000) -> list[float]:
     """
     Find the median of a list of values by adding constant functions.
 
@@ -312,9 +312,10 @@ def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: in
         n (int): The number of leaves (project).
         min_search (float, optional): The minimum value of the search range. Defaults to 0.
         min_search (float, optional): The maximum value of the search range. Defaults to 1.
+        max_iterations (int, optional): The maximum number of iterations. Defaults to 1000.
 
     Returns:
-        constants (list[float]): A list of all the constants values.
+        constants (list[float]): A list of all the constants values, or None if the maximum number of iterations is reached.
     """
     
     # calculate the midpoint of the search range
@@ -342,15 +343,20 @@ def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: in
         median = _find_median(sorted_values_with_constants) 
         sum_medians += median
     
-    # if the sum of the medians is equal to the total budget, return the medians
-    if sum_medians == c:
+    EPSILON = 0.00000000000000000000000000000000000000001 # a threshold value
+    # base case: if the search range is sufficiently small or maximum number of iterations is reached, return the current constants
+    if max_iterations <= 0:
+        print('max_iterations <= 0')
+    if max_search - min_search < EPSILON:
+        print('max_search - min_search < EPSILON')
+    if abs(sum_medians - c) < EPSILON or max_search - min_search < EPSILON or max_iterations <= 0:
         return constants
-    # if the sum of the medians is greater than thetotal budget, search the lower half of the range
-    elif sum_medians > c:
-        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min_search=min_search, max_search=t)
+    # if the sum of the medians is greater than or equal to the total budget, search the lower half of the range
+    elif sum_medians >= c:
+        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min_search=min_search, max_search=t, max_iterations=max_iterations-1)
     # If the sum of the medians is less than the total budget, search the upper half of the range
     elif sum_medians < c:
-        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min_search=t, max_search=max_search)
+        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min_search=t, max_search=max_search, max_iterations=max_iterations-1)
 
 
 def _create_result(votes: dict, new_values: list[float]) -> dict:
