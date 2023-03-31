@@ -306,7 +306,7 @@ def _find_median(lst: list[float]) -> float:
         
     return median
 
-def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: int, min: float = 0, max: float = 1) -> list[float]:
+def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: int, min_search: float = 0, max_search: float = 1) -> list[float]:
     """
     Find the median of a list of values by adding constant functions.
 
@@ -315,15 +315,15 @@ def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: in
             for that project by all the users.
         c (float): The total budget.
         n (int): The number of leaves (project).
-        min (float, optional): The minimum value of the search range. Defaults to 0.
-        max (float, optional): The maximum value of the search range. Defaults to 1.
+        min_search (float, optional): The minimum value of the search range. Defaults to 0.
+        min_search (float, optional): The maximum value of the search range. Defaults to 1.
 
     Returns:
-        List[float]: A list of medians that add up to `c`.
+        constants (list[float]): A list of all the constants values.
     """
     
     # calculate the midpoint of the search range
-    t = (min + max) / 2 
+    t = (min_search + max_search) / 2 
     # create an empty list to store the constants
     constants = []
 
@@ -337,23 +337,24 @@ def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: in
     for i in range(1, n):
         constants[i-1] = c * min(1, i * t)
     
-    values_with_constants = values + constants
-    # sort the values and constants 
-    sorted_values_with_constants = sorted(values_with_constants) 
-    # find the medians of the sorted values and constants
-    medians = _find_median(sorted_values_with_constants) 
-    # calculate the sum of the medians
-    sum_medians = sum(medians)
+    sum_medians = 0
+    for project, values in votes_by_project.items():
+        values_with_constants = values + constants
+        # sort the values and constants 
+        sorted_values_with_constants = sorted(values_with_constants) 
+        # find the median of the sorted values and constants
+        median = _find_median(sorted_values_with_constants) 
+        sum_medians += median
     
     # if the sum of the medians is equal to the total budget, return the medians
     if sum_medians == c:
-        return medians
+        return constants
     # if the sum of the medians is greater than thetotal budget, search the lower half of the range
     elif sum_medians > c:
-        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min=min, max=t)
+        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min_search=min_search, max_search=t)
     # If the sum of the medians is less than the total budget, search the upper half of the range
     elif sum_medians < c:
-        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min=t, max=max)
+        return _find_median_with_constant_functions(votes_by_project=votes_by_project, c=c, n=n, min_search=t, max_search=max_search)
 
 
 def _create_result(votes: dict, new_values: list[float]) -> dict:
