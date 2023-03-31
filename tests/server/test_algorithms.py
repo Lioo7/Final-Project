@@ -143,19 +143,19 @@ class TestMedianAlgorithm:
                 "Department of Defense": {"Army": 6, "total": 6},
                 "Department of Education": {"Schools": 0, "total": 0},
                 "Department of Interior": {"immigration": 0, "total": 0},
-                "total": 2
+                "total": 6
             },
             "user2": {
                 "Department of Defense": {"Army": 0, "total": 0},
                 "Department of Education": {"Schools": 3, "total": 3},
                 "Department of Interior": {"immigration": 3, "total": 3},
-                "total": 2
+                "total": 6
             },
             "user3": {
                 "Department of Defense": {"Army": 3, "total": 3},
                 "Department of Education": {"Schools": 3, "total": 3},
                 "Department of Interior": {"immigration": 0, "total": 0},
-                "total": 2
+                "total": 6
             }
         }
 

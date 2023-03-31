@@ -260,6 +260,7 @@ def _calculate_median(votes_by_user: dict, total_budget: float, algorithm_number
     
     votes_by_project = {} # {leaf_number (project): its_values (budget)}
     median_values = {} # {leaf_number (project): its_median_value}
+    constants = [] # the constants values (will be only used for the 2nd algorithm)
     
     # add each value of project (leave) to the dictionary 
     for user in votes_by_user.keys():
@@ -268,18 +269,18 @@ def _calculate_median(votes_by_user: dict, total_budget: float, algorithm_number
                 votes_by_project[count] = []
             votes_by_project[count].append(value)
     
-    # choose the algorithm to run based on the input
-        if algorithm_number == 2: # generalized_median_algorithm
-            num_of_projects = len(votes_by_project)
-            median = _find_median_with_constant_functions(votes_by_project=votes_by_project, c=total_budget, n=num_of_projects)
-            
-        for key, values in votes_by_project.items():
-            if key not in median_values:
-                median_values[key] = []
-            # sort the list of values
-            sorted_values = sorted(values) 
-            median = _find_median(sorted_values) 
-            median_values[key] = median     
+# choose the algorithm to run based on the input
+    if algorithm_number == 2: # generalized_median_algorithm
+        num_of_projects = len(votes_by_project)
+        constants = _find_median_with_constant_functions(votes_by_project=votes_by_project, c=total_budget, n=num_of_projects)
+
+    for key, values in votes_by_project.items():
+        if key not in median_values:
+            median_values[key] = []
+        # sort the list of values
+        sorted_values = sorted(values + constants) 
+        median = _find_median(sorted_values) 
+        median_values[key] = median     
     
     return median_values
     
@@ -335,8 +336,9 @@ def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: in
 
     # calculate the value of each constant using the following formula: f_i = c * min{1, i * t}
     for i in range(1, n):
-        constants[i-1] = c * min(1, i * t)
-    
+        const = c * min(1, i * t)
+        constants[i-1] = round(const, 3)
+                
     sum_medians = 0
     for project, values in votes_by_project.items():
         values_with_constants = values + constants
@@ -452,18 +454,27 @@ def _calculate_totals(budget: dict) -> float:
 
 # if __name__ == "__main__":
 #     votes = {
-#     "user1": {
-#         "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
-#         "Department of Education": {
-#             "Schools": 1,
-#             "Higher education": 1,
-#             "total": 2
-#         },
-#         "total": 4
-#     }
-# }
+#             "user1": {
+#                 "Department of Defense": {"Army": 6, "total": 6},
+#                 "Department of Education": {"Schools": 0, "total": 0},
+#                 "Department of Interior": {"immigration": 0, "total": 0},
+#                 "total": 6
+#             },
+#             "user2": {
+#                 "Department of Defense": {"Army": 0, "total": 0},
+#                 "Department of Education": {"Schools": 3, "total": 3},
+#                 "Department of Interior": {"immigration": 3, "total": 3},
+#                 "total": 6
+#             },
+#             "user3": {
+#                 "Department of Defense": {"Army": 3, "total": 3},
+#                 "Department of Education": {"Schools": 3, "total": 3},
+#                 "Department of Interior": {"immigration": 0, "total": 0},
+#                 "total": 6
+#             }
+#         }
 
 # tree = Tree.from_dict(votes)
 # # tree.print_tree()
-# ans = median_algorithm(votes)
+# ans = run_algorithm(votes, 2)
 # print(ans)
