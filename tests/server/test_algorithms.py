@@ -24,7 +24,7 @@ class TestMedianAlgorithm:
                     "total": 80,
                 },
                 "total": 100
-            },
+            }
         }
 
         budget_data = run_algorithm(votes, 1)
@@ -140,31 +140,30 @@ class TestMedianAlgorithm:
         # Test case 1: Testing the output of the function with three users.
         votes = {
             "user1": {
-                "Department of Defense": {"Army": 2, "total": 2},
+                "Department of Defense": {"Army": 6, "total": 6},
                 "Department of Education": {"Schools": 0, "total": 0},
                 "Department of Interior": {"immigration": 0, "total": 0},
-                "total": 2
+                "total": 6
             },
             "user2": {
                 "Department of Defense": {"Army": 0, "total": 0},
-                "Department of Education": {"Schools": 1, "total": 1},
-                "Department of Interior": {"immigration": 1, "total": 1},
-                "total": 2
+                "Department of Education": {"Schools": 3, "total": 3},
+                "Department of Interior": {"immigration": 3, "total": 3},
+                "total": 6
             },
             "user3": {
-                "Department of Defense": {"Army": 1, "total": 1},
-                "Department of Education": {"Schools": 1, "total": 1},
+                "Department of Defense": {"Army": 3, "total": 3},
+                "Department of Education": {"Schools": 3, "total": 3},
                 "Department of Interior": {"immigration": 0, "total": 0},
-                "total": 2
-            },
-            "total": 6
+                "total": 6
+            }
         }
 
         expected_result = {
-            "Department of Defense": {"Army": 0.8, "total": 0.8},
-            "Department of Education": {"Schools": 0.8, "total": 0.8},
-            "Department of Interior": {"immigration": 0.4, "total": 0.4},
-            "total": 2
+            "Department of Defense": {"Army": 2.4, "total": 2.4},
+            "Department of Education": {"Schools": 2.4, "total": 2.4},
+            "Department of Interior": {"immigration": 1.2, "total": 1.2},
+            "total": 6
         }
 
         assert run_algorithm(votes, 2) == expected_result
