@@ -265,7 +265,10 @@ def _calculate_median(dict: dict) -> dict:
     for key, values in dict_values.items():
         if key not in median_values:
             median_values[key] = []
-        median = _find_median(values)
+        # sort the list of values
+        sorted_values = sorted(values) 
+        # call _find_median with the sorted list of values
+        median = _find_median(sorted_values) 
         median_values[key] = median
     
     return median_values
