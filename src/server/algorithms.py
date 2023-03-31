@@ -1,8 +1,6 @@
 """
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
-
-from numpy import empty
 from tree import Tree
 import logging 
 
@@ -16,19 +14,17 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def median_algorithm(leaves_values: dict, total_budget: float) -> dict:
+def median_algorithm(votes: dict) -> dict:
     """
     Calculate the median of the votes for the budget and return the budget according to the median votes.
 
     Args
     ----
-    leaves_values (dict): A dictionary where each key represents a user and the value is a list of budget votes 
-        (floats) for each leaf node (project).
-    total_budget (float): The total budget.
+    votes (dict): A nested dictionary representing the votes of all citizens for the budget.
             
     Returns
     -------
-    budget (dict): A nested dictionary representing the budget according to the median votes of all citizens.
+    final_budget (dict): A nested dictionary representing the budget according to the median votes of all citizens.
 
     References
     ----------
@@ -83,23 +79,21 @@ def median_algorithm(leaves_values: dict, total_budget: float) -> dict:
     True
     """
 
-    median_values = _calculate_median(leaves_values, total_budget, 1)
+    final_budget = run_algorithm(votes, 1)
     
-    return median_values
+    return final_budget
 
-def generalized_median_algorithm(leaves_values: dict, total_budget: float) -> dict:
+def generalized_median_algorithm(votes: dict) -> dict:
     """
     Calculate the budget according to the median algorithm of Hervé Moulin, using linear functions by using the given votes.
 
     Args
     ----
-    leaves_values (dict): A dictionary where each key represents a user and the value is a list of budget votes 
-    (floats) for each leaf node (project).
-    total_budget (float): The total budget.
+    votes (dict): A nested dictionary representing the votes of all citizens for the budget.
 
     Returns
     -------
-    budget (dict): A nested dictionary representing the budget according to the median algorithm of Hervé Moulin.
+    final_budget (dict): A nested dictionary representing the budget according to the median algorithm of Hervé Moulin.
 
     References
     ----------
@@ -175,9 +169,9 @@ def generalized_median_algorithm(leaves_values: dict, total_budget: float) -> di
     True
     """
 
-    median_values = _calculate_median(leaves_values, total_budget, 2)
+    final_budget = run_algorithm(votes, 2)
     
-    return median_values
+    return final_budget
 
 def run_algorithm(votes: dict, algorithm_number: int) -> dict:
     """
@@ -216,14 +210,14 @@ def run_algorithm(votes: dict, algorithm_number: int) -> dict:
 
     # choose the algorithm to run based on the input
     if algorithm_number == 1: # median_algorithm
-        algo_values = median_algorithm(leaves_values, total_budget)
+        median_values = _calculate_median(leaves_values, total_budget, 1)
     elif algorithm_number == 2: # generalized_median_algorithm
-        algo_values = generalized_median_algorithm(leaves_values, total_budget)
+        median_values = _calculate_median(leaves_values, total_budget, 2)
     else: # wrong input
         raise Exception("Invalid algorithm id!")
     
     # create the final result dictionary
-    result = _create_result(votes, algo_values)
+    result = _create_result(votes, median_values)
     
     # return the final result dictionary
     return result

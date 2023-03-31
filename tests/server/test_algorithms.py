@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../..')
-from src.server.algorithms import run_algorithm
+from src.server.algorithms import median_algorithm, generalized_median_algorithm
 import pytest
 
 class TestMedianAlgorithm:
@@ -27,7 +27,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 25, "Police": 20, "total": 45},
@@ -43,7 +43,7 @@ class TestMedianAlgorithm:
         # Test case 2: Testing the function with an empty dictionary.
         votes = {}
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {}
 
@@ -70,7 +70,7 @@ class TestMedianAlgorithm:
             },
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -96,7 +96,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -122,7 +122,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data != {
             "Department of Defense": {"Army": 2, "Police": 1, "total": 3},
@@ -166,13 +166,13 @@ class TestMedianAlgorithm:
             "total": 6
         }
 
-        assert run_algorithm(votes, 2) == expected_result
+        assert generalized_median_algorithm(votes) == expected_result
 
     def test_generalized_median_algorithm_with_empty_dictionary(self):
         # Test case 2: Testing the function with an empty dictionary.
         votes = {}
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data == {}
 
@@ -199,7 +199,7 @@ class TestMedianAlgorithm:
             },
         }
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -225,7 +225,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -251,7 +251,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data != {
             "Department of Defense": {"Army": 2, "Police": 1, "total": 3},
