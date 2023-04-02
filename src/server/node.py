@@ -2,13 +2,12 @@
 class Node:
     '''This class present node in the tree of subjects/projects'''
 
-    def __init__(self, id:int=None, name:str="", description:str="", parent:int=None, budget_amount:float=None, value=None) -> None:
-        self._id = id or None
-        self._name = name or None
-        self._value = value
-        self._description = description or None
-        self._parent = parent or None
-        self._allocated_budget_amount = budget_amount or None
+    def __init__(self, id:int=None, name:str="", description:str="", parent:int=None, budget_amount:float=None) -> None:
+        self._id = id
+        self._name = name
+        self._description = description
+        self._parent = parent
+        self._allocated_budget_amount = budget_amount
         self._children: list['Node'] = []
 
     def get_id(self) -> int:
@@ -146,16 +145,33 @@ class Node:
         """
         # print the name and value (if any) of the current node
         prefix = '└' if is_last else '├'
-        value_str = f': {node._value}' if node._value is not None else ''
+        value_str = f': {node._allocated_budget_amount}' if node._allocated_budget_amount is not None else ''
         print(' ' * level * 2 + prefix + '─ ' + node._name + value_str)
         # recursively print the children nodes
         children_count = len(node._children)
         for i, child in enumerate(node._children):
             is_last_child = i == children_count - 1
             Node._print_node(child, level + 1, is_last_child)
-            
+    
+    
+    def to_dict(self):
+        children = []
+        for child in self.get_children():
+            children.append(child.to_dict())
+
+        node_dict = {
+            'id': self.get_id(),
+            'name': self.get_name(),
+            'description': self.get_description(),
+            'parent': self.get_parent_id(),
+            'allocated_budget_amount': self.get_allocated_budget_amount(),
+            'children': children,
+        }
+
+        return node_dict
+    
     def __str__(self):
-        return f'id: {self._id} | name: {self._name} | value: {self._value} | description: {self._description}\
+        return f'id: {self._id} | name: {self._name}  | description: {self._description}\
             parent: {self._parent} | allocated_budget_amount: {self._allocated_budget_amount} | children: {self._children}'
 
     

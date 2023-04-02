@@ -129,12 +129,12 @@ def voting_tree():
 
 @app.route('/peoples_budget/voting', methods=['GET'])
 def subjects_and_projects_tree():
-    
-    tree = Tree()
-    #TODO : object = take data from DB
-    json_tree = tree.to_json()
-    
-    return jsonify({"json_tree": "json_tree"})
+    database.handler.connect()
+    tree = database.handler.build_tree_from_current_budget()
+    dictionary = tree.to_dict()
+    json_tree = json.dumps(dictionary,ensure_ascii=False)
+        
+    return jsonify(json_tree)
 
 
 
