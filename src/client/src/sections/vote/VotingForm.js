@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,17 +8,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Row from './Row';
 import table from './Table';
+import PopCardSubmit from './PopCardSubmit';
 
 export default function VotingForm() {
-  const navigate = useNavigate();
-
   const [tableData, setTableData] = useState(table);
   const [totalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
+  const [display, setDisplay] = useState(true);
   const maxBudget = 100;
 
   const findPathById = (idToFind, data, path = []) => {
@@ -105,25 +103,12 @@ export default function VotingForm() {
     return { ...data, checked: true, children: newData };
   };
 
-  // const helperHandleCheck = (table, status) => {
-  //   return table.map((row) => {
-  //     if (row.children) {
-  //       return { ...row, checked: status, children: helperHandleCheck(row.children, status) };
-  //     }
-  //     return { ...row, checked: status };
-  //   });
-  // };
-
   const helperHandleCheck = (table, status) =>
     table.map((row) =>
       row.children
         ? { ...row, checked: status, children: helperHandleCheck(row.children, status) }
         : { ...row, checked: status }
     );
-
-  const handleSubmit = () => {
-    navigate('/peoples_budget/results', { replace: true });
-  };
 
   const recHandle = (data, path, updateTableData) => {
     if (path.length === 0) {
@@ -299,7 +284,7 @@ export default function VotingForm() {
 
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
-      <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
+      {display && <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow sx={{ fontWeight: 'bold' }}>
@@ -343,17 +328,9 @@ export default function VotingForm() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
-        <Button
-          id="voteSubmit"
-          variant="outlined"
-          sx={{ width: '300px', height: '60px', fontWeight: 'bold', fontSize: '25px' }}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </Box>
+      </TableContainer>}
+
+      <PopCardSubmit setDisplay={setDisplay}/>
     </Stack>
   );
 }
