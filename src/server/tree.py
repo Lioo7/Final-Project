@@ -154,7 +154,16 @@ class Tree:
     
     def _get_node_recursive(self, current_node:Node, target_node_id:int) -> Node:
         
-        return Node()
+        if target_node_id == current_node.get_id():
+            return current_node
+
+        else:
+            for child in current_node.get_children():
+                found_node = self._get_node_recursive(child, target_node_id)
+                if found_node:
+                    return found_node
+                
+        return None
     
     
     def get_budget_amount(self) -> float:
@@ -220,7 +229,18 @@ class Tree:
             return True
         
         return False
+    
+    
+    def node_exists(self,node_id:int) -> bool:
+        if self.get_node(node_id) is None:
+            return False
         
+        return True
+    
+    def to_dict(self) -> dict:
+        self._root.to_dict()
+    
+    
     @staticmethod
     def from_dict(data):
         """

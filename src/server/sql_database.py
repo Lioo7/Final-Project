@@ -250,4 +250,33 @@ class SQL_database(Abstract_Database):
         
         return False
     
+    def build_tree_from_mysql_table(self) -> Tree:
+       
+        # Get root
+        query = "SELECT * FROM CURRENT_BUDGET WHERE parent_id IS NULL"
+        self.cursor.execute(query)
+        root_result = self.cursor.fetchone()
+        root = Node(id=root_result[0], name=root_result[1], description=root_result[2], parent=root_result[3], budget_amount=root_result[4])
+        
+        # Create tree
+        tree = Tree(root)
+
+        # Get all rows that show non-root nodes
+        query = "SELECT * FROM CURRENT_BUDGET WHERE parent_id IS NOT NULL"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+        
+        # Build the tree
+        for row in rows:        
+            child_node = Node(id=row[0], name=row[1], description=row[2], parent=row[3], budget_amount=row[4])
+            tree.add_node(child_node.get_parent_id(),child_node)
+
+
+        return tree
+
+
+
+
+
+
     
