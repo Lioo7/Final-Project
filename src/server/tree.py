@@ -238,7 +238,7 @@ class Tree:
         return True
     
     def to_dict(self) -> dict:
-        self._root.to_dict()
+        return self._root.to_dict()
     
     
     @staticmethod

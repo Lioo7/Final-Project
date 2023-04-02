@@ -4,6 +4,8 @@ import pandas
 from tree import Tree
 from node import Node
 from sql_database import SQL_database
+import csv
+import json
 
 class SQL_init():
     
@@ -122,33 +124,52 @@ class SQL_init():
         return tree
     
     
+    @staticmethod
+    def write_tree_to_csv(tree, filename):
+        with open(filename, mode='w', newline='',encoding='utf-8') as file:
+            writer = csv.writer(file)
+            writer.writerow(['node_id', 'name', 'description', 'parent_id', 'budget_amount'])
+            SQL_init.write_node_to_csv(tree.get_root(), writer)
+
+    
+    @staticmethod
+    def write_node_to_csv(node, writer):
+        writer.writerow([node.get_id(), node.get_name(), node.get_description(), node.get_parent_id()
+                         , node.get_allocated_budget_amount()])
+        for child in node.get_children():
+            SQL_init.write_node_to_csv(child, writer)
     
 if __name__ == "__main__":
     # Connect server
-    # db = SQL_init.connect_database()
-    # cursor = db.cursor()
-    # # Create and build database
-    # SQL_init.create_database(cursor,SQL_init.data_base_name)
-    # SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''node_id INT PRIMARY KEY, name VARCHAR(1000),
-    #                       description VARCHAR(1000), parent_id INT, budget_amount VARCHAR(255)''')
-    # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
-    #                       budget_amount VARCHAR(255)''')
-    # SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
-    #                       last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
-    #                       gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
+    db = SQL_init.connect_database()
+    cursor = db.cursor()
+    # Create and build database
+    SQL_init.create_database(cursor,SQL_init.data_base_name)
+    SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''node_id INT PRIMARY KEY, name VARCHAR(1000),
+                          description VARCHAR(1000), parent_id INT, budget_amount VARCHAR(255)''')
+    SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
+                          budget_amount VARCHAR(255)''')
+    SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
+                          last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
+                          gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
+        
+    tree = SQL_init.build_tree_from_csv()
+    node = tree.get_root()
     
-    # #SQL_init.clean_database(cursor)
+    SQL_init.insert_to_current_budget_table(cursor,tree.get_root())
+    db.commit()
     
-    # tree = SQL_init.build_tree_from_csv()
-    # node = tree.get_root()
-    
-    # SQL_init.insert_to_current_budget_table(cursor,tree.get_root())
-    # db.commit()
+    #SQL_init.clean_database(cursor)
     
     
-    sql_handler = SQL_database(SQL_database.create_config())
-    sql_handler.connect()
-    tree = sql_handler.build_tree_from_mysql_table()
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # tree = sql_handler.build_tree_from_current_budget()
+    # #tree.print_tree()
+    # d = tree.to_dict()
+    # json_obj = json.dumps(d,ensure_ascii=False)
+    # print(json_obj)
     
+
     
         

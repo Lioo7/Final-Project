@@ -52,5 +52,9 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def insert_new_user(new_user) -> bool:
+    def insert_new_user(self,new_user) -> bool:
+        pass
+    
+    @abstractmethod
+    def build_tree_from_current_budget(self,) -> Tree:
         pass
