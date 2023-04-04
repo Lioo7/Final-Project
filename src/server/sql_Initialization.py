@@ -30,8 +30,6 @@ class SQL_init():
 
     @staticmethod
     def create_table(mycursor, table_name:str, table_columns:str) -> None:
-       # mycursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ( {table_columns} )")
-       # mycursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({table_columns})")
         mycursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({table_columns})")
 
     @staticmethod
@@ -44,6 +42,7 @@ class SQL_init():
         SQL_init.delete_table(cursor,'CURRENT_BUDGET')
         SQL_init.delete_table(cursor,'USERS_VOTES')
         SQL_init.delete_table(cursor,'USERS')
+        SQL_init.delete_table(cursor,'CURRENT_BUDGET_TRYYYY')
 
     @staticmethod
     def insert_to_current_budget_table(mycursor, node:Node) -> None:
@@ -53,6 +52,21 @@ class SQL_init():
                         node.get_parent_id(), node.get_allocated_budget_amount()))
         for child in node.get_children():
             SQL_init.insert_to_current_budget_table(mycursor,child)
+    
+    @staticmethod
+    def load_and_insert_to_current_budget_table(cursor,db) -> None:
+        path = '../../dataset/'
+        df = pandas.read_csv( path + 'national_budget.csv',encoding='utf-8')
+        num_rows = len(df)
+        for i in range(1,num_rows):
+            row = df.iloc[i, :]
+            cursor.execute('''INSERT INTO CURRENT_BUDGET_TRYYYY (kod_one, name_one,
+                            kod_two, name_two, kod_three, name_three, kod_four, name_four, kod_five, name_five,
+                            kod_six, name_six, takziv)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''',
+                        (int(row[0]), row[1], int(row[2]), row[3], int(row[4]), row[5], int(row[6]), row[7],
+                            int(row[8]), row[9], int(row[10]),row[11], str(row[12])))
+        db.commit()
     
     @staticmethod
     def build_tree_from_csv()->Tree:
@@ -66,62 +80,69 @@ class SQL_init():
             row = df.iloc[i, :]
             row_list = row.tolist()
             node_id = int(row_list[0])
-            if not tree.node_exists(int(node_id)):
-                node_name = row_list[1]
+            node_name = row_list[1]
+            if not tree.node_exists(int(node_id),node_name):
                 node = Node(id=int(node_id),name=node_name,parent=0)
-                tree.add_node(0,node)
+                tree.add_node_by_id_and_name(0,"root",node)
         
         for i in range(1,num_rows):
             row = df.iloc[i, :]
             row_list = row.tolist()
             node_id = int(row_list[2])
-            if not tree.node_exists(int(node_id)):
-                node_name = row_list[3]
+            node_name = row_list[3]    
+            if not tree.node_exists(int(node_id),node_name):
                 node = Node(id=int(node_id),name=node_name,parent=int(row_list[0]))
                 parent_id = int(row_list[0])
-                tree.add_node(parent_id,node)
+                parent_name = row_list[1]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
         
         for i in range(1,num_rows):
             row = df.iloc[i, :]
             row_list = row.tolist()
             node_id = int(row_list[4])
-            if not tree.node_exists(int(node_id)):
-                node_name = row_list[5]
+            node_name = row_list[5]
+            if not tree.node_exists(int(node_id),node_name):
                 node = Node(id=int(node_id),name=node_name,parent=int(row_list[2]))
                 parent_id = int(row_list[2])
-                tree.add_node(parent_id,node)
+                parent_name = row_list[3]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
         
         for i in range(1,num_rows):
             row = df.iloc[i, :]
             row_list = row.tolist()
             node_id = int(row_list[6])
-            if not tree.node_exists(int(node_id)):
-                node_name = row_list[7]
+            node_name = row_list[7]
+            if not tree.node_exists(int(node_id),node_name):
                 node = Node(id=int(node_id),name=node_name,parent=int(row_list[4]))
                 parent_id = int(row_list[4])
-                tree.add_node(parent_id,node)
+                parent_name = row_list[5]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
         
         for i in range(1,num_rows):
             row = df.iloc[i, :]
             row_list = row.tolist()
             node_id = int(row_list[8])
-            if not tree.node_exists(int(node_id)):
-                node_name = row_list[9]
+            node_name = row_list[9]
+            if not tree.node_exists(int(node_id),node_name):
                 node = Node(id=int(node_id),name=node_name,parent=int(row_list[6]))
                 parent_id = int(row_list[6])
-                tree.add_node(parent_id,node)
+                parent_name = row_list[7]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
         
         for i in range(1,num_rows):
             row = df.iloc[i, :]
             row_list = row.tolist()
             node_id = int(row_list[10])
-            if not tree.node_exists(int(node_id)):
-                node_name = row_list[11]
-                node = Node(id=int(node_id),name=node_name,parent=int(row_list[8]))
+            node_name = row_list[11]
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=int(row_list[8]),budget_amount=float(row_list[12]))
                 parent_id = int(row_list[8])
-                tree.add_node(parent_id,node)
+                parent_name = row_list[9]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
                 
         return tree
+    
+    
     
     
     @staticmethod
@@ -143,33 +164,51 @@ if __name__ == "__main__":
     # Connect server
     db = SQL_init.connect_database()
     cursor = db.cursor()
+    
     # Create and build database
     SQL_init.create_database(cursor,SQL_init.data_base_name)
-    SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''node_id INT PRIMARY KEY, name VARCHAR(1000),
-                          description VARCHAR(1000), parent_id INT, budget_amount VARCHAR(255)''')
-    SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
-                          budget_amount VARCHAR(255)''')
+    SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''kod_one INT, name_one VARCHAR(1000),
+                            kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
+                            kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
+                            kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)''')
     SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
-                          last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
-                          gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
-        
-    tree = SQL_init.build_tree_from_csv()
-    node = tree.get_root()
-    
-    SQL_init.insert_to_current_budget_table(cursor,tree.get_root())
-    db.commit()
-    
-    #SQL_init.clean_database(cursor)
+                            last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
+                            gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
+    SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
+                            budget_amount VARCHAR(255)''')
+
+    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    SQL_init.clean_database(cursor)
     
     
+    
+    
+        # node_id = int(row_list[0])
+        # node_name = row_list[1]
+        # if not tree.node_exists(int(node_id),node_name):
+        #     node = Node(id=int(node_id),name=node_name,parent=0)
+        #     tree.add_node_by_id_and_name(0,"root",node)
+    
+    ############################################################################################
+    # tree = SQL_init.build_tree_from_csv()
+    # node = tree.get_root()
+    
+    # SQL_init.insert_to_current_budget_table(cursor,tree.get_root())
+    # db.commit()
+    
+    
+    ###################################################################################################
+    # App (server) example:
     # sql_handler = SQL_database(SQL_database.create_config())
     # sql_handler.connect()
-    # tree = sql_handler.build_tree_from_current_budget()
-    # #tree.print_tree()
-    # d = tree.to_dict()
-    # json_obj = json.dumps(d,ensure_ascii=False)
-    # print(json_obj)
+    # sql_handler.cursor.execute("SELECT * FROM CURRENT_BUDGET WHERE node_id=7")
+    # print(sql_handler.cursor.fetchall())
+    #tree = sql_handler.build_tree_from_current_budget()
+    #tree.print_tree()
     
-
+    # dictionary = tree.to_dict()
+    # json_tree = json.dumps(dictionary,ensure_ascii=False)
+    # print(json_tree)
+    
     
         

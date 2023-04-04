@@ -67,6 +67,35 @@ class Tree:
         
         return True
     
+    def add_node_by_id_and_name(self, parent_id:int,parent_name:str, new_node:Node) -> bool:
+        '''
+        Add a new node to the tree with the specified parent id and name.
+        '''
+       
+        if new_node is None:
+            print("Error!, New Node that inserted is None.")
+            return False
+        
+        if parent_id is None:
+            print("Error!, Parent id that inserted is None.")
+            return False
+        
+        if parent_name is None or "":
+            print("Error!, Parent id that inserted is None.")
+            return False
+            
+        else:
+            parent_node = self.get_node_by_name_and_id(parent_id,parent_name)
+            
+            if parent_node is None:
+                print(f"Error!, There is no Node with id ''{parent_id}'' and name ''{parent_name}'' in the tree")
+                return False
+            
+        parent_node.add_child(new_node)
+        self._node_amount += 1
+        
+        return True
+    
         
         
 
@@ -126,6 +155,28 @@ class Tree:
         '''
         return self._node_amount
     
+    def get_node_by_name_and_id(self, node_id:int, node_name:str):
+        if self._root is None:
+            print("Error!, Empty tree")
+            return None
+
+        current_node = self._root
+        return self._get_node_recursive_by_name_and_id(current_node, node_id,node_name)
+    
+    
+    def _get_node_recursive_by_name_and_id(self, current_node:Node, target_node_id:int,target_node_name:str) -> Node:
+        if target_node_id == current_node.get_id() and target_node_name == current_node.get_name():
+            return current_node
+        
+        else:
+            for child in current_node.get_children():
+                found_node = self._get_node_recursive_by_name_and_id(child, target_node_id,target_node_name)
+                if found_node:
+                    return found_node
+                
+        return None
+    
+        
     def get_node(self,node_id:int) -> Node:
         '''
         Returns the node object with the given id,
@@ -237,6 +288,13 @@ class Tree:
         
         return True
     
+    def node_exists(self,node_id:int,node_name:str) -> bool:
+        if self.get_node_by_name_and_id(node_id,node_name) is None:
+            return False
+        
+        return True
+    
+    
     def to_dict(self) -> dict:
         return self._root.to_dict()
     
@@ -252,6 +310,7 @@ class Tree:
         Returns:
             Tree: A tree object with the root node being the top-level dictionary key.
         """
+        
         def _build_tree(data) -> Node:
             """
             Recursive function to build a tree from a nested dictionary.
@@ -278,6 +337,7 @@ class Tree:
         # create a tree object from the root node
         root_node = _build_tree(data)
         return Tree(root_node)
+
 
     def print_tree(self) -> None:
         """
