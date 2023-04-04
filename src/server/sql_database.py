@@ -250,104 +250,6 @@ class SQL_database(Abstract_Database):
         
         return False
     
-    # def build_tree_from_mysql_table(self) -> Tree:
-       
-    #     # Get root
-    #     query = "SELECT * FROM CURRENT_BUDGET WHERE parent_id IS NULL"
-    #     self.cursor.execute(query)
-    #     root_result = self.cursor.fetchone()
-    #     root = Node(id=root_result[0], name=root_result[1], description=root_result[2], parent=root_result[3], budget_amount=root_result[4])
-        
-    #     # Create tree
-    #     tree = Tree(root)
-
-    #     # Get all rows that show non-root nodes
-    #     query = "SELECT * FROM CURRENT_BUDGET WHERE parent_id IS NOT NULL"
-    #     self.cursor.execute(query)
-    #     rows = self.cursor.fetchall()
-        
-    #     # Build the tree
-    #     for row in rows:        
-    #         child_node = Node(id=row[0], name=row[1], description=row[2], parent=row[3], budget_amount=row[4])
-    #         tree.add_node(child_node.get_parent_id(),child_node)
-
-
-    #     return tree
-    # def build_tree_from_mysql_table(self) -> Tree:
-    #     # Retrieve all rows from the table
-    #     query = "SELECT * FROM CURRENT_BUDGET"
-    #     self.cursor.execute(query)
-    #     rows = self.cursor.fetchall()
-        
-    #     # Create a dictionary to store nodes by id
-    #     nodes_dict = {}
-        
-    #     # Create the root node
-    #     root = None
-        
-    #     # Loop over the rows and create nodes for each row
-    #     for row in rows:
-    #         node_id = row[0]
-    #         name = row[1]
-    #         description = row[2]
-    #         parent_id = row[3]
-    #         budget_amount = row[4]
-            
-    #         # Create a node for the row
-    #         node = Node(id=node_id, name=name, description=description, budget_amount=budget_amount)
-            
-    #         # Store the node in the dictionary by id
-    #         nodes_dict[node_id] = node
-            
-    #         # If this is the root node, set it as such
-    #         if parent_id is None:
-    #             root = node
-    #         else:
-    #             # Get the parent node from the dictionary
-    #             parent:Node = nodes_dict.get(parent_id)
-                
-    #             # Add the current node as a child of the parent node
-    #             parent.add_child(node)
-        
-    #     # Create and return a Tree object with the root node
-    #     return Tree(root)
-    def build_tree_from_current_budget(self) -> Tree:
-        
-        self.cursor.execute("SELECT * FROM CURRENT_BUDGET")
-        rows = self.cursor.fetchall()
-
-        node_map = {}
-        for row in rows:
-            node_id = row[0]
-            name = row[1]
-            description = row[2]
-            parent_id = row[3]
-            budget_amount = row[4]
-
-            # Create a new node for the current row
-            node = Node(node_id, name, description, budget_amount)
-
-            # Add the new node to the node map
-            node_map[node_id] = node
-
-            # If the current node has a parent, add it as a child to the parent
-            if parent_id is not None:
-                parent = node_map.get(parent_id)
-                if parent is not None:
-                    parent.add_child(node)
-                else:
-                    parent = self.find_node_by_id(parent_id, node_map)
-                    parent.add_child(node)
-
-        # Find the root node (the node with no parent)
-        root = None
-        for node_id, node in node_map.items():
-            if node.get_parent_id() is None:
-                root = node
-                break
-
-        # Return the tree
-        return Tree(root)
     
     def find_node_by_id(self, node_id: int,node_map:dict) -> Node:
         if node_id in node_map:
@@ -366,9 +268,67 @@ class SQL_database(Abstract_Database):
                 return node
             else:
                 return None
-
-
-
-
-
+    
+    
+    def build_tree_from_current_budget(self) -> Tree:
+        self.cursor.execute("SELECT * FROM CURRENT_BUDGET")
+        rows = self.cursor.fetchall()
+    
+        root = Node(id=0,name="root",description="I am root", parent=None, budget_amount=0)
+        tree = Tree(root)
+        num_rows = self.cursor.rowcount
+        
+        for row in rows:
+            node_id = int(row[0])
+            node_name = row[1]
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=0)
+                tree.add_node_by_id_and_name(0,"root",node)
+        
+        for row in rows:
+            node_id = int(row[2])
+            node_name = row[3]    
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=int(row[0]))
+                parent_id = int(row[0])
+                parent_name = row[1]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
+        
+        for row in rows:
+            node_id = int(row[4])
+            node_name = row[5]
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=int(row[2]))
+                parent_id = int(row[2])
+                parent_name = row[3]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
+        
+        for row in rows:
+            node_id = int(row[6])
+            node_name = row[7]
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=int(row[4]))
+                parent_id = int(row[4])
+                parent_name = row[5]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
+        
+        for row in rows:
+            node_id = int(row[8])
+            node_name = row[9]
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=int(row[6]))
+                parent_id = int(row[6])
+                parent_name = row[7]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
+        
+        for row in rows:
+            node_id = int(row[10])
+            node_name = row[11]
+            if not tree.node_exists(int(node_id),node_name):
+                node = Node(id=int(node_id),name=node_name,parent=int(row[8]),budget_amount=float(row[12]))
+                parent_id = int(row[8])
+                parent_name = row[9]
+                tree.add_node_by_id_and_name(parent_id,parent_name,node)
+                
+        return tree
     
