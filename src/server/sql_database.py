@@ -332,3 +332,27 @@ class SQL_database(Abstract_Database):
                 
         return tree
     
+    def insert_user_voting(self) -> bool:
+        return True
+    
+    def update_voting_option(self,user_id:str) -> bool:
+        update_query = "UPDATE USERS SET allowed_to_vote = %s WHERE user_id = %s"
+        try:
+            self.cursor.execute(update_query, ("0", user_id))
+        except:
+            return False
+        
+        return True
+    
+    def check_voting_option(self,user_id:str) -> str:
+        check_query = "SELECT allowed_to_vote FROM USERS WHERE user_id = %s"
+        try:
+            self.cursor.execute(check_query, user_id)
+        except:
+            return "Error!"
+        
+        result = self.cursor.fetchall()
+        if result == "0":
+            return "false"
+        
+        return "true"

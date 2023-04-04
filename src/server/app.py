@@ -2,6 +2,7 @@ from flask import Flask ,request, jsonify
 from waitress import serve
 from flask_cors import CORS
 from tree import Tree
+from node import Node
 from algorithms import median_algorithm , generalized_median_algorithm
 import json
 from data_handler import data_handler
@@ -114,17 +115,33 @@ def algorithms_results():
 @app.route('/peoples_budget/voting', methods=['POST'])
 def voting_tree():
     try:
-        tree = Tree()
-        tree.load_tree_from_dict(request.json)
+        database.handler.connect()
+        check_result = database.handler.check_voting_option(user_id="123")
+            
+        if check_result == "false":
+            return jsonify({'status': 'Is not allowed to vote'})
+            
+        elif check_result == "Error!":
+            raise Exception("Error!, check_voting_option execute query")
+            
+        json_string = request.json
+        dictionary = json.loads(json_string)
+        root = Node(0,"root","I am root",None,0)
+        tree = Tree(root)
+        tree.load_tree_from_dict(dictionary)
         
-        # TODO: save tree in DB
+        # Save tree in DB
+        result = database.handler.insert_user_voting()
+        if not result:
+            raise Exception("Error!, voting does not saved")
+        
+        else:
+            database.handler.update_voting_option(user_id="123")
 
     except: 
-        print("error!")
         return jsonify({'status': 'failed'})
-    # Check validation with database
   
-    return jsonify({'status': 'succeed'})
+    return jsonify({'status': 'Succeeded'})
 
 
 @app.route('/peoples_budget/voting', methods=['GET'])
