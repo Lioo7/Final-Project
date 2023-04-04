@@ -72,14 +72,14 @@ export default function SignUpForm() {
     try {
       const response = await fetch(url, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({firstName, lastName, id, birthDate, gender, email, password }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, id, birthDate, gender, email, password }),
       });
 
       // console.log({ firstName }, { lastName }, { id }, { birthDate }, { gender }, { email }, { password });
       const responseData = await response.json();
       console.log(responseData);
-      if (responseData.status === 'succeed') {
+      if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/home', { replace: true });
       } else {
         throw new Error('Error!, User was not successfully registered');

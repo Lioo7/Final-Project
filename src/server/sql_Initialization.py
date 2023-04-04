@@ -60,7 +60,7 @@ class SQL_init():
         num_rows = len(df)
         for i in range(1,num_rows):
             row = df.iloc[i, :]
-            cursor.execute('''INSERT INTO CURRENT_BUDGET_TRYYYY (kod_one, name_one,
+            cursor.execute('''INSERT INTO CURRENT_BUDGET (kod_one, name_one,
                             kod_two, name_two, kod_three, name_three, kod_four, name_four, kod_five, name_five,
                             kod_six, name_six, takziv)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''',
@@ -162,53 +162,36 @@ class SQL_init():
     
 if __name__ == "__main__":
     # Connect server
-    db = SQL_init.connect_database()
-    cursor = db.cursor()
+    # db = SQL_init.connect_database()
+    # cursor = db.cursor()
     
-    # Create and build database
-    SQL_init.create_database(cursor,SQL_init.data_base_name)
-    SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''kod_one INT, name_one VARCHAR(1000),
-                            kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
-                            kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
-                            kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)''')
-    SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
-                            last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
-                            gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
-    SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
-                            budget_amount VARCHAR(255)''')
+    # # Create and build database
+    # SQL_init.create_database(cursor,SQL_init.data_base_name)
+    # SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''kod_one INT, name_one VARCHAR(1000),
+    #                         kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
+    #                         kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
+    #                         kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)''')
+    # SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
+    #                         last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
+    #                         gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
+    # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
+    #                         budget_amount VARCHAR(255)''')
 
-    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
-    SQL_init.clean_database(cursor)
+    # SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    #SQL_init.clean_database(cursor)
     
     
     
-    
-        # node_id = int(row_list[0])
-        # node_name = row_list[1]
-        # if not tree.node_exists(int(node_id),node_name):
-        #     node = Node(id=int(node_id),name=node_name,parent=0)
-        #     tree.add_node_by_id_and_name(0,"root",node)
-    
-    ############################################################################################
-    # tree = SQL_init.build_tree_from_csv()
-    # node = tree.get_root()
-    
-    # SQL_init.insert_to_current_budget_table(cursor,tree.get_root())
-    # db.commit()
-    
-    
-    ###################################################################################################
     # App (server) example:
-    # sql_handler = SQL_database(SQL_database.create_config())
-    # sql_handler.connect()
-    # sql_handler.cursor.execute("SELECT * FROM CURRENT_BUDGET WHERE node_id=7")
-    # print(sql_handler.cursor.fetchall())
-    #tree = sql_handler.build_tree_from_current_budget()
+    sql_handler = SQL_database(SQL_database.create_config())
+    sql_handler.connect()
+    tree = sql_handler.build_tree_from_current_budget()
     #tree.print_tree()
     
-    # dictionary = tree.to_dict()
-    # json_tree = json.dumps(dictionary,ensure_ascii=False)
-    # print(json_tree)
+    dictionary = tree.to_dict()
+    #print(dictionary)
+    json_tree = json.dumps(dictionary,ensure_ascii=False)
+    print(json_tree)
     
     
         

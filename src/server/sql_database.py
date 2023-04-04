@@ -269,8 +269,9 @@ class SQL_database(Abstract_Database):
             else:
                 return None
     
-    def build_tree_from_current_budget_table(self) -> Tree:
-        self.cursor.execute("SELECT * FROM CURRENT_BUDGET_TRYYYY")
+    
+    def build_tree_from_current_budget(self) -> Tree:
+        self.cursor.execute("SELECT * FROM CURRENT_BUDGET")
         rows = self.cursor.fetchall()
     
         root = Node(id=0,name="root",description="I am root", parent=None, budget_amount=0)

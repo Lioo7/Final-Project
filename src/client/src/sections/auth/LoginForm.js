@@ -40,7 +40,7 @@ export default function LoginForm() {
 
       const responseData = await response.json();
 
-      if (responseData.status === 'succeed') {
+      if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/home', { replace: true });
       } else {
         throw new Error('User does not exist. Please register first.');

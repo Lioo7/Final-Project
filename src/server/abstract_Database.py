@@ -56,5 +56,5 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def build_tree_from_current_budget(self,) -> Tree:
+    def build_tree_from_current_budget(self) -> Tree:
         pass
