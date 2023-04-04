@@ -42,7 +42,6 @@ class SQL_init():
         SQL_init.delete_table(cursor,'CURRENT_BUDGET')
         SQL_init.delete_table(cursor,'USERS_VOTES')
         SQL_init.delete_table(cursor,'USERS')
-        SQL_init.delete_table(cursor,'CURRENT_BUDGET_TRYYYY')
 
     @staticmethod
     def insert_to_current_budget_table(mycursor, node:Node) -> None:
@@ -162,36 +161,35 @@ class SQL_init():
     
 if __name__ == "__main__":
     # Connect server
-    # db = SQL_init.connect_database()
-    # cursor = db.cursor()
+    db = SQL_init.connect_database()
+    cursor = db.cursor()
     
-    # # Create and build database
-    # SQL_init.create_database(cursor,SQL_init.data_base_name)
-    # SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''kod_one INT, name_one VARCHAR(1000),
-    #                         kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
-    #                         kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
-    #                         kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)''')
-    # SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
-    #                         last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
-    #                         gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
-    # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
-    #                         budget_amount VARCHAR(255)''')
+    # Create and build database
+    SQL_init.create_database(cursor,SQL_init.data_base_name)
+    SQL_init.create_table(cursor, 'CURRENT_BUDGET', '''kod_one INT, name_one VARCHAR(1000),
+                            kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
+                            kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
+                            kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)''')
+    SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
+                            last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
+                            gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
+    SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
+                            budget_amount VARCHAR(255)''')
 
-    # SQL_init.load_and_insert_to_current_budget_table(cursor,db)
-    #SQL_init.clean_database(cursor)
+    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    
+    # Clean
+    SQL_init.clean_database(cursor)
     
     
     
-    # App (server) example:
-    sql_handler = SQL_database(SQL_database.create_config())
-    sql_handler.connect()
-    tree = sql_handler.build_tree_from_current_budget()
-    #tree.print_tree()
+    ###### App (server) example:
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # tree = sql_handler.build_tree_from_current_budget()
+    # tree.print_tree()
     
-    dictionary = tree.to_dict()
-    #print(dictionary)
-    json_tree = json.dumps(dictionary,ensure_ascii=False)
-    print(json_tree)
-    
-    
-        
+    # dictionary = tree.to_dict()
+    # print(dictionary)
+    # json_tree = json.dumps(dictionary,ensure_ascii=False)
+    # print(json_tree)
