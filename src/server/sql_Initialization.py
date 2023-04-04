@@ -173,6 +173,8 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
                             last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                             gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
+    
+    # TODO: Change USERS_VOTES column to : user_id, node_name, node_name, node_name ... budget_amount
     SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
                             budget_amount VARCHAR(255)''')
 
