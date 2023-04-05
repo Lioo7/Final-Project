@@ -2,6 +2,7 @@ from flask import Flask ,request, jsonify
 from waitress import serve
 from flask_cors import CORS
 from tree import Tree
+from node import Node
 from algorithms import median_algorithm , generalized_median_algorithm
 import json
 from data_handler import data_handler
@@ -98,13 +99,11 @@ def dashboard():
 @app.route('/peoples_budget/results', methods=['GET'])
 def algorithms_results():
     # TODO: select from DB the input voting
-    median_tree = Tree()
-    median_tree.load_from_db()
-    median_algorithm_result = median_algorithm(median_tree.to_dict())
+    database.handler.connect()
+    dictionary = database.handler.load_user_votes() #TODO: implement load_user_votes() function in sql_database class
     
-    generalized_median_tree = Tree()
-    generalized_median_tree.load_from_db()
-    generalized_median_result = generalized_median_algorithm(generalized_median_tree.to_dict())
+    median_algorithm_result:dict = median_algorithm(dictionary)    
+    generalized_median_result:dict = generalized_median_algorithm(dictionary)
     
     return jsonify({'median_algorithm':json.dump(median_algorithm_result) ,
                     'generalized_median_algorithm': json.dump(generalized_median_result)})
@@ -114,23 +113,40 @@ def algorithms_results():
 @app.route('/peoples_budget/voting', methods=['POST'])
 def voting_tree():
     try:
-        tree = Tree()
-        tree.load_tree_from_dict(request.json)
+        database.handler.connect()
+        check_result = database.handler.check_voting_option(user_id="123")
+            
+        if check_result == "false":
+            return jsonify({'status': 'Is not allowed to vote'})
+            
+        elif check_result == "Error!":
+            raise Exception("Error!, check_voting_option execute query")
+            
+        json_string = request.json
+        dictionary = json.loads(json_string)
+        root = Node(0,"root","I am root",None,0)
+        tree = Tree(root)
+        tree.load_tree_from_dict(dictionary)
         
-        # TODO: save tree in DB
+        # Save tree in DB
+        result = database.handler.insert_user_voting() # TODO : implement insert_user_voting() function in sql_database class
+        if not result:
+            raise Exception("Error!, voting does not saved")
+        
+        else:
+            database.handler.update_voting_option(user_id="123")
 
     except: 
-        print("error!")
         return jsonify({'status': 'failed'})
-    # Check validation with database
   
-    return jsonify({'status': 'succeed'})
+    return jsonify({'status': 'Succeeded'})
 
 
 @app.route('/peoples_budget/voting', methods=['GET'])
 def subjects_and_projects_tree():
     database.handler.connect()
     tree = database.handler.build_tree_from_current_budget()
+    # TODO: tree.calculate_totals_something() #TODO: implement calculate_totals_something in Tree class
     dictionary = tree.to_dict()
     json_tree = json.dumps(dictionary,ensure_ascii=False)
         

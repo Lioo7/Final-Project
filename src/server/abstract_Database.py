@@ -58,3 +58,19 @@ class Abstract_Database(ABC):
     @abstractmethod
     def build_tree_from_current_budget(self) -> Tree:
         pass
+    
+    @abstractmethod
+    def insert_user_voting(self) -> bool:
+        pass
+    
+    @abstractmethod
+    def update_voting_option(self, user_id:str) -> bool:
+        pass
+    
+    @abstractmethod
+    def check_voting_option(self, user_id:str) -> bool:
+        pass
+    
+    @abstractmethod
+    def load_user_votes() -> dict:
+        pass

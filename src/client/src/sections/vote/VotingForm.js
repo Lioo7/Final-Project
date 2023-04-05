@@ -19,6 +19,26 @@ export default function VotingForm() {
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
   const maxBudget = 100;
+  const url = 'http://localhost:5000/peoples_budget/voting';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const information = await response.json();
+        console.log(information);
+        // setData(information);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const findPathById = (idToFind, data, path = []) => {
     for (let i = 0; i < data.length; i += 1) {
