@@ -70,7 +70,7 @@ export default function Row(props) {
 
   return (
     <>
-      <TableRow key={row.id} sx={{backgroundColor: row.checked ? '#F4F6F8' : 'white'}}>
+      <TableRow key={row.id} sx={{ backgroundColor: row.checked ? '#F4F6F8' : 'white' }}>
         <TableCell align="center">
           <IconButton
             id={`iconTree${row.id}`}
@@ -94,10 +94,10 @@ export default function Row(props) {
             // }}
           />
         </TableCell>
-        <TableCell align="center" component="th" scope="row" >
+        <TableCell align="center" component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="center" >
+        <TableCell align="center">
           <TextField
             id={`budgetText${row.id}`}
             type="number"
@@ -108,7 +108,7 @@ export default function Row(props) {
             onChange={handleChangeText}
           />
         </TableCell>
-        <TableCell align="center" >
+        <TableCell align="center">
           {' '}
           <Slider
             id={`slider${row.id}`}
@@ -122,7 +122,7 @@ export default function Row(props) {
             sx={{ mt: 1.2 }}
           />
         </TableCell>
-        <TableCell align="center" > 
+        <TableCell align="center">
           {props.totalBudget === 0
             ? 0
             : Math.max(Math.min(((row.budget / props.totalBudget) * 100).toFixed(1), 100), 0)}
@@ -155,7 +155,7 @@ Row.propTypes = {
   row: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    budget: PropTypes.number.isRequired,
+    budget: PropTypes.string.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -178,4 +178,3 @@ Row.propTypes = {
     })
   ).isRequired,
 };
-  

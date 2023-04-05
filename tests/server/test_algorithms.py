@@ -1,10 +1,11 @@
 import sys
-sys.path.append('../..')
-from src.server.algorithms import run_algorithm
+import random
 import pytest
+sys.path.append('../..')
+from src.server.algorithms import median_algorithm, generalized_median_algorithm
 
 class TestMedianAlgorithm:
-    def test_median_algorithm_with_two_users(self):
+    def test_median_algorithm_with_two_users(self) -> None:
         # Test case 1: Testing the output of the function with two users.
         votes = {
             "user1": {
@@ -24,10 +25,10 @@ class TestMedianAlgorithm:
                     "total": 80,
                 },
                 "total": 100
-            },
+            }
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 25, "Police": 20, "total": 45},
@@ -39,15 +40,15 @@ class TestMedianAlgorithm:
             "total": 100
         }
 
-    def test_median_algorithm_with_empty_dictionary(self):
+    def test_median_algorithm_with_empty_dictionary(self) -> None:
         # Test case 2: Testing the function with an empty dictionary.
         votes = {}
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {}
 
-    def test_median_algorithm_with_same_votes(self):
+    def test_median_algorithm_with_same_votes(self) -> None:
         # Test case 3: Testing the function with the same vote for each department.
         votes = {
             "user1": {
@@ -70,7 +71,7 @@ class TestMedianAlgorithm:
             },
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -82,7 +83,7 @@ class TestMedianAlgorithm:
             "total": 4
         }
 
-    def test_median_algorithm_one_user(self):
+    def test_median_algorithm_one_user(self) -> None:
         # Test case 4: Testing the function with only one user.
         votes = {
             "user1": {
@@ -96,7 +97,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -108,7 +109,7 @@ class TestMedianAlgorithm:
             "total": 4
         }
 
-    def test_median_algorithm_wrong_answer(self):
+    def test_median_algorithm_wrong_answer(self) -> None:
         # Test case 5: Testing the function for wrong answer.
         votes = {
             "user1": {
@@ -122,7 +123,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 1)
+        budget_data = median_algorithm(votes)
 
         assert budget_data != {
             "Department of Defense": {"Army": 2, "Police": 1, "total": 3},
@@ -133,51 +134,84 @@ class TestMedianAlgorithm:
             },
             "total": 8
         }
-
-
-# class TestGeneralizedMedianAlgorithm:
-    def test_generalized_median_algorithm_with_three_users(self):
-        # Test case 1: Testing the output of the function with three users.
+    
+    def test_median_algorithm_three_users(self) -> None:
+        # Test case 6: Testing the output of the function with three users.
         votes = {
             "user1": {
-                "Department of Defense": {"Army": 2, "total": 2},
+                "Department of Defense": {"Army": 6, "total": 6},
                 "Department of Education": {"Schools": 0, "total": 0},
                 "Department of Interior": {"immigration": 0, "total": 0},
-                "total": 2
+                "total": 6
             },
             "user2": {
                 "Department of Defense": {"Army": 0, "total": 0},
-                "Department of Education": {"Schools": 1, "total": 1},
-                "Department of Interior": {"immigration": 1, "total": 1},
-                "total": 2
+                "Department of Education": {"Schools": 3, "total": 3},
+                "Department of Interior": {"immigration": 3, "total": 3},
+                "total": 6
             },
             "user3": {
-                "Department of Defense": {"Army": 1, "total": 1},
-                "Department of Education": {"Schools": 1, "total": 1},
+                "Department of Defense": {"Army": 3, "total": 3},
+                "Department of Education": {"Schools": 3, "total": 3},
                 "Department of Interior": {"immigration": 0, "total": 0},
-                "total": 2
-            },
-            "total": 6
+                "total": 6
+            }
         }
 
         expected_result = {
-            "Department of Defense": {"Army": 0.8, "total": 0.8},
-            "Department of Education": {"Schools": 0.8, "total": 0.8},
-            "Department of Interior": {"immigration": 0.4, "total": 0.4},
-            "total": 2
+            "Department of Defense": {"Army": 3, "total": 3},
+            "Department of Education": {"Schools": 3, "total": 3},
+            "Department of Interior": {"immigration": 0, "total": 0},
+            "total": 6
         }
 
-        assert run_algorithm(votes, 2) == expected_result
+        assert median_algorithm(votes) == expected_result
 
-    def test_generalized_median_algorithm_with_empty_dictionary(self):
+
+class TestGeneralizedMedianAlgorithm:
+    EPSILON = 0.0001 # a threshold value
+    
+    def test_generalized_median_algorithm_with_three_users(self) -> None:
+        # Test case 1: Testing the output of the function with three users.
+        votes = {
+            "user1": {
+                "Department of Defense": {"Army": 6, "total": 6},
+                "Department of Education": {"Schools": 0, "total": 0},
+                "Department of Interior": {"immigration": 0, "total": 0},
+                "total": 6
+            },
+            "user2": {
+                "Department of Defense": {"Army": 0, "total": 0},
+                "Department of Education": {"Schools": 3, "total": 3},
+                "Department of Interior": {"immigration": 3, "total": 3},
+                "total": 6
+            },
+            "user3": {
+                "Department of Defense": {"Army": 3, "total": 3},
+                "Department of Education": {"Schools": 3, "total": 3},
+                "Department of Interior": {"immigration": 0, "total": 0},
+                "total": 6
+            }
+        }
+
+        expected_result = {
+            "Department of Defense": {"Army": 2.4, "total": 2.4},
+            "Department of Education": {"Schools": 2.4, "total": 2.4},
+            "Department of Interior": {"immigration": 1.2, "total": 1.2},
+            "total": 6
+        }
+
+        assert generalized_median_algorithm(votes) == expected_result
+
+    def test_generalized_median_algorithm_with_empty_dictionary(self) -> None:
         # Test case 2: Testing the function with an empty dictionary.
         votes = {}
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data == {}
 
-    def test_generalized_median_algorithm_with_same_votes(self):
+    def test_generalized_median_algorithm_with_same_votes(self) -> None:
         # Test case 3: Testing the function with the same vote for each department.
         votes = {
             "user1": {
@@ -200,7 +234,7 @@ class TestMedianAlgorithm:
             },
         }
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -212,7 +246,7 @@ class TestMedianAlgorithm:
             "total": 4
         }
 
-    def test_generalized_median_algorithm_one_user(self):
+    def test_generalized_median_algorithm_one_user(self) -> None:
         # Test case 4: Testing the function with only one user.
         votes = {
             "user1": {
@@ -226,7 +260,7 @@ class TestMedianAlgorithm:
             }
         }
 
-        budget_data = run_algorithm(votes, 2)
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data == {
             "Department of Defense": {"Army": 1, "Police": 1, "total": 2},
@@ -238,7 +272,7 @@ class TestMedianAlgorithm:
             "total": 4
         }
 
-    def test_generalized_median_algorithm_wrong_answer(self):
+    def test_generalized_median_algorithm_wrong_answer(self) -> None:
         # Test case 5: Testing the function for wrong answer.
         votes = {
             "user1": {
@@ -251,8 +285,8 @@ class TestMedianAlgorithm:
                 "total": 4
             }
         }
-
-        budget_data = run_algorithm(votes, 2)
+  
+        budget_data = generalized_median_algorithm(votes)
 
         assert budget_data != {
             "Department of Defense": {"Army": 2, "Police": 1, "total": 3},
@@ -263,3 +297,42 @@ class TestMedianAlgorithm:
             },
             "total": 8
         }
+        
+    def test_generalized_median_algorithm_random_votes(self) -> None:
+        # Test the function by generating random votes and ensuring that the total budget remains the same.
+
+        # set up the initial budget and departments
+        initial_budget = 100
+        departments = [
+            "Department of Defense",
+            "Department of Education",
+            "Department of Interior"
+        ]
+
+        # generate random votes for 10 users
+        num_users = 10
+        votes = {}
+        for i in range(num_users):
+            while True:
+                user_votes = {}
+                for dept in departments:
+                    dept_votes = {}
+                    for j in range(2):
+                        dept_votes[f"Option{j+1}"] = random.randint(0, initial_budget)
+                    dept_votes["total"] = sum(dept_votes.values())
+                    user_votes[dept] = dept_votes
+                user_votes["total"] = sum([v["total"] for v in user_votes.values()])
+                if user_votes["total"] == initial_budget:
+                    break
+            votes[f"user{i+1}"] = user_votes
+        
+        # compute the budget data using the algorithm
+        budget_data = generalized_median_algorithm(votes)
+
+        # check that the total budget remains the same
+        new_total_budget = budget_data["total"]
+        assert abs(new_total_budget - initial_budget) <= self.EPSILON, f"Total budget does not match original budget. Original: {initial_budget}, New: {new_total_budget}"
+
+
+
+
