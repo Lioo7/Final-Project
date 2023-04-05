@@ -356,3 +356,6 @@ class SQL_database(Abstract_Database):
             return "false"
         
         return "true"
+    
+    def load_user_votes() -> Tree:
+        pass

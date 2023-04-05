@@ -70,3 +70,7 @@ class Abstract_Database(ABC):
     @abstractmethod
     def check_voting_option(self, user_id:str) -> bool:
         pass
+    
+    @abstractmethod
+    def load_user_votes() -> dict:
+        pass

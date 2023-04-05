@@ -99,13 +99,11 @@ def dashboard():
 @app.route('/peoples_budget/results', methods=['GET'])
 def algorithms_results():
     # TODO: select from DB the input voting
-    median_tree = Tree()
-    median_tree.load_from_db()
-    median_algorithm_result = median_algorithm(median_tree.to_dict())
+    database.handler.connect()
+    dictionary = database.handler.load_user_votes() #TODO: implement load_user_votes() function in sql_database class
     
-    generalized_median_tree = Tree()
-    generalized_median_tree.load_from_db()
-    generalized_median_result = generalized_median_algorithm(generalized_median_tree.to_dict())
+    median_algorithm_result:dict = median_algorithm(dictionary)    
+    generalized_median_result:dict = generalized_median_algorithm(dictionary)
     
     return jsonify({'median_algorithm':json.dump(median_algorithm_result) ,
                     'generalized_median_algorithm': json.dump(generalized_median_result)})
@@ -131,7 +129,7 @@ def voting_tree():
         tree.load_tree_from_dict(dictionary)
         
         # Save tree in DB
-        result = database.handler.insert_user_voting()
+        result = database.handler.insert_user_voting() # TODO : implement insert_user_voting() function in sql_database class
         if not result:
             raise Exception("Error!, voting does not saved")
         
@@ -148,6 +146,7 @@ def voting_tree():
 def subjects_and_projects_tree():
     database.handler.connect()
     tree = database.handler.build_tree_from_current_budget()
+    # TODO: tree.calculate_totals_something() #TODO: implement calculate_totals_something in Tree class
     dictionary = tree.to_dict()
     json_tree = json.dumps(dictionary,ensure_ascii=False)
         
