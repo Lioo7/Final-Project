@@ -226,7 +226,7 @@ def run_algorithm(votes: dict, algorithm_number: int) -> dict:
 def _find_leaves(node) -> list:
     """"Returns all the leaves of the given node"""
     if not node._children:
-        return [node._value]
+        return [node._allocated_budget_amount]
     leaves = []
     for child in node._children:
         # ignore leaves named 'total'
