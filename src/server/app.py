@@ -127,9 +127,11 @@ def voting_tree():
         root = Node(0,"root","I am root",None,0)
         tree = Tree(root)
         tree.load_tree_from_dict(dictionary)
+        user_id = 'user_id' # have to get the user id from the client!
         
         # Save tree in DB
-        result = database.handler.insert_user_voting() # TODO : implement insert_user_voting() function in sql_database class
+        # TODO : have to get the user_id from the client and test the function
+        result = database.handler.store_vote(vote_data=dictionary, user_id=user_id) 
         if not result:
             raise Exception("Error!, voting does not saved")
         

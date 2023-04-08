@@ -2,6 +2,7 @@
 import mysql.connector
 from abstract_Database import Abstract_Database
 import os
+import json
 from tree import Tree
 from node import Node
 from datetime import datetime, timedelta, date
@@ -332,8 +333,34 @@ class SQL_database(Abstract_Database):
                 
         return tree
     
-    def insert_user_voting(self) -> bool:
-        return True
+    def store_vote(self, vote: dict, user_id: int) -> bool:
+        """
+        Stores a user's vote in the database.
+        
+        Args:
+            vote (dict): A dictionary object containing the user's vote.
+            user_id (int): The ID of the user who submitted the vote.
+            
+        Returns:
+            bool: True if the vote was successfully stored, False otherwise.
+        """
+        
+        # convert the JSON data to a string
+        vote_str = json.dumps(vote)
+        
+        # create the query to insert the vote data into the database
+        query = f'''INSERT INTO votes (user_id, vote_data) VALUES ({user_id}, '{vote_str}');'''
+        
+        try:
+            # execute the query and commit the changes to the database
+            self.cursor.execute(query)
+            self.db.commit()
+            return True
+        except mysql.connector.Error as err:
+            # if an error occurred, print the error message and return False
+            print(f"An error occurred while storing the vote: {err}")
+            return False
+
     
     def update_voting_option(self,user_id:str) -> bool:
         update_query = "UPDATE USERS SET allowed_to_vote = %s WHERE user_id = %s"
