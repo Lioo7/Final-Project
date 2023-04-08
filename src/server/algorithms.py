@@ -451,7 +451,7 @@ def _calculate_total(budget: dict) -> float:
     
     return total
 
-def _calculate_totals(d):
+def _calculate_totals(d) -> float:
     """
     Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "total".
     The function also adds "total" keys to the dictionary at each level, with the value being the sum of all the "total"
@@ -474,8 +474,8 @@ def _calculate_totals(d):
             if 'total' in v:
                 v['total'] = str(sub_total)
             total += sub_total
-        elif k == 'total' and v:
-            # If the current key is "total", add its value to the total sum.
+        elif k != 'total' and isinstance(v, str) and v.isdigit():
+            # If the current key is not "total", and the current value is a string of digits, add its integer value to the total sum.
             total += int(v)
     if 'total' in d:
         # If the current dictionary has a "total" key, update its value with the total sum.
@@ -483,7 +483,7 @@ def _calculate_totals(d):
     elif has_sublevels:
         # If the current dictionary doesn't have a "total" key but has sub-levels, add a "total" key with the total sum.
         d['total'] = str(total)
-    
+
     return total
 
 

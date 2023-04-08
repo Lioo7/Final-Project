@@ -400,5 +400,5 @@ class SQL_database(Abstract_Database):
         
         return "true"
     
-    def load_user_votes() -> Tree:
+    def load_user_votes(self) -> dict:
         pass
