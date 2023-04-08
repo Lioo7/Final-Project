@@ -159,6 +159,7 @@ class SQL_init():
             
     @staticmethod
     def create_users_votes_table(cursor) -> None:
+        # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
         SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
 
     

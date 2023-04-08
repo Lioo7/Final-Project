@@ -3,7 +3,7 @@ from waitress import serve
 from flask_cors import CORS
 from tree import Tree
 from node import Node
-from algorithms import median_algorithm , generalized_median_algorithm
+from algorithms import median_algorithm , generalized_median_algorithm, _calculate_totals
 import json
 from data_handler import data_handler
 from sql_database import SQL_database
@@ -148,8 +148,9 @@ def voting_tree():
 def subjects_and_projects_tree():
     database.handler.connect()
     tree = database.handler.build_tree_from_current_budget()
-    # TODO: tree.calculate_totals_something() #TODO: implement calculate_totals_something in Tree class
     dictionary = tree.to_dict()
+    # updates the 'total' values in the budget dictionary 
+    _calculate_totals(dictionary)
     json_tree = json.dumps(dictionary,ensure_ascii=False)
         
     return jsonify(json_tree)

@@ -331,7 +331,7 @@ class Tree:
                     node.add_child(child_node)
             else:
                 # create a leaf node for the value
-                node = Node(name='leaf', value=data)
+                node = Node(name='leaf', budget_amount=data)
             return node
 
         # create a tree object from the root node
