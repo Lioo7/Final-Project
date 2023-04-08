@@ -386,7 +386,7 @@ def _create_result(votes: dict, new_values: list[float]) -> dict:
     index[0] = 0
     
     result = _building_nested_dict(first_user_vote, new_values, index, result)
-    _calculate_totals(result)
+    _calculate_total(result)
     
     return result
 
@@ -423,7 +423,7 @@ def _building_nested_dict(votes: dict, new_values: list, index: list[float], res
     
     return nested_result
 
-def _calculate_totals(budget: dict) -> float:
+def _calculate_total(budget: dict) -> float:
     """
     A utility function that recursively calculates the total budget
     for each level of a nested dictionary and assigns it to the 'total' key.
@@ -440,7 +440,7 @@ def _calculate_totals(budget: dict) -> float:
     for key, value in budget.items():
         if isinstance(value, dict):
             # if the value is a dictionary, recursively calculate its total budget and assign it to the 'total' key
-            sub_dept_budget = _calculate_totals(value)
+            sub_dept_budget = _calculate_total(value)
             budget[key]['total'] = sub_dept_budget
             total += sub_dept_budget
         elif isinstance(value, (int, float)):
@@ -448,6 +448,41 @@ def _calculate_totals(budget: dict) -> float:
             total += value
     # assign the total budget to the 'total' key of the current level
     budget['total'] = total
+    
+    return total
+
+def _calculate_totals(d):
+    """
+    Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "total".
+    The function also adds "total" keys to the dictionary at each level, with the value being the sum of all the "total"
+    values of its sub-levels.
+
+    Args:
+    - d: a nested dictionary containing numerical values under the "total" key
+
+    Returns:
+    - The total value of the dictionary, as an integer.
+    """
+    total = 0
+    has_sublevels = False
+    for k, v in d.items():
+        if isinstance(v, dict):
+            # If the current value is a dictionary, recursively call the function and sum up its returned value.
+            has_sublevels = True
+            sub_total = _calculate_totals(v)
+            # If the current dictionary has a "total" key, update its value with the sum of its sub-levels.
+            if 'total' in v:
+                v['total'] = str(sub_total)
+            total += sub_total
+        elif k == 'total' and v:
+            # If the current key is "total", add its value to the total sum.
+            total += int(v)
+    if 'total' in d:
+        # If the current dictionary has a "total" key, update its value with the total sum.
+        d['total'] = str(total)
+    elif has_sublevels:
+        # If the current dictionary doesn't have a "total" key but has sub-levels, add a "total" key with the total sum.
+        d['total'] = str(total)
     
     return total
 
