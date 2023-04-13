@@ -9,12 +9,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+
 import Row from './Row';
-import table from './Table';
+// import table from './Table';
 import PopCardSubmit from './PopCardSubmit';
+import ThankYou from './ThankYou';
+import LoadingTable from './LoadingTable';
 
 export default function VotingForm() {
-  const [tableData, setTableData] = useState(table);
+  const [tableData, setTableData] = useState([]);
   const [totalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
@@ -28,17 +31,20 @@ export default function VotingForm() {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
-        const information = await response.json();
+        const information = JSON.parse(await response.json());
+        setTableData(information.children);
+
+        // saveJSON(information);
+        console.log(typeof information);
+
         console.log(information);
         // setData(information);
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
-
 
   const findPathById = (idToFind, data, path = []) => {
     for (let i = 0; i < data.length; i += 1) {
@@ -147,7 +153,7 @@ export default function VotingForm() {
     // Update siblings/childs1 budget
     const maxBudget = TotalBudget(data);
     let updatedTableData = updateBudget(data, id, value, diff, maxBudget, 0);
-    console.log('totalBudget', maxBudget);
+    // console.log('totalBudget', maxBudget);
 
     // Update childs2 budget
     updatedTableData = handleChildBudget(updatedTableData, id, value);
@@ -159,7 +165,7 @@ export default function VotingForm() {
       }
       return { ...row };
     });
-    console.log(updatedTableData);
+    // console.log(updatedTableData);
 
     // Update childs4 budget
     updatedTableData = updatedTableData.map((row) => {
@@ -303,54 +309,63 @@ export default function VotingForm() {
   };
 
   return (
-    <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
-      {display && <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
-        <Table stickyHeader aria-label="collapsible table">
-          <TableHead>
-            <TableRow sx={{ fontWeight: 'bold' }}>
-              <TableCell align="center" />
-              <TableCell align="center">
-                <Button
-                  variant="outlined"
-                  onClick={clearAll}
-                  sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }}
-                >
-                  Clear All
-                </Button>
-              </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
-                Subject
-              </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
-                Budget
-              </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
-                Vote
-              </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
-                Precent
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tableData.map((row) => (
-              <Row
-                key={row.id}
-                parent={tableData}
-                row={row}
-                handleVote={handleVote}
-                updateBudget={updateBudget}
-                handleCheckBox={handleCheckBox}
-                totalBudget={totalBudget}
-                newMaxBudget={newMaxBudget}
-                maxBudget={maxBudget}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>}
+    <>
+      {tableData.length === 0 ? (
+        <LoadingTable />
+      ) : (
+        <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
+          {display && (
+            <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
+              <Table stickyHeader aria-label="collapsible table">
+                <TableHead>
+                  <TableRow sx={{ fontWeight: 'bold' }}>
+                    <TableCell align="center" />
+                    <TableCell align="center">
+                      <Button
+                        variant="outlined"
+                        onClick={clearAll}
+                        sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }}
+                      >
+                        Clear All
+                      </Button>
+                    </TableCell>
+                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                      Subject
+                    </TableCell>
+                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                      Budget
+                    </TableCell>
+                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                      Vote
+                    </TableCell>
+                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                      Precent
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tableData.map((row) => (
+                    <Row
+                      key={row.id}
+                      parent={tableData}
+                      row={row}
+                      handleVote={handleVote}
+                      updateBudget={updateBudget}
+                      handleCheckBox={handleCheckBox}
+                      totalBudget={totalBudget}
+                      newMaxBudget={newMaxBudget}
+                      maxBudget={maxBudget}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
 
-      <PopCardSubmit setDisplay={setDisplay}/>
-    </Stack>
+          <PopCardSubmit setDisplay={setDisplay} />
+          {!display && <ThankYou />}
+        </Stack>
+      )}
+    </>
   );
 }

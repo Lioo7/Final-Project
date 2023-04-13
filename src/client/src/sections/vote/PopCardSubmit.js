@@ -69,7 +69,7 @@ export default function PopCardSubmit(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you like to submit your vote?
+            Are you sure you want to submit your vote?
             <br />
             Please note that you can only vote once.
           </DialogContentText>

@@ -165,54 +165,6 @@ const table = [
     budget: '5',
     checked: false,
   },
-  // {
-  //   id: 3,
-  //   name: 'משרד הפנים',
-  //   last_name: 'Bowart',
-  //   budget: '85',
-  // },
-  // {
-  //   id: 4,
-  //   name: 'Bert',
-  //   last_name: 'Huckett',
-  //   budget: '75',
-  // },
-  // {
-  //   id: 5,
-  //   name: 'Drew',
-  //   last_name: 'Jenicke',
-  //   budget: '42',
-  // },
-  // {
-  //   id: 6,
-  //   name: 'Deloria',
-  //   last_name: 'Pepperill',
-  //   budget: '11',
-  // },
-  // {
-  //   id: 7,
-  //   name: 'Spense',
-  //   last_name: 'Ivashnyov',
-  //   budget: '90',
-  // },
-  // {
-  //   id: 8,
-  //   name: 'Elden',
-  //   last_name: 'Chaucer',
-  //   budget: '56',
-  // },
-  // {
-  //   id: 9,
-  //   name: 'Sholom',
-  //   last_name: 'Deetch',
-  //   budget: '22',
-  // },
-  // {
-  //   id: 10,
-  //   name: 'Genovera',
-  //   last_name: 'Colby',
-  //   budget: '63',
-  // },
 ];
 
 export default table;
