@@ -182,20 +182,19 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
                             budget_amount VARCHAR(255)''')
 
-    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    # SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     
     # Clean
     SQL_init.clean_database(cursor)
     
     
+    # ###### App (server) example:
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # tree = sql_handler.build_tree_from_current_budget()
+    # tree.print_tree()
     
-    ###### App (server) example:
-    sql_handler = SQL_database(SQL_database.create_config())
-    sql_handler.connect()
-    tree = sql_handler.build_tree_from_current_budget()
-    tree.print_tree()
-    
-    dictionary = tree.to_dict()
-    print(dictionary)
-    json_tree = json.dumps(dictionary,ensure_ascii=False)
-    print(json_tree)
+    # dictionary = tree.to_dict()
+    # print(dictionary)
+    # json_tree = json.dumps(dictionary,ensure_ascii=False)
+    # print(json_tree)
