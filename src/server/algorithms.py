@@ -451,65 +451,130 @@ def _calculate_total(budget: dict) -> float:
     
     return total
 
-def _calculate_totals(d) -> float:
+def _calculate_totals(node: dict) -> int:
     """
-    Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "total".
-    The function also adds "total" keys to the dictionary at each level, with the value being the sum of all the "total"
-    values of its sub-levels.
-
+    Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "allocated_budget_amount".
+    The function also adds "allocated_budget_amount" keys to the dictionary at each level,
+    with the value being the sum of all the "allocated_budget_amount" values of its sub-levels.
+    
     Args:
-    - d: a nested dictionary containing numerical values under the "total" key
-
+        node (dict): A dictionary representing a node in a tree structure.
+    
     Returns:
-    - The total value of the dictionary, as an integer.
+        int: The total allocated budget amount for the given node and its descendants.
     """
-    total = 0
-    has_sublevels = False
-    for k, v in d.items():
-        if isinstance(v, dict):
-            # if the current value is a dictionary, recursively call the function and sum up its returned value.
-            has_sublevels = True
-            sub_total = _calculate_totals(v)
-            # if the current dictionary has a "total" key, update its value with the sum of its sub-levels.
-            if 'total' in v:
-                v['total'] = str(sub_total)
-            total += sub_total
-        elif k != 'total' and isinstance(v, str) and v.isdigit():
-            # if the current key is not "total", and the current value is a string of digits, add its integer value to the total sum.
-            total += int(v)
-    if 'total' in d:
-        # if the current dictionary has a "total" key, update its value with the total sum.
-        d['total'] = str(total)
-    elif has_sublevels:
-        # if the current dictionary doesn't have a "total" key but has sub-levels, add a "total" key with the total sum.
-        d['total'] = str(total)
+    allocated_budget_amount = 0
+    
+    # if the allocated_budget_amount is an integer, add it to the allocated_budget_amount variable
+    # otherwise, set the allocated_budget_amount for this node to 0
+    if isinstance(node['allocated_budget_amount'], int):
+        allocated_budget_amount += node['allocated_budget_amount']
+    else:
+        node['allocated_budget_amount'] = 0
 
-    return total
+    # for each child of the current node, recursively call the _calculate_totals function to calculate
+    # the total allocated budget amount for the child, and add it to the allocated_budget_amount of the current node
+    for child in node['children']:
+        child_budget_amount = _calculate_totals(child)
+        node['allocated_budget_amount'] += child_budget_amount
+
+    # return the allocated_budget_amount of the current node and its descendants
+    return node['allocated_budget_amount']
+
 
 
 # if __name__ == "__main__":
-#     votes = {
-#             "user1": {
-#                 "Department of Defense": {"Army": 6, "total": 6},
-#                 "Department of Education": {"Schools": 0, "total": 0},
-#                 "Department of Interior": {"immigration": 0, "total": 0},
-#                 "total": 6
-#             },
-#             "user2": {
-#                 "Department of Defense": {"Army": 0, "total": 0},
-#                 "Department of Education": {"Schools": 3, "total": 3},
-#                 "Department of Interior": {"immigration": 3, "total": 3},
-#                 "total": 6
-#             },
-#             "user3": {
-#                 "Department of Defense": {"Army": 3, "total": 3},
-#                 "Department of Education": {"Schools": 3, "total": 3},
-#                 "Department of Interior": {"immigration": 0, "total": 0},
-#                 "total": 6
-#             }
+#     vote = {
+#             "id": 0,
+#             "name": "root",
+#             "description": "I am root",
+#             "parent": None,
+#             "allocated_budget_amount": "",
+#             "children": [
+#                 {
+#                     "id": 1,
+#                     "name": "Security and public order",
+#                     "description": "I am Security and public order",
+#                     "parent": 0,
+#                     "allocated_budget_amount": "",
+#                     "children": [
+#                         {
+#                             "id": 2,
+#                             "name": "Security",
+#                             "description": "I am Security",
+#                             "parent": 1,
+#                             "allocated_budget_amount": "",
+#                             "children": [
+#                                 {
+#                                     "id": 3,
+#                                     "name": "Ministry of Defense",
+#                                     "description": "I am Ministry of Defense",
+#                                     "parent": 2,
+#                                     "allocated_budget_amount": "",
+#                                     "children": [
+#                                         {
+#                                             "id": 4,
+#                                             "name": "HR",
+#                                             "description": "I am HR",
+#                                             "parent": 3,
+#                                             "allocated_budget_amount": "",
+#                                             "children": [
+#                                                 {
+#                                                     "id": 6,
+#                                                     "name": "Current salary of permanent soldiers",
+#                                                     "description": "I am Current salary of permanent soldiers",
+#                                                     "parent": 4,
+#                                                     "allocated_budget_amount": 11171083,
+#                                                     "children": []
+#                                                 },
+#                                                 {
+#                                                     "id": 7,
+#                                                     "name": "Current salary of Ministry of Defense employees",
+#                                                     "description": "I am Current salary of Ministry of Defense employees",
+#                                                     "parent": 4,
+#                                                     "allocated_budget_amount": 1265398,
+#                                                     "children": []
+#                                                 }
+#                                             ]
+#                                         },
+#                                         {
+#                                             "id": 5,
+#                                             "name": "Pensions",
+#                                             "description": "I am Pensions",
+#                                             "parent": 3,
+#                                             "allocated_budget_amount": "",
+#                                             "children": [
+#                                                 {
+#                                                     "id": 8,
+#                                                     "name": "Permanent soldiers pensions",
+#                                                     "description": "I am Permanent soldiers' pensions",
+#                                                     "parent": 5,
+#                                                     "allocated_budget_amount": 7780739,
+#                                                     "children": []
+#                                                 },
+#                                                 {
+#                                                     "id": 9,
+#                                                     "name": "Retirement grants for permanent soldiers",
+#                                                     "description": "I am Retirement grants for permanent soldiers",
+#                                                     "parent": 5,
+#                                                     "allocated_budget_amount": 374853,
+#                                                     "children": []
+#                                                 }
+#                                             ]
+#                                         }
+#                                     ]
+#                                 }
+#                             ]
+#                         }
+#                     ]
+#                 }
+#             ]
 #         }
 
-# tree = Tree.from_dict(votes)
+# # tree = Tree.from_dict(vote)
 # # tree.print_tree()
-# ans = run_algorithm(votes, 2)
-# print(ans)
+# # ans = run_algorithm(vote, 2)
+# # print(ans)
+
+# _calculate_totals(vote)
+# print(vote)
