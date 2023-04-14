@@ -114,7 +114,9 @@ def algorithms_results():
 def voting_tree():
     try:
         database.handler.connect()
-        check_result = database.handler.check_voting_option(user_id="123")
+        user_id = 'user_id' # have to get the user id from the client!
+        
+        check_result = database.handler.check_voting_option(user_id=user_id)
             
         if check_result == "false":
             return jsonify({'status': 'Is not allowed to vote'})
@@ -124,10 +126,6 @@ def voting_tree():
             
         json_string = request.json
         dictionary = json.loads(json_string)
-        root = Node(0,"root","I am root",None,0)
-        tree = Tree(root)
-        tree.load_tree_from_dict(dictionary)
-        user_id = 'user_id' # have to get the user id from the client!
         
         # Save tree in DB
         # TODO : have to get the user_id from the client and test the function
@@ -152,7 +150,7 @@ def subjects_and_projects_tree():
     # updates the 'total' values in the budget dictionary 
     _calculate_totals(dictionary)
     json_tree = json.dumps(dictionary,ensure_ascii=False)
-        
+    
     return jsonify(json_tree)
 
 

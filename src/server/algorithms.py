@@ -467,7 +467,7 @@ def _calculate_totals(node: dict) -> int:
     
     # if the allocated_budget_amount is an integer, add it to the allocated_budget_amount variable
     # otherwise, set the allocated_budget_amount for this node to 0
-    if isinstance(node['allocated_budget_amount'], int):
+    if isinstance(node['allocated_budget_amount'], float):
         allocated_budget_amount += node['allocated_budget_amount']
     else:
         node['allocated_budget_amount'] = 0

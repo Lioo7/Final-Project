@@ -181,7 +181,10 @@ if __name__ == "__main__":
     # # TODO: Change USERS_VOTES column to : user_id, node_name, node_name, node_name ... budget_amount
     # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
     #                         budget_amount VARCHAR(255)''')
-    SQL_init.create_users_votes_table(cursor)
+    
+    SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
+    # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
+    
     
     SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     
@@ -196,12 +199,12 @@ if __name__ == "__main__":
     # tree.print_tree()
     
     ###### App (server) example:
-    sql_handler = SQL_database(SQL_database.create_config())
-    sql_handler.connect()
-    tree = sql_handler.build_tree_from_current_budget()
-    tree.print_tree()
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # tree = sql_handler.build_tree_from_current_budget()
+    # tree.print_tree()
     
-    dictionary = tree.to_dict()
-    print(dictionary)
-    json_tree = json.dumps(dictionary,ensure_ascii=False)
-    print(json_tree)
+    # dictionary = tree.to_dict()
+    # print(dictionary)
+    # json_tree = json.dumps(dictionary,ensure_ascii=False)
+    # print(json_tree)
