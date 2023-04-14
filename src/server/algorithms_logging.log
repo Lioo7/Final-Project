@@ -1,10 +1,2 @@
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 404-997-780
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 15:52:13] "OPTIONS /peoples_budget/login HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 15:52:14] "POST /peoples_budget/login HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 16:06:46] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 16:07:06] "GET /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 16:07:15] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 16:07:35] "GET /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 16:34:41] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/Apr/2023 16:34:53] "GET /peoples_budget/voting HTTP/1.1" 200 -
