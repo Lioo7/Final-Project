@@ -366,26 +366,26 @@ class TestGeneralizedMedianAlgorithm:
                     "Security":{
                         "Ministry of Defense":{
                             "Manpower":{
-                            "Manpower expenses":{
-                                "Current salary of permanent soldiers":"11171083",
-                                "Current salary of Ministry of Defense employees":"1265398",
-                                "total":"12436481"
-                            },
-                            "Pensions":{
-                                "Permanent soldiers' pensions":"7780739",
-                                "Retirement grants for permanent soldiers":"374853",
-                                "total":"8155592"
-                            },
+                                "Manpower expenses":{
+                                    "Current salary of permanent soldiers":"11171083",
+                                    "Current salary of Ministry of Defense employees":"1265398",
+                                    "total":"12436481"
+                                    },
+                                "Pensions":{
+                                    "Permanent soldiers' pensions":"7780739",
+                                    "Retirement grants for permanent soldiers":"374853",
+                                    "total":"8155592"
+                                    },
+                                "total":"20592073"
+                                },
                             "total":"20592073"
                             },
-                            "total":"20592073"
-                        },
                         "total":"20592073"
-                    },
+                        },
                     "total":"20592073"
-                },
+                    },
                 "total":"20592073"
-            }
+                }
 
             _calculate_totals(vote)
             assert vote == expected_result    
