@@ -467,21 +467,21 @@ def _calculate_totals(d) -> float:
     has_sublevels = False
     for k, v in d.items():
         if isinstance(v, dict):
-            # If the current value is a dictionary, recursively call the function and sum up its returned value.
+            # if the current value is a dictionary, recursively call the function and sum up its returned value.
             has_sublevels = True
             sub_total = _calculate_totals(v)
-            # If the current dictionary has a "total" key, update its value with the sum of its sub-levels.
+            # if the current dictionary has a "total" key, update its value with the sum of its sub-levels.
             if 'total' in v:
                 v['total'] = str(sub_total)
             total += sub_total
         elif k != 'total' and isinstance(v, str) and v.isdigit():
-            # If the current key is not "total", and the current value is a string of digits, add its integer value to the total sum.
+            # if the current key is not "total", and the current value is a string of digits, add its integer value to the total sum.
             total += int(v)
     if 'total' in d:
-        # If the current dictionary has a "total" key, update its value with the total sum.
+        # if the current dictionary has a "total" key, update its value with the total sum.
         d['total'] = str(total)
     elif has_sublevels:
-        # If the current dictionary doesn't have a "total" key but has sub-levels, add a "total" key with the total sum.
+        # if the current dictionary doesn't have a "total" key but has sub-levels, add a "total" key with the total sum.
         d['total'] = str(total)
 
     return total
