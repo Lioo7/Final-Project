@@ -189,14 +189,19 @@ if __name__ == "__main__":
     #SQL_init.clean_database(cursor)
     
     
-    
-    ###### App (server) example:
+    # ###### App (server) example:
     # sql_handler = SQL_database(SQL_database.create_config())
     # sql_handler.connect()
     # tree = sql_handler.build_tree_from_current_budget()
     # tree.print_tree()
     
-    # dictionary = tree.to_dict()
-    # print(dictionary)
-    # json_tree = json.dumps(dictionary,ensure_ascii=False)
-    # print(json_tree)
+    ###### App (server) example:
+    sql_handler = SQL_database(SQL_database.create_config())
+    sql_handler.connect()
+    tree = sql_handler.build_tree_from_current_budget()
+    tree.print_tree()
+    
+    dictionary = tree.to_dict()
+    print(dictionary)
+    json_tree = json.dumps(dictionary,ensure_ascii=False)
+    print(json_tree)
