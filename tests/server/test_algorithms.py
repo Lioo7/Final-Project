@@ -2,7 +2,7 @@ import sys
 import random
 import pytest
 sys.path.append('../..')
-from src.server.algorithms import median_algorithm, generalized_median_algorithm
+from src.server.algorithms import median_algorithm, generalized_median_algorithm, _calculate_totals
 
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
@@ -332,6 +332,64 @@ class TestGeneralizedMedianAlgorithm:
         # check that the total budget remains the same
         new_total_budget = budget_data["total"]
         assert abs(new_total_budget - initial_budget) <= self.EPSILON, f"Total budget does not match original budget. Original: {initial_budget}, New: {new_total_budget}"
+        
+    class TestUtilityFunctions:
+        def test_calculate_totals(self) -> None:
+            # Test case 1: Testing the calculations of the total keys in the dict.
+            vote = {
+                "Security and public order": {
+                    "Security": {
+                        "Ministry of Defense": {
+                            "Manpower": {
+                                "Manpower expenses": {
+                                    "Current salary of permanent soldiers": "11171083",
+                                    "Current salary of Ministry of Defense employees": "1265398",
+                                    "total": ""
+                                },
+                            "Pensions": {
+                                "Permanent soldiers' pensions": "7780739",
+                                "Retirement grants for permanent soldiers": "374853",
+                                "total": ""
+                            },
+                            "total": ""
+                            },
+                        },
+                        "total": ""
+                    },
+                    "total": ""
+                },
+                "total": ""
+            }
+
+            expected_result = {
+                "Security and public order":{
+                    "Security":{
+                        "Ministry of Defense":{
+                            "Manpower":{
+                            "Manpower expenses":{
+                                "Current salary of permanent soldiers":"11171083",
+                                "Current salary of Ministry of Defense employees":"1265398",
+                                "total":"12436481"
+                            },
+                            "Pensions":{
+                                "Permanent soldiers' pensions":"7780739",
+                                "Retirement grants for permanent soldiers":"374853",
+                                "total":"8155592"
+                            },
+                            "total":"20592073"
+                            },
+                            "total":"20592073"
+                        },
+                        "total":"20592073"
+                    },
+                    "total":"20592073"
+                },
+                "total":"20592073"
+            }
+
+            _calculate_totals(vote)
+            assert vote == expected_result    
+            
 
 
 
