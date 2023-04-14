@@ -178,17 +178,27 @@ if __name__ == "__main__":
                             last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                             gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
     
-    # TODO: Change USERS_VOTES column to : user_id, node_name, node_name, node_name ... budget_amount
-    SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
-                            budget_amount VARCHAR(255)''')
-
-    # SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    # # TODO: Change USERS_VOTES column to : user_id, node_name, node_name, node_name ... budget_amount
+    # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
+    #                         budget_amount VARCHAR(255)''')
+    
+    SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
+    # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
+    
+    
+    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     
     # Clean
-    SQL_init.clean_database(cursor)
+    #SQL_init.clean_database(cursor)
     
     
     # ###### App (server) example:
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # tree = sql_handler.build_tree_from_current_budget()
+    # tree.print_tree()
+    
+    ###### App (server) example:
     # sql_handler = SQL_database(SQL_database.create_config())
     # sql_handler.connect()
     # tree = sql_handler.build_tree_from_current_budget()
