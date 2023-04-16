@@ -9,6 +9,7 @@ class Node:
         self._parent = parent
         self._allocated_budget_amount = budget_amount
         self._children: list['Node'] = []
+        self.checked = False
 
     def get_id(self) -> int:
         '''
@@ -165,6 +166,7 @@ class Node:
             'description': self.get_description(),
             'parent': self.get_parent_id(),
             'allocated_budget_amount': self.get_allocated_budget_amount(),
+            'checked': self.checked,
             'children': children,
         }
 
