@@ -25,6 +25,7 @@ export default function PopCardSubmit(props) {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
+  const url = 'http://localhost:5000/peoples_budget/voting';
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,13 +35,30 @@ export default function PopCardSubmit(props) {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     props.setDisplay(false)
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/peoples_budget/results', { replace: true });
-    }, 8000);
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( props.tableData ),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.status === 'Succeeded') {
+        setTimeout(() => {
+          setLoading(false);
+          navigate('/peoples_budget/results', { replace: true });
+        }, 8000);
+      } else {
+        throw new Error('Error sending user vote.');
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+    }
   };
 
   return (

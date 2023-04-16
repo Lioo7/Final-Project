@@ -14,7 +14,8 @@ import Row from './Row';
 export default function Childs(props) {
   const [tableChilds, setTableChilds] = useState(props.childrens);
   // Calculate the sum of the budget of the children
-  const totalChildBudget = tableChilds.reduce((total, item) => total + Number(item.budget), 0);
+  const totalChildBudget = tableChilds.reduce((total, item) => total + Number(item.allocated_budget_amount), 0);
+  // console.log('Childs:', tableChilds)
 
   useEffect(() => {
     setTableChilds(props.childrens);
@@ -59,12 +60,12 @@ Childs.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      budget: PropTypes.number.isRequired,
+      allocated_budget_amount: PropTypes.number.isRequired,
       children: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
           name: PropTypes.string.isRequired,
-          budget: PropTypes.number.isRequired,
+          allocated_budget_amount: PropTypes.number.isRequired,
         })
       ),
     })

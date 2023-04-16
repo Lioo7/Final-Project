@@ -15,12 +15,12 @@ import { debounce } from 'lodash';
 import Childs from './Childs';
 
 export default function Row(props) {
-  // const { row } = props;
   const [row, setRow] = useState(props.row);
   const [open, setOpen] = useState(false);
-  const [budget, setBudget] = useState(row.budget);
+  const [budget, setBudget] = useState(row.allocated_budget_amount);
   const [childs, setChilds] = useState(row.children);
   const [checkBox, setCheckBox] = useState(row.checked);
+  // console.log('Row:', row)
 
   useEffect(() => {
     setRow(props.row);
@@ -42,7 +42,7 @@ export default function Row(props) {
     }
     if (!checkBox) {
       event.target.value = parseInt(event.target.value, 10);
-      const diff = row.budget - event.target.value;
+      const diff = row.allocated_budget_amount - event.target.value;
       props.handleVote(props.parent, row.id, event.target.value, diff);
       setBudget(event.target.value);
     }
@@ -62,7 +62,7 @@ export default function Row(props) {
       event.target.value = 0;
     }
     if (!checkBox) {
-      const diff = row.budget - event.target.value;
+      const diff = row.allocated_budget_amount - event.target.value;
       props.handleVote(props.parent, row.id, event.target.value, diff);
       setBudget(event.target.value);
     }
@@ -102,30 +102,31 @@ export default function Row(props) {
             id={`budgetText${row.id}`}
             type="number"
             variant="outlined"
-            value={Math.round(Number(row.budget) * 10) / 10}
+            value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
             defaultValue={Number(budget)}
-            InputProps={{ inputProps: { min: 0, max: 100 } }}
+            InputProps={{ inputProps: { min: 0, max: 1000000000 } }}
             onChange={handleChangeText}
           />
         </TableCell>
         <TableCell align="center">
-          {' '}
+          {/* {' '} */}
           <Slider
             id={`slider${row.id}`}
-            value={Math.round(Number(row.budget) * 10) / 10}
+            value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
             onChange={handleChangeSlider}
-            step={10}
-            marks
+            // step={1000}
+            // marks
             valueLabelDisplay="auto"
+            // getAriaValueText={abbreviate(Number(row.allocated_budget_amount))}
             aria-label="Default"
             max={props.maxBudget}
             sx={{ mt: 1.2 }}
-          />
-        </TableCell>
+          /> 
+         </TableCell> 
         <TableCell align="center">
           {props.totalBudget === 0
             ? 0
-            : Math.max(Math.min(((row.budget / props.totalBudget) * 100).toFixed(1), 100), 0)}
+            : Math.max(Math.min(((row.allocated_budget_amount / props.totalBudget) * 100).toFixed(1), 100), 0)}
           %
         </TableCell>
       </TableRow>
@@ -133,11 +134,11 @@ export default function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              {childs && (
+              {childs.length >0 && (
                 <Childs
                   childrens={childs}
                   parent={row.children}
-                  maxBudget={Number(row.budget)}
+                  maxBudget={Number(row.allocated_budget_amount)}
                   updateBudget={props.updateBudget}
                   handleCheckBox={props.handleCheckBox}
                   handleVote={props.handleVote}
@@ -155,12 +156,12 @@ Row.propTypes = {
   row: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    budget: PropTypes.string.isRequired,
+    allocated_budget_amount: PropTypes.string.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        budget: PropTypes.number.isRequired,
+        allocated_budget_amount: PropTypes.number.isRequired,
       })
     ),
   }).isRequired,
@@ -174,7 +175,7 @@ Row.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      budget: PropTypes.number.isRequired,
+      allocated_budget_amount: PropTypes.number.isRequired,
     })
   ).isRequired,
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,41 +9,42 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
 import Row from './Row';
-// import table from './Table';
+
 import PopCardSubmit from './PopCardSubmit';
 import ThankYou from './ThankYou';
 import LoadingTable from './LoadingTable';
 
 export default function VotingForm() {
   const [tableData, setTableData] = useState([]);
-  const [totalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
+
+  // const [totalBudget, setTotalBudget] = useState(tableData.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
-  const maxBudget = 100;
+
+  const maxBudget = 596770415;
   const url = 'http://localhost:5000/peoples_budget/voting';
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const information = JSON.parse(await response.json());
+      console.log(information.children);
+      setTableData(information.children);
+    } catch (error) {
+      console.error(error);
+    }
+    return {};
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        });
-        const information = JSON.parse(await response.json());
-        setTableData(information.children);
-
-        // saveJSON(information);
-        console.log(typeof information);
-
-        console.log(information);
-        // setData(information);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
+    startTransition(() => {
+      fetchData(); // fetch data asynchronously
+      // console.log(tableData);
+    });
   }, []);
 
   const findPathById = (idToFind, data, path = []) => {
@@ -51,7 +52,7 @@ export default function VotingForm() {
       if (data[i].id === idToFind) {
         return path;
       }
-      if (data[i].children) {
+      if (data[i].children.length > 0) {
         const childResult = findPathById(idToFind, data[i].children, [...path, data[i].id]);
         if (childResult) {
           return childResult;
@@ -64,11 +65,12 @@ export default function VotingForm() {
   const clearAll = () => {
     const tableClear = clear(tableData);
     setTableData(tableClear);
+    console.log(tableData);
   };
 
   const clear = (data) => {
     const clearData = data.map((row) => {
-      if (row.children) {
+      if (row.children.length > 0) {
         return { ...row, checked: false, children: clear(row.children) };
       }
       return { ...row, checked: false };
@@ -81,7 +83,7 @@ export default function VotingForm() {
       if (item.checked) {
         return total;
       }
-      return total + Number(item.budget);
+      return total + Number(item.allocated_budget_amount);
     }, 0);
     setNewMaxBudget(newTotalBudget);
     return newTotalBudget;
@@ -94,7 +96,7 @@ export default function VotingForm() {
   const handleCheckBox = (data, id, status) => {
     const updatedTable = data.map((row) => {
       if (row.id === id) {
-        if (row.children) {
+        if (row.children.length > 0) {
           return { ...row, checked: status, children: helperHandleCheck(row.children, status) };
         }
         return { ...row, checked: status };
@@ -131,7 +133,7 @@ export default function VotingForm() {
 
   const helperHandleCheck = (table, status) =>
     table.map((row) =>
-      row.children
+      row.children.length > 0
         ? { ...row, checked: status, children: helperHandleCheck(row.children, status) }
         : { ...row, checked: status }
     );
@@ -160,16 +162,15 @@ export default function VotingForm() {
 
     // Update childs3 budget
     updatedTableData = updatedTableData.map((row) => {
-      if (row.children) {
+      if (row.children.length > 0) {
         return { ...row, children: handleChildBudget(row.children, id, value) };
       }
       return { ...row };
     });
-    // console.log(updatedTableData);
 
     // Update childs4 budget
     updatedTableData = updatedTableData.map((row) => {
-      if (row.children) {
+      if (row.children.length > 0) {
         const children3 = row.children.map((child3) => {
           if (child3.children) {
             return { ...child3, children: handleChildBudget(child3.children, id, value) };
@@ -183,11 +184,11 @@ export default function VotingForm() {
 
     // Update childs5 budget
     updatedTableData = updatedTableData.map((row) => {
-      if (row.children) {
+      if (row.children.length > 0) {
         const children3 = row.children.map((child3) => {
-          if (child3.children) {
+          if (child3.children.length > 0) {
             const children4 = child3.children.map((child4) => {
-              if (child4.children) {
+              if (child4.children.length > 0) {
                 return { ...child4, children: handleChildBudget(child4.children, id, value) };
               }
               return { ...child4 };
@@ -203,13 +204,13 @@ export default function VotingForm() {
 
     // Update childs6 budget
     updatedTableData = updatedTableData.map((row) => {
-      if (row.children) {
+      if (row.children.length > 0) {
         const children3 = row.children.map((child3) => {
-          if (child3.children) {
+          if (child3.children.length > 0) {
             const children4 = child3.children.map((child4) => {
-              if (child4.children) {
+              if (child4.children.length > 0) {
                 const children5 = child4.children.map((child5) => {
-                  if (child5.children) {
+                  if (child5.children.length > 0) {
                     return { ...child5, children: handleChildBudget(child5.children, id, value) };
                   }
                   return { ...child5 };
@@ -243,19 +244,18 @@ export default function VotingForm() {
 
   const handleChildBudget = (data, id, value) => {
     const updatedTableData = data.map((row) => {
-      if (!row.children) {
+      if (row.children.length === 0) {
         return { ...row };
       }
-      const totalChildBudget = row.children.reduce((total, item) => total + Number(item.budget), 0);
-      const budgetDiff = row.budget - totalChildBudget;
-      const childrens = updateBudget(row.children, id, value, budgetDiff, row.budget, 1);
+      const totalChildBudget = row.children.reduce((total, item) => total + Number(item.allocated_budget_amount), 0);
+      const budgetDiff = row.allocated_budget_amount - totalChildBudget;
+      const childrens = updateBudget(row.children, id, value, budgetDiff, row.allocated_budget_amount, 1);
       return { ...row, children: childrens };
     });
     return updatedTableData;
   };
 
   const updateBudget = (data, id, value, diff, currMaxBudget, isChilds) => {
-    // console.log('updateBudget', id);
     let updatedTableData = data.slice(); // create a copy of tableData
     let countRows = isChilds ? data.length : data.length - 1; // count of rows to update
     // const rowsIds = data.map((row) => row.id); // array of row IDs
@@ -278,14 +278,14 @@ export default function VotingForm() {
         }
         if (isChilds === 0 && row.id === id) {
           if (value > currMaxBudget) {
-            return { ...row, budget: currMaxBudget };
+            return { ...row, allocated_budget_amount: currMaxBudget };
           }
-          return { ...row, budget: value };
+          return { ...row, allocated_budget_amount: value };
         }
         if (!rowsIds.includes(row.id)) {
           return { ...row };
         }
-        let currBudget = parseFloat(row.budget) + budgetPerRow;
+        let currBudget = parseFloat(row.allocated_budget_amount) + budgetPerRow;
         if (currBudget > currMaxBudget) {
           remain += currBudget - currMaxBudget;
           removedRows += 1;
@@ -300,7 +300,7 @@ export default function VotingForm() {
           rowsIds.splice(indexToRemove, 1);
           currBudget = 0;
         }
-        return { ...row, budget: currBudget };
+        return { ...row, allocated_budget_amount: currBudget };
       });
       diff = remain;
       countRows -= removedRows;
@@ -352,7 +352,7 @@ export default function VotingForm() {
                       handleVote={handleVote}
                       updateBudget={updateBudget}
                       handleCheckBox={handleCheckBox}
-                      totalBudget={totalBudget}
+                      totalBudget={maxBudget}
                       newMaxBudget={newMaxBudget}
                       maxBudget={maxBudget}
                     />
@@ -362,7 +362,7 @@ export default function VotingForm() {
             </TableContainer>
           )}
 
-          <PopCardSubmit setDisplay={setDisplay} />
+          <PopCardSubmit setDisplay={setDisplay} tableData={tableData}/>
           {!display && <ThankYou />}
         </Stack>
       )}
