@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,12 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import OldBudgetRow from './OldBudgetRow';
-import table from '../vote/Table';
 
-export default function OldBudget() {
-  const [tableData] = useState(table);
-  const [totalBudget] = useState(tableData.reduce((total, item) => total + Number(item.budget), 0));
-
+export default function OldBudget(props) {
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
       <TableContainer sx={{ maxHeight: 'auto', maxWidth: '650PX' }} component={Paper}>
@@ -33,8 +29,8 @@ export default function OldBudget() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableData.map((row) => (
-              <OldBudgetRow key={row.id} row={row} totalBudget={totalBudget} />
+            {props.tableData.map((row) => (
+              <OldBudgetRow key={row.id} row={row} totalBudget={props.totalBudget} />
             ))}
           </TableBody>
         </Table>

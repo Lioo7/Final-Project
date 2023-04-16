@@ -72,8 +72,8 @@ export default function SignUpForm() {
     try {
       const response = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, id, birthDate, gender, email, password }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({firstName, lastName, id, birthDate, gender, email, password }),
       });
 
       // console.log({ firstName }, { lastName }, { id }, { birthDate }, { gender }, { email }, { password });

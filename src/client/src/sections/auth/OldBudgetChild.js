@@ -13,7 +13,7 @@ import OldBudgetRow from './OldBudgetRow';
 
 export default function OldBudgetChild(props) {
   const [tableChilds] = useState(props.childrens);
-  const totalBudget = tableChilds.reduce((total, item) => total + Number(item.budget), 0);
+  const totalBudget = tableChilds.reduce((total, item) => total + Number(item.allocated_budget_amount), 0);
 
 
   return (

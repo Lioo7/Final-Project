@@ -32,11 +32,11 @@ export default function OldBudgetRow(props) {
         <TableCell align="center" component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="center">{row.budget}</TableCell>
+        <TableCell align="center">{row.allocated_budget_amount}</TableCell>
         <TableCell align="center">
           {props.totalBudget === 0
             ? 0
-            : Math.max(Math.min(((row.budget / props.totalBudget) * 100).toFixed(1), 100), 0)}
+            : Math.max(Math.min(((row.allocated_budget_amount / props.totalBudget) * 100).toFixed(1), 100), 0)}
           %
         </TableCell>
       </TableRow>
