@@ -9,7 +9,7 @@ from data_handler import data_handler
 from sql_database import SQL_database
 from user import User
 from datetime import datetime, date
-from Calculator import Calculator
+from calculator import Calculator
 
 app = Flask(__name__)
 CORS(app)
@@ -148,7 +148,7 @@ def voting_tree():
             raise Exception("Error!, voting does not saved")
 
         else:
-            database.handler.update_voting_option(user_id="123")
+            database.handler.update_voting_option(user_id=user_id)
 
     except:
         return jsonify({'status': 'failed'})
