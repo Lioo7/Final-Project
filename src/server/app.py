@@ -176,6 +176,7 @@ def subjects_and_projects_tree():
     # updates the 'total' values in the budget dictionary
     _calculate_totals(dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
+    
     return jsonify(json_tree)
 
 
