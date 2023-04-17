@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -22,9 +22,30 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(5, 0),
 }));
 
-export default function LoginPage() {
+export default function LoginPage({setId}) {
   const navigate = useNavigate();
+  const [tableData,setTableData] = useState([]);
+  const [totalBudget, setTotalBudget] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+  const url = 'http://localhost:5000/peoples_budget/login';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const information = JSON.parse(await response.json());
+        setTableData(information.children);
+        setTotalBudget(information.children.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleClick = () => {
     navigate('/peoples_budget/sign_up', { replace: true });
@@ -47,7 +68,7 @@ export default function LoginPage() {
               Login to People's Budget
             </Typography>
 
-            <LoginForm />
+            <LoginForm setId={setId} />
 
             <Typography variant="body2" sx={{ mb: 3 }}>
               Don’t have an account?
@@ -70,7 +91,7 @@ export default function LoginPage() {
         </Container>
       </StyledRoot>
 
-      {isClicked && <OldBudget/>}
+      {isClicked && <OldBudget tableData={tableData} totalBudget={totalBudget}/>}
     </>
   );
 }

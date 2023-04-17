@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
@@ -12,8 +12,11 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 import LoadingVote from './LoadingVote';
+import UserContext from '../../contexts/UserContext';
+
 
 function PaperComponent(props) {
+
   return (
     <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
@@ -22,6 +25,8 @@ function PaperComponent(props) {
 }
 
 export default function PopCardSubmit(props) {
+  const id = useContext(UserContext);
+  
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,7 +47,7 @@ export default function PopCardSubmit(props) {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( props.tableData ),
+        body: JSON.stringify( props.tableData, id ),
       });
 
       const responseData = await response.json();

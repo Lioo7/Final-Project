@@ -1,16 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-// import VotingForm from '../sections/vote/VotingForm';
 import VotingForm from '../sections/vote/VotingForm';
 
 export default function VotingPage() {
-  return (
+
+  return  (
     <>
       <Helmet>
         <title> Voting </title>
       </Helmet>
 
       <VotingForm />
-      {/* <ParentTable /> */}
     </>
   );
 }

@@ -12,19 +12,19 @@ export default function Cards(props) {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <CardStructure title="Votes amount" color="info" icon={'game-icons:vote'} val={props.voters} />
+              <CardStructure title="Votes amount" color="info" icon={'game-icons:vote'} val={props.voters ? props.voters: '0'} />
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <CardStructure title="Popular office" color="warning" icon={'ep:office-building'} val={'ש.חברתיים'}/>
+              <CardStructure title="The biggest office" color="warning" icon={'ep:office-building'} val={'ש.חברתיים'}/>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <CardStructure title="Popular city" color="error" icon={'game-icons:modern-city'} val={'אשקלון'}/>
+              <CardStructure title="Number of Projects" color="error" icon={'file-icons:microsoft-project'} val={'5203'}/>
             </Grid>
 
           </Grid>
     </div>
   );
 }
-Cards.propTypes = { voters: PropTypes.number.isRequired };
+Cards.propTypes = { voters: PropTypes.number };

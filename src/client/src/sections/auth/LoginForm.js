@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useState, useContext  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import UserContext from '../../contexts/UserContext';
 import Iconify from '../../components/iconify/Iconify';
 
-export default function LoginForm() {
+export default function LoginForm({ setId }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [id, setId] = useState('');
+  // const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   const [idError, setIdError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const id = useContext(UserContext);
+
 
   const handleClick = async () => {
     const url = 'http://localhost:5000/peoples_budget/login';

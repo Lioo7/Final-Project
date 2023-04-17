@@ -30,6 +30,7 @@ export default function DashForm() {
 
   useEffect(() => {
     setData(data)
+    console.log('data',  data)
   }, [data]);
 
 

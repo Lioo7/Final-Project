@@ -40,7 +40,7 @@ export default function Ages(props) {
 
   return (
     <>
-      <Chart options={chartData.options} series={chartData.series} type="pie" width={props.width} />
+      <Chart options={chartData.options} series={chartData.series ? chartData.series : [1 ,1 ,1 ,1 , 1, 1]} type="pie" width={props.width} />
     </>
   );
 }

@@ -36,7 +36,7 @@ export default function Gender(props) {
 
   return (
     <>
-      <Chart options={chartData.options} series={chartData.series} type="pie" width={props.width} />
+      <Chart options={chartData.options} series={chartData.series ? chartData.series : [1, 1] } type="pie" width={props.width} />
     </>
   );
 }
