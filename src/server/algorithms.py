@@ -481,7 +481,32 @@ def _calculate_totals(node: dict) -> int:
     # return the allocated_budget_amount of the current node and its descendants
     return node['allocated_budget_amount']
 
+    
+@staticmethod  
+def update_dict_ids(input_dict: dict, parent_id=None, current_id=0):
+    """
+    Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.
 
+    Args:
+        input_dict (dict): Input dictionary to update.
+        parent_id (int): Parent id to set for the children. Default is None.
+        current_id (int): Current id to use for updating the dictionary. Default is 0.
+
+    Returns:
+        dict: Updated dictionary with unique and incremental 'id' and 'parent' values.
+    """
+    input_dict['id'] = current_id
+    input_dict['parent'] = parent_id
+
+    children = input_dict.get('children', [])
+    num_children = len(children)
+    for i in range(num_children):
+        current_id += 1
+        children[i] = update_dict_ids(children[i], current_id=current_id, parent_id=input_dict['id'])
+        current_id += len(children[i].get('children', []))
+    input_dict['children'] = children
+
+    return input_dict
 
 # if __name__ == "__main__":
 #     vote = {
