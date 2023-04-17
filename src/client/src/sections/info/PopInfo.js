@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 const style = {
   position: 'absolute',
@@ -16,27 +16,26 @@ const style = {
   p: 4,
 };
 
-export default function KeepMountedModal() {
-  const [open, setOpen] = React.useState(false);
+export default function PopInfo() {
+  
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
-
+    <div dir="rtl">
+      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
-        keepMounted
         open={open}
         onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-        lang="he" 
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          Duis mollis,
           </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography>
         </Box>

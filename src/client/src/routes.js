@@ -12,7 +12,7 @@ import LoginPage from './pages/LoginPage';
 import SignUPage from './pages/SignUPage';
 
 
-export default function Router() {
+export default function Router({setId}) {
   const routes = useRoutes([
     {
       path: '/peoples_budget',
@@ -40,7 +40,7 @@ export default function Router() {
       element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/peoples_budget/login" />, index: true },
-        {path: '/peoples_budget/login', element: <LoginPage />},
+        {path: '/peoples_budget/login', element: <LoginPage setId={setId}/>},
         {path: '/peoples_budget/sign_up', element: <SignUPage />}
       ],
     },

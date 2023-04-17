@@ -17,7 +17,7 @@ import Childs from './Childs';
 export default function Row(props) {
   const [row, setRow] = useState(props.row);
   const [open, setOpen] = useState(false);
-  const [budget, setBudget] = useState(row.allocated_budget_amount);
+  const [budget, setBudget] = useState(Number(row.allocated_budget_amount));
   const [childs, setChilds] = useState(row.children);
   const [checkBox, setCheckBox] = useState(row.checked);
   // console.log('Row:', row)
@@ -114,7 +114,7 @@ export default function Row(props) {
             id={`slider${row.id}`}
             value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
             onChange={handleChangeSlider}
-            // step={1000}
+            // step={10000}
             // marks
             valueLabelDisplay="auto"
             // getAriaValueText={abbreviate(Number(row.allocated_budget_amount))}
@@ -139,7 +139,7 @@ export default function Row(props) {
                   childrens={childs}
                   parent={row.children}
                   maxBudget={Number(row.allocated_budget_amount)}
-                  updateBudget={props.updateBudget}
+                  updateBudget={Number(props.updateBudget)}
                   handleCheckBox={props.handleCheckBox}
                   handleVote={props.handleVote}
                 />
@@ -156,7 +156,7 @@ Row.propTypes = {
   row: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    allocated_budget_amount: PropTypes.string.isRequired,
+    allocated_budget_amount: PropTypes.number.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,

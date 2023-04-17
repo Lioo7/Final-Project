@@ -80,7 +80,7 @@ export default function SignUpForm() {
       const responseData = await response.json();
       console.log(responseData);
       if (responseData.status === 'Succeeded') {
-        navigate('/peoples_budget/home', { replace: true });
+        navigate('/peoples_budget/login', { replace: true });
       } else {
         throw new Error('Error!, User was not successfully registered');
       }
