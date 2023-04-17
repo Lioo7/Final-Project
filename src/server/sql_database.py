@@ -402,5 +402,23 @@ class SQL_database(Abstract_Database):
         
         return "true"
     
+    def get_information(self) -> dict:
+        dictionary = dict()
+        query = '''SELECT * FROM INFORMATION'''
+        try:
+            self.cursor.execute(query)
+        except:
+            dictionary[0] = "Error!"
+            return dictionary
+        
+        result = self.cursor.fetchall()
+        
+        for row in result:
+            dictionary[row[0]] = row[1]   
+        
+        return dictionary
+    
     def load_user_votes(self) -> dict:
         pass
+    
+    
