@@ -170,6 +170,8 @@ class SQL_init():
             SQL_init.write_node_to_csv(child, writer)
     
     
+   
+        
 if __name__ == "__main__":
     # Connect server
     db = SQL_init.connect_database()
@@ -210,18 +212,16 @@ if __name__ == "__main__":
     
     ###### App (server) example:
     
-    # sql_handler = SQL_database(SQL_database.create_config())
-    # sql_handler.connect()
-    # tree = sql_handler.build_tree_from_current_budget()
-    # dictionary = tree.to_dict()
-    # from algorithms import _calculate_totals    
-    # _calculate_totals(dictionary)
-    # json_tree = json.dumps(dictionary, ensure_ascii=False)
-    # print(json_tree)
-    # # i = 0
-    # for node in dictionary.values():
-    #     print(node[7])
-    #     node['children']
+    sql_handler = SQL_database(SQL_database.create_config())
+    sql_handler.connect()
+    tree = sql_handler.build_tree_from_current_budget()
+    dictionary = tree.to_dict()
+    from algorithms import _calculate_totals    
+    _calculate_totals(dictionary)
+    json_tree = json.dumps(dictionary, ensure_ascii=False)
+    print(json_tree)
+    counter = 0
+    SQL_init.modify_id(dictionary,counter)
 
     
     
