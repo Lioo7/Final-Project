@@ -408,7 +408,7 @@ class SQL_database(Abstract_Database):
         try:
             self.cursor.execute(query)
         except:
-            dictionary[0] = "Error!"
+            dictionary["e"] = "Error!"
             return dictionary
         
         result = self.cursor.fetchall()

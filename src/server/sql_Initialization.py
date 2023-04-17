@@ -168,12 +168,7 @@ class SQL_init():
                          , node.get_allocated_budget_amount()])
         for child in node.get_children():
             SQL_init.write_node_to_csv(child, writer)
-            
-    @staticmethod
-    def create_users_votes_table(cursor) -> None:
-        # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
-        SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
-
+    
     
 if __name__ == "__main__":
     # Connect server
