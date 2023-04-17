@@ -97,7 +97,19 @@ def signup():
     database.handler.disconnect()
     return jsonify({'status': 'Faild'})
 
-
+# --- Information ---
+@app.route('/peoples_budget/information', methods=['GET'])
+def information():
+    database.handler.connect()
+    dictionary = database.handler.get_information()
+    
+    if dictionary.get("e") == "Error!":
+        return jsonify({'status': 'Faild'})
+    
+    json_information = json.dumps(dictionary, ensure_ascii=False)
+    return jsonify(json_information)
+    
+    
 # --- Dashborad ---
 @app.route('/peoples_budget/dashboard', methods=['GET'])
 def dashboard():

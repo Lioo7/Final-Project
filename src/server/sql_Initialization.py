@@ -42,6 +42,7 @@ class SQL_init():
         SQL_init.delete_table(cursor,'CURRENT_BUDGET')
         SQL_init.delete_table(cursor,'USERS_VOTES')
         SQL_init.delete_table(cursor,'USERS')
+        SQL_init.delete_table(cursor,'INFORMATION')
 
     @staticmethod
     def insert_to_current_budget_table(mycursor, node:Node) -> None:
@@ -67,6 +68,17 @@ class SQL_init():
                             int(row[8]), row[9], int(row[10]),row[11], str(row[12])))
         db.commit()
     
+    @staticmethod
+    def load_information_to_information_table(cursor,db) -> None:
+        path = '../../dataset/'
+        df = pandas.read_csv( path + 'information.csv',encoding='utf-8')
+        num_rows = len(df)
+        for i in range(0,num_rows):
+            row = df.iloc[i, :]
+            cursor.execute('''INSERT INTO INFORMATION (name, details)
+                        VALUES (%s, %s)''',(row[0], row[1]))
+        
+        
     @staticmethod
     def build_tree_from_csv()->Tree:
         path = '../../dataset/'
@@ -156,12 +168,7 @@ class SQL_init():
                          , node.get_allocated_budget_amount()])
         for child in node.get_children():
             SQL_init.write_node_to_csv(child, writer)
-            
-    @staticmethod
-    def create_users_votes_table(cursor) -> None:
-        # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
-        SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
-
+    
     
 if __name__ == "__main__":
     # Connect server
@@ -184,17 +191,20 @@ if __name__ == "__main__":
     
     SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
     # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
+    SQL_init.create_table(cursor,'INFORMATION', 'name VARCHAR(255), details VARCHAR(1000)')
     
-    
-    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
-    
+    #SQL_init.load_information_to_information_table(cursor,db)
+    #SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     # Clean
     #SQL_init.clean_database(cursor)
     
     
-    # ###### App (server) example:
-    # sql_handler = SQL_database(SQL_database.create_config())
-    # sql_handler.connect()
+    ###### App (server) example:
+    #sql_handler = SQL_database(SQL_database.create_config())
+    #sql_handler.connect()
+    
+    #d = sql_handler.get_information()
+        
     # tree = sql_handler.build_tree_from_current_budget()
     # tree.print_tree()
     
