@@ -459,7 +459,7 @@ def _calculate_total(budget: dict) -> float:
     return total
 
 
-def _calculate_totals(node: dict) -> int:
+def calculate_totals(node: dict) -> int:
     """
     Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "allocated_budget_amount".
     The function also adds "allocated_budget_amount" keys to the dictionary at each level,
@@ -483,7 +483,7 @@ def _calculate_totals(node: dict) -> int:
     # for each child of the current node, recursively call the _calculate_totals function to calculate
     # the total allocated budget amount for the child, and add it to the allocated_budget_amount of the current node
     for child in node['children']:
-        child_budget_amount = _calculate_totals(child)
+        child_budget_amount = calculate_totals(child)
         node['allocated_budget_amount'] += child_budget_amount
 
     # return the allocated_budget_amount of the current node and its descendants

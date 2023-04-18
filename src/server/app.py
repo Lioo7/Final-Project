@@ -3,7 +3,7 @@ from waitress import serve
 from flask_cors import CORS
 from tree import Tree
 from node import Node
-from algorithms import median_algorithm, generalized_median_algorithm, _calculate_totals,update_dict_ids
+from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids
 import json
 from data_handler import data_handler
 from sql_database import SQL_database
@@ -44,7 +44,7 @@ def table_tree():
     tree = database.handler.build_tree_from_current_budget()
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
-    _calculate_totals(dictionary)
+    calculate_totals(dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
     return jsonify(json_tree)
 
@@ -174,7 +174,7 @@ def subjects_and_projects_tree():
     tree = database.handler.build_tree_from_current_budget()
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
-    _calculate_totals(dictionary)
+    calculate_totals(dictionary)
     update_dict_ids(dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
     

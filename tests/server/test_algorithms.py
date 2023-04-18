@@ -2,7 +2,7 @@ import sys
 import random
 import pytest
 sys.path.append('../..')
-from src.server.algorithms import median_algorithm, generalized_median_algorithm, _calculate_totals, update_dict_ids
+from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids
 
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
@@ -510,7 +510,7 @@ class TestGeneralizedMedianAlgorithm:
                 ]
             }
 
-            _calculate_totals(vote)
+            calculate_totals(vote)
             assert vote == expected_result    
         
         
@@ -689,7 +689,7 @@ class TestGeneralizedMedianAlgorithm:
     ]
 }
                                     
-            _calculate_totals(vote)
+            calculate_totals(vote)
             assert vote == expected_result     
                     
 
