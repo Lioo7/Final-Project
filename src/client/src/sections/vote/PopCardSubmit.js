@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState,useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
@@ -26,7 +26,7 @@ function PaperComponent(props) {
 
 export default function PopCardSubmit(props) {
   const id = useContext(UserContext);
-  
+
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,10 +44,11 @@ export default function PopCardSubmit(props) {
     props.setDisplay(false)
     setLoading(true);
     try {
+      console.log(id)
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( props.tableData, id ),
+        body: JSON.stringify(props.tableData, id),
       });
 
       const responseData = await response.json();
@@ -109,5 +110,5 @@ export default function PopCardSubmit(props) {
 }
 
 PopCardSubmit.propTypes = {
-    setDisplay: PropTypes.func.isRequired,
+  setDisplay: PropTypes.func.isRequired,
 };  

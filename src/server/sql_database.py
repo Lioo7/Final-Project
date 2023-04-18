@@ -381,18 +381,18 @@ class SQL_database(Abstract_Database):
 
     
     def update_voting_option(self,user_id:str) -> bool:
-        update_query = "UPDATE USERS SET allowed_to_vote = %s WHERE user_id = %s"
+        update_query = f"UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = '{user_id}'"
         try:
-            self.cursor.execute(update_query, ("0", user_id))
+            self.cursor.execute(update_query)
         except:
             return False
         
         return True
     
     def check_voting_option(self,user_id:str) -> str:
-        check_query = "SELECT allowed_to_vote FROM USERS WHERE user_id = %s"
+        check_query = f"SELECT allowed_to_vote FROM USERS WHERE user_id = '{user_id}'"
         try:
-            self.cursor.execute(check_query, user_id)
+            self.cursor.execute(check_query)
         except:
             return "Error!"
         

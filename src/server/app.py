@@ -139,15 +139,25 @@ def algorithms_results():
 def voting_tree():
     try:
         database.handler.connect()
-        user_id = 'user_id'  # have to get the user id from the client!
+        data = request.json
+        #print(data)
+        user_id = data['id']
+        # have to get the user id from the client!
+        print(user_id)
 
         check_result = database.handler.check_voting_option(user_id=user_id)
+        print("here2")
 
         if check_result == "false":
+            print("here3")
+            
             return jsonify({'status': 'Is not allowed to vote'})
 
         elif check_result == "Error!":
+            print(check_result)
+            
             raise Exception("Error!, check_voting_option execute query")
+        print("here4")
 
         json_string = request.json
         dictionary = json.loads(json_string)
@@ -164,7 +174,7 @@ def voting_tree():
 
     except:
         return jsonify({'status': 'failed'})
-
+    print("here")
     return jsonify({'status': 'Succeeded'})
 
 

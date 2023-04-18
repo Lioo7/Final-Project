@@ -78,6 +78,8 @@ class SQL_init():
             cursor.execute('''INSERT INTO INFORMATION (name, details)
                         VALUES (%s, %s)''',(row[0], row[1]))
         
+        db.commit()
+        
         
     @staticmethod
     def build_tree_from_csv()->Tree:
