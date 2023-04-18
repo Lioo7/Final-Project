@@ -38,6 +38,7 @@ def login():
         database.handler.disconnect()
         return jsonify({'status': 'Faild'})
 
+
 @app.route('/peoples_budget/login', methods=['GET'])
 def table_tree():
     database.handler.connect()
@@ -98,18 +99,20 @@ def signup():
     return jsonify({'status': 'Faild'})
 
 # --- Information ---
+
+
 @app.route('/peoples_budget/information', methods=['GET'])
 def information():
     database.handler.connect()
     dictionary = database.handler.get_information()
-    
+
     if dictionary.get("e") == "Error!":
         return jsonify({'status': 'Faild'})
-    
+
     json_information = json.dumps(dictionary, ensure_ascii=False)
     return jsonify(json_information)
-    
-    
+
+
 # --- Dashborad ---
 @app.route('/peoples_budget/dashboard', methods=['GET'])
 def dashboard():
@@ -139,18 +142,25 @@ def algorithms_results():
 def voting_tree():
     try:
         database.handler.connect()
-        user_id = 'user_id'  # have to get the user id from the client!
+        data = request.json
+        user_id = data['id']
+        # have to get the user id from the client!
+        print(user_id)
+        json_string = data['table']
+        dictionary = json.loads(json_string)
+
+        print(json_string)
 
         check_result = database.handler.check_voting_option(user_id=user_id)
 
         if check_result == "false":
+
             return jsonify({'status': 'Is not allowed to vote'})
 
         elif check_result == "Error!":
-            raise Exception("Error!, check_voting_option execute query")
+            print(check_result)
 
-        json_string = request.json
-        dictionary = json.loads(json_string)
+            raise Exception("Error!, check_voting_option execute query")
 
         # Save tree in DB
         # TODO : have to get the user_id from the client and test the function
@@ -164,7 +174,7 @@ def voting_tree():
 
     except:
         return jsonify({'status': 'failed'})
-
+    print("here")
     return jsonify({'status': 'Succeeded'})
 
 
@@ -177,8 +187,9 @@ def subjects_and_projects_tree():
     calculate_totals(dictionary)
     update_dict_ids(dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
-    
+
     return jsonify(json_tree)
+
 
 # dev or prod
 mode = "dev"
