@@ -490,7 +490,6 @@ def _calculate_totals(node: dict) -> int:
     return node['allocated_budget_amount']
 
     
-@staticmethod  
 def update_dict_ids(input_dict: dict, parent_id=None, current_id=0):
     """
     Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.

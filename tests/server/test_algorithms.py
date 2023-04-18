@@ -694,7 +694,7 @@ class TestGeneralizedMedianAlgorithm:
                     
 
         def test_update_dict_ids(self) -> None:
-            input	= {
+            input = {
    		        "id": 13,
                 "name": "root",
                 "description": "I am root",
