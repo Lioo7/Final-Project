@@ -83,6 +83,7 @@ def median_algorithm(votes: dict) -> dict:
     
     return final_budget
 
+
 def generalized_median_algorithm(votes: dict) -> dict:
     """
     Calculate the budget according to the median algorithm of Hervé Moulin, using linear functions by using the given votes.
@@ -173,6 +174,7 @@ def generalized_median_algorithm(votes: dict) -> dict:
     
     return final_budget
 
+
 def run_algorithm(votes: dict, algorithm_number: int) -> dict:
     """
     Runs a specific algorithm on the given votes and returns the result.
@@ -235,6 +237,7 @@ def _find_leaves(node) -> list:
         
     return leaves
 
+
 def _calculate_median(votes_by_user: dict, total_budget: float, algorithm_number: int) -> dict:
     """
     A utility function that calculates the median value of each
@@ -278,6 +281,7 @@ def _calculate_median(votes_by_user: dict, total_budget: float, algorithm_number
     
     return median_values
     
+    
 def _find_median(lst: list[float]) -> float:
     """
     A utility function that returns the median value.
@@ -300,6 +304,7 @@ def _find_median(lst: list[float]) -> float:
         median = (first_median + second_median) / 2
         
     return median
+
 
 def _find_median_with_constant_functions(votes_by_project: dict, c: float, n: int, min_search: float = 0, max_search: float = 1, max_iterations: int = 10000) -> list[float]:
     """
@@ -390,6 +395,7 @@ def _create_result(votes: dict, new_values: list[float]) -> dict:
     
     return result
 
+
 def _building_nested_dict(votes: dict, new_values: list, index: list[float], result: dict) -> dict:
     """
     A utility function that recursively build a new nested dictionary based on
@@ -423,6 +429,7 @@ def _building_nested_dict(votes: dict, new_values: list, index: list[float], res
     
     return nested_result
 
+
 def _calculate_total(budget: dict) -> float:
     """
     A utility function that recursively calculates the total budget
@@ -451,7 +458,8 @@ def _calculate_total(budget: dict) -> float:
     
     return total
 
-def _calculate_totals(node: dict) -> int:
+
+def calculate_totals(node: dict) -> int:
     """
     Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "allocated_budget_amount".
     The function also adds "allocated_budget_amount" keys to the dictionary at each level,
@@ -465,9 +473,9 @@ def _calculate_totals(node: dict) -> int:
     """
     allocated_budget_amount = 0
     
-    # if the allocated_budget_amount is an integer, add it to the allocated_budget_amount variable
+    # if the allocated_budget_amount is an integer or float, add it to the allocated_budget_amount variable
     # otherwise, set the allocated_budget_amount for this node to 0
-    if isinstance(node['allocated_budget_amount'], float):
+    if isinstance(node['allocated_budget_amount'], (int, float)):
         allocated_budget_amount += node['allocated_budget_amount']
     else:
         node['allocated_budget_amount'] = 0
@@ -475,14 +483,13 @@ def _calculate_totals(node: dict) -> int:
     # for each child of the current node, recursively call the _calculate_totals function to calculate
     # the total allocated budget amount for the child, and add it to the allocated_budget_amount of the current node
     for child in node['children']:
-        child_budget_amount = _calculate_totals(child)
+        child_budget_amount = calculate_totals(child)
         node['allocated_budget_amount'] += child_budget_amount
 
     # return the allocated_budget_amount of the current node and its descendants
     return node['allocated_budget_amount']
 
     
-@staticmethod  
 def update_dict_ids(input_dict: dict, parent_id=None, current_id=0):
     """
     Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.
