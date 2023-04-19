@@ -48,7 +48,7 @@ export default function PopCardSubmit(props) {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(props.tableData, id),
+        body: JSON.stringify(id, props.tableData),
       });
 
       const responseData = await response.json();

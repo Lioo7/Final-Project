@@ -3,7 +3,7 @@ from waitress import serve
 from flask_cors import CORS
 from tree import Tree
 from node import Node
-from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids
+from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, counter
 import json
 from data_handler import data_handler
 from sql_database import SQL_database
@@ -140,16 +140,13 @@ def voting_tree():
     try:
         database.handler.connect()
         data = request.json
-        #print(data)
         user_id = data['id']
         # have to get the user id from the client!
-        print(user_id)
+        print(user_id) # כאן זה לא מדפיס !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         check_result = database.handler.check_voting_option(user_id=user_id)
-        print("here2")
 
         if check_result == "false":
-            print("here3")
             
             return jsonify({'status': 'Is not allowed to vote'})
 
@@ -174,7 +171,7 @@ def voting_tree():
 
     except:
         return jsonify({'status': 'failed'})
-    print("here")
+
     return jsonify({'status': 'Succeeded'})
 
 
@@ -185,7 +182,8 @@ def subjects_and_projects_tree():
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
-    update_dict_ids(dictionary)
+    count = counter()
+    update_dict_ids(count,dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
     
     return jsonify(json_tree)
