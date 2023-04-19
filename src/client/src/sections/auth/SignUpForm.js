@@ -72,21 +72,24 @@ export default function SignUpForm() {
     try {
       const response = await fetch(url, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({firstName, lastName, id, birthDate, gender, email, password }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, id, birthDate, gender, email, password }),
       });
 
-      // console.log({ firstName }, { lastName }, { id }, { birthDate }, { gender }, { email }, { password });
       const responseData = await response.json();
       console.log(responseData);
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/login', { replace: true });
+      } else if (responseData.status === 'The email already exists in the system - try another email') {
+        setEmailError('Invalid Email: The email already exists in the system - try another email.');
+      } else if (responseData.status === 'The ID already exists in the system') {
+        setIdError('Invalid Email: The ID already exists in the system.');
       } else {
         throw new Error('Error!, User was not successfully registered');
       }
     } catch (error) {
       console.error(error);
-      // TODO: throw message to the user
+      alert("An error was received, please refresh the page and try again");
     }
   };
 
