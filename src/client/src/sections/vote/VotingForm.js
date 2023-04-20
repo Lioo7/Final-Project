@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, startTransition } from 'react';
+import { useState, useEffect, startTransition, useContext } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Row from './Row';
+import UserContext from '../../contexts/UserContext';
 
 import PopCardSubmit from './PopCardSubmit';
 import ThankYou from './ThankYou';
@@ -21,10 +22,10 @@ export default function VotingForm() {
   // const [totalBudget, setTotalBudget] = useState(tableData.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
-
+  const id = useContext(UserContext);
   const maxBudget = 596770415;
-  const url = 'http://localhost:5000/peoples_budget/voting';
-
+  const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
+  
   const fetchData = async () => {
     try {
       const response = await fetch(url, {
@@ -362,7 +363,7 @@ export default function VotingForm() {
             </TableContainer>
           )}
 
-          <PopCardSubmit setDisplay={setDisplay} tableData={tableData}/>
+          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} />
           {!display && <ThankYou />}
         </Stack>
       )}

@@ -2,7 +2,7 @@ import sys
 import random
 import pytest
 sys.path.append('../..')
-from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids
+from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, counter
 
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
@@ -874,8 +874,9 @@ class TestGeneralizedMedianAlgorithm:
                     }
                 ]
             }
-            
-            update_dict_ids(input)
+            count = counter()
+            update_dict_ids(count,input)
+            print(input)
             assert input == expected_result
             
             

@@ -333,7 +333,7 @@ class SQL_database(Abstract_Database):
                 
         return tree
     
-    def store_vote(self, vote: dict, user_id: int) -> bool:
+    def store_vote(self, vote: str, user_id: int) -> bool:
         """
         Stores a user's vote in the database.
         
@@ -344,12 +344,8 @@ class SQL_database(Abstract_Database):
         Returns:
             bool: True if the vote was successfully stored, False otherwise.
         """
-        
-        # convert the JSON data to a string
-        vote_str = json.dumps(vote)
-        
         # create the query to insert the vote data into the database
-        query = f'''INSERT INTO USERS_VOTES (user_id, vote_data) VALUES ({user_id}, '{vote_str}');'''
+        query = f'''INSERT INTO USERS_VOTES (user_id, vote) VALUES ({user_id}, '{vote}')'''
         
         try:
             """
@@ -373,26 +369,30 @@ class SQL_database(Abstract_Database):
             # execute the query and commit the changes to the database
             self.cursor.execute(query)
             self.db.commit()
-            return True
+            
         except mysql.connector.Error as err:
             # if an error occurred, print the error message and return False
             print(f"An error occurred while storing the vote: {err}")
             return False
 
+        return True
+        
+
     
     def update_voting_option(self,user_id:str) -> bool:
-        update_query = "UPDATE USERS SET allowed_to_vote = %s WHERE user_id = %s"
+        update_query = f"UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = '{user_id}'"
         try:
-            self.cursor.execute(update_query, ("0", user_id))
+            self.cursor.execute(update_query)
+            self.db.commit()
         except:
             return False
         
         return True
     
     def check_voting_option(self,user_id:str) -> str:
-        check_query = "SELECT allowed_to_vote FROM USERS WHERE user_id = %s"
+        check_query = f"SELECT allowed_to_vote FROM USERS WHERE user_id = '{user_id}'"
         try:
-            self.cursor.execute(check_query, user_id)
+            self.cursor.execute(check_query)
         except:
             return "Error!"
         

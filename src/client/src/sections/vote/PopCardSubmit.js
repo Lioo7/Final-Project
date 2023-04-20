@@ -45,10 +45,11 @@ export default function PopCardSubmit(props) {
     console.log(props.tableData);
     console.log(id);
     try {
+      console.log(id)
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({id, table}),
+        body: JSON.stringify({ id, table }),
       });
 
       const responseData = await response.json();
@@ -116,3 +117,4 @@ export default function PopCardSubmit(props) {
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
 };
+

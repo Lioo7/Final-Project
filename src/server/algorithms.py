@@ -458,6 +458,10 @@ def _calculate_total(budget: dict) -> float:
     
     return total
 
+class counter:
+    
+    def __init__(self,num:int=0):
+        self.current_id = num
 
 def calculate_totals(node: dict) -> int:
     """
@@ -490,7 +494,7 @@ def calculate_totals(node: dict) -> int:
     return node['allocated_budget_amount']
 
     
-def update_dict_ids(input_dict: dict, parent_id=None, current_id=0):
+def update_dict_ids(counter:counter,input_dict: dict, parent_id=None):
     """
     Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.
 
@@ -502,15 +506,15 @@ def update_dict_ids(input_dict: dict, parent_id=None, current_id=0):
     Returns:
         dict: Updated dictionary with unique and incremental 'id' and 'parent' values.
     """
-    input_dict['id'] = current_id
+    input_dict['id'] = counter.current_id
     input_dict['parent'] = parent_id
 
     children = input_dict.get('children', [])
     num_children = len(children)
     for i in range(num_children):
-        current_id += 1
-        children[i] = update_dict_ids(children[i], current_id=current_id, parent_id=input_dict['id'])
-        current_id += len(children[i].get('children', []))
+        counter.current_id += 1
+        children[i] = update_dict_ids(counter, children[i], parent_id=input_dict['id'])
+        counter.current_id += len(children[i].get('children', []))
     input_dict['children'] = children
 
     return input_dict

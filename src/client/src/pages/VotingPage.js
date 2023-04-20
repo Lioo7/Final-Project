@@ -3,13 +3,13 @@ import VotingForm from '../sections/vote/VotingForm';
 
 export default function VotingPage() {
 
-  return  (
+  return (
     <>
       <Helmet>
         <title> Voting </title>
       </Helmet>
 
-      <VotingForm />
+      <VotingForm  />
     </>
   );
 }
