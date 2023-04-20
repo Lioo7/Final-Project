@@ -24,10 +24,6 @@ function PaperComponent(props) {
 
 export default function PopCardSubmit(props) {
   const id = useContext(UserContext);
-<<<<<<< HEAD
-
-=======
->>>>>>> 3c9eab4bfaa6e1b2f65271d4dfd67298bb70d77c
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
@@ -53,11 +49,7 @@ export default function PopCardSubmit(props) {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-<<<<<<< HEAD
-        body: JSON.stringify(id, props.tableData),
-=======
-        body: JSON.stringify({id, table}),
->>>>>>> 3c9eab4bfaa6e1b2f65271d4dfd67298bb70d77c
+        body: JSON.stringify({ id, table }),
       });
 
       const responseData = await response.json();
@@ -124,8 +116,5 @@ export default function PopCardSubmit(props) {
 
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
-<<<<<<< HEAD
-};  
-=======
 };
->>>>>>> 3c9eab4bfaa6e1b2f65271d4dfd67298bb70d77c
+

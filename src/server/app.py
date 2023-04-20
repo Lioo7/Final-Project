@@ -14,10 +14,11 @@ from calculator import Calculator
 app = Flask(__name__)
 CORS(app)
 
+# DB 
 database = data_handler(SQL_database(SQL_database.create_config()))
 
-#  --- Login ---
 
+#  ----- Login -----
 
 @app.route('/peoples_budget/login', methods=['POST'])
 def login():
@@ -98,9 +99,8 @@ def signup():
     database.handler.disconnect()
     return jsonify({'status': 'Faild'})
 
+
 # --- Information ---
-
-
 @app.route('/peoples_budget/information', methods=['GET'])
 def information():
     database.handler.connect()
@@ -144,43 +144,41 @@ def voting_tree():
         database.handler.connect()
         data = request.json
         user_id = data['id']
-        # have to get the user id from the client!
-        print(user_id)
-        json_string = data['table']
-        dictionary = json.loads(json_string)
-
-        print(json_string)
-
-        check_result = database.handler.check_voting_option(user_id=user_id)
-
-        if check_result == "false":
-
-            return jsonify({'status': 'Is not allowed to vote'})
-
-        elif check_result == "Error!":
-            print(check_result)
-
-            raise Exception("Error!, check_voting_option execute query")
-
-        # Save tree in DB
-        # TODO : have to get the user_id from the client and test the function
-        result = database.handler.store_vote(
-            vote_data=dictionary, user_id=user_id)
+        vote = data['table']
+        print(vote)
+        print("   \n")
+        result = database.handler.store_vote(vote=vote, user_id=user_id)
+        print(result)
+        
         if not result:
-            raise Exception("Error!, voting does not saved")
+            return jsonify({'status': 'Error!, voting does not saved'})
 
         else:
             database.handler.update_voting_option(user_id=user_id)
 
     except:
         return jsonify({'status': 'failed'})
-    print("here")
+    
     return jsonify({'status': 'Succeeded'})
 
 
 @app.route('/peoples_budget/voting', methods=['GET'])
 def subjects_and_projects_tree():
     database.handler.connect()
+    
+    user_id = request.args.get('user_id')
+    
+    # Check if user can vote
+    check_result = database.handler.check_voting_option(user_id=user_id)
+    
+    if check_result == "false":
+        return jsonify({'status': 'Is not allowed to vote'})
+
+    elif check_result == "Error!":
+        print(check_result)
+        return jsonify({'status': 'Error!, check_voting_option execute query'})
+
+    
     tree = database.handler.build_tree_from_current_budget()
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary

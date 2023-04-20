@@ -193,10 +193,11 @@ if __name__ == "__main__":
     # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
     #                         budget_amount VARCHAR(255)''')
     
-    SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote VARCHAR(255)')
+    SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote TEXT(4294967295)')
     # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
     SQL_init.create_table(cursor,'INFORMATION', 'name VARCHAR(50), details VARCHAR(1000)')
     
+    # Load datasets
     SQL_init.load_information_to_information_table(cursor,db)
     SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     # Clean
@@ -214,16 +215,16 @@ if __name__ == "__main__":
     
     ###### App (server) example:
     
-    sql_handler = SQL_database(SQL_database.create_config())
-    sql_handler.connect()
-    tree = sql_handler.build_tree_from_current_budget()
-    dictionary = tree.to_dict()
-    from algorithms import _calculate_totals    
-    _calculate_totals(dictionary)
-    json_tree = json.dumps(dictionary, ensure_ascii=False)
-    print(json_tree)
-    counter = 0
-    SQL_init.modify_id(dictionary,counter)
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # tree = sql_handler.build_tree_from_current_budget()
+    # dictionary = tree.to_dict()
+    # from algorithms import _calculate_totals    
+    # _calculate_totals(dictionary)
+    # json_tree = json.dumps(dictionary, ensure_ascii=False)
+    # print(json_tree)
+    # counter = 0
+    # SQL_init.modify_id(dictionary,counter)
 
     
     

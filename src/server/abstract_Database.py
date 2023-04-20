@@ -60,7 +60,7 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def store_vote(self, vote: dict, user_id: int) -> bool:
+    def store_vote(self, vote: str, user_id: int) -> bool:
         pass
     
     @abstractmethod
