@@ -198,15 +198,19 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor,'INFORMATION', 'name VARCHAR(50), details VARCHAR(1000)')
     
     # Load datasets
-    SQL_init.load_information_to_information_table(cursor,db)
-    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    #SQL_init.load_information_to_information_table(cursor,db)
+    #SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     # Clean
     #SQL_init.clean_database(cursor)
     
     
-    ###### App (server) example:
-    #sql_handler = SQL_database(SQL_database.create_config())
-    #sql_handler.connect()
+    # ###### App (server) example:
+    # sql_handler = SQL_database(SQL_database.create_config())
+    # sql_handler.connect()
+    # query = "SELECT * FROM USERS_VOTES"
+    # sql_handler.cursor.execute(query)
+    # result = sql_handler.cursor.fetchall()
+    # print(result)
     
     #d = sql_handler.get_information()
         
