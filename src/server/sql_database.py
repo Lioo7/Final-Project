@@ -419,6 +419,17 @@ class SQL_database(Abstract_Database):
         return dictionary
     
     def load_user_votes(self) -> dict:
-        pass
+        query = '''SELECT * FROM USERS_VOTES'''
+        try:
+            self.cursor.execute(query)
+            dict_result = self.cursor.fetchone()
+            converted_dict = self._convert_dict_format(dict_result)
+            
+        except:
+            return None
+        
+        return converted_dict
     
+    def _convert_dict_format(self,dict:dict) -> dict:
+        pass
     

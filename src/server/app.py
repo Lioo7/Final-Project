@@ -130,9 +130,14 @@ def algorithms_results():
     # TODO: implement load_user_votes() function in sql_database class
     dictionary = database.handler.load_user_votes()
 
+    if not isinstance(dictionary,dict):
+        return jsonify({'status': 'Faild to load from DB'})
+        
     median_algorithm_result: dict = median_algorithm(dictionary)
     generalized_median_result: dict = generalized_median_algorithm(dictionary)
-
+    
+    # TODO: check valid results from algorithms
+    
     return jsonify({'median_algorithm': json.dump(median_algorithm_result),
                     'generalized_median_algorithm': json.dump(generalized_median_result)})
 
