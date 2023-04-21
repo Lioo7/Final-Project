@@ -147,7 +147,8 @@ def voting_tree():
         vote = data['table']
         print(vote)
         print("   \n")
-        result = database.handler.store_vote(vote=vote, user_id=user_id)
+        vote_str = json.dumps(vote,ensure_ascii=False).replace("'", "''")
+        result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
         print(result)
         
         if not result:
