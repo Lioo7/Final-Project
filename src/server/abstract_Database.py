@@ -76,7 +76,7 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def load_user_votes(self) -> dict:
+    def load_user_votes(self) -> list[dict]:
         pass
     
     

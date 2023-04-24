@@ -3,7 +3,7 @@ from waitress import serve
 from flask_cors import CORS
 from tree import Tree
 from node import Node
-from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, counter
+from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, unite_votes, counter
 import json
 from data_handler import data_handler
 from sql_database import SQL_database
@@ -128,13 +128,14 @@ def algorithms_results():
     # TODO: select from DB the input voting
     database.handler.connect()
     # TODO: implement load_user_votes() function in sql_database class
-    dictionary = database.handler.load_user_votes()
-
-    if not isinstance(dictionary,dict):
-        return jsonify({'status': 'Faild to load from DB'})
+    # dictionary = database.handler.load_user_votes()
+    votes = database.handler.load_user_votes() # [votes1, vote2...]
+    voted_dict = unite_votes(votes)
+    # if not isinstance(dictionary,dict):
+    #     return jsonify({'status': 'Faild to load from DB'})
         
-    median_algorithm_result: dict = median_algorithm(dictionary)
-    generalized_median_result: dict = generalized_median_algorithm(dictionary)
+    median_algorithm_result: dict = median_algorithm(voted_dict)
+    generalized_median_result: dict = generalized_median_algorithm(voted_dict)
     
     # TODO: check valid results from algorithms
     

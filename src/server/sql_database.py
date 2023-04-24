@@ -419,17 +419,14 @@ class SQL_database(Abstract_Database):
         return dictionary
     
     def load_user_votes(self) -> dict:
-        query = '''SELECT * FROM USERS_VOTES'''
+        query = '''SELECT vote FROM USERS_VOTES'''
         try:
             self.cursor.execute(query)
-            dict_result = self.cursor.fetchone()
-            converted_dict = self._convert_dict_format(dict_result)
-            
+            result = self.cursor.fetchone()
+    
         except:
             return None
         
-        return converted_dict
-    
-    def _convert_dict_format(self,dict:dict) -> dict:
-        pass
+        return result
+
     
