@@ -2,7 +2,7 @@ import sys
 import random
 import pytest
 sys.path.append('../..')
-from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, convert_stucture, update_dict_ids, counter
+from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, convert_structure, update_dict_ids, counter
 
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
@@ -990,7 +990,7 @@ class TestGeneralizedMedianAlgorithm:
                                                 "Retirement grants for permanent soldiers": 374853,
                                                 "total": 8155592
                                             },
-                                            "total": 12436481
+                                            "total": 20592073
                                         },
                                         "total": 20592073
                                     },
@@ -999,7 +999,7 @@ class TestGeneralizedMedianAlgorithm:
                                 "total": 20592073
                             }
                   
-            convert_stucture(vote)
-            assert vote == expected_result    
+            updated_vote = convert_structure(vote)
+            assert updated_vote == expected_result    
             
             

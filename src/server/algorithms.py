@@ -520,104 +520,160 @@ def update_dict_ids(counter:counter,input_dict: dict, parent_id=None):
     return input_dict
 
 
-def convert_stucture(vote: dict) -> dict:
-    
-    
-    return 0
+def convert_structure(vote) -> dict:
+    """
+    Recursively converts the structure of a budget vote.
 
+    Args:
+        vote (dict): A dictionary representing the budget vote in the original structure.
+    
+    Returns:
+        dict: A dictionary representing the budget vote in the new structure.
+
+    The original structure consists of an array of dictionaries where each dictionary represents a budget vote item.
+    Each dictionary has the following keys:
+        - "id": the id of the node.
+        - "name": the name of the budget vote item.
+        - "description": the description of the node (ministry).
+        - "parent": the id if the node above the current node.
+        - "allocated_budget_amount": the allocated budget amount for the budget vote item.
+        - "children": an array of dictionaries representing the children of the budget vote item, if any.
+
+    The new structure consists of a nested dictionary where each dictionary represents a budget vote item.
+    Each dictionary has the following keys:
+        - "total": the total allocated budget amount for the budget vote item and its children.
+        - any child budget vote items as nested dictionaries.
+    """
+    def connvert_recursive(vote) -> dict:
+        result = {}
+        # iterate over the children of the current vote item
+        for item in vote['children']:
+            # extract the name, children, and total allocated budget amount for the current item
+            name = item['name']
+            children = item['children']
+            total = item['allocated_budget_amount']
+            # if the current item has no children, add it to the result with its allocated budget amount
+            if len(children) == 0:
+                result[name] = total
+            # if the current item has children, recursively call this function on its children and add the result to the current item
+            else:
+                child_result = connvert_recursive({'children': children})
+                child_result['total'] = total
+                result[name] = child_result
+        return result
+    
+    # init a variable to store the total allocated budget amount
+    total = 0       
+    # convert the dict
+    updated_vote = connvert_recursive(vote)
+    # iterate over the values in the updated budget vote and add up the total allocated budget amount in the first level
+    for value in updated_vote.values():
+        total+= value['total']
+    # add the total allocated budget amount to the top level of the updated dictionary
+    updated_vote['total'] = total
+    
+    return updated_vote
+    
 
 # if __name__ == "__main__":
 #     vote = {
-#             "id": 0,
-#             "name": "root",
-#             "description": "I am root",
-#             "parent": None,
-#             "allocated_budget_amount": "",
-#             "children": [
-#                 {
-#                     "id": 1,
-#                     "name": "Security and public order",
-#                     "description": "I am Security and public order",
-#                     "parent": 0,
-#                     "allocated_budget_amount": "",
-#                     "children": [
+#                     "id":0,
+#                     "name":"root",
+#                     "description":"I am root",
+#                     "parent":None,
+#                     "allocated_budget_amount":20592073,
+#                     "children":[
 #                         {
-#                             "id": 2,
-#                             "name": "Security",
-#                             "description": "I am Security",
-#                             "parent": 1,
-#                             "allocated_budget_amount": "",
-#                             "children": [
+#                             "id":1,
+#                             "name":"Security and public order",
+#                             "description":"I am Security and public order",
+#                             "parent":0,
+#                             "allocated_budget_amount":20592073,
+#                             "children":[
 #                                 {
-#                                     "id": 3,
-#                                     "name": "Ministry of Defense",
-#                                     "description": "I am Ministry of Defense",
-#                                     "parent": 2,
-#                                     "allocated_budget_amount": "",
-#                                     "children": [
-#                                         {
-#                                             "id": 4,
-#                                             "name": "HR",
-#                                             "description": "I am HR",
-#                                             "parent": 3,
-#                                             "allocated_budget_amount": "",
-#                                             "children": [
+#                                 "id":2,
+#                                 "name":"Security",
+#                                 "description":"I am Security",
+#                                 "parent":1,
+#                                 "allocated_budget_amount":20592073,
+#                                 "children":[
+#                                     {
+#                                         "id":3,
+#                                         "name":"Ministry of Defense",
+#                                         "description":"I am Ministry of Defense",
+#                                         "parent":2,
+#                                         "allocated_budget_amount":20592073,
+#                                         "children":[
+#                                             {
+#                                             "id":4,
+#                                             "name":"HR",
+#                                             "description":"I am HR",
+#                                             "parent":3,
+#                                             "allocated_budget_amount":12436481,
+#                                             "children":[
 #                                                 {
-#                                                     "id": 6,
-#                                                     "name": "Current salary of permanent soldiers",
-#                                                     "description": "I am Current salary of permanent soldiers",
-#                                                     "parent": 4,
-#                                                     "allocated_budget_amount": 11171083,
-#                                                     "children": []
+#                                                     "id":5,
+#                                                     "name":"Current salary of permanent soldiers",
+#                                                     "description":"I am Current salary of permanent soldiers",
+#                                                     "parent":4,
+#                                                     "allocated_budget_amount":11171083,
+#                                                     "children":[
+                                                        
+#                                                     ]
 #                                                 },
 #                                                 {
-#                                                     "id": 7,
-#                                                     "name": "Current salary of Ministry of Defense employees",
-#                                                     "description": "I am Current salary of Ministry of Defense employees",
-#                                                     "parent": 4,
-#                                                     "allocated_budget_amount": 1265398,
-#                                                     "children": []
+#                                                     "id":6,
+#                                                     "name":"Current salary of Ministry of Defense employees",
+#                                                     "description":"I am Current salary of Ministry of Defense employees",
+#                                                     "parent":4,
+#                                                     "allocated_budget_amount":1265398,
+#                                                     "children":[
+                                                        
+#                                                     ]
 #                                                 }
 #                                             ]
-#                                         },
-#                                         {
-#                                             "id": 5,
-#                                             "name": "Pensions",
-#                                             "description": "I am Pensions",
-#                                             "parent": 3,
-#                                             "allocated_budget_amount": "",
-#                                             "children": [
+#                                             },
+#                                             {
+#                                             "id":7,
+#                                             "name":"Pensions",
+#                                             "description":"I am Pensions",
+#                                             "parent":3,
+#                                             "allocated_budget_amount":8155592,
+#                                             "children":[
 #                                                 {
-#                                                     "id": 8,
-#                                                     "name": "Permanent soldiers pensions",
-#                                                     "description": "I am Permanent soldiers' pensions",
-#                                                     "parent": 5,
-#                                                     "allocated_budget_amount": 7780739,
-#                                                     "children": []
+#                                                     "id":8,
+#                                                     "name":"Permanent soldiers pensions",
+#                                                     "description":"I am Permanent soldiers' pensions",
+#                                                     "parent":7,
+#                                                     "allocated_budget_amount":7780739,
+#                                                     "children":[
+                                                        
+#                                                     ]
 #                                                 },
 #                                                 {
-#                                                     "id": 9,
-#                                                     "name": "Retirement grants for permanent soldiers",
-#                                                     "description": "I am Retirement grants for permanent soldiers",
-#                                                     "parent": 5,
-#                                                     "allocated_budget_amount": 374853,
-#                                                     "children": []
-#                                                 }
-#                                             ]
-#                                         }
-#                                     ]
-#                                 }
-#                             ]
-#                         }
-#                     ]
-#                 }
-#             ]
-#         }
+#                                                     "id":9,
+#                                                     "name":"Retirement grants for permanent soldiers",
+#                                                     "description":"I am Retirement grants for permanent soldiers",
+#                                                     "parent":7,
+#                                                     "allocated_budget_amount":374853,
+#                                                     "children":[
+#                                                         ]
+#                                                     }
+#                                                 ]
+#                                             }
+#                                         ]
+#                                     }
+#                                 ]
+#                             }
+#                         ]
+#                     }
+#                 ]
+#             }
 
-# # tree = Tree.from_dict(vote)
-# # tree.print_tree()
-# # ans = run_algorithm(vote, 2)
-# # print(ans)
+# # # tree = Tree.from_dict(vote)
+# # # tree.print_tree()
+# # # ans = run_algorithm(vote, 2)
+# # # print(ans)
 
-# _calculate_totals(vote)
-# print(vote)
+# updated_vote = convert_structure(vote)
+# print(updated_vote)
