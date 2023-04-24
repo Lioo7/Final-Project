@@ -562,7 +562,7 @@ def convert_structure(vote) -> dict:
                 result[name] = child_result
         return result
     
-    # init a variable to store the total allocated budget amount
+    # the total allocated budget amount
     total = 0       
     # convert the dict
     updated_vote = connvert_recursive(vote)
@@ -574,6 +574,18 @@ def convert_structure(vote) -> dict:
     
     return updated_vote
     
+    
+def unite_votes(votes:list[dict]) -> dict:
+    voted_dict = {}
+    
+    for i, vote in enumerate(votes):
+        # convert to the new structure 
+        updated_vote = convert_structure(vote)
+        userId = 'user' + str(i)
+        # add the updated vote to the dict
+        voted_dict[userId] = updated_vote
+        
+    return voted_dict
 
 # if __name__ == "__main__":
 #     vote = {
