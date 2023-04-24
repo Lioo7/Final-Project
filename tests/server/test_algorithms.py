@@ -883,80 +883,87 @@ class TestGeneralizedMedianAlgorithm:
         def test_convert_structure(self) -> None:
             # Testing the converting of a JSON object from the server to the structre of the algorithms
             vote = {
-                "id": 0,
-                "name": "root",
-                "description": "I am root",
-                "parent": None,
-                "allocated_budget_amount": "",
-                "children": [
-                    {
-                        "id": 1,
-                        "name": "Security and public order",
-                        "description": "I am Security and public order",
-                        "parent": 0,
-                        "allocated_budget_amount": "",
-                        "children": [
-                            {
-                                "id": 2,
-                                "name": "Security",
-                                "description": "I am Security",
-                                "parent": 1,
-                                "allocated_budget_amount": "",
-                                "children": [
+                    "id":0,
+                    "name":"root",
+                    "description":"I am root",
+                    "parent":None,
+                    "allocated_budget_amount":20592073,
+                    "children":[
+                        {
+                            "id":1,
+                            "name":"Security and public order",
+                            "description":"I am Security and public order",
+                            "parent":0,
+                            "allocated_budget_amount":20592073,
+                            "children":[
+                                {
+                                "id":2,
+                                "name":"Security",
+                                "description":"I am Security",
+                                "parent":1,
+                                "allocated_budget_amount":20592073,
+                                "children":[
                                     {
-                                        "id": 3,
-                                        "name": "Ministry of Defense",
-                                        "description": "I am Ministry of Defense",
-                                        "parent": 2,
-                                        "allocated_budget_amount": "",
-                                        "children": [
+                                        "id":3,
+                                        "name":"Ministry of Defense",
+                                        "description":"I am Ministry of Defense",
+                                        "parent":2,
+                                        "allocated_budget_amount":20592073,
+                                        "children":[
                                             {
-                                                "id": 4,
-                                                "name": "HR",
-                                                "description": "I am HR",
-                                                "parent": 3,
-                                                "allocated_budget_amount": "",
-                                                "children": [
-                                                    {
-                                                        "id": 6,
-                                                        "name": "Current salary of permanent soldiers",
-                                                        "description": "I am Current salary of permanent soldiers",
-                                                        "parent": 4,
-                                                        "allocated_budget_amount": 11171083.0,
-                                                        "children": []
-                                                    },
-                                                    {
-                                                        "id": 7,
-                                                        "name": "Current salary of Ministry of Defense employees",
-                                                        "description": "I am Current salary of Ministry of Defense employees",
-                                                        "parent": 4,
-                                                        "allocated_budget_amount": 1265398.0,
-                                                        "children": []
-                                                    }
-                                                ]
+                                            "id":4,
+                                            "name":"HR",
+                                            "description":"I am HR",
+                                            "parent":3,
+                                            "allocated_budget_amount":12436481,
+                                            "children":[
+                                                {
+                                                    "id":5,
+                                                    "name":"Current salary of permanent soldiers",
+                                                    "description":"I am Current salary of permanent soldiers",
+                                                    "parent":4,
+                                                    "allocated_budget_amount":11171083,
+                                                    "children":[
+                                                        
+                                                    ]
+                                                },
+                                                {
+                                                    "id":6,
+                                                    "name":"Current salary of Ministry of Defense employees",
+                                                    "description":"I am Current salary of Ministry of Defense employees",
+                                                    "parent":4,
+                                                    "allocated_budget_amount":1265398,
+                                                    "children":[
+                                                        
+                                                    ]
+                                                }
+                                            ]
                                             },
                                             {
-                                                "id": 5,
-                                                "name": "Pensions",
-                                                "description": "I am Pensions",
-                                                "parent": 3,
-                                                "allocated_budget_amount": "",
-                                                "children": [
-                                                    {
-                                                        "id": 8,
-                                                        "name": "Permanent soldiers pensions",
-                                                        "description": "I am Permanent soldiers' pensions",
-                                                        "parent": 5,
-                                                        "allocated_budget_amount": 7780739.0,
-                                                        "children": []
-                                                    },
-                                                    {
-                                                        "id": 9,
-                                                        "name": "Retirement grants for permanent soldiers",
-                                                        "description": "I am Retirement grants for permanent soldiers",
-                                                        "parent": 5,
-                                                        "allocated_budget_amount": 374853.0,
-                                                        "children": []
+                                            "id":7,
+                                            "name":"Pensions",
+                                            "description":"I am Pensions",
+                                            "parent":3,
+                                            "allocated_budget_amount":8155592,
+                                            "children":[
+                                                {
+                                                    "id":8,
+                                                    "name":"Permanent soldiers pensions",
+                                                    "description":"I am Permanent soldiers' pensions",
+                                                    "parent":7,
+                                                    "allocated_budget_amount":7780739,
+                                                    "children":[
+                                                        
+                                                    ]
+                                                },
+                                                {
+                                                    "id":9,
+                                                    "name":"Retirement grants for permanent soldiers",
+                                                    "description":"I am Retirement grants for permanent soldiers",
+                                                    "parent":7,
+                                                    "allocated_budget_amount":374853,
+                                                    "children":[
+                                                        ]
                                                     }
                                                 ]
                                             }
@@ -979,7 +986,7 @@ class TestGeneralizedMedianAlgorithm:
                                                 "total": 12436481
                                             },
                                             "Pensions": {
-                                                "Permanent soldiers' pensions": 7780739,
+                                                "Permanent soldiers pensions": 7780739,
                                                 "Retirement grants for permanent soldiers": 374853,
                                                 "total": 8155592
                                             },
