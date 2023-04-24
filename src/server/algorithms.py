@@ -519,6 +519,13 @@ def update_dict_ids(counter:counter,input_dict: dict, parent_id=None):
 
     return input_dict
 
+
+def convert_stucture(vote: dict) -> dict:
+    
+    
+    return 0
+
+
 # if __name__ == "__main__":
 #     vote = {
 #             "id": 0,
