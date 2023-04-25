@@ -27,7 +27,7 @@ export default function PopCardSubmit(props) {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
-  const [table, setTable] = useState(props.tableData);
+  const [table, setTable] = useState({ ...props.allData, children: props.tableData });
   const url = 'http://localhost:5000/peoples_budget/voting';
 
   const handleClickOpen = () => {
@@ -42,10 +42,9 @@ export default function PopCardSubmit(props) {
     // removed the table
     props.setDisplay(false);
     setLoading(true);
-    console.log(props.tableData);
-    console.log(id);
     try {
       console.log(id)
+      console.log(table)
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

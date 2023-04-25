@@ -597,14 +597,9 @@ def convert_structure(vote) -> dict:
     
 def unite_votes(votes:list[dict]) -> dict:
     voted_dict = {}
-    print(type(votes), "**********************outside for loop")
-    for i, vote in enumerate(votes):
+    
+    for i, vote in enumerate(votes,start=1):
         # convert to the new structure 
-        print(vote)
-        print("*************************************************************")
-        print("*************************************************************")
-        print(type(vote))
-        
         updated_vote = convert_structure(vote)
         userId = 'user' + str(i)
         # add the updated vote to the dict

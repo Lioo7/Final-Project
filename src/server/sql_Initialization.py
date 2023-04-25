@@ -6,6 +6,7 @@ from node import Node
 from sql_database import SQL_database
 import csv
 import json
+import logging
 
 class SQL_init():
     
@@ -57,6 +58,9 @@ class SQL_init():
     def load_and_insert_to_current_budget_table(cursor,db) -> None:
         path = '../../dataset/'
         df = pandas.read_csv( path + 'national_budget.csv',encoding='utf-8')
+        # remove double quotes from relevant columns
+        cols_to_clean = ['שם רמה 1','שם רמה 2', 'שם סעיף','שם תחום', 'שם תכנית', 'שם תקנה']
+        df[cols_to_clean] = df[cols_to_clean].apply(lambda x: x.str.replace('"', ''))
         num_rows = len(df)
         for i in range(1,num_rows):
             row = df.iloc[i, :]

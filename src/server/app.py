@@ -3,13 +3,15 @@ from waitress import serve
 from flask_cors import CORS
 from tree import Tree
 from node import Node
-from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, unite_votes, counter
+from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, unite_votes, counter, convert_structure
 import json
 from data_handler import data_handler
 from sql_database import SQL_database
 from user import User
 from datetime import datetime, date
 from calculator import Calculator
+import logging
+
 
 app = Flask(__name__)
 CORS(app)
@@ -27,10 +29,11 @@ def login():
         password = request.json['password']
 
     except:
-        print("error!")
-    # TODO: Check validation with database
+        logging.error("ERROR! : login args")
+    
     database.handler.connect()
     result = database.handler.check_if_user_exists(id, password)
+    
     if result:
         database.handler.disconnect()
         return jsonify({'status': 'Succeeded'})
@@ -64,7 +67,7 @@ def signup():
         password = request.json['password']
 
     except:
-        print("error!")
+        logging.error('ERROR! : sign_up args')
 
     # Check validation with database
     converted_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
@@ -129,19 +132,30 @@ def algorithms_results():
     database.handler.connect()
     # TODO: implement load_user_votes() function in sql_database class
     # dictionary = database.handler.load_user_votes()
-    votes = database.handler.load_user_votes() # [votes1, vote2...]
+    votes = database.handler.load_user_votes()
+    
+    if not isinstance(votes,list):
+         return jsonify({'status': 'Faild to load from DB'})
+     
     voted_dict = unite_votes(votes)
-    # if not isinstance(dictionary,dict):
-    #     return jsonify({'status': 'Faild to load from DB'})
     
-    print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    # Algo 1:
     median_algorithm_result: dict = median_algorithm(voted_dict)
-    generalized_median_result: dict = generalized_median_algorithm(voted_dict)
     
-    # TODO: check valid results from algorithms
+    # Algo 2:
+    # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
     
-    return jsonify({'median_algorithm': json.dump(median_algorithm_result),
-                    'generalized_median_algorithm': json.dump(generalized_median_result)})
+    # Get current budget
+    tree = database.handler.build_tree_from_current_budget()
+    current_budget = tree.to_dict()
+    # updates the 'total' values in the budget dictionary
+    calculate_totals(current_budget)
+    count = counter()
+    update_dict_ids(count,current_budget)
+    converted_current_budget = convert_structure(current_budget)
+    
+    return {'median_algorithm': json.dumps(median_algorithm_result,ensure_ascii=False),
+            'current_budget': json.dumps(converted_current_budget,ensure_ascii=False)}
 
 
 # --- Voting ---
@@ -151,9 +165,9 @@ def voting_tree():
         database.handler.connect()
         data = request.json
         user_id = data['id']
-        table = data['table']
-        vote = table[0]
-        vote_str = json.dumps(vote,ensure_ascii=False).replace("'", "''").replace('"', '\\"').replace('\\"\\"', '\\"')
+        vote = data['table']
+        
+        vote_str = json.dumps(vote,ensure_ascii=False).replace("'", "''")
         result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
         
         if not result:
@@ -181,7 +195,6 @@ def subjects_and_projects_tree():
         return jsonify({'status': 'Is not allowed to vote'})
 
     elif check_result == "Error!":
-        print(check_result)
         return jsonify({'status': 'Error!, check_voting_option execute query'})
 
     

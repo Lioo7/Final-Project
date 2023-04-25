@@ -38,7 +38,7 @@ export default function ResultsForm() {
   }, [data]);
 
   const handleButtonClick = (number) => {
-    if (!loading){
+    if (!loading) {
       setDisplayGraph1(false);
       setDisplayGraph2(false);
       setLoading(true);

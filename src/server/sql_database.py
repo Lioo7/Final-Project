@@ -7,6 +7,7 @@ from tree import Tree
 from node import Node
 from datetime import datetime, timedelta, date
 from user import User
+import logging
 
 class SQL_database(Abstract_Database):
     
@@ -426,25 +427,12 @@ class SQL_database(Abstract_Database):
             result = self.cursor.fetchall()
             
             for i in range(len(result)):
-                print(type(result[i][0]))
-                print("***********************************************************************************")
-                print("***********************************************************************************")
-                print("***********************************************************************************")
-                print("result: ******",result[i][0])
-                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 dictionary = json.loads(result[i][0])
-                print("dict!!:", dictionary)
                 votes.append(dictionary)
                 
         except:
             return None
-        
-        for vote in votes:
-            #print(vote)
-            print("***********************************************************************")
+       
         return votes
 
     
