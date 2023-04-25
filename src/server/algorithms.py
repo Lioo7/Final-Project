@@ -544,7 +544,7 @@ def convert_structure(vote) -> dict:
         - "total": the total allocated budget amount for the budget vote item and its children.
         - any child budget vote items as nested dictionaries.
     """
-    def connvert_recursive(vote) -> dict:
+    def convert_recursive(vote) -> dict:
         result = {}
         # iterate over the children of the current vote item
         for item in vote['children']:
@@ -557,15 +557,35 @@ def convert_structure(vote) -> dict:
                 result[name] = total
             # if the current item has children, recursively call this function on its children and add the result to the current item
             else:
-                child_result = connvert_recursive({'children': children})
+                child_result = convert_recursive({'children': children})
                 child_result['total'] = total
                 result[name] = child_result
         return result
     
+    # def convert_recursive(vote) -> dict:
+    #     result = {}
+    #     # check if the 'children' key exists and if its value is a list or dictionary
+    #     if 'children' in vote and isinstance(vote['children'], (list, dict)):
+    #         # iterate over the children of the current vote item
+    #         for item in vote['children']:
+    #             # extract the name, children, and total allocated budget amount for the current item
+    #             name = item['name']
+    #             children = item['children']
+    #             total = item['allocated_budget_amount']
+    #             # if the current item has no children, add it to the result with its allocated budget amount
+    #             if len(children) == 0:
+    #                 result[name] = total
+    #             # if the current item has children, recursively call this function on its children and add the result to the current item
+    #             else:
+    #                 child_result = convert_recursive({'children': children})
+    #                 child_result['total'] = total
+    #                 result[name] = child_result
+    #     return result
+    
     # the total allocated budget amount
     total = 0       
     # convert the dict
-    updated_vote = connvert_recursive(vote)
+    updated_vote = convert_recursive(vote)
     # iterate over the values in the updated budget vote and add up the total allocated budget amount in the first level
     for value in updated_vote.values():
         total+= value['total']
@@ -577,9 +597,14 @@ def convert_structure(vote) -> dict:
     
 def unite_votes(votes:list[dict]) -> dict:
     voted_dict = {}
-    
+    print(type(votes), "**********************outside for loop")
     for i, vote in enumerate(votes):
         # convert to the new structure 
+        print(vote)
+        print("*************************************************************")
+        print("*************************************************************")
+        print(type(vote))
+        
         updated_vote = convert_structure(vote)
         userId = 'user' + str(i)
         # add the updated vote to the dict

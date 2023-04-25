@@ -122,7 +122,7 @@ def dashboard():
                     'genders': Calculator.get_voter_count_by_gender(database.handler)})
 
 
-# --- Results ---
+# ----- Results -----
 @app.route('/peoples_budget/results', methods=['GET'])
 def algorithms_results():
     # TODO: select from DB the input voting
@@ -133,7 +133,8 @@ def algorithms_results():
     voted_dict = unite_votes(votes)
     # if not isinstance(dictionary,dict):
     #     return jsonify({'status': 'Faild to load from DB'})
-        
+    
+    print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     median_algorithm_result: dict = median_algorithm(voted_dict)
     generalized_median_result: dict = generalized_median_algorithm(voted_dict)
     
@@ -150,12 +151,10 @@ def voting_tree():
         database.handler.connect()
         data = request.json
         user_id = data['id']
-        vote = data['table']
-        print(vote)
-        print("   \n")
-        vote_str = json.dumps(vote,ensure_ascii=False).replace("'", "''")
+        table = data['table']
+        vote = table[0]
+        vote_str = json.dumps(vote,ensure_ascii=False).replace("'", "''").replace('"', '\\"').replace('\\"\\"', '\\"')
         result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
-        print(result)
         
         if not result:
             return jsonify({'status': 'Error!, voting does not saved'})
@@ -193,8 +192,8 @@ def subjects_and_projects_tree():
     count = counter()
     update_dict_ids(count,dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
-
-    return jsonify(json_tree)
+    
+    return json_tree
 
 
 # dev or prod

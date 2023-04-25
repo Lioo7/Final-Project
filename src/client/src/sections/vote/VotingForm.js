@@ -32,7 +32,7 @@ export default function VotingForm() {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
-      const information = JSON.parse(await response.json());
+      const information = await response.json();
       console.log(information.children);
       setTableData(information.children);
     } catch (error) {
