@@ -18,6 +18,7 @@ import LoadingTable from './LoadingTable';
 
 export default function VotingForm() {
   const [tableData, setTableData] = useState([]);
+  const [allData, setAllData] = useState({});
 
   // const [totalBudget, setTotalBudget] = useState(tableData.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
@@ -25,7 +26,7 @@ export default function VotingForm() {
   const id = useContext(UserContext);
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
-  
+
   const fetchData = async () => {
     try {
       const response = await fetch(url, {
@@ -35,6 +36,7 @@ export default function VotingForm() {
       const information = await response.json();
       console.log(information.children);
       setTableData(information.children);
+      setAllData(information)
     } catch (error) {
       console.error(error);
     }
@@ -363,7 +365,7 @@ export default function VotingForm() {
             </TableContainer>
           )}
 
-          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} />
+          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} />
           {!display && <ThankYou />}
         </Stack>
       )}
