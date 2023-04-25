@@ -139,7 +139,6 @@ def algorithms_results():
      
     voted_dict = unite_votes(votes)
     
-    # Algo 1:
     median_algorithm_result: dict = median_algorithm(voted_dict)
     
     # Algo 2:
