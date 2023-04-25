@@ -9,7 +9,7 @@ __all__ = ["median_algorithm", "generalized_median_algorithm"]
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
 logging.basicConfig(
-    filename="algorithms_logging.log", level=logging.DEBUG, filemode="w"
+    filename="server_logging.log", level=logging.DEBUG, filemode="w"
 )
 logger = logging.getLogger()
 

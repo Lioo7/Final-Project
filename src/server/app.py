@@ -10,6 +10,7 @@ from sql_database import SQL_database
 from user import User
 from datetime import datetime, date
 from calculator import Calculator
+import logging 
 
 app = Flask(__name__)
 CORS(app)
@@ -134,7 +135,6 @@ def algorithms_results():
     # if not isinstance(dictionary,dict):
     #     return jsonify({'status': 'Faild to load from DB'})
     
-    print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     median_algorithm_result: dict = median_algorithm(voted_dict)
     generalized_median_result: dict = generalized_median_algorithm(voted_dict)
     
