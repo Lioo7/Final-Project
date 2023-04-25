@@ -198,8 +198,8 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor,'INFORMATION', 'name VARCHAR(50), details VARCHAR(1000)')
     
     # Load datasets
-    #SQL_init.load_information_to_information_table(cursor,db)
-    #SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    SQL_init.load_information_to_information_table(cursor,db)
+    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     # Clean
     #SQL_init.clean_database(cursor)
     
@@ -207,10 +207,118 @@ if __name__ == "__main__":
     # ###### App (server) example:
     # sql_handler = SQL_database(SQL_database.create_config())
     # sql_handler.connect()
-    # query = "SELECT * FROM USERS_VOTES"
+    
+    # vote = {
+    #                 "id":0,
+    #                 "name":"root",
+    #                 "description":"I am root",
+    #                 "parent":None,
+    #                 "allocated_budget_amount":20592073,
+    #                 "children":[
+    #                     {
+    #                         "id":1,
+    #                         "name":"Security and public order",
+    #                         "description":"I am Security and public order",
+    #                         "parent":0,
+    #                         "allocated_budget_amount":20592073,
+    #                         "children":[
+    #                             {
+    #                             "id":2,
+    #                             "name":"Security",
+    #                             "description":"I am Security",
+    #                             "parent":1,
+    #                             "allocated_budget_amount":20592073,
+    #                             "children":[
+    #                                 {
+    #                                     "id":3,
+    #                                     "name":"Ministry of Defense",
+    #                                     "description":"I am Ministry of Defense",
+    #                                     "parent":2,
+    #                                     "allocated_budget_amount":20592073,
+    #                                     "children":[
+    #                                         {
+    #                                         "id":4,
+    #                                         "name":"HR",
+    #                                         "description":"I am HR",
+    #                                         "parent":3,
+    #                                         "allocated_budget_amount":12436481,
+    #                                         "children":[
+    #                                             {
+    #                                                 "id":5,
+    #                                                 "name":"Current salary of permanent soldiers",
+    #                                                 "description":"I am Current salary of permanent soldiers",
+    #                                                 "parent":4,
+    #                                                 "allocated_budget_amount":11171083,
+    #                                                 "children":[
+                                                        
+    #                                                 ]
+    #                                             },
+    #                                             {
+    #                                                 "id":6,
+    #                                                 "name":"Current salary of Ministry of Defense employees",
+    #                                                 "description":"I am Current salary of Ministry of Defense employees",
+    #                                                 "parent":4,
+    #                                                 "allocated_budget_amount":1265398,
+    #                                                 "children":[
+                                                        
+    #                                                 ]
+    #                                             }
+    #                                         ]
+    #                                         },
+    #                                         {
+    #                                         "id":7,
+    #                                         "name":"Pensions",
+    #                                         "description":"I am Pensions",
+    #                                         "parent":3,
+    #                                         "allocated_budget_amount":8155592,
+    #                                         "children":[
+    #                                             {
+    #                                                 "id":8,
+    #                                                 "name":"Permanent soldiers pensions",
+    #                                                 "description":"I am Permanent soldiers pensions",
+    #                                                 "parent":7,
+    #                                                 "allocated_budget_amount":7780739,
+    #                                                 "children":[
+                                                        
+    #                                                 ]
+    #                                             },
+    #                                             {
+    #                                                 "id":9,
+    #                                                 "name":"Retirement grants for permanent soldiers",
+    #                                                 "description":"I am Retirement grants for permanent soldiers",
+    #                                                 "parent":7,
+    #                                                 "allocated_budget_amount":374853,
+    #                                                 "children":[
+    #                                                     ]
+    #                                                 }
+    #                                             ]
+    #                                         }
+    #                                     ]
+    #                                 }
+    #                             ]
+    #                         }
+    #                     ]
+    #                 }
+    #             ]
+    #         }
+    
+    # user_id = "99999999"
+    # vote_str = json.dumps(vote,ensure_ascii=False)
+    # is_saved = sql_handler.store_vote(vote=vote_str, user_id=user_id)
+    # if is_saved:
+    #     print("saved")
+    #     print(" ")
+        
+    # result = sql_handler.load_user_votes()
+    # print(" ")
+    # print(" ")
+    # print(" ")
+    # query = '''SELECT user_id FROM USERS_VOTES'''
     # sql_handler.cursor.execute(query)
-    # result = sql_handler.cursor.fetchall()
-    # print(result)
+    # res = sql_handler.cursor.fetchall()
+    # print(type(res))
+    # print(res)
+    
     
     #d = sql_handler.get_information()
         

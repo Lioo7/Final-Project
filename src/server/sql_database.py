@@ -418,15 +418,33 @@ class SQL_database(Abstract_Database):
         
         return dictionary
     
-    def load_user_votes(self) -> dict:
+    def load_user_votes(self) -> list[dict]:
+        votes :list[dict] = []
         query = '''SELECT vote FROM USERS_VOTES'''
         try:
             self.cursor.execute(query)
-            result = self.cursor.fetchone()
-    
+            result = self.cursor.fetchall()
+            
+            for i in range(len(result)):
+                print(type(result[i][0]))
+                print("***********************************************************************************")
+                print("***********************************************************************************")
+                print("***********************************************************************************")
+                print("result: ******",result[i][0])
+                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print("dictionary!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                dictionary = json.loads(result[i][0])
+                print("dict!!:", dictionary)
+                votes.append(dictionary)
+                
         except:
             return None
         
-        return result
+        for vote in votes:
+            #print(vote)
+            print("***********************************************************************")
+        return votes
 
     
