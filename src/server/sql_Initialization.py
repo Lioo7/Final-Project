@@ -192,25 +192,28 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor, 'USERS', '''user_id INT PRIMARY KEY, first_name VARCHAR(255),
                             last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                             gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)''')
-    
-    # # TODO: Change USERS_VOTES column to : user_id, node_name, node_name, node_name ... budget_amount
-    # SQL_init.create_table(cursor, 'USERS_VOTES', '''user_id INT PRIMARY KEY, project_name VARCHAR(255),
-    #                         budget_amount VARCHAR(255)''')
-    
     SQL_init.create_table(cursor, 'USERS_VOTES', 'user_id VARCHAR(255), vote TEXT(4294967295)')
     # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
     SQL_init.create_table(cursor,'INFORMATION', 'name VARCHAR(50), details VARCHAR(1000)')
     
     # Load datasets
-    SQL_init.load_information_to_information_table(cursor,db)
-    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    #SQL_init.load_information_to_information_table(cursor,db)
+    #SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     # Clean
     #SQL_init.clean_database(cursor)
     
     
-    # ###### App (server) example:
-    # sql_handler = SQL_database(SQL_database.create_config())
-    # sql_handler.connect()
+    
+    
+    #  ###### App (server) example: ###############
+    #sql_handler = SQL_database(SQL_database.create_config())
+    #sql_handler.connect()
+    #result = sql_handler.get_user_full_name(123123123)
+    #sql_handler.cursor.execute("SELECT * FROM USERS")
+    #result = sql_handler.cursor.fetchall()
+    #print(result)
+    
+    
     
     # vote = {
     #                 "id":0,
