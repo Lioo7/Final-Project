@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
@@ -13,6 +13,7 @@ import Scrollbar from '../../../components/scrollbar/Scrollbar';
 import NavSection from '../../../components/nav-section/NavSection';
 //
 import navConfig from './config';
+import UserContext from '../../../contexts/UserContext';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +38,30 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+  const [name, setName] = useState('Hello user');
+  const id = useContext(UserContext);
+
+  const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const information = await response.json();
+      setName(`${information.first_name} ${information.last_name}`);
+      console.log(id);
+      console.log(name);
+    } catch (error) {
+      console.error(error);
+    }
+    return {};
+  };
+
+  useEffect(() => {
+    fetchData(); // fetch data asynchronously
+  }, []);
 
   useEffect(() => {
     if (openNav) {
@@ -63,7 +88,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {name}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
