@@ -16,7 +16,7 @@ import logging
 app = Flask(__name__)
 CORS(app)
 
-# DB 
+# DB
 database = data_handler(SQL_database(SQL_database.create_config()))
 
 
@@ -30,10 +30,10 @@ def login():
 
     except:
         logging.error("ERROR! : login args")
-    
+
     database.handler.connect()
     result = database.handler.check_if_user_exists(id, password)
-    
+
     if result:
         database.handler.disconnect()
         return jsonify({'status': 'Succeeded'})
@@ -48,14 +48,14 @@ def table_tree():
     database.handler.connect()
     tree = database.handler.build_tree_from_current_budget()
     dictionary = tree.to_dict()
-    
+
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
     database.handler.disconnect()
-    
+
     return jsonify(json_tree)
-    
+
 
 # ----------- Sign up ---------------
 
@@ -91,12 +91,12 @@ def signup():
 
     if check_mail:
         database.handler.disconnect()
-        return jsonify({'status': f'user already exists by {new_user.get_mail()}'})
+        return jsonify({'status': 'The email already exists in the system - try another email'})
 
     check_id = database.handler.user_id_exeisting(new_user)
     if check_id:
         database.handler.disconnect()
-        return jsonify({'status': f'user already exists by {new_user.get_id()}'})
+        return jsonify({'status': 'The ID already exists in the system'})
 
     insert_result = database.handler.insert_new_user(new_user)
     if insert_result:
@@ -104,46 +104,47 @@ def signup():
         return jsonify({'status': 'Succeeded'})
 
     database.handler.disconnect()
-    
+
     return jsonify({'status': 'Faild'})
 
 # ---------------- Home --------------------
 
-@app.route('/peoples_budget/home', methods=['GET'])
+@ app.route('/peoples_budget/home', methods=['GET'])
 def home():
     try:
-        id = request.json['id']
+        id = request.args.get('user_id')
     except:
         return jsonify({'status': 'Error!, id args'})
-    
+
     try:
         database.handler.connect()
-    
+
     except:
         return jsonify({'status': 'Error!, can not connect to db'})
-    
-    full_name= database.handler.get_user_full_name()
+
+    full_name = database.handler.get_user_full_name(int(id))
     first_name = full_name[0]
-    
+
     if first_name == "Faild":
         database.handler.disconnect()
         return jsonify({'status': f'There is no user in db with id: {id}'})
-        
+
     if first_name == "Error!":
         database.handler.disconnect()
         return jsonify({'status': 'Error!, Faild to execute get full name query'})
-    
+
     last_name = full_name[1]
-    
+
     database.handler.disconnect()
-    
+    print(first_name)
+    print(last_name)
     return {'first_name': first_name,
             'last_name': last_name}
-    
+
 
 # -------------- Information ----------------------
 
-@app.route('/peoples_budget/information', methods=['GET'])
+@ app.route('/peoples_budget/information', methods=['GET'])
 def information():
     database.handler.connect()
     dictionary = database.handler.get_information()
@@ -152,23 +153,23 @@ def information():
         return jsonify({'status': 'Faild'})
 
     json_information = json.dumps(dictionary, ensure_ascii=False)
-    
+
     database.handler.disconnect()
     return jsonify(json_information)
 
 
 # -------------------- Dashborad ------------------
 
-@app.route('/peoples_budget/dashboard', methods=['GET'])
+@ app.route('/peoples_budget/dashboard', methods=['GET'])
 def dashboard():
     database.handler.connect()
-    
+
     voter_count = Calculator.get_voter_count(database.handler)
     ages = Calculator.get_voter_count_by_age(database.handler)
     genders = Calculator.get_voter_count_by_gender(database.handler)
-    
+
     database.handler.disconnect()
-    
+
     return jsonify({'voter_count': voter_count,
                     'ages': ages,
                     'genders': genders})
@@ -176,81 +177,84 @@ def dashboard():
 
 # ------------------- Results ----------------------
 
-@app.route('/peoples_budget/results', methods=['GET'])
+@ app.route('/peoples_budget/results', methods=['GET'])
 def algorithms_results():
     # TODO: select from DB the input voting
     database.handler.connect()
     # TODO: implement load_user_votes() function in sql_database class
     # dictionary = database.handler.load_user_votes()
     votes = database.handler.load_user_votes()
-    
-    if not isinstance(votes,list):
+
+    if not isinstance(votes, list):
          return jsonify({'status': 'Faild to load from DB'})
-     
+
     voted_dict = unite_votes(votes)
-    
+
     # Algo 1:
     median_algorithm_result: dict = median_algorithm(voted_dict)
-    
+
     # Algo 2:
     # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
-    
+
     # Get current budget
     tree = database.handler.build_tree_from_current_budget()
     current_budget = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(current_budget)
     count = counter()
-    update_dict_ids(count,current_budget)
+    update_dict_ids(count, current_budget)
     converted_current_budget = convert_structure(current_budget)
-    
+
     database.handler.disconnect()
-    
-    return {'median_algorithm': json.dumps(median_algorithm_result,ensure_ascii=False),
-            'current_budget': json.dumps(converted_current_budget,ensure_ascii=False)}
+
+    return {'median_algorithm': json.dumps(median_algorithm_result, ensure_ascii=False),
+            'current_budget': json.dumps(converted_current_budget, ensure_ascii=False)}
 
 
 # ----------------- Voting ---------------------
 
-@app.route('/peoples_budget/voting', methods=['POST'])
+@ app.route('/peoples_budget/voting', methods=['POST'])
 def voting_tree():
     try:
         database.handler.connect()
         data = request.json
         user_id = data['id']
         vote = data['table']
-        
+
         # update user option voting
-        update_result = database.handler.update_voting_option(user_id=user_id,is_allowed=False)
+        update_result = database.handler.update_voting_option(
+            user_id = user_id, is_allowed = False)
         if not update_result:
             database.handler.disconnect()
             return jsonify({'status': 'Error!, Voting permission has not been updated, vote not saved'})
-                
-        vote_str = json.dumps(vote,ensure_ascii=False).replace("'", "''")
-        result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
-        
+
+        vote_str=json.dumps(vote, ensure_ascii = False).replace("'", "''")
+        result=database.handler.store_vote(
+            vote = str(vote_str), user_id = user_id)
+
         if not result:
             # update user option voting
-            update_result = database.handler.update_voting_option(user_id=user_id,is_allowed=True)
-            database.handler.disconnect()   
+            update_result=database.handler.update_voting_option(
+                user_id = user_id, is_allowed = True)
+            database.handler.disconnect()
             return jsonify({'status': 'Error!, voting does not saved'})
-            
+
     except:
         return jsonify({'status': 'failed'})
-    
+
     database.handler.disconnect()
     return jsonify({'status': 'Succeeded'})
 
 
-@app.route('/peoples_budget/voting', methods=['GET'])
+@ app.route('/peoples_budget/voting', methods = ['GET'])
 def subjects_and_projects_tree():
     database.handler.connect()
-    
-    user_id = request.args.get('user_id')
-    
+
+    user_id=request.args.get('user_id')
+
     # Check if user can vote
-    check_result = database.handler.check_voting_option(user_id=user_id)
-    
+    check_result=database.handler.check_voting_option(user_id = user_id)
+
     if check_result == "false":
         database.handler.disconnect()
         return jsonify({'status': 'Is not allowed to vote'})
@@ -259,26 +263,26 @@ def subjects_and_projects_tree():
         database.handler.disconnect()
         return jsonify({'status': 'Error!, check_voting_option execute query'})
 
-    
-    tree = database.handler.build_tree_from_current_budget()
-    dictionary = tree.to_dict()
+
+    tree=database.handler.build_tree_from_current_budget()
+    dictionary=tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
-    count = counter()
-    update_dict_ids(count,dictionary)
-    json_tree = json.dumps(dictionary, ensure_ascii=False)
-    
+    count=counter()
+    update_dict_ids(count, dictionary)
+    json_tree=json.dumps(dictionary, ensure_ascii = False)
+
     database.handler.disconnect()
     return json_tree
 
 
 # dev or prod
-mode = "dev"
+mode="dev"
 
 if __name__ == '__main__':
 
     if mode == "dev":
-        app.run(port=5000, debug=True)
+        app.run(port = 5000, debug = True)
 
     else:
-        serve(app, host='0.0.0.0', port=5000)
+        serve(app, host = '0.0.0.0', port = 5000)
