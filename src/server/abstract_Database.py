@@ -64,7 +64,7 @@ class Abstract_Database(ABC):
         pass
     
     @abstractmethod
-    def update_voting_option(self, user_id:str) -> bool:
+    def update_voting_option(self, user_id:str,is_allowed:bool) -> bool:
         pass
     
     @abstractmethod
@@ -77,6 +77,10 @@ class Abstract_Database(ABC):
     
     @abstractmethod
     def load_user_votes(self) -> list[dict]:
+        pass
+    
+    @abstractmethod
+    def get_user_full_name(self,user_id:int) -> list[str]:
         pass
     
     

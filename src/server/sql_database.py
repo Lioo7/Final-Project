@@ -166,9 +166,7 @@ class SQL_database(Abstract_Database):
                                     birth_date<='{sixtysix_years_ago}'
                                     AND allowed_to_vote = '0' '''
         sixtysix_years_ago_result = self.execute_query(sixtysix_years_ago_query)
-        print(eighteen_twentyfive_years_ago_result[0][0],twentysix_thirtyfive_years_ago_result[0][0],
-                thirtysix_fourtyfive_years_ago_result[0][0],fourtysix_fiftyfive_years_ago_result[0][0],
-                fiftysix_sixtyfive_years_ago_result[0][0],sixtysix_years_ago_result[0][0])
+        
         return [eighteen_twentyfive_years_ago_result[0][0],twentysix_thirtyfive_years_ago_result[0][0],
                 thirtysix_fourtyfive_years_ago_result[0][0],fourtysix_fiftyfive_years_ago_result[0][0],
                 fiftysix_sixtyfive_years_ago_result[0][0],sixtysix_years_ago_result[0][0]]
@@ -234,7 +232,7 @@ class SQL_database(Abstract_Database):
     def insert_new_user(self, new_user:User) -> bool:
         
         query = f'''INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-        allowed_to_vote) VALUES ({new_user.get_id()}, '{new_user.get_first_name()}', '{new_user.get_last_name}',
+        allowed_to_vote) VALUES ({new_user.get_id()}, '{new_user.get_first_name()}', '{new_user.get_last_name()}',
         '{new_user.get_date_of_birth()}', '{new_user.get_mail()}', '{new_user.get_password()}',
         '{new_user.get_gender_value()}','0', '1');'''
         
@@ -380,8 +378,13 @@ class SQL_database(Abstract_Database):
         
 
     
-    def update_voting_option(self,user_id:str) -> bool:
-        update_query = f"UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = '{user_id}'"
+    def update_voting_option(self,user_id:str,is_allowed:bool) -> bool:
+        update_query = ""
+        if is_allowed:
+            update_query = f"UPDATE USERS SET allowed_to_vote = 1 WHERE user_id = '{user_id}'"
+        else:
+            update_query = f"UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = '{user_id}'"
+            
         try:
             self.cursor.execute(update_query)
             self.db.commit()
@@ -435,4 +438,17 @@ class SQL_database(Abstract_Database):
        
         return votes
 
+    def get_user_full_name(self,user_id:int) -> list[str]:
+        query = f"SELECT first_name, last_name FROM USERS WHERE user_id={user_id}"
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+        
+        except:
+            return ["Error!"]
+        
+        if not result:
+            return "Faild"
+        
+        return [result[0][0],result[0][1]]
     
