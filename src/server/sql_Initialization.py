@@ -197,8 +197,8 @@ if __name__ == "__main__":
     SQL_init.create_table(cursor,'INFORMATION', 'name VARCHAR(50), details VARCHAR(1000)')
     
     # Load datasets
-    #SQL_init.load_information_to_information_table(cursor,db)
-    #SQL_init.load_and_insert_to_current_budget_table(cursor,db)
+    SQL_init.load_information_to_information_table(cursor,db)
+    SQL_init.load_and_insert_to_current_budget_table(cursor,db)
     # Clean
     #SQL_init.clean_database(cursor)
     

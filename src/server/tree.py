@@ -5,11 +5,12 @@ class Tree:
     '''This class present the tree of subjects and projects (container of Nodes)'''
     
     def __init__(self, root:Node) -> None:
-        self._root = root
-        self._node_amount = 0
-        
-        if self._root is not None:
-            self.node_amount = 1
+        if isinstance(root, Node):
+            self._root = root
+            self._node_amount = 0
+            
+            if self._root is not None:
+                self.node_amount = 1
 
     def get_root(self) -> Node:
         '''
@@ -138,7 +139,47 @@ class Tree:
         self._node_amount -= 1
         
         return True
+    
+    
+    def remove_node_by_id_and_name(self, parent_id:int, node_id:int,node_name:str) -> bool:
+        '''
+        Removes a node from the tree with the given parent id and child id
         
+        >>> root = Node(1, "root",  "I am root", None , 1000)
+        >>> node1 = Node(2, "project1", "I am project1", None, 500)
+        >>> node2 = Node(3, "project2", "I am project2", None, 300)
+        >>> tree = Tree(root)
+        >>> tree.add_node(1, node1)
+        >>> tree.add_node(2, node2)
+        >>> tree.get_size()
+        3
+        >>> tree.remove_node(2, 3)
+        >>> tree.get_size()
+        2
+        >>> tree.get_node(3,root)
+        None
+        '''
+        node = self.get_node_by_name_and_id(node_id=node_id,node_name=node_name)
+        
+        if node is None:
+            print(f"Error!, There is no node in the tree that has the id {node_id}")
+            return False
+        
+        # Remove children
+        for child in node.get_children():
+            child.set_parent_id(None)
+        
+        # Remove node from beeing child of his parent
+        parent_id = node.get_parent_id()
+        parent_node = self.get_node(parent_id)
+        parent_node.remove_child(node.get_id())
+        
+        # Remove parent id from this node
+        node.set_parent_id(None)
+        
+        self._node_amount -= 1
+        
+        return True   
 
     def get_size(self) -> int:
         '''
@@ -165,6 +206,7 @@ class Tree:
     
     
     def _get_node_recursive_by_name_and_id(self, current_node:Node, target_node_id:int,target_node_name:str) -> Node:
+        
         if target_node_id == current_node.get_id() and target_node_name == current_node.get_name():
             return current_node
         
@@ -175,6 +217,33 @@ class Tree:
                     return found_node
                 
         return None
+    
+    # def get_node_by_name_and_id(self, node_id:int, node_name:str) -> Node:
+    #     '''
+    #     Return the node with the given id and name in the tree.
+
+    #     Args:
+    #     node_id (int): The id of the node to search for.
+    #     node_name (str): The name of the node to search for.
+
+    #     Returns:
+    #     The node with the given id and name if found, None otherwise.
+    #     '''
+    #     def dfs(node: Node) -> Node:
+    #         if node is None:
+    #             return None
+            
+    #         if node.get_id() == node_id and node.get_name() == node_name:
+    #             return node
+            
+    #         for child in node.get_children():
+    #             result = dfs(child)
+    #             if result is not None:
+    #                 return result
+            
+    #         return None
+        
+    #     return dfs(self.get_root())
     
         
     def get_node(self,node_id:int) -> Node:

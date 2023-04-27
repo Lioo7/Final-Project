@@ -125,7 +125,7 @@ def home():
     except:
         return jsonify({'status': 'Error!, can not connect to db'})
 
-    full_name = database.handler.get_user_full_name(int(id))
+    full_name = database.handler.get_user_full_name(id)
     first_name = full_name[0]
 
     if first_name == "Faild":
