@@ -79,7 +79,7 @@ def median_algorithm(votes: dict) -> dict:
     True
     """
 
-    final_budget = run_algorithm(votes, 1)
+    final_budget = _run_algorithm(votes, 1)
     
     return final_budget
 
@@ -170,12 +170,145 @@ def generalized_median_algorithm(votes: dict) -> dict:
     True
     """
 
-    final_budget = run_algorithm(votes, 2)
+    final_budget = _run_algorithm(votes, 2)
     
     return final_budget
 
 
-def run_algorithm(votes: dict, algorithm_number: int) -> dict:
+class counter:
+    
+    def __init__(self,num:int=0):
+        self.current_id = num
+
+
+def calculate_totals(node: dict) -> int:
+    """
+    Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "allocated_budget_amount".
+    The function also adds "allocated_budget_amount" keys to the dictionary at each level,
+    with the value being the sum of all the "allocated_budget_amount" values of its sub-levels.
+    
+    Args:
+        node (dict): A dictionary representing a node in a tree structure.
+    
+    Returns:
+        int: The total allocated budget amount for the given node and its descendants.
+    """
+    allocated_budget_amount = 0
+    
+    # if the allocated_budget_amount is an integer or float, add it to the allocated_budget_amount variable
+    # otherwise, set the allocated_budget_amount for this node to 0
+    if isinstance(node['allocated_budget_amount'], (int, float)):
+        allocated_budget_amount += node['allocated_budget_amount']
+    else:
+        node['allocated_budget_amount'] = 0
+
+    # for each child of the current node, recursively call the _calculate_totals function to calculate
+    # the total allocated budget amount for the child, and add it to the allocated_budget_amount of the current node
+    for child in node['children']:
+        child_budget_amount = calculate_totals(child)
+        node['allocated_budget_amount'] += child_budget_amount
+
+    # return the allocated_budget_amount of the current node and its descendants
+    return node['allocated_budget_amount']
+
+    
+def update_dict_ids(counter:counter,input_dict: dict, parent_id=None):
+    """
+    Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.
+
+    Args:
+        input_dict (dict): Input dictionary to update.
+        parent_id (int): Parent id to set for the children. Default is None.
+        current_id (int): Current id to use for updating the dictionary. Default is 0.
+
+    Returns:
+        dict: Updated dictionary with unique and incremental 'id' and 'parent' values.
+    """
+    input_dict['id'] = counter.current_id
+    input_dict['parent'] = parent_id
+
+    children = input_dict.get('children', [])
+    num_children = len(children)
+    for i in range(num_children):
+        counter.current_id += 1
+        children[i] = update_dict_ids(counter, children[i], parent_id=input_dict['id'])
+        counter.current_id += len(children[i].get('children', []))
+    input_dict['children'] = children
+
+    return input_dict
+
+
+def convert_structure(vote) -> dict:
+    """
+    Recursively converts the structure of a budget vote.
+
+    Args:
+        vote (dict): A dictionary representing the budget vote in the original structure.
+    
+    Returns:
+        dict: A dictionary representing the budget vote in the new structure.
+
+    The original structure consists of an array of dictionaries where each dictionary represents a budget vote item.
+    Each dictionary has the following keys:
+        - "id": the id of the node.
+        - "name": the name of the budget vote item.
+        - "description": the description of the node (ministry).
+        - "parent": the id if the node above the current node.
+        - "allocated_budget_amount": the allocated budget amount for the budget vote item.
+        - "children": an array of dictionaries representing the children of the budget vote item, if any.
+
+    The new structure consists of a nested dictionary where each dictionary represents a budget vote item.
+    Each dictionary has the following keys:
+        - "total": the total allocated budget amount for the budget vote item and its children.
+        - any child budget vote items as nested dictionaries.
+    """
+    def convert_recursive(vote) -> dict:
+        result = {}
+        # iterate over the children of the current vote item
+        for item in vote['children']:
+            # extract the name, children, and total allocated budget amount for the current item
+            name = item['name']
+            children = item['children']
+            total = item['allocated_budget_amount']
+            # if the current item has no children, add it to the result with its allocated budget amount
+            if len(children) == 0:
+                result[name] = total
+            # if the current item has children, recursively call this function on its children and add the result to the current item
+            else:
+                child_result = convert_recursive({'children': children})
+                child_result['total'] = total
+                result[name] = child_result
+        return result
+    
+    
+    # the total allocated budget amount
+    total = 0       
+    # convert the dict
+    updated_vote = convert_recursive(vote)
+    # iterate over the values in the updated budget vote and add up the total allocated budget amount in the first level
+    for value in updated_vote.values():
+        total+= value['total']
+    # add the total allocated budget amount to the top level of the updated dictionary
+    updated_vote['total'] = total
+    
+    return updated_vote
+    
+    
+def unite_votes(votes:list[dict]) -> dict:
+    voted_dict = {}
+    
+    for i, vote in enumerate(votes,start=1):
+        # convert to the new structure 
+        updated_vote = convert_structure(vote)
+        userId = 'user' + str(i)
+        # add the updated vote to the dict
+        voted_dict[userId] = updated_vote
+        
+    return voted_dict
+
+
+# =============================================Utility-Functions============================================================
+def _run_algorithm(votes: dict, algorithm_number: int) -> dict:
     """
     Runs a specific algorithm on the given votes and returns the result.
 
@@ -458,238 +591,83 @@ def _calculate_total(budget: dict) -> float:
     
     return total
 
-class counter:
-    
-    def __init__(self,num:int=0):
-        self.current_id = num
-
-def calculate_totals(node: dict) -> int:
-    """
-    Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "allocated_budget_amount".
-    The function also adds "allocated_budget_amount" keys to the dictionary at each level,
-    with the value being the sum of all the "allocated_budget_amount" values of its sub-levels.
-    
-    Args:
-        node (dict): A dictionary representing a node in a tree structure.
-    
-    Returns:
-        int: The total allocated budget amount for the given node and its descendants.
-    """
-    allocated_budget_amount = 0
-    
-    # if the allocated_budget_amount is an integer or float, add it to the allocated_budget_amount variable
-    # otherwise, set the allocated_budget_amount for this node to 0
-    if isinstance(node['allocated_budget_amount'], (int, float)):
-        allocated_budget_amount += node['allocated_budget_amount']
-    else:
-        node['allocated_budget_amount'] = 0
-
-    # for each child of the current node, recursively call the _calculate_totals function to calculate
-    # the total allocated budget amount for the child, and add it to the allocated_budget_amount of the current node
-    for child in node['children']:
-        child_budget_amount = calculate_totals(child)
-        node['allocated_budget_amount'] += child_budget_amount
-
-    # return the allocated_budget_amount of the current node and its descendants
-    return node['allocated_budget_amount']
-
-    
-def update_dict_ids(counter:counter,input_dict: dict, parent_id=None):
-    """
-    Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.
-
-    Args:
-        input_dict (dict): Input dictionary to update.
-        parent_id (int): Parent id to set for the children. Default is None.
-        current_id (int): Current id to use for updating the dictionary. Default is 0.
-
-    Returns:
-        dict: Updated dictionary with unique and incremental 'id' and 'parent' values.
-    """
-    input_dict['id'] = counter.current_id
-    input_dict['parent'] = parent_id
-
-    children = input_dict.get('children', [])
-    num_children = len(children)
-    for i in range(num_children):
-        counter.current_id += 1
-        children[i] = update_dict_ids(counter, children[i], parent_id=input_dict['id'])
-        counter.current_id += len(children[i].get('children', []))
-    input_dict['children'] = children
-
-    return input_dict
-
-
-def convert_structure(vote) -> dict:
-    """
-    Recursively converts the structure of a budget vote.
-
-    Args:
-        vote (dict): A dictionary representing the budget vote in the original structure.
-    
-    Returns:
-        dict: A dictionary representing the budget vote in the new structure.
-
-    The original structure consists of an array of dictionaries where each dictionary represents a budget vote item.
-    Each dictionary has the following keys:
-        - "id": the id of the node.
-        - "name": the name of the budget vote item.
-        - "description": the description of the node (ministry).
-        - "parent": the id if the node above the current node.
-        - "allocated_budget_amount": the allocated budget amount for the budget vote item.
-        - "children": an array of dictionaries representing the children of the budget vote item, if any.
-
-    The new structure consists of a nested dictionary where each dictionary represents a budget vote item.
-    Each dictionary has the following keys:
-        - "total": the total allocated budget amount for the budget vote item and its children.
-        - any child budget vote items as nested dictionaries.
-    """
-    def convert_recursive(vote) -> dict:
-        result = {}
-        # iterate over the children of the current vote item
-        for item in vote['children']:
-            # extract the name, children, and total allocated budget amount for the current item
-            name = item['name']
-            children = item['children']
-            total = item['allocated_budget_amount']
-            # if the current item has no children, add it to the result with its allocated budget amount
-            if len(children) == 0:
-                result[name] = total
-            # if the current item has children, recursively call this function on its children and add the result to the current item
-            else:
-                child_result = convert_recursive({'children': children})
-                child_result['total'] = total
-                result[name] = child_result
-        return result
-    
-    # def convert_recursive(vote) -> dict:
-    #     result = {}
-    #     # check if the 'children' key exists and if its value is a list or dictionary
-    #     if 'children' in vote and isinstance(vote['children'], (list, dict)):
-    #         # iterate over the children of the current vote item
-    #         for item in vote['children']:
-    #             # extract the name, children, and total allocated budget amount for the current item
-    #             name = item['name']
-    #             children = item['children']
-    #             total = item['allocated_budget_amount']
-    #             # if the current item has no children, add it to the result with its allocated budget amount
-    #             if len(children) == 0:
-    #                 result[name] = total
-    #             # if the current item has children, recursively call this function on its children and add the result to the current item
-    #             else:
-    #                 child_result = convert_recursive({'children': children})
-    #                 child_result['total'] = total
-    #                 result[name] = child_result
-    #     return result
-    
-    # the total allocated budget amount
-    total = 0       
-    # convert the dict
-    updated_vote = convert_recursive(vote)
-    # iterate over the values in the updated budget vote and add up the total allocated budget amount in the first level
-    for value in updated_vote.values():
-        total+= value['total']
-    # add the total allocated budget amount to the top level of the updated dictionary
-    updated_vote['total'] = total
-    
-    return updated_vote
-    
-    
-def unite_votes(votes:list[dict]) -> dict:
-    voted_dict = {}
-    
-    for i, vote in enumerate(votes,start=1):
-        # convert to the new structure 
-        updated_vote = convert_structure(vote)
-        userId = 'user' + str(i)
-        # add the updated vote to the dict
-        voted_dict[userId] = updated_vote
-        
-    return voted_dict
 
 # if __name__ == "__main__":
-#     vote = {
-#                     "id":0,
-#                     "name":"root",
-#                     "description":"I am root",
-#                     "parent":None,
-#                     "allocated_budget_amount":20592073,
-#                     "children":[
-#                         {
-#                             "id":1,
-#                             "name":"Security and public order",
-#                             "description":"I am Security and public order",
-#                             "parent":0,
-#                             "allocated_budget_amount":20592073,
-#                             "children":[
-#                                 {
-#                                 "id":2,
-#                                 "name":"Security",
-#                                 "description":"I am Security",
-#                                 "parent":1,
-#                                 "allocated_budget_amount":20592073,
-#                                 "children":[
+#     input = {
+#    		        "id": 13,
+#                 "name": "root",
+#                 "description": "I am root",
+#                 "parent": None,
+#                 "allocated_budget_amount": 20592073,
+#                 "children": [
+#                     {
+#                         "id": 300,
+#                         "name": "Security and public order",
+#                         "description": "I am Security and public order",
+#                         "parent": 13,
+#                         "allocated_budget_amount": 20592073,
+#                         "children": [
+#                             {
+#                                 "id": 300,
+#                                 "name": "Security",
+#                                 "description": "I am Security",
+#                                 "parent": 1,
+#                                 "allocated_budget_amount": 20592073,
+#                                 "children": [
 #                                     {
-#                                         "id":3,
-#                                         "name":"Ministry of Defense",
-#                                         "description":"I am Ministry of Defense",
-#                                         "parent":2,
-#                                         "allocated_budget_amount":20592073,
-#                                         "children":[
+#                                         "id": 200,
+#                                         "name": "Ministry of Defense",
+#                                         "description": "I am Ministry of Defense",
+#                                         "parent": 300,
+#                                         "allocated_budget_amount": 20592073,
+#                                         "children": [
 #                                             {
-#                                             "id":4,
-#                                             "name":"HR",
-#                                             "description":"I am HR",
-#                                             "parent":3,
-#                                             "allocated_budget_amount":12436481,
-#                                             "children":[
-#                                                 {
-#                                                     "id":5,
-#                                                     "name":"Current salary of permanent soldiers",
-#                                                     "description":"I am Current salary of permanent soldiers",
-#                                                     "parent":4,
-#                                                     "allocated_budget_amount":11171083,
-#                                                     "children":[
-                                                        
-#                                                     ]
-#                                                 },
-#                                                 {
-#                                                     "id":6,
-#                                                     "name":"Current salary of Ministry of Defense employees",
-#                                                     "description":"I am Current salary of Ministry of Defense employees",
-#                                                     "parent":4,
-#                                                     "allocated_budget_amount":1265398,
-#                                                     "children":[
-                                                        
-#                                                     ]
-#                                                 }
-#                                             ]
+#                                                 "id": 400,
+#                                                 "name": "HR",
+#                                                 "description": "I am HR",
+#                                                 "parent": 200,
+#                                                 "allocated_budget_amount": 12436481,
+#                                                 "children": [
+#                                                     {
+#                                                         "id": 60,
+#                                                         "name": "Current salary of permanent soldiers",
+#                                                         "description": "I am Current salary of permanent soldiers",
+#                                                         "parent": 400,
+#                                                         "allocated_budget_amount": 11171083,
+#                                                         "children": []
+#                                                     },
+#                                                     {
+#                                                         "id": 7,
+#                                                         "name": "Current salary of Ministry of Defense employees",
+#                                                         "description": "I am Current salary of Ministry of Defense employees",
+#                                                         "parent": 400,
+#                                                         "allocated_budget_amount": 1265398,
+#                                                         "children": []
+#                                                     }
+#                                                 ]
 #                                             },
 #                                             {
-#                                             "id":7,
-#                                             "name":"Pensions",
-#                                             "description":"I am Pensions",
-#                                             "parent":3,
-#                                             "allocated_budget_amount":8155592,
-#                                             "children":[
-#                                                 {
-#                                                     "id":8,
-#                                                     "name":"Permanent soldiers pensions",
-#                                                     "description":"I am Permanent soldiers' pensions",
-#                                                     "parent":7,
-#                                                     "allocated_budget_amount":7780739,
-#                                                     "children":[
-                                                        
-#                                                     ]
-#                                                 },
-#                                                 {
-#                                                     "id":9,
-#                                                     "name":"Retirement grants for permanent soldiers",
-#                                                     "description":"I am Retirement grants for permanent soldiers",
-#                                                     "parent":7,
-#                                                     "allocated_budget_amount":374853,
-#                                                     "children":[
-#                                                         ]
+#                                                 "id": 5,
+#                                                 "name": "Pensions",
+#                                                 "description": "I am Pensions",
+#                                                 "parent": 200,
+#                                                 "allocated_budget_amount": 8155592,
+#                                                 "children": [
+#                                                     {
+#                                                         "id": 80,
+#                                                         "name": "Permanent soldiers pensions",
+#                                                         "description": "I am Permanent soldiers' pensions",
+#                                                         "parent": 5,
+#                                                         "allocated_budget_amount": 7780739,
+#                                                         "children": []
+#                                                     },
+#                                                     {
+#                                                         "id": 1,
+#                                                         "name": "Retirement grants for permanent soldiers",
+#                                                         "description": "I am Retirement grants for permanent soldiers",
+#                                                         "parent": 5,
+#                                                         "allocated_budget_amount": 374853,
+#                                                         "children": []
 #                                                     }
 #                                                 ]
 #                                             }
@@ -701,11 +679,8 @@ def unite_votes(votes:list[dict]) -> dict:
 #                     }
 #                 ]
 #             }
+    
+#     count = counter()
+#     update_dict_ids(count, input)
+#     print(input)
 
-# # # tree = Tree.from_dict(vote)
-# # # tree.print_tree()
-# # # ans = run_algorithm(vote, 2)
-# # # print(ans)
-
-# updated_vote = convert_structure(vote)
-# print(updated_vote)
