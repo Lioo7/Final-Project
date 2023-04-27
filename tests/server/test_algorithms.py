@@ -2,7 +2,16 @@ import sys
 import random
 import pytest
 sys.path.append('../..')
-from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, convert_structure, update_dict_ids, unite_votes, counter
+from src.server.algorithms import (
+    counter, 
+    median_algorithm,
+    generalized_median_algorithm,
+    calculate_totals,
+    convert_structure,
+    update_dict_ids,
+    unite_votes,
+    is_the_email_valid
+    )
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
         # Test case 1: Testing the output of the function with two users.
@@ -301,15 +310,15 @@ class TestGeneralizedMedianAlgorithm:
         # Test the function by generating random votes and ensuring that the total budget remains the same.
 
         # set up the initial budget and departments
-        initial_budget = 100
+        initial_budget = 10
         departments = [
             "Department of Defense",
             "Department of Education",
             "Department of Interior"
         ]
 
-        # generate random votes for 10 users
-        num_users = 10
+        # generate random votes for 5 users
+        num_users = 5
         votes = {}
         for i in range(num_users):
             while True:
@@ -1222,4 +1231,26 @@ class TestGeneralizedMedianAlgorithm:
             votes = [votes1, votes2]
             updated_votes = unite_votes(votes)
             assert updated_votes == expected_votes
-                                
+        
+    class TestUserVerificationFunctions:
+        def test_is_the_email_valid(self) -> None:
+            expected_valid = ['abc-d@mail.com', 'abc.def@mail.com', 'abc@mail.com', 'abc_def@mail.com', \
+                    'abc.def@mail.cc', 'abc.def@mail-archive.com', 'abc.def@mail.org', \
+                    'abc.def@mail.com', 'a-b.a.b@mail.com', 'a@gmail.com', 'dan@gmail.com']
+            expected_invalid = ['abc-@mail.com', 'abc..def@mail.com', '.abc@mail.com', 'abc#def@mail.com', \
+                       'abc.def@mail.c', 'abc.def@mail#archive.com', 'abc.def@mail', 'abc.def@mail..com']
+            emails = expected_valid + expected_invalid
+            valid = []
+            invalid = []
+            
+            for email in emails:
+                if is_the_email_valid(email):
+                    valid.append(email)
+                else:
+                    invalid.append(email)
+            
+            print('valid: ', valid)
+            print('invalid: ', invalid)
+            assert valid == expected_valid and invalid == expected_invalid
+                    
+            

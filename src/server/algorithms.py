@@ -3,6 +3,7 @@ This file contains the algorithms that will be used in the project for calculati
 """
 from tree import Tree
 import logging 
+import re
 
 __all__ = ["median_algorithm", "generalized_median_algorithm"]
 
@@ -320,7 +321,24 @@ def unite_votes(votes: list[dict]) -> dict:
     return voted_dict
 
 
-
+# =============================================User-Verification-Functions============================================================
+def is_the_email_valid(email: str) -> bool:
+    """
+    Check if an email address is valid.
+    
+    Args:
+        email (str): A string representing the email address to check.
+    
+    Returns:
+        bool: True if the email address is valid, False otherwise.
+    
+    """
+    is_valid = False
+    pattern = r'^[a-z\d]+(([._-]{1}[a-z\d]+)+|([a-z\d]*))@[a-z\d-]+\.[a-z]+[a-z]+'
+    if re.search(pattern, email):
+        is_valid = True
+    
+    return is_valid
 
 
 
