@@ -1,12 +1,13 @@
-
+import sys
+sys.path.append('..')
 import mysql.connector
-from abstract_Database import Abstract_Database
+from database.abstract_Database import Abstract_Database
 import os
 import json
-from tree import Tree
-from node import Node
+from server.tree import Tree
+from server.node import Node
 from datetime import datetime, timedelta, date
-from user import User
+from server.user import User
 import logging
 
 class SQL_database(Abstract_Database):

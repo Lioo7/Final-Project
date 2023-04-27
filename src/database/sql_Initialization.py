@@ -1,8 +1,10 @@
 import mysql.connector
 import os
+import sys
+sys.path.append('..')
 import pandas
-from tree import Tree
-from node import Node
+from server.tree import Tree
+from server.node import Node
 from sql_database import SQL_database
 import csv
 import json

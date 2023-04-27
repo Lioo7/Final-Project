@@ -1,7 +1,8 @@
-
+import sys
+sys.path.append('..')
 from abc import ABC, abstractmethod
-from tree import Tree
-from user import User
+from server.tree import Tree
+from server.user import User
 
 class Abstract_Database(ABC):
     

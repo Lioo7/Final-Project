@@ -1,7 +1,9 @@
+import sys
+sys.path.append('..')
 from tree import Tree
-from data_handler import data_handler
-from sql_database import *
-from abstract_Database import Abstract_Database
+from database.data_handler import data_handler
+from database.sql_database import *
+from database.abstract_Database import Abstract_Database
 
 class Calculator:
     '''This static class performing all the calculations'''
