@@ -2,8 +2,17 @@ import sys
 import random
 import pytest
 sys.path.append('../..')
-from src.server.algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, convert_structure, update_dict_ids, counter
-
+from src.server.algorithms import (
+    counter, 
+    median_algorithm,
+    generalized_median_algorithm,
+    calculate_totals,
+    convert_structure,
+    update_dict_ids,
+    unite_votes,
+    is_the_email_valid,
+    is_able_to_vote
+    )
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
         # Test case 1: Testing the output of the function with two users.
@@ -782,100 +791,94 @@ class TestGeneralizedMedianAlgorithm:
             }
             
             expected_result = {
-                    "id":0,
-                    "name":"root",
-                    "description":"I am root",
-                    "parent":None,
-                    "allocated_budget_amount":20592073,
-                    "children":[
+    "id": 0,
+    "name": "root",
+    "description": "I am root",
+    "parent": None,
+    "allocated_budget_amount": 20592073,
+    "children": [
+        {
+            "id": 1,
+            "name": "Security and public order",
+            "description": "I am Security and public order",
+            "parent": 0,
+            "allocated_budget_amount": 20592073,
+            "children": [
+                {
+                    "id": 2,
+                    "name": "Security",
+                    "description": "I am Security",
+                    "parent": 1,
+                    "allocated_budget_amount": 20592073,
+                    "children": [
                         {
-                            "id":1,
-                            "name":"Security and public order",
-                            "description":"I am Security and public order",
-                            "parent":0,
-                            "allocated_budget_amount":20592073,
-                            "children":[
+                            "id": 3,
+                            "name": "Ministry of Defense",
+                            "description": "I am Ministry of Defense",
+                            "parent": 2,
+                            "allocated_budget_amount": 20592073,
+                            "children": [
                                 {
-                                "id":2,
-                                "name":"Security",
-                                "description":"I am Security",
-                                "parent":1,
-                                "allocated_budget_amount":20592073,
-                                "children":[
-                                    {
-                                        "id":3,
-                                        "name":"Ministry of Defense",
-                                        "description":"I am Ministry of Defense",
-                                        "parent":2,
-                                        "allocated_budget_amount":20592073,
-                                        "children":[
-                                            {
-                                            "id":4,
-                                            "name":"HR",
-                                            "description":"I am HR",
-                                            "parent":3,
-                                            "allocated_budget_amount":12436481,
-                                            "children":[
-                                                {
-                                                    "id":5,
-                                                    "name":"Current salary of permanent soldiers",
-                                                    "description":"I am Current salary of permanent soldiers",
-                                                    "parent":4,
-                                                    "allocated_budget_amount":11171083,
-                                                    "children":[
-                                                        
-                                                    ]
-                                                },
-                                                {
-                                                    "id":6,
-                                                    "name":"Current salary of Ministry of Defense employees",
-                                                    "description":"I am Current salary of Ministry of Defense employees",
-                                                    "parent":4,
-                                                    "allocated_budget_amount":1265398,
-                                                    "children":[
-                                                        
-                                                    ]
-                                                }
-                                            ]
-                                            },
-                                            {
-                                            "id":7,
-                                            "name":"Pensions",
-                                            "description":"I am Pensions",
-                                            "parent":3,
-                                            "allocated_budget_amount":8155592,
-                                            "children":[
-                                                {
-                                                    "id":8,
-                                                    "name":"Permanent soldiers pensions",
-                                                    "description":"I am Permanent soldiers' pensions",
-                                                    "parent":7,
-                                                    "allocated_budget_amount":7780739,
-                                                    "children":[
-                                                        
-                                                    ]
-                                                },
-                                                {
-                                                    "id":9,
-                                                    "name":"Retirement grants for permanent soldiers",
-                                                    "description":"I am Retirement grants for permanent soldiers",
-                                                    "parent":7,
-                                                    "allocated_budget_amount":374853,
-                                                    "children":[
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
+                                    "id": 4,
+                                    "name": "HR",
+                                    "description": "I am HR",
+                                    "parent": 3,
+                                    "allocated_budget_amount": 12436481,
+                                    "children": [
+                                        {
+                                            "id": 5,
+                                            "name": "Current salary of permanent soldiers",
+                                            "description": "I am Current salary of permanent soldiers",
+                                            "parent": 4,
+                                            "allocated_budget_amount": 11171083,
+                                            "children": []
+                                        },
+                                        {
+                                            "id": 6,
+                                            "name": "Current salary of Ministry of Defense employees",
+                                            "description": "I am Current salary of Ministry of Defense employees",
+                                            "parent": 4,
+                                            "allocated_budget_amount": 1265398,
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 9,
+                                    "name": "Pensions",
+                                    "description": "I am Pensions",
+                                    "parent": 3,
+                                    "allocated_budget_amount": 8155592,
+                                    "children": [
+                                        {
+                                            "id": 10,
+                                            "name": "Permanent soldiers pensions",
+                                            "description": "I am Permanent soldiers' pensions",
+                                            "parent": 9,
+                                            "allocated_budget_amount": 7780739,
+                                            "children": []
+                                        },
+                                        {
+                                            "id": 11,
+                                            "name": "Retirement grants for permanent soldiers",
+                                            "description": "I am Retirement grants for permanent soldiers",
+                                            "parent": 9,
+                                            "allocated_budget_amount": 374853,
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+            
             count = counter()
-            update_dict_ids(count,input)
+            update_dict_ids(count, input)
             print(input)
             assert input == expected_result
             
@@ -1002,4 +1005,267 @@ class TestGeneralizedMedianAlgorithm:
             updated_vote = convert_structure(vote)
             assert updated_vote == expected_result    
             
+        
+        def test_unite_votes(self) -> None:
+            votes1 = {
+                    "id": 0,
+                    "name": "root",
+                    "description": "I am root",
+                    "parent": None,
+                    "allocated_budget_amount": 20592073,
+                    "children": [
+                        {
+                            "id": 1,
+                            "name": "Security and public order",
+                            "description": "I am Security and public order",
+                            "parent": 0,
+                            "allocated_budget_amount": 20592073,
+                            "children": [
+                                {
+                                    "id": 2,
+                                    "name": "Security",
+                                    "description": "I am Security",
+                                    "parent": 1,
+                                    "allocated_budget_amount": 20592073,
+                                    "children": [
+                                        {
+                                            "id": 3,
+                                            "name": "Ministry of Defense",
+                                            "description": "I am Ministry of Defense",
+                                            "parent": 2,
+                                            "allocated_budget_amount": 20592073,
+                                            "children": [
+                                                {
+                                                    "id": 4,
+                                                    "name": "HR",
+                                                    "description": "I am HR",
+                                                    "parent": 3,
+                                                    "allocated_budget_amount": 12436481,
+                                                    "children": [
+                                                        {
+                                                            "id": 5,
+                                                            "name": "Current salary of permanent soldiers",
+                                                            "description": "I am Current salary of permanent soldiers",
+                                                            "parent": 4,
+                                                            "allocated_budget_amount": 11171083,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "id": 6,
+                                                            "name": "Current salary of Ministry of Defense employees",
+                                                            "description": "I am Current salary of Ministry of Defense employees",
+                                                            "parent": 4,
+                                                            "allocated_budget_amount": 1265398,
+                                                            "children": []
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": 9,
+                                                    "name": "Pensions",
+                                                    "description": "I am Pensions",
+                                                    "parent": 3,
+                                                    "allocated_budget_amount": 8155592,
+                                                    "children": [
+                                                        {
+                                                            "id": 10,
+                                                            "name": "Permanent soldiers pensions",
+                                                            "description": "I am Permanent soldiers' pensions",
+                                                            "parent": 9,
+                                                            "allocated_budget_amount": 7780739,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "id": 11,
+                                                            "name": "Retirement grants for permanent soldiers",
+                                                            "description": "I am Retirement grants for permanent soldiers",
+                                                            "parent": 9,
+                                                            "allocated_budget_amount": 374853,
+                                                            "children": []
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+                    
+            votes2 = {
+                    "id": 0,
+                    "name": "root",
+                    "description": "I am root",
+                    "parent": None,
+                    "allocated_budget_amount": 20592073,
+                    "children": [
+                        {
+                            "id": 1,
+                            "name": "Security and public order",
+                            "description": "I am Security and public order",
+                            "parent": 0,
+                            "allocated_budget_amount": 20592073,
+                            "children": [
+                                {
+                                    "id": 2,
+                                    "name": "Security",
+                                    "description": "I am Security",
+                                    "parent": 1,
+                                    "allocated_budget_amount": 20592073,
+                                    "children": [
+                                        {
+                                            "id": 3,
+                                            "name": "Ministry of Defense",
+                                            "description": "I am Ministry of Defense",
+                                            "parent": 2,
+                                            "allocated_budget_amount": 20592073,
+                                            "children": [
+                                                {
+                                                    "id": 4,
+                                                    "name": "HR",
+                                                    "description": "I am HR",
+                                                    "parent": 3,
+                                                    "allocated_budget_amount": 12436481,
+                                                    "children": [
+                                                        {
+                                                            "id": 5,
+                                                            "name": "Current salary of permanent soldiers",
+                                                            "description": "I am Current salary of permanent soldiers",
+                                                            "parent": 4,
+                                                            "allocated_budget_amount": 11171083,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "id": 6,
+                                                            "name": "Current salary of Ministry of Defense employees",
+                                                            "description": "I am Current salary of Ministry of Defense employees",
+                                                            "parent": 4,
+                                                            "allocated_budget_amount": 1265398,
+                                                            "children": []
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": 9,
+                                                    "name": "Pensions",
+                                                    "description": "I am Pensions",
+                                                    "parent": 3,
+                                                    "allocated_budget_amount": 8155592,
+                                                    "children": [
+                                                        {
+                                                            "id": 10,
+                                                            "name": "Permanent soldiers pensions",
+                                                            "description": "I am Permanent soldiers' pensions",
+                                                            "parent": 9,
+                                                            "allocated_budget_amount": 7780739,
+                                                            "children": []
+                                                        },
+                                                        {
+                                                            "id": 11,
+                                                            "name": "Retirement grants for permanent soldiers",
+                                                            "description": "I am Retirement grants for permanent soldiers",
+                                                            "parent": 9,
+                                                            "allocated_budget_amount": 374853,
+                                                            "children": []
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            
+            expected_votes = {
+                            "user1": {
+                                "Security and public order": {
+                                "Security": {
+                                    "Ministry of Defense": {
+                                    "HR": {
+                                        "Current salary of permanent soldiers": 11171083,
+                                        "Current salary of Ministry of Defense employees": 1265398,
+                                        "total": 12436481
+                                    },
+                                    "Pensions": {
+                                        "Permanent soldiers pensions": 7780739,
+                                        "Retirement grants for permanent soldiers": 374853,
+                                        "total": 8155592
+                                    },
+                                    "total": 20592073
+                                    },
+                                    "total": 20592073
+                                },
+                                "total": 20592073
+                                },
+                                "total": 20592073
+                            },
+                            "user2": {
+                                "Security and public order": {
+                                "Security": {
+                                    "Ministry of Defense": {
+                                    "HR": {
+                                        "Current salary of permanent soldiers": 11171083,
+                                        "Current salary of Ministry of Defense employees": 1265398,
+                                        "total": 12436481
+                                    },
+                                    "Pensions": {
+                                        "Permanent soldiers pensions": 7780739,
+                                        "Retirement grants for permanent soldiers": 374853,
+                                        "total": 8155592
+                                    },
+                                    "total": 20592073
+                                    },
+                                    "total": 20592073
+                                },
+                                "total": 20592073
+                                },
+                                "total": 20592073
+                            }
+                            }
+
+               
+            votes = [votes1, votes2]
+            updated_votes = unite_votes(votes)
+            assert updated_votes == expected_votes
+        
+    class TestUserVerificationFunctions:
+        def test_is_the_email_valid(self) -> None:
+            expected_valid = ['abc-d@mail.com', 'abc.def@mail.com', 'abc@mail.com', 'abc_def@mail.com', \
+                    'abc.def@mail.cc', 'abc.def@mail-archive.com', 'abc.def@mail.org', \
+                    'abc.def@mail.com', 'a-b.a.b@mail.com', 'a@gmail.com', 'dan@gmail.com']
+            expected_invalid = ['abc-@mail.com', 'abc..def@mail.com', '.abc@mail.com', 'abc#def@mail.com', \
+                       'abc.def@mail.c', 'abc.def@mail#archive.com', 'abc.def@mail', 'abc.def@mail..com']
+            emails = expected_valid + expected_invalid
+            valid = []
+            invalid = []
+            
+            for email in emails:
+                if is_the_email_valid(email):
+                    valid.append(email)
+                else:
+                    invalid.append(email)
+            
+            assert valid == expected_valid and invalid == expected_invalid
+
+
+        def test_is_able_to_vote(self) -> None:
+            expected_valid = ['01/01/1990', '12/12/2003']
+            expected_invalid = ['01/01/2020', '12/12/2050']
+            dates = expected_valid + expected_invalid
+            valid = []
+            invalid = []
+            
+            for date in dates:
+                if is_able_to_vote(date):
+                    valid.append(date)
+                else:
+                    invalid.append(date)
+                    
+            assert valid == expected_valid and invalid == expected_invalid
+                    
             
