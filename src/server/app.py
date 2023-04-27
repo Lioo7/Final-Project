@@ -1,3 +1,5 @@
+import sys
+sys.path.append('..')
 from flask import Flask, request, jsonify
 from waitress import serve
 from flask_cors import CORS
@@ -5,12 +7,13 @@ from tree import Tree
 from node import Node
 from algorithms import median_algorithm, generalized_median_algorithm, calculate_totals, update_dict_ids, unite_votes, counter, convert_structure
 import json
-from data_handler import data_handler
-from sql_database import SQL_database
+from database.data_handler import data_handler
+from database.sql_database import SQL_database
 from user import User
 from datetime import datetime, date
 from calculator import Calculator
 import logging
+import database.abstract_Database
 
 
 app = Flask(__name__)
