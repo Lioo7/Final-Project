@@ -169,10 +169,6 @@ def dashboard():
     ages = Calculator.get_voter_count_by_age(database.handler)
     genders = Calculator.get_voter_count_by_gender(database.handler)
     
-    print("voter_count: ", voter_count)
-    print("ages: ", ages)
-    print("genders: ", genders)
-
     database.handler.disconnect()
 
     return jsonify({'voter_count': voter_count,
