@@ -1,15 +1,18 @@
-import mysql.connector
 import os
 import sys
 
+import mysql.connector
+
 sys.path.append("..")
-import pandas
-from server.tree import Tree
-from server.node import Node
-from sql_database import SQL_database
 import csv
 import json
 import logging
+
+import pandas
+from sql_database import SQL_database
+
+from server.node import Node
+from server.tree import Tree
 
 
 class SQL_init:

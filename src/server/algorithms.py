@@ -1,10 +1,11 @@
 """
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
-from tree import Tree
+import datetime
 import logging
 import re
-import datetime
+
+from tree import Tree
 
 __all__ = [
     "median_algorithm",

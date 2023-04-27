@@ -1,12 +1,13 @@
-import unittest
 import sys
+import unittest
 
 sys.path.append("../..")
+import datetime
+import sqlite3
+
 from src.server.calculator import Calculator
 from src.server.data_handler import data_handler
 from src.server.sql_database import SQL_database
-import sqlite3
-import datetime
 
 
 class Test_calculator(unittest.TestCase):

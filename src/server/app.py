@@ -1,29 +1,24 @@
-import sys
-
-sys.path.append("..")
-from flask import Flask, request, jsonify
-from waitress import serve
-from flask_cors import CORS
-from tree import Tree
-from node import Node
-from algorithms import (
-    median_algorithm,
-    generalized_median_algorithm,
-    calculate_totals,
-    update_dict_ids,
-    unite_votes,
-    counter,
-    convert_structure,
-)
 import json
+import logging
+import sys
+from datetime import date, datetime
+
+from algorithms import (calculate_totals, convert_structure, counter,
+                        generalized_median_algorithm, median_algorithm,
+                        unite_votes, update_dict_ids)
+from calculator import Calculator
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from node import Node
+from tree import Tree
+from user import User
+from waitress import serve
+
+import database.abstract_Database
 from database.data_handler import data_handler
 from database.sql_database import SQL_database
-from user import User
-from datetime import datetime, date
-from calculator import Calculator
-import logging
-import database.abstract_Database
 
+sys.path.append("..")
 
 app = Flask(__name__)
 CORS(app)

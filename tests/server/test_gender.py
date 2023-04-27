@@ -1,5 +1,5 @@
-import unittest
 import sys
+import unittest
 
 sys.path.append("../..")
 from src.server.gender import Gender

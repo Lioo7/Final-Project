@@ -1,19 +1,14 @@
-import sys
 import random
+import sys
+
 import pytest
 
 sys.path.append("../..")
-from src.server.algorithms import (
-    counter,
-    median_algorithm,
-    generalized_median_algorithm,
-    calculate_totals,
-    convert_structure,
-    update_dict_ids,
-    unite_votes,
-    is_the_email_valid,
-    is_able_to_vote,
-)
+from src.server.algorithms import (calculate_totals, convert_structure,
+                                   counter, generalized_median_algorithm,
+                                   is_able_to_vote, is_the_email_valid,
+                                   median_algorithm, unite_votes,
+                                   update_dict_ids)
 
 
 class TestMedianAlgorithm:

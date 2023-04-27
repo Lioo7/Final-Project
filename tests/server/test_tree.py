@@ -1,9 +1,9 @@
-import unittest
 import sys
+import unittest
 
 sys.path.append("../..")
-from src.server.tree import Tree
 from src.server.node import Node
+from src.server.tree import Tree
 
 
 class Test_tree(unittest.TestCase):

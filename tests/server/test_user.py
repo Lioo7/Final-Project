@@ -1,10 +1,10 @@
+import sys
 import unittest
 from datetime import date
-import sys
 
 sys.path.append("../..")
-from src.server.user import User
 from src.server.gender import Gender
+from src.server.user import User
 
 
 class Test_user(unittest.TestCase):

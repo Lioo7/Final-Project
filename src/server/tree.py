@@ -1,5 +1,6 @@
-from node import Node
 import json
+
+from node import Node
 
 
 class Tree:
