@@ -30,6 +30,8 @@ def login():
 
     except:
         logging.error("ERROR! : login args")
+        return jsonify({'status': 'Faild'})
+        
 
     database.handler.connect()
     result = database.handler.check_if_user_exists(id, password)
@@ -71,6 +73,7 @@ def signup():
         password = request.json['password']
 
     except:
+        logging.error("ERROR! : sign_up args")
         return jsonify('ERROR! : sign_up args')
 
     # Check validation with database
@@ -136,8 +139,6 @@ def home():
     last_name = full_name[1]
 
     database.handler.disconnect()
-    print(first_name)
-    print(last_name)
     return {'first_name': first_name,
             'last_name': last_name}
 
