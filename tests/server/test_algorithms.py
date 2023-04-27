@@ -10,7 +10,8 @@ from src.server.algorithms import (
     convert_structure,
     update_dict_ids,
     unite_votes,
-    is_the_email_valid
+    is_the_email_valid,
+    is_able_to_vote
     )
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
@@ -310,15 +311,15 @@ class TestGeneralizedMedianAlgorithm:
         # Test the function by generating random votes and ensuring that the total budget remains the same.
 
         # set up the initial budget and departments
-        initial_budget = 10
+        initial_budget = 100
         departments = [
             "Department of Defense",
             "Department of Education",
             "Department of Interior"
         ]
 
-        # generate random votes for 5 users
-        num_users = 5
+        # generate random votes for 10 users
+        num_users = 10
         votes = {}
         for i in range(num_users):
             while True:
@@ -1249,8 +1250,22 @@ class TestGeneralizedMedianAlgorithm:
                 else:
                     invalid.append(email)
             
-            print('valid: ', valid)
-            print('invalid: ', invalid)
+            assert valid == expected_valid and invalid == expected_invalid
+
+
+        def test_is_able_to_vote(self) -> None:
+            expected_valid = ['01/01/1990', '12/12/2003']
+            expected_invalid = ['01/01/2020', '12/12/2050']
+            dates = expected_valid + expected_invalid
+            valid = []
+            invalid = []
+            
+            for date in dates:
+                if is_able_to_vote(date):
+                    valid.append(date)
+                else:
+                    invalid.append(date)
+                    
             assert valid == expected_valid and invalid == expected_invalid
                     
             

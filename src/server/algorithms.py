@@ -4,8 +4,11 @@ This file contains the algorithms that will be used in the project for calculati
 from tree import Tree
 import logging 
 import re
+import datetime
 
-__all__ = ["median_algorithm", "generalized_median_algorithm"]
+__all__ = ['median_algorithm', 'generalized_median_algorithm',\
+    'calculate_totals', 'update_dict_ids', 'convert_structure',\
+        'unite_votes', 'is_the_email_valid', 'is_able_to_vote']
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
@@ -263,7 +266,7 @@ def convert_structure(vote) -> dict:
         - "total": the total allocated budget amount for the budget vote item and its children.
         - any child budget vote items as nested dictionaries.
     """
-    def convert_recursive(vote) -> dict:
+    def _convert_recursive(vote) -> dict:
         result = {}
         # iterate over the children of the current vote item
         for item in vote['children']:
@@ -276,7 +279,7 @@ def convert_structure(vote) -> dict:
                 result[name] = total
             # if the current item has children, recursively call this function on its children and add the result to the current item
             else:
-                child_result = convert_recursive({'children': children})
+                child_result = _convert_recursive({'children': children})
                 child_result['total'] = total
                 result[name] = child_result
         return result
@@ -285,7 +288,7 @@ def convert_structure(vote) -> dict:
     # the total allocated budget amount
     total = 0       
     # convert the dict
-    updated_vote = convert_recursive(vote)
+    updated_vote = _convert_recursive(vote)
     # iterate over the values in the updated budget vote and add up the total allocated budget amount in the first level
     for value in updated_vote.values():
         total+= value['total']
@@ -340,6 +343,36 @@ def is_the_email_valid(email: str) -> bool:
     
     return is_valid
 
+
+def is_able_to_vote(date_of_birth: str) -> bool:
+    """
+    Returns True if the person with the given date of birth is 18 years or older.
+
+    Args:
+        date_of_birth: A string representing the date of birth in the format DD/MM/YYYY.
+
+    Returns:
+        A boolean indicating whether the person is 18 years or older.
+
+    Raises:
+        ValueError: If the input string is not in the correct format.
+    """
+    # convert the input string to a datetime object
+    try:
+        dob = datetime.datetime.strptime(date_of_birth, '%d/%m/%Y')
+    except ValueError:
+        # if the input string is not in the correct format, raise an error
+        raise ValueError("Incorrect date format, should be DD/MM/YYYY")
+
+    # calculate the person's age
+    today = datetime.datetime.today()
+    age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+
+    # check if the person is an adult (18 years or older)
+    if age >= 18:
+        return True
+    else:
+        return False
 
 
 # =============================================Utility-Functions============================================================
