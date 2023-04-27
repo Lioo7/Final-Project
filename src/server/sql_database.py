@@ -72,14 +72,14 @@ class SQL_database(Abstract_Database):
         return Tree(root_node)
     
     def get_row_count(self, table_name: str) -> int:
-        query = f"SELECT COUNT(*) FROM {table_name}"
+        query = f"SELECT COUNT(*) FROM {table_name} WHERE allowed_to_vote=0"
         result = self.execute_query(query)
         return result[0][0]
 
     
     def get_row_count_by_gender(self, table_name: str) -> list[int]:
-        male_query = f"SELECT COUNT(*) FROM {table_name} WHERE gender=1"
-        female_query = f"SELECT COUNT(*) FROM {table_name} WHERE gender=2"
+        male_query = f"SELECT COUNT(*) FROM {table_name} WHERE gender=1 AND allowed_to_vote=0"
+        female_query = f"SELECT COUNT(*) FROM {table_name} WHERE gender=2 AND allowed_to_vote=0"
         
         try:
             self.cursor.execute(male_query)
