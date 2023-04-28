@@ -4,7 +4,7 @@ This file contains the algorithms that will be used in the project for calculati
 import datetime
 import logging
 import re
-
+import counter
 from tree import Tree
 
 __all__ = [
@@ -185,9 +185,6 @@ def generalized_median_algorithm(votes: dict) -> dict:
     return final_budget
 
 
-class counter:
-    def __init__(self, num: int = 0):
-        self.current_id = num
 
 
 def calculate_totals(node: dict) -> int:
