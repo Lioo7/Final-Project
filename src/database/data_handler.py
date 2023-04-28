@@ -1,5 +1,6 @@
-from database.abstract_Database import Abstract_Database
-
+import sys
+sys.path.append("../..")
+from src.database.abstract_Database import Abstract_Database
 
 class data_handler:
 

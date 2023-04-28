@@ -258,8 +258,8 @@ if __name__ == "__main__":
     )
 
     # Load datasets
-    SQL_init.load_information_to_information_table(cursor, db)
-    SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    #SQL_init.load_information_to_information_table(cursor, db)
+    #SQL_init.load_and_insert_to_current_budget_table(cursor, db)
     # Clean
     # SQL_init.clean_database(cursor)
     

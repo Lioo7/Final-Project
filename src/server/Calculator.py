@@ -1,11 +1,11 @@
 import sys
 
-sys.path.append("..")
+sys.path.append("../..")
 from tree import Tree
 
-from database.abstract_Database import Abstract_Database
-from database.data_handler import data_handler
-from database.sql_database import *
+from src.database.abstract_Database import Abstract_Database
+from src.database.data_handler import data_handler
+from src.database.sql_database import *
 
 
 class Calculator:

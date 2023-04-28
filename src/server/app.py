@@ -1,6 +1,7 @@
 import json
 import logging
 import sys
+sys.path.append("..")
 from datetime import datetime
 
 from flask import Flask, jsonify, request
@@ -17,8 +18,7 @@ from algorithms import (calculate_totals, convert_structure,
                         unite_votes, update_dict_ids)
 
 
-
-import database.abstract_Database
+from database.abstract_Database import Abstract_Database
 from database.data_handler import data_handler
 from database.sql_database import SQL_database
 

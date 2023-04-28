@@ -6,8 +6,8 @@ import datetime
 import sqlite3
 
 from src.server.calculator import Calculator
-from src.server.data_handler import data_handler
-from src.server.sql_database import SQL_database
+from src.database.data_handler import data_handler
+from src.database.sql_database import SQL_database
 
 
 class Test_calculator(unittest.TestCase):
