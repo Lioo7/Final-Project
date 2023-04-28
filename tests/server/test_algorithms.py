@@ -10,6 +10,7 @@ from src.server.algorithms import (calculate_totals, convert_structure,generaliz
                                    update_dict_ids)
 
 
+
 class TestMedianAlgorithm:
     def test_median_algorithm_with_two_users(self) -> None:
         # Test case 1: Testing the output of the function with two users.
@@ -1343,55 +1344,3 @@ class TestGeneralizedMedianAlgorithm:
             votes = [votes1, votes2]
             updated_votes = unite_votes(votes)
             assert updated_votes == expected_votes
-
-    class TestUserVerificationFunctions:
-        def test_is_the_email_valid(self) -> None:
-            expected_valid = [
-                "abc-d@mail.com",
-                "abc.def@mail.com",
-                "abc@mail.com",
-                "abc_def@mail.com",
-                "abc.def@mail.cc",
-                "abc.def@mail-archive.com",
-                "abc.def@mail.org",
-                "abc.def@mail.com",
-                "a-b.a.b@mail.com",
-                "a@gmail.com",
-                "dan@gmail.com",
-            ]
-            expected_invalid = [
-                "abc-@mail.com",
-                "abc..def@mail.com",
-                ".abc@mail.com",
-                "abc#def@mail.com",
-                "abc.def@mail.c",
-                "abc.def@mail#archive.com",
-                "abc.def@mail",
-                "abc.def@mail..com",
-            ]
-            emails = expected_valid + expected_invalid
-            valid = []
-            invalid = []
-
-            for email in emails:
-                if is_the_email_valid(email):
-                    valid.append(email)
-                else:
-                    invalid.append(email)
-
-            assert valid == expected_valid and invalid == expected_invalid
-
-        def test_is_able_to_vote(self) -> None:
-            expected_valid = ["01/01/1990", "12/12/2003"]
-            expected_invalid = ["01/01/2020", "12/12/2050"]
-            dates = expected_valid + expected_invalid
-            valid = []
-            invalid = []
-
-            for date in dates:
-                if is_able_to_vote(date):
-                    valid.append(date)
-                else:
-                    invalid.append(date)
-
-            assert valid == expected_valid and invalid == expected_invalid

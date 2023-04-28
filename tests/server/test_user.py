@@ -2,9 +2,10 @@ import sys
 import unittest
 from datetime import date
 
-sys.path.append("../..")
 from src.server.gender import Gender
 from src.server.user import User
+
+sys.path.append("../..")
 
 
 class Test_user(unittest.TestCase):
@@ -95,6 +96,57 @@ class Test_user(unittest.TestCase):
         # Test set_allowed_to_vote() function
         self.user.set_allowed_to_vote(False)
         self.assertEqual(self.user.get_allowed_to_vote(), False)
+
+    def test_is_the_email_valid(self) -> None:
+        expected_valid = [
+            "abc-d@mail.com",
+            "abc.def@mail.com",
+            "abc@mail.com",
+            "abc_def@mail.com",
+            "abc.def@mail.cc",
+            "abc.def@mail-archive.com",
+            "abc.def@mail.org",
+            "abc.def@mail.com",
+            "a-b.a.b@mail.com",
+            "a@gmail.com",
+            "dan@gmail.com",
+        ]
+        expected_invalid = [
+            "abc-@mail.com",
+            "abc..def@mail.com",
+            ".abc@mail.com",
+            "abc#def@mail.com",
+            "abc.def@mail.c",
+            "abc.def@mail#archive.com",
+            "abc.def@mail",
+            "abc.def@mail..com",
+        ]
+        emails = expected_valid + expected_invalid
+        valid = []
+        invalid = []
+
+        for email in emails:
+            if self.user.is_the_email_valid(email):
+                valid.append(email)
+            else:
+                invalid.append(email)
+
+        assert valid == expected_valid and invalid == expected_invalid
+
+    def test_is_over_18(self) -> None:
+        expected_valid = ["01/01/1990", "12/12/2003"]
+        expected_invalid = ["01/01/2020", "12/12/2050"]
+        dates = expected_valid + expected_invalid
+        valid = []
+        invalid = []
+
+        for date in dates:
+            if self.user.is_over_18(date):
+                valid.append(date)
+            else:
+                invalid.append(date)
+
+        assert valid == expected_valid and invalid == expected_invalid
 
 
 if __name__ == "__main__":
