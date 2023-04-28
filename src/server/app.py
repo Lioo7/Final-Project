@@ -1,24 +1,22 @@
 import json
 import logging
 import sys
-from datetime import date, datetime
+from datetime import datetime
 
-from algorithms import (
-    calculate_totals,
-    convert_structure,
-    counter,
-    generalized_median_algorithm,
-    median_algorithm,
-    unite_votes,
-    update_dict_ids,
-)
-from calculator import Calculator
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from waitress import serve
+
+from calculator import Calculator
+from user import User
 from node import Node
 from tree import Tree
-from user import User
-from waitress import serve
+from counter import Counter
+from algorithms import (calculate_totals, convert_structure,
+                        generalized_median_algorithm, median_algorithm,
+                        unite_votes, update_dict_ids)
+
+
 
 import database.abstract_Database
 from database.data_handler import data_handler
@@ -33,8 +31,7 @@ CORS(app)
 database = data_handler(SQL_database(SQL_database.create_config()))
 
 
-#  ------------ Login ---------------
-
+#  ----------------- Login ----------------------
 
 @app.route("/peoples_budget/login", methods=["POST"])
 def login():
@@ -72,8 +69,7 @@ def table_tree():
     return jsonify(json_tree)
 
 
-# ----------- Sign up ---------------
-
+# ----------------- Sign up ----------------------
 
 @app.route("/peoples_budget/sign_up", methods=["POST"])
 def signup():
@@ -142,8 +138,7 @@ def signup():
     return jsonify({"status": "Faild"})
 
 
-# ---------------- Home --------------------
-
+# --------------------- Home --------------------------
 
 @app.route("/peoples_budget/home", methods=["GET"])
 def home():
@@ -175,8 +170,7 @@ def home():
     return {"first_name": first_name, "last_name": last_name}
 
 
-# -------------- Information ----------------------
-
+# ------------------- Information ---------------------------
 
 @app.route("/peoples_budget/information", methods=["GET"])
 def information():
@@ -192,8 +186,7 @@ def information():
     return jsonify(json_information)
 
 
-# -------------------- Dashborad ------------------
-
+# ---------------------- Dashborad ----------------------------
 
 @app.route("/peoples_budget/dashboard", methods=["GET"])
 def dashboard():
@@ -208,46 +201,35 @@ def dashboard():
     return jsonify({"voter_count": voter_count, "ages": ages, "genders": genders})
 
 
-# ------------------- Results ----------------------
+# ----------------------- Voting ---------------------------
 
-
-@app.route("/peoples_budget/results", methods=["GET"])
-def algorithms_results():
-    # TODO: select from DB the input voting
+@app.route("/peoples_budget/voting", methods=["GET"])
+def subjects_and_projects_tree():
     database.handler.connect()
-    # TODO: implement load_user_votes() function in sql_database class
-    # dictionary = database.handler.load_user_votes()
-    votes = database.handler.load_user_votes()
 
-    if not isinstance(votes, list):
-        return jsonify({"status": "Faild to load from DB"})
+    user_id = request.args.get("user_id")
 
-    voted_dict = unite_votes(votes)
+    # Check if user can vote
+    check_result = database.handler.check_voting_option(user_id=user_id)
 
-    # Algo 1:
-    median_algorithm_result: dict = median_algorithm(voted_dict)
+    if check_result == "false":
+        database.handler.disconnect()
+        return jsonify({"status": "Is not allowed to vote"})
 
-    # Algo 2:
-    # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+    elif check_result == "Error!":
+        database.handler.disconnect()
+        return jsonify({"status": "Error!, check_voting_option execute query"})
 
-    # Get current budget
     tree = database.handler.build_tree_from_current_budget()
-    current_budget = tree.to_dict()
+    dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
-    calculate_totals(current_budget)
-    count = counter()
-    update_dict_ids(count, current_budget)
-    converted_current_budget = convert_structure(current_budget)
+    calculate_totals(dictionary)
+    count = Counter()
+    update_dict_ids(count, dictionary)
+    json_tree = json.dumps(dictionary, ensure_ascii=False)
 
     database.handler.disconnect()
-
-    return {
-        "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
-        "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
-    }
-
-
-# ----------------- Voting ---------------------
+    return json_tree
 
 
 @app.route("/peoples_budget/voting", methods=["POST"])
@@ -288,34 +270,40 @@ def voting_tree():
     return jsonify({"status": "Succeeded"})
 
 
-@app.route("/peoples_budget/voting", methods=["GET"])
-def subjects_and_projects_tree():
+
+# ----------------------- Results ------------------------------
+
+@app.route("/peoples_budget/results", methods=["GET"])
+def algorithms_results():
     database.handler.connect()
+    votes = database.handler.load_user_votes()
 
-    user_id = request.args.get("user_id")
+    if not isinstance(votes, list):
+        return jsonify({"status": "Faild to load from DB"})
 
-    # Check if user can vote
-    check_result = database.handler.check_voting_option(user_id=user_id)
+    voted_dict = unite_votes(votes)
 
-    if check_result == "false":
-        database.handler.disconnect()
-        return jsonify({"status": "Is not allowed to vote"})
+    # Algo 1:
+    median_algorithm_result: dict = median_algorithm(voted_dict)
 
-    elif check_result == "Error!":
-        database.handler.disconnect()
-        return jsonify({"status": "Error!, check_voting_option execute query"})
+    # Algo 2:
+    # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
 
+    # Get current budget
     tree = database.handler.build_tree_from_current_budget()
-    dictionary = tree.to_dict()
+    current_budget = tree.to_dict()
     # updates the 'total' values in the budget dictionary
-    calculate_totals(dictionary)
-    count = counter()
-    update_dict_ids(count, dictionary)
-    json_tree = json.dumps(dictionary, ensure_ascii=False)
+    calculate_totals(current_budget)
+    count = Counter()
+    update_dict_ids(count, current_budget)
+    converted_current_budget = convert_structure(current_budget)
 
     database.handler.disconnect()
-    return json_tree
 
+    return {
+        "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
+        "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
+    }
 
 # dev or prod
 mode = "dev"

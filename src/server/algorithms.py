@@ -1,8 +1,10 @@
 """
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
+import datetime
 import logging
-
+import re
+from counter import Counter
 from tree import Tree
 
 __all__ = [
@@ -183,9 +185,6 @@ def generalized_median_algorithm(votes: dict) -> dict:
     return final_budget
 
 
-class counter:
-    def __init__(self, num: int = 0):
-        self.current_id = num
 
 
 def calculate_totals(node: dict) -> int:
@@ -219,7 +218,7 @@ def calculate_totals(node: dict) -> int:
     return node["allocated_budget_amount"]
 
 
-def update_dict_ids(counter: counter, input_dict: dict, parent_id=None):
+def update_dict_ids(counter: Counter, input_dict: dict, parent_id=None):
     """
     Recursively updates the 'id' and 'parent' values of a dictionary to make them unique and in incremental order.
 
