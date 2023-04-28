@@ -1,2 +1,1 @@
-WARNING:werkzeug: * Debugger is active!
-INFO:werkzeug: * Debugger PIN: 404-997-780
+INFO:waitress:Serving on http://0.0.0.0:5000

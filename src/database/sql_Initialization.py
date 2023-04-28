@@ -1,19 +1,15 @@
 import os
 import sys
+sys.path.append("..")
 
 import mysql.connector
-
-sys.path.append("..")
-import csv
-import json
-import logging
-
-import pandas
 from sql_database import SQL_database
+
+import csv
+import pandas
 
 from server.node import Node
 from server.tree import Tree
-
 
 class SQL_init:
 
@@ -257,7 +253,6 @@ if __name__ == "__main__":
     SQL_init.create_table(
         cursor, "USERS_VOTES", "user_id VARCHAR(255), vote TEXT(4294967295)"
     )
-    # SQL_init.create_table(cursor, 'USERS_VOTES', 'id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, level_1 VARCHAR(255), level_2 VARCHAR(255), section VARCHAR(255), domain VARCHAR(255), program VARCHAR(255), regulation VARCHAR(255), total INT')
     SQL_init.create_table(
         cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
     )
@@ -267,148 +262,4 @@ if __name__ == "__main__":
     SQL_init.load_and_insert_to_current_budget_table(cursor, db)
     # Clean
     # SQL_init.clean_database(cursor)
-
-    #  ###### App (server) example: ###############
-    # sql_handler = SQL_database(SQL_database.create_config())
-    # sql_handler.connect()
-    # result = sql_handler.get_user_full_name(123123123)
-    # sql_handler.cursor.execute("SELECT * FROM USERS")
-    # result = sql_handler.cursor.fetchall()
-    # print(result)
-
-    # vote = {
-    #                 "id":0,
-    #                 "name":"root",
-    #                 "description":"I am root",
-    #                 "parent":None,
-    #                 "allocated_budget_amount":20592073,
-    #                 "children":[
-    #                     {
-    #                         "id":1,
-    #                         "name":"Security and public order",
-    #                         "description":"I am Security and public order",
-    #                         "parent":0,
-    #                         "allocated_budget_amount":20592073,
-    #                         "children":[
-    #                             {
-    #                             "id":2,
-    #                             "name":"Security",
-    #                             "description":"I am Security",
-    #                             "parent":1,
-    #                             "allocated_budget_amount":20592073,
-    #                             "children":[
-    #                                 {
-    #                                     "id":3,
-    #                                     "name":"Ministry of Defense",
-    #                                     "description":"I am Ministry of Defense",
-    #                                     "parent":2,
-    #                                     "allocated_budget_amount":20592073,
-    #                                     "children":[
-    #                                         {
-    #                                         "id":4,
-    #                                         "name":"HR",
-    #                                         "description":"I am HR",
-    #                                         "parent":3,
-    #                                         "allocated_budget_amount":12436481,
-    #                                         "children":[
-    #                                             {
-    #                                                 "id":5,
-    #                                                 "name":"Current salary of permanent soldiers",
-    #                                                 "description":"I am Current salary of permanent soldiers",
-    #                                                 "parent":4,
-    #                                                 "allocated_budget_amount":11171083,
-    #                                                 "children":[
-
-    #                                                 ]
-    #                                             },
-    #                                             {
-    #                                                 "id":6,
-    #                                                 "name":"Current salary of Ministry of Defense employees",
-    #                                                 "description":"I am Current salary of Ministry of Defense employees",
-    #                                                 "parent":4,
-    #                                                 "allocated_budget_amount":1265398,
-    #                                                 "children":[
-
-    #                                                 ]
-    #                                             }
-    #                                         ]
-    #                                         },
-    #                                         {
-    #                                         "id":7,
-    #                                         "name":"Pensions",
-    #                                         "description":"I am Pensions",
-    #                                         "parent":3,
-    #                                         "allocated_budget_amount":8155592,
-    #                                         "children":[
-    #                                             {
-    #                                                 "id":8,
-    #                                                 "name":"Permanent soldiers pensions",
-    #                                                 "description":"I am Permanent soldiers pensions",
-    #                                                 "parent":7,
-    #                                                 "allocated_budget_amount":7780739,
-    #                                                 "children":[
-
-    #                                                 ]
-    #                                             },
-    #                                             {
-    #                                                 "id":9,
-    #                                                 "name":"Retirement grants for permanent soldiers",
-    #                                                 "description":"I am Retirement grants for permanent soldiers",
-    #                                                 "parent":7,
-    #                                                 "allocated_budget_amount":374853,
-    #                                                 "children":[
-    #                                                     ]
-    #                                                 }
-    #                                             ]
-    #                                         }
-    #                                     ]
-    #                                 }
-    #                             ]
-    #                         }
-    #                     ]
-    #                 }
-    #             ]
-    #         }
-
-    # user_id = "99999999"
-    # vote_str = json.dumps(vote,ensure_ascii=False)
-    # is_saved = sql_handler.store_vote(vote=vote_str, user_id=user_id)
-    # if is_saved:
-    #     print("saved")
-    #     print(" ")
-
-    # result = sql_handler.load_user_votes()
-    # print(" ")
-    # print(" ")
-    # print(" ")
-    # query = '''SELECT user_id FROM USERS_VOTES'''
-    # sql_handler.cursor.execute(query)
-    # res = sql_handler.cursor.fetchall()
-    # print(type(res))
-    # print(res)
-
-    # d = sql_handler.get_information()
-
-    # tree = sql_handler.build_tree_from_current_budget()
-    # tree.print_tree()
-
-    ###### App (server) example:
-
-    # sql_handler = SQL_database(SQL_database.create_config())
-    # sql_handler.connect()
-    # tree = sql_handler.build_tree_from_current_budget()
-    # dictionary = tree.to_dict()
-    # from algorithms import _calculate_totals
-    # _calculate_totals(dictionary)
-    # json_tree = json.dumps(dictionary, ensure_ascii=False)
-    # print(json_tree)
-    # counter = 0
-    # SQL_init.modify_id(dictionary,counter)
-
-    # tree = sql_handler.build_tree_from_current_budget()
-    # tree.print_tree()
-
-    # dictionary = tree.to_dict()
-    # print(dictionary)
-    # json_tree = json.dumps(dictionary,ensure_ascii=False)
-    # print(json_tree)
+    

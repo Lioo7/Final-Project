@@ -96,9 +96,7 @@ def signup():
         # FEMALE
         gender = 2
 
-    new_user = User(
-        id, first_name, last_name, converted_date, email, password, gender, False
-    )
+    new_user = User(id, first_name, last_name, converted_date, email, password, gender, False)
 
     database.handler.connect()
     check_mail = database.handler.user_mail_exeisting(new_user)
@@ -227,9 +225,7 @@ def voting_tree():
         vote = data["table"]
 
         # update user option voting
-        update_result = database.handler.update_voting_option(
-            user_id=user_id, is_allowed=False
-        )
+        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
         if not update_result:
             database.handler.disconnect()
             return jsonify(
@@ -243,9 +239,7 @@ def voting_tree():
 
         if not result:
             # update user option voting
-            update_result = database.handler.update_voting_option(
-                user_id=user_id, is_allowed=True
-            )
+            update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=True)
             database.handler.disconnect()
             return jsonify({"status": "Error!, voting does not saved"})
 
@@ -254,7 +248,6 @@ def voting_tree():
 
     database.handler.disconnect()
     return jsonify({"status": "Succeeded"})
-
 
 
 # ----------------------- Results ------------------------------
@@ -290,6 +283,7 @@ def algorithms_results():
         "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
         "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
     }
+
 
 # dev or prod
 mode = "dev"

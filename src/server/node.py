@@ -1,14 +1,8 @@
 class Node:
     """This class present node in the tree of subjects/projects"""
 
-    def __init__(
-        self,
-        id: int = None,
-        name: str = "",
-        description: str = "",
-        parent: int = None,
-        budget_amount: float = None,
-    ) -> None:
+    def __init__(self, id: int = None, name: str = "", description: str = "", parent: int = None, 
+                 budget_amount: float = None) -> None:
         self._id = id
         self._name = name
         self._description = description

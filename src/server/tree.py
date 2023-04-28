@@ -4,12 +4,11 @@ class Tree:
     """This class present the tree of subjects and projects (container of Nodes)"""
 
     def __init__(self, root: Node) -> None:
-        if isinstance(root, Node):
-            self._root = root
-            self._node_amount = 0
+        self._root = root
+        self._node_amount = 0
 
-            if self._root is not None:
-                self.node_amount = 1
+        if self._root is not None:
+            self.node_amount = 1
 
     def get_root(self) -> Node:
         """

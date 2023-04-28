@@ -98,6 +98,7 @@ class SQL_database(Abstract_Database):
 
         return [male_result[0], female_result[0]]
 
+
     @staticmethod
     def get_date_years_ago(years_ago):
         """
@@ -115,6 +116,7 @@ class SQL_database(Abstract_Database):
         date_years_ago_str = date_years_ago.strftime("%Y-%m-%d")
 
         return date_years_ago_str
+
 
     def get_row_count_by_age(self, table_name: str) -> list[int]:
         """
@@ -192,6 +194,7 @@ class SQL_database(Abstract_Database):
             sixtysix_years_ago_result[0][0],
         ]
 
+
     @staticmethod
     def create_config() -> dict:
         configuration = {
@@ -203,6 +206,7 @@ class SQL_database(Abstract_Database):
             "charset": "utf8",
         }
         return configuration
+
 
     def check_if_user_exists(self, id, password):
         query = f"""SELECT user_id FROM USERS WHERE user_id = '{id}' AND password = '{password}' """
@@ -218,6 +222,7 @@ class SQL_database(Abstract_Database):
 
         return False
 
+
     def user_id_exeisting(self, user: User) -> bool:
         query = f"""SELECT user_id FROM USERS WHERE user_id={user.get_id()}"""
         try:
@@ -232,6 +237,7 @@ class SQL_database(Abstract_Database):
 
         return False
 
+
     def user_mail_exeisting(self, user: User) -> bool:
         query = f"""SELECT mail FROM USERS WHERE mail='{user.get_mail()}' """
         try:
@@ -245,6 +251,7 @@ class SQL_database(Abstract_Database):
             return True
 
         return False
+
 
     def insert_new_user(self, new_user: User) -> bool:
         query = f"""INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
@@ -267,6 +274,7 @@ class SQL_database(Abstract_Database):
             return True
 
         return False
+
 
     def find_node_by_id(self, node_id: int, node_map: dict) -> Node:
         if node_id in node_map:
@@ -291,6 +299,7 @@ class SQL_database(Abstract_Database):
                 return node
             else:
                 return None
+
 
     def build_tree_from_current_budget(self) -> Tree:
         self.cursor.execute("SELECT * FROM CURRENT_BUDGET")
@@ -361,6 +370,7 @@ class SQL_database(Abstract_Database):
 
         return tree
 
+
     def store_vote(self, vote: str, user_id: int) -> bool:
         """
         Stores a user's vote in the database.
@@ -407,6 +417,7 @@ class SQL_database(Abstract_Database):
 
         return True
 
+
     def update_voting_option(self, user_id: str, is_allowed: bool) -> bool:
         update_query = ""
         if is_allowed:
@@ -426,6 +437,7 @@ class SQL_database(Abstract_Database):
 
         return True
 
+
     def check_voting_option(self, user_id: str) -> str:
         check_query = f"SELECT allowed_to_vote FROM USERS WHERE user_id = '{user_id}'"
         try:
@@ -438,6 +450,7 @@ class SQL_database(Abstract_Database):
             return "false"
 
         return "true"
+
 
     def get_information(self) -> dict:
         dictionary = dict()
@@ -455,6 +468,7 @@ class SQL_database(Abstract_Database):
 
         return dictionary
 
+
     def load_user_votes(self) -> list[dict]:
         votes: list[dict] = []
         query = """SELECT vote FROM USERS_VOTES"""
@@ -470,6 +484,7 @@ class SQL_database(Abstract_Database):
             return None
 
         return votes
+
 
     def get_user_full_name(self, user_id: int) -> list[str]:
         query = f"SELECT first_name, last_name FROM USERS WHERE user_id={user_id}"
