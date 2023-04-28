@@ -3,9 +3,15 @@ import logging
 import sys
 from datetime import date, datetime
 
-from algorithms import (calculate_totals, convert_structure, counter,
-                        generalized_median_algorithm, median_algorithm,
-                        unite_votes, update_dict_ids)
+from algorithms import (
+    calculate_totals,
+    convert_structure,
+    counter,
+    generalized_median_algorithm,
+    median_algorithm,
+    unite_votes,
+    update_dict_ids,
+)
 from calculator import Calculator
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -99,7 +105,21 @@ def signup():
     )
 
     database.handler.connect()
+    valid_email = User.is_the_email_valid(email)
     check_mail = database.handler.user_mail_exeisting(new_user)
+    # check_age = User.is_over_18()
+
+    # # check if the user is 18+
+    # if not check_age:
+    #     database.handler.disconnect()
+    #     return jsonify(
+    #         {"status": "The user is under 18 years old"}
+    #     )
+
+    # check if the structure of the email is valid
+    if not valid_email:
+        database.handler.disconnect()
+        return jsonify({"status": "Invalid email - Please insert a valid email"})
 
     if check_mail:
         database.handler.disconnect()

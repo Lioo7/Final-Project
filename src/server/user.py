@@ -1,3 +1,5 @@
+import datetime
+import re
 from datetime import date
 
 from gender import Gender
@@ -199,3 +201,62 @@ class User:
         False
         """
         self._allowed_to_vote = _allowed_to_vote
+
+    def is_the_email_valid(self, email: str) -> bool:
+        """
+        Check if an email address is valid.
+
+        Args:
+            email (str): A string representing the email address to check.
+
+        Returns:
+            bool: True if the email address is valid, False otherwise.
+
+        Example:
+        >>> is_the_email_valid('avi@gmail.com')
+        True
+        >>> is_the_email_valid('avi.gmail.com')
+        False
+        """
+        is_valid = False
+        pattern = r"^[a-z\d]+(([._-]{1}[a-z\d]+)+|([a-z\d]*))@[a-z\d-]+\.[a-z]+[a-z]+"
+        if re.search(pattern, email):
+            is_valid = True
+
+        return is_valid
+
+    def is_over_18(self, date_of_birth: str) -> bool:
+        """
+        Returns True if the person with the given date of birth is 18 years or older.
+
+        Args:
+            date_of_birth: A string representing the date of birth in the format DD/MM/YYYY.
+
+        Returns:
+            A boolean indicating whether the person is 18 years or older.
+
+        Raises:
+            ValueError: If the input string is not in the correct format.
+
+        Example:
+        >>> is_over_18('01/01/1990')
+        True
+        >>> is_over_18('01/01/2020')
+        False
+        """
+        # convert the input string to a datetime object
+        try:
+            dob = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+        except ValueError:
+            # if the input string is not in the correct format, raise an error
+            raise ValueError("Incorrect date format, should be DD/MM/YYYY")
+
+        # calculate the person's age
+        today = datetime.datetime.today()
+        age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+
+        # check if the person is an adult (18 years or older)
+        if age >= 18:
+            return True
+        else:
+            return False
