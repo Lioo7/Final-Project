@@ -1,11 +1,10 @@
 import random
 import sys
+sys.path.append("../..")
 
 import pytest
-
-sys.path.append("../..")
-from src.server.algorithms import (calculate_totals, convert_structure,
-                                   counter, generalized_median_algorithm,
+from src.server.counter import Counter
+from src.server.algorithms import (calculate_totals, convert_structure,generalized_median_algorithm,
                                    is_able_to_vote, is_the_email_valid,
                                    median_algorithm, unite_votes,
                                    update_dict_ids)
@@ -808,7 +807,7 @@ class TestGeneralizedMedianAlgorithm:
             
             result_before = self.check_duplicate_ids(tree)
             assert result_before == False
-            count = counter()
+            count = Counter()
             
             
             update_dict_ids(count,tree)
@@ -998,7 +997,7 @@ class TestGeneralizedMedianAlgorithm:
         #             }
         #         ]
         #     }
-        #     count = counter()
+        #     count = Counter()
         #     update_dict_ids(count,input)
         #     print(input)
         #     assert input == expected_result
