@@ -1,11 +1,11 @@
 import sys
 import unittest
 from datetime import date
+sys.path.append("../..")
 
 from src.server.gender import Gender
 from src.server.user import User
 
-sys.path.append("../..")
 
 
 class Test_user(unittest.TestCase):

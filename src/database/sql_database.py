@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append("..")
+sys.path.append("../..")
 import json
 import logging
 import os
@@ -8,10 +8,10 @@ from datetime import date, datetime, timedelta
 
 import mysql.connector
 
-from database.abstract_Database import Abstract_Database
-from server.node import Node
-from server.tree import Tree
-from server.user import User
+from src.database.abstract_Database import Abstract_Database
+from src.server.node import Node
+from src.server.tree import Tree
+from src.server.user import User
 
 
 class SQL_database(Abstract_Database):
