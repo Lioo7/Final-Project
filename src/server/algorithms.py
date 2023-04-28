@@ -326,6 +326,7 @@ def unite_votes(votes: list[dict]) -> dict:
 
     return voted_dict
 
+
 # =============================================Utility-Functions============================================================
 def _run_algorithm(votes: dict, algorithm_number: int) -> dict:
     """

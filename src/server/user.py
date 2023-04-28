@@ -1,7 +1,9 @@
-from datetime import date
-from gender import Gender
 import datetime
 import re
+from datetime import date
+
+from gender import Gender
+
 
 class User:
     """This class present regested user in the system"""
@@ -235,7 +237,7 @@ class User:
 
         Raises:
             ValueError: If the input string is not in the correct format.
-            
+
         Example:
         >>> is_over_18('01/01/1990')
         True

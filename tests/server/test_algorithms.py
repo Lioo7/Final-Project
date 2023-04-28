@@ -4,10 +4,15 @@ import sys
 import pytest
 
 sys.path.append("../..")
-from src.server.algorithms import (calculate_totals, convert_structure,
-                                   counter, generalized_median_algorithm,
-                                   median_algorithm, unite_votes,
-                                   update_dict_ids)
+from src.server.algorithms import (
+    calculate_totals,
+    convert_structure,
+    counter,
+    generalized_median_algorithm,
+    median_algorithm,
+    unite_votes,
+    update_dict_ids,
+)
 
 
 class TestMedianAlgorithm:

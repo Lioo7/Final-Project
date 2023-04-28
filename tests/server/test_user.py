@@ -2,9 +2,10 @@ import sys
 import unittest
 from datetime import date
 
-sys.path.append("../..")
 from src.server.gender import Gender
 from src.server.user import User
+
+sys.path.append("../..")
 
 
 class Test_user(unittest.TestCase):
@@ -95,7 +96,7 @@ class Test_user(unittest.TestCase):
         # Test set_allowed_to_vote() function
         self.user.set_allowed_to_vote(False)
         self.assertEqual(self.user.get_allowed_to_vote(), False)
-        
+
     def test_is_the_email_valid(self) -> None:
         expected_valid = [
             "abc-d@mail.com",
@@ -132,7 +133,7 @@ class Test_user(unittest.TestCase):
 
         assert valid == expected_valid and invalid == expected_invalid
 
-    def is_over_18(self) -> None:
+    def test_is_over_18(self) -> None:
         expected_valid = ["01/01/1990", "12/12/2003"]
         expected_invalid = ["01/01/2020", "12/12/2050"]
         dates = expected_valid + expected_invalid
