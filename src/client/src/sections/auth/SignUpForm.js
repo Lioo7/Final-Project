@@ -23,6 +23,11 @@ export default function SignUpForm() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const dob = new Date(birthDate);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const monthDiff = today.getMonth() - dob.getMonth();
+
   const handleClick = async () => {
     const url = 'http://localhost:5000/peoples_budget/sign_up';
 
@@ -41,12 +46,17 @@ export default function SignUpForm() {
 
     if (id.length !== 9) {
       setIdError('Invalid ID: Please enter a 9 digit number.');
+      console.log(typeof id);
       return;
     }
     setIdError('');
 
-    if (birthDate === '') {
-      setBirthDateError('Invalid Birth Date: Please enter a birth date.');
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age-=1;
+    }
+
+    if (age < 18) {
+      setBirthDateError('Invalid Birth Date: You are under 18 - you can not sign up.');
       return;
     }
     setBirthDateError('');
@@ -57,8 +67,8 @@ export default function SignUpForm() {
     }
     setGenderError('');
 
-    if (email === '') {
-      setEmailError('Invalid Email: Please enter a email.');
+    if (!email.match(/^[^ ]+@[^ ]+\.[a-z]{2,3}$/)) {
+      setEmailError('Invalid Email: Please enter a correct email.');
       return;
     }
     setEmailError('');
@@ -89,7 +99,7 @@ export default function SignUpForm() {
       }
     } catch (error) {
       console.error(error);
-      alert("An error was received, please refresh the page and try again");
+      alert('An error was received, please refresh the page and try again');
     }
   };
 
