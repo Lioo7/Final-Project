@@ -303,6 +303,9 @@ def algorithms_results():
 mode = "dev"
 
 if __name__ == "__main__":
+    
+    calculte_results()
+    
     if mode == "dev":
         app.run(port=5000, debug=True)
 
