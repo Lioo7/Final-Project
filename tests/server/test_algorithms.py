@@ -5,7 +5,6 @@ sys.path.append("../..")
 import pytest
 from src.server.counter import Counter
 from src.server.algorithms import (calculate_totals, convert_structure,generalized_median_algorithm,
-                                   is_able_to_vote, is_the_email_valid,
                                    median_algorithm, unite_votes,
                                    update_dict_ids)
 
@@ -699,24 +698,32 @@ class TestGeneralizedMedianAlgorithm:
             calculate_totals(vote)
             assert vote == expected_result     
         
-        def check_dup(self,tree):
-            unique_ids = set()
-            result = False
             
-        def check_duplicate_ids(self,tree):
+        def check_duplicate_ids(self,tree:dict) -> bool:
             unique_ids = set()
             error = False
-            for node in tree:
+            
+            # check for duplicates in the root node
+            if tree['id'] in unique_ids:
+                print(f"Error: Duplicate id '{tree['id']}' found in the tree")
+                error = True
+            else:
+                unique_ids.add(tree['id'])
+
+            # iterate through children nodes
+            for node in tree.get('children', []):
                 if node['id'] in unique_ids:
                     print(f"Error: Duplicate id '{node['id']}' found in the tree")
                     error = True
                 else:
                     unique_ids.add(node['id'])
-                if node['children']:
-                    error_in_child = self.check_duplicate_ids(node['children'])
+                if node.get('children'):
+                    error_in_child = self.check_duplicate_ids(node)
                     if error_in_child:
                         error = True
+                        
             return error
+        
         
         def test_update_dict_ids(self) -> None:
             tree = {
@@ -807,13 +814,13 @@ class TestGeneralizedMedianAlgorithm:
             }
             
             result_before = self.check_duplicate_ids(tree)
-            assert result_before == False
+            assert result_before == True
             count = Counter()
             
             
             update_dict_ids(count,tree)
             result_after = self.check_duplicate_ids(tree)
-            assert result_after == True
+            assert result_after == False
             
             
             
