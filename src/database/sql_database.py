@@ -309,19 +309,18 @@ class SQL_database(Abstract_Database):
             id=0, name="root", description="I am root", parent=None, budget_amount=0
         )
         tree = Tree(root)
-        num_rows = self.cursor.rowcount
 
         for row in rows:
             node_id = int(row[0])
             node_name = row[1]
-            if not tree.node_exists(int(node_id), node_name):
+            if not tree.node_exists_by_id_and_name(int(node_id), node_name):
                 node = Node(id=int(node_id), name=node_name, parent=0)
                 tree.add_node_by_id_and_name(0, "root", node)
 
         for row in rows:
             node_id = int(row[2])
             node_name = row[3]
-            if not tree.node_exists(int(node_id), node_name):
+            if not tree.node_exists_by_id_and_name(int(node_id), node_name):
                 node = Node(id=int(node_id), name=node_name, parent=int(row[0]))
                 parent_id = int(row[0])
                 parent_name = row[1]
@@ -330,7 +329,7 @@ class SQL_database(Abstract_Database):
         for row in rows:
             node_id = int(row[4])
             node_name = row[5]
-            if not tree.node_exists(int(node_id), node_name):
+            if not tree.node_exists_by_id_and_name(int(node_id), node_name):
                 node = Node(id=int(node_id), name=node_name, parent=int(row[2]))
                 parent_id = int(row[2])
                 parent_name = row[3]
@@ -339,7 +338,7 @@ class SQL_database(Abstract_Database):
         for row in rows:
             node_id = int(row[6])
             node_name = row[7]
-            if not tree.node_exists(int(node_id), node_name):
+            if not tree.node_exists_by_id_and_name(int(node_id), node_name):
                 node = Node(id=int(node_id), name=node_name, parent=int(row[4]))
                 parent_id = int(row[4])
                 parent_name = row[5]
@@ -348,7 +347,7 @@ class SQL_database(Abstract_Database):
         for row in rows:
             node_id = int(row[8])
             node_name = row[9]
-            if not tree.node_exists(int(node_id), node_name):
+            if not tree.node_exists_by_id_and_name(int(node_id), node_name):
                 node = Node(id=int(node_id), name=node_name, parent=int(row[6]))
                 parent_id = int(row[6])
                 parent_name = row[7]
@@ -357,7 +356,7 @@ class SQL_database(Abstract_Database):
         for row in rows:
             node_id = int(row[10])
             node_name = row[11]
-            if not tree.node_exists(int(node_id), node_name):
+            if not tree.node_exists_by_id_and_name(int(node_id), node_name):
                 node = Node(
                     id=int(node_id),
                     name=node_name,
