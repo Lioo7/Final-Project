@@ -133,7 +133,18 @@ class Node:
             return
 
         raise ValueError(f"No child node with id {child_id} was found")
-
+    
+    
+    def remove_child_by_id_and_name(self, node_id:int, node_name:str) -> bool:
+        
+        for child in self._children:
+            if child.get_id() == node_id and child.get_name() == node_name:
+                self._children.remove(child)
+                return True
+        
+        return False
+        
+    #@staticmethod
     def _print_node(node, level=0, is_last=False) -> None:
         """
         Print the current node and its children in a hierarchical format.
@@ -156,6 +167,7 @@ class Node:
         for i, child in enumerate(node._children):
             is_last_child = i == children_count - 1
             Node._print_node(child, level + 1, is_last_child)
+
 
     def to_dict(self):
         children = []

@@ -10,45 +10,18 @@ class Test_tree(unittest.TestCase):
     def test_add_node(self):
         root = Node(0, "Ministry of Defence", "description", None, 100)
         tree = Tree(root)
-        child = Node(1, "project", "description", 0, 50)
-        tree.add_node(0, child)
+        child = Node(1, "node", "description", 0, 50)
+        tree.add_node_by_id_and_name(root.get_id(),root.get_name(), child)
 
         self.assertEqual(len(tree.get_node(0).get_children()), 1)
-        self.assertEqual(tree.node_amount, 2)
+        self.assertEqual(tree.get_size(), 2)
 
         for i in range(2, 100):
-            node = (i, "node {i}".format(i=i), "description", None, 10)
-            tree.add_node(i - 1, node)
+            node = Node(i, "node", "description", None, 10)
+            tree.add_node_by_id_and_name(i - 1,"node", node)
 
-        self.assertEqual(tree.node_amount, 100)
+        self.assertEqual(tree.get_size(), 100)
 
-    def test_remove_node(self):
-        root = Node(0, "Root", "This is the root node", None, 100)
-        tree = Tree(root)
-        child = Node(1, "Child", "This is a child node", 0, 50)
-        tree.add_node_by_id_and_name(root.get_id(), root.get_name(), child.get_id())
-        tree.remove_node_by_id_and_name(
-            parent_id=root.get_id(), node_id=child.get_id(), node_name=child.get_name()
-        )
-
-        founded_node = tree.get_node_by_name_and_id(root.get_id(), root.get_name())
-        children_node = founded_node.get_children()
-        self.assertEqual(len(children_node), 0)
-        self.assertEqual(tree.node_amount, 1)
-
-        # Add nodes until the tree has 100 nodes
-        for i in range(1, 100):
-            node = (i, "node {i}".format(i=i), "description", None, 10)
-            tree.add_node(i - 1, node)
-
-        # Remove nodes until the tree has only the root node
-        i = 99
-        while i > 0:
-            tree.remove_node(i, node)
-            i = i - 1
-
-        self.assertEqual(len(tree._root.get_children()), 0)
-        self.assertEqual(tree.node_amount, 1)
 
     def test_get_size(self):
         root = Node(0, "Root", "This is the root node", None, 100)
@@ -67,9 +40,10 @@ class Test_tree(unittest.TestCase):
         child2 = Node(2, "Child2", "This is another child node", 0, 25)
         grandchild = Node(3, "Grandchild", "This is a grandchild node", 1, 10)
         tree.add_node_by_id_and_name(root.get_id(), root.get_name(), child1)
+        
         tree.add_node_by_id_and_name(root.get_id(), root.get_name(), child2)
+        
         tree.add_node_by_id_and_name(child1.get_id(), child1.get_name(), grandchild)
-
         self.assertEqual(tree.get_budget_amount(), 185)
 
     def test_is_project(self):

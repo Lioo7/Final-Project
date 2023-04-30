@@ -99,7 +99,8 @@ def signup():
     new_user = User(id, first_name, last_name, converted_date, email, password, gender, False)
 
     database.handler.connect()
-    valid_email = User.is_the_email_valid(email)
+    valid_email = new_user.is_the_email_valid(email)
+    print(valid_email)
     check_mail = database.handler.user_mail_exeisting(new_user)
     # check_age = User.is_over_18()
 
@@ -304,7 +305,7 @@ mode = "dev"
 
 if __name__ == "__main__":
     
-    calculte_results()
+    #calculte_results()
     
     if mode == "dev":
         app.run(port=5000, debug=True)
