@@ -1,15 +1,17 @@
 import os
 import sys
+
 sys.path.append("..")
 
-import mysql.connector
-from sql_database import SQL_database
-
 import csv
+
+import mysql.connector
 import pandas
+from sql_database import SQL_database
 
 from server.node import Node
 from server.tree import Tree
+
 
 class SQL_init:
 
@@ -258,8 +260,7 @@ if __name__ == "__main__":
     )
 
     # Load datasets
-    #SQL_init.load_information_to_information_table(cursor, db)
-    #SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    # SQL_init.load_information_to_information_table(cursor, db)
+    # SQL_init.load_and_insert_to_current_budget_table(cursor, db)
     # Clean
-    #SQL_init.clean_database(cursor)
-    
+    # SQL_init.clean_database(cursor)

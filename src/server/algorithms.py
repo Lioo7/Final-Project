@@ -4,6 +4,7 @@ This file contains the algorithms that will be used in the project for calculati
 import datetime
 import logging
 import re
+
 from counter import Counter
 from tree import Tree
 
@@ -14,8 +15,6 @@ __all__ = [
     "update_dict_ids",
     "convert_structure",
     "unite_votes",
-    "is_the_email_valid",
-    "is_able_to_vote",
 ]
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
@@ -183,8 +182,6 @@ def generalized_median_algorithm(votes: dict) -> dict:
     final_budget = _run_algorithm(votes, 2)
 
     return final_budget
-
-
 
 
 def calculate_totals(node: dict) -> int:

@@ -1,5 +1,6 @@
 from node import Node
 
+
 class Tree:
     """This class present the tree of subjects and projects (container of Nodes)"""
 
