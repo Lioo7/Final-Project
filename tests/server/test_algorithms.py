@@ -5,14 +5,10 @@ sys.path.append("../..")
 
 import pytest
 
-from src.server.algorithms import (
-    calculate_totals,
-    convert_structure,
-    generalized_median_algorithm,
-    median_algorithm,
-    unite_votes,
-    update_dict_ids,
-)
+from src.server.algorithms import (calculate_totals, convert_structure,
+                                   generalized_median_algorithm,
+                                   median_algorithm, unite_votes,
+                                   update_dict_ids)
 from src.server.counter import Counter
 
 
@@ -702,36 +698,38 @@ class TestGeneralizedMedianAlgorithm:
             }
 
             calculate_totals(vote)
-            assert vote == expected_result
-
-        def check_duplicate_ids(self, tree: dict) -> bool:
+            assert vote == expected_result     
+        
+            
+        def check_duplicate_ids(self,tree:dict) -> bool:
             unique_ids = set()
             error = False
-
+            
             # check for duplicates in the root node
-            if tree["id"] in unique_ids:
+            if tree['id'] in unique_ids:
                 print(f"Error: Duplicate id '{tree['id']}' found in the tree")
                 error = True
             else:
-                unique_ids.add(tree["id"])
+                unique_ids.add(tree['id'])
 
             # iterate through children nodes
-            for node in tree.get("children", []):
-                if node["id"] in unique_ids:
+            for node in tree.get('children', []):
+                if node['id'] in unique_ids:
                     print(f"Error: Duplicate id '{node['id']}' found in the tree")
                     error = True
                 else:
-                    unique_ids.add(node["id"])
-                if node.get("children"):
+                    unique_ids.add(node['id'])
+                if node.get('children'):
                     error_in_child = self.check_duplicate_ids(node)
                     if error_in_child:
                         error = True
-
+                        
             return error
-
+        
+        
         def test_update_dict_ids(self) -> None:
             tree = {
-                "id": 13,
+   		        "id": 13,
                 "name": "root",
                 "description": "I am root",
                 "parent": None,
@@ -804,27 +802,29 @@ class TestGeneralizedMedianAlgorithm:
                                                         "description": "I am Retirement grants for permanent soldiers",
                                                         "parent": 5,
                                                         "allocated_budget_amount": 374853,
-                                                        "children": [],
-                                                    },
-                                                ],
-                                            },
-                                        ],
+                                                        "children": []
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     }
-                                ],
+                                ]
                             }
-                        ],
+                        ]
                     }
-                ],
+                ]
             }
-
+            
             result_before = self.check_duplicate_ids(tree)
             assert result_before == True
             count = Counter()
-
-            update_dict_ids(count, tree)
+            
+            
+            update_dict_ids(count,tree)
             result_after = self.check_duplicate_ids(tree)
             assert result_after == False
-
+              
+            
         def test_convert_structure(self) -> None:
             # Testing the converting of a JSON object from the server to the structre of the algorithms
             vote = {
