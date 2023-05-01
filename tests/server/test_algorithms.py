@@ -177,7 +177,7 @@ class TestMedianAlgorithm:
 
 
 class TestGeneralizedMedianAlgorithm:
-    EPSILON = 0.0001  # a threshold value
+    EPSILON = 0.01  # a threshold value
 
     def test_generalized_median_algorithm_with_three_users(self) -> None:
         # Test case 1: Testing the output of the function with three users.

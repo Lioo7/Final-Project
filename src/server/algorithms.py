@@ -1,9 +1,9 @@
 """
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
-import datetime
+from ast import main
 import logging
-import re
+import numpy as np
 
 from counter import Counter
 from tree import Tree
@@ -14,7 +14,7 @@ __all__ = [
     "calculate_totals",
     "update_dict_ids",
     "convert_structure",
-    "unite_votes",
+    "unite_votes"
 ]
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
@@ -440,7 +440,7 @@ def _find_median(lst: list[float]) -> float:
     A utility function that returns the median value.
 
     Args:
-        lst (List of floats): a list of integers.
+        lst (List of floats): a list of floats.
 
     Returns:
         The median number.
@@ -465,7 +465,7 @@ def _find_median_with_constant_functions(
     n: int,
     min_search: float = 0,
     max_search: float = 1,
-    max_iterations: int = 10000,
+    max_iterations: int = 50,
 ) -> list[float]:
     """
     Find the median of a list of values by adding constant functions.
@@ -474,9 +474,9 @@ def _find_median_with_constant_functions(
         votes_by_project (dict): A dictionary where each key represents a project and the value is a list of budget votes
             for that project by all the users.
         c (float): The total budget.
-        n (int): The number of leaves (project).
+        n (int): The number of leaves (projects).
         min_search (float, optional): The minimum value of the search range. Defaults to 0.
-        min_search (float, optional): The maximum value of the search range. Defaults to 1.
+        max_search (float, optional): The maximum value of the search range. Defaults to 1.
         max_iterations (int, optional): The maximum number of iterations. Defaults to 1000.
 
     Returns:
@@ -490,7 +490,7 @@ def _find_median_with_constant_functions(
 
     # loop 'n' - 1 times to create 'n-1' constants
     for i in range(1, n):
-        # lreate a new variable name for the constant
+        # create a new variable name for each constant
         var_name = "f_" + str(i)
         constants.append(var_name)
 
@@ -498,6 +498,8 @@ def _find_median_with_constant_functions(
     for i in range(1, n):
         const = c * min(1, i * t)
         constants[i - 1] = round(const, 3)
+    
+    # constants = c*min(1, i*t)
 
     sum_medians = 0
     for project, values in votes_by_project.items():
@@ -507,16 +509,18 @@ def _find_median_with_constant_functions(
         # find the median of the sorted values and constants
         median = _find_median(sorted_values_with_constants)
         sum_medians += median
+        
+    # print('max_iterations: ', max_iterations)
+    # print('sum_medians: ', sum_medians)
 
-    EPSILON = 0.00000000000000000000000000000000000000001  # a threshold value
-    # base case: if the search range is sufficiently small or maximum number of iterations is reached, return the current constants
-    if max_iterations <= 0:
-        print("max_iterations <= 0")
-    if max_search - min_search < EPSILON:
-        print("max_search - min_search < EPSILON")
+    EPSILON = 0.0001  # a threshold value
+    # base case: if the diff of the sum is amall enough 
+    # or the search range is sufficiently small 
+    # or the maximum number of iterations is reached, 
+    # return the current constants
     if (
-        abs(sum_medians - c) < EPSILON
-        or max_search - min_search < EPSILON
+        abs(sum_medians - c) < EPSILON * c
+        # or max_search - min_search < EPSILON
         or max_iterations <= 0
     ):
         return constants
@@ -530,7 +534,7 @@ def _find_median_with_constant_functions(
             max_search=t,
             max_iterations=max_iterations - 1,
         )
-    # If the sum of the medians is less than the total budget, search the upper half of the range
+    # if the sum of the medians is less than the total budget, search the upper half of the range
     elif sum_medians < c:
         return _find_median_with_constant_functions(
             votes_by_project=votes_by_project,
@@ -637,3 +641,5 @@ def _calculate_total(budget: dict) -> float:
     budget["total"] = total
 
     return total
+
+
