@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, startTransition, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,19 +11,19 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Row from './Row';
 import UserContext from '../../contexts/UserContext';
-
 import PopCardSubmit from './PopCardSubmit';
-import ThankYou from './ThankYou';
+// import ThankYou from './ThankYou';
 import LoadingTable from './LoadingTable';
+import ThankYou from './ThankYou';
 
 export default function VotingForm() {
   const [tableData, setTableData] = useState([]);
   const [allData, setAllData] = useState({});
-
-  // const [totalBudget, setTotalBudget] = useState(tableData.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
+  const [isVoted, setIsVoted] = useState(false);
   const id = useContext(UserContext);
+
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
 
@@ -34,9 +34,11 @@ export default function VotingForm() {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      console.log(information.children);
+      if (information === 'Is not allowed to vote') {
+        setIsVoted(true);
+      }
+      setAllData(information);
       setTableData(information.children);
-      setAllData(information)
     } catch (error) {
       console.error(error);
     }
@@ -44,10 +46,7 @@ export default function VotingForm() {
   };
 
   useEffect(() => {
-    startTransition(() => {
-      fetchData(); // fetch data asynchronously
-      // console.log(tableData);
-    });
+    fetchData(); // fetch data asynchronously
   }, []);
 
   const findPathById = (idToFind, data, path = []) => {
@@ -313,7 +312,9 @@ export default function VotingForm() {
 
   return (
     <>
-      {tableData.length === 0 ? (
+      {isVoted ? (
+        <ThankYou />
+      ) : tableData.length === 0 ? (
         <LoadingTable />
       ) : (
         <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
@@ -325,11 +326,12 @@ export default function VotingForm() {
                     <TableCell align="center" />
                     <TableCell align="center">
                       <Button
+                        id="clearAll"
                         variant="outlined"
                         onClick={clearAll}
                         sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }}
                       >
-                        Clear All
+                        Fixed budget
                       </Button>
                     </TableCell>
                     <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
@@ -365,8 +367,8 @@ export default function VotingForm() {
             </TableContainer>
           )}
 
-          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} />
-          {!display && <ThankYou />}
+          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} isVoted={isVoted} />
+          {/* {!display && <ThankYou />} */}
         </Stack>
       )}
     </>

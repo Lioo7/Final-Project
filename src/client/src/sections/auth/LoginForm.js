@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
 import Iconify from '../../components/iconify/Iconify';
 
@@ -16,20 +17,17 @@ export default function LoginForm({ setId }) {
 
   const id = useContext(UserContext);
 
-
   const handleClick = async () => {
     const url = 'http://localhost:5000/peoples_budget/login';
 
     // Validate the input fields
     if (id.length !== 9) {
-      // throw new Error('Invalid ID: Please enter a 9 digit number.');
       setIdError('Invalid ID: Please enter a 9 digit number.');
       return;
     }
     setIdError('');
 
     if (password.length < 5) {
-      // throw new Error('Invalid password: Please enter a password with at least 5 characters.');
       setPasswordError('Invalid password: Please enter a password with at least 5 characters.');
       return;
     }
@@ -100,3 +98,7 @@ export default function LoginForm({ setId }) {
     </>
   );
 }
+
+LoginForm.propTypes = {
+  setId: PropTypes.func.isRequired,
+};

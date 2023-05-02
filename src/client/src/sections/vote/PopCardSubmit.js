@@ -27,7 +27,7 @@ export default function PopCardSubmit(props) {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
-  const [table, setTable] = useState({ ...props.allData, children: props.tableData });
+  const [table] = useState({...props.allData, children: props.tableData});
   const url = 'http://localhost:5000/peoples_budget/voting';
 
   const handleClickOpen = () => {
@@ -42,16 +42,17 @@ export default function PopCardSubmit(props) {
     // removed the table
     props.setDisplay(false);
     setLoading(true);
+    console.log(table);
+    console.log(id);
     try {
-      console.log(id)
-      console.log(table)
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, table }),
+        body: JSON.stringify({id, table}),
       });
 
       const responseData = await response.json();
+      console.log(responseData);
 
       if (responseData.status === 'Succeeded') {
         setTimeout(() => {
@@ -102,10 +103,10 @@ export default function PopCardSubmit(props) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleClose}>
+            <Button id="cancel" autoFocus onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button id="submit" onClick={handleSubmit}>Submit</Button>
           </DialogActions>
         </Dialog>
       )}
@@ -115,5 +116,5 @@ export default function PopCardSubmit(props) {
 
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
