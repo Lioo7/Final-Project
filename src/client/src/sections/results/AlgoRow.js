@@ -33,8 +33,6 @@ export default function AlgoRow(props) {
   const [childsAlgo] = useState(typeof rowAlgo === 'number' ? null : rowAlgo);
   const [newBudget] = useState(typeof rowAlgo === 'number' ? rowAlgo : rowAlgo.total);
   const diff = budget - newBudget;
-  console.log(diff);
-  console.log(10 - 15);
 
   function percent(num) {
     return Math.max(Math.min(((num / 596770415) * 100).toFixed(1), 100), 0);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Button } from '@mui/material';
 import Loading from './Loading';
 import Algo from './Algo';
+import LoadingVote from './LoadingVote';
 
 export default function ResultsForm() {
   const [loading, setLoading] = useState(false);
@@ -9,6 +10,8 @@ export default function ResultsForm() {
   const [displayGraph2, setDisplayGraph2] = useState(false);
   const [clicked1, setClicked1] = useState(false);
   const [clicked2, setClicked2] = useState(false);
+
+  const [loadingPage, setLoadingPage] = useState(true);
 
   const [oldBudget, setOldBudget] = useState({});
   const [algo1, setAlgo1] = useState({});
@@ -34,6 +37,9 @@ export default function ResultsForm() {
 
   useEffect(() => {
     fetchData();
+    setTimeout(() => {
+      setLoadingPage(false);
+    }, 15000);
   }, []);
 
   const handleButtonClick = (number) => {
@@ -51,7 +57,9 @@ export default function ResultsForm() {
     }
   };
 
-  return (
+  return Object.keys(oldBudget).length === 0 ? (
+    <LoadingVote />
+  ) : (
     <div>
       <Typography variant="h3" align="center" marginBottom={5}>
         Select an option:

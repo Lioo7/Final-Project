@@ -12,7 +12,6 @@ import Button from '@mui/material/Button';
 import Row from './Row';
 import UserContext from '../../contexts/UserContext';
 import PopCardSubmit from './PopCardSubmit';
-// import ThankYou from './ThankYou';
 import LoadingTable from './LoadingTable';
 import ThankYou from './ThankYou';
 
@@ -368,7 +367,6 @@ export default function VotingForm() {
           )}
 
           <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} isVoted={isVoted} />
-          {/* {!display && <ThankYou />} */}
         </Stack>
       )}
     </>
