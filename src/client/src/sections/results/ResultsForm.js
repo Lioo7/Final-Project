@@ -23,7 +23,7 @@ export default function ResultsForm() {
       });
       const information = await response.json();
       console.log('information', information);
-      
+
       setOldBudget(JSON.parse(information.current_budget));
       setAlgo1(JSON.parse(information.median_algorithm));
       // setAlgo2(information.average_algorithm);
@@ -78,13 +78,13 @@ export default function ResultsForm() {
             variant={clicked2 ? 'contained' : 'outlined'}
             onClick={() => handleButtonClick(1)}
           >
-             Average Algorithm
+            Average Algorithm
           </Button>
         </Box>
       </Box>
       {loading && <Loading />}
-      {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1}/>}
-      {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo1}/>}
+      {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1} />}
+      {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo1} />}
     </div>
   );
 }
