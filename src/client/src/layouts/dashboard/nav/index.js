@@ -38,7 +38,7 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
-  const [name, setName] = useState('Hello user');
+  const [name, setName] = useState('');
   const id = useContext(UserContext);
 
   const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
@@ -50,9 +50,11 @@ export default function Nav({ openNav, onCloseNav }) {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      setName(`${information.first_name} ${information.last_name}`);
-      console.log(id);
-      console.log(name);
+      if(id === '000000000') {
+        setName(account.displayName);
+      } else {
+        setName(`${information.first_name} ${information.last_name}`);
+      }
     } catch (error) {
       console.error(error);
     }

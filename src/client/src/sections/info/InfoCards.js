@@ -52,7 +52,7 @@ export default function InfoCards(props) {
           <Typography id="keep-mounted-modal-title" variant="h3" component="h2" sx={{ textAlign: 'center' }} dir="rtl">
           {props.keys}
           </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2, textAlign: 'right' }} dir="rtl">
+          <Typography id="keep-mounted-modal-description" sx={{ mt: 1, textAlign: 'right' }} dir="rtl">
             {props.value}
           </Typography>
         </Box>

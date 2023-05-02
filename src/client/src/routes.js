@@ -26,21 +26,11 @@ export default function Router({setId}) {
         { path: 'results', element: <ResultsPage /> },
       ],
     },
-    // {
-    //   path: '/peoples_budget/login',
-    //   element: <LoginPage />,
-      
-    // },
-    // {
-    //   path: '/peoples_budget/sign_up',
-    //   element: <SignUPage />,
-      
-    // },
     {
       element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/peoples_budget/login" />, index: true },
-        {path: '/peoples_budget/login', element: <LoginPage setId={setId}/>},
+        {path: '/peoples_budget/login', element: <LoginPage setId={setId} />},
         {path: '/peoples_budget/sign_up', element: <SignUPage />}
       ],
     },

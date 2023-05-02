@@ -9,6 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
 import Row from './Row';
 import UserContext from '../../contexts/UserContext';
 import PopCardSubmit from './PopCardSubmit';
@@ -328,9 +330,14 @@ export default function VotingForm() {
                         id="clearAll"
                         variant="outlined"
                         onClick={clearAll}
-                        sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }}
+                        sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px', flexDirection: 'column'}}
                       >
-                        Fixed budget
+                        <Typography variant="subtitle1" sx={{ lineHeight: '1' }}>
+                          Fixed budget
+                        </Typography>
+                          <Typography variant="subtitle2" sx={{ fontSize: '10px', fontWeight: 'bold', lineHeight: '1' }}>
+                            (Clear All)
+                          </Typography>
                       </Button>
                     </TableCell>
                     <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">

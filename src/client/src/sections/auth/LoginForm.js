@@ -1,10 +1,11 @@
-import { useState, useContext  } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
 import Iconify from '../../components/iconify/Iconify';
+import account from '../../_mock/account';
 
 export default function LoginForm({ setId }) {
   const navigate = useNavigate();
@@ -53,6 +54,31 @@ export default function LoginForm({ setId }) {
     }
   };
 
+  const handleClickGuest = async () => {
+    const url = 'http://localhost:5000/peoples_budget/login';
+    setId(account.id);
+    setPassword(account.password);
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, password }),
+      });
+      navigate('/peoples_budget/home', { replace: true });
+
+      // const responseData = await response.json();
+      // if (responseData.status === 'Succeeded') {
+      //   navigate('/peoples_budget/home', { replace: true });
+      // } else {
+      //   throw new Error('User does not exist. Please register first.');
+      // }
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
+    }
+  };
+
   return (
     <>
       <Stack spacing={3}>
@@ -85,15 +111,41 @@ export default function LoginForm({ setId }) {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
+      {/* <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
         <Checkbox name="remember" label="Remember me" />
         <Link variant="subtitle2" underline="none" color="black" alignItems="left">
           Remember me
         </Link>
+      </Stack> */}
+
+      <Stack direction="row" alignItems="center" sx={{ my: 1 }}>
+        <Link variant="subtitle2" underline="always" alignItems="left">
+          Forgot Password ?
+        </Link>
       </Stack>
 
-      <LoadingButton id="loginBtn" fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
+      <LoadingButton
+        id="loginBtn"
+        sx={{ my: 1, fontSize: '1rem'}}
+        fullWidth
+        size="large"
+        type="submit"
+        variant="contained"
+        onClick={handleClick}
+      >
         Login
+      </LoadingButton>
+
+      <LoadingButton
+        id="loginGuest"
+        sx={{  '&:hover': { border: 'solid 2 black' } }}
+        size="small"
+        fullWidth
+        type="submit"
+        variant="outlined"
+        onClick={handleClickGuest}
+      >
+        guest mode
       </LoadingButton>
     </>
   );

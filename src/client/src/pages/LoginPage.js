@@ -22,9 +22,9 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(5, 0),
 }));
 
-export default function LoginPage({setId}) {
+export default function LoginPage({ setId }) {
   const navigate = useNavigate();
-  const [tableData,setTableData] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [totalBudget, setTotalBudget] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
   const url = 'http://localhost:5000/peoples_budget/login';
@@ -39,7 +39,6 @@ export default function LoginPage({setId}) {
         const information = JSON.parse(await response.json());
         setTableData(information.children);
         setTotalBudget(information.children.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
-
       } catch (error) {
         console.error(error);
       }
@@ -52,7 +51,7 @@ export default function LoginPage({setId}) {
   };
 
   const handleBudgetClick = () => {
-    setIsClicked(prev => !prev)
+    setIsClicked((prev) => !prev);
   };
 
   return (
@@ -79,11 +78,19 @@ export default function LoginPage({setId}) {
               here.
             </Typography>
             <Button
+              id="budgetBtn"
               size="medium"
               onClick={handleBudgetClick}
               type="submit"
-              variant="outlined"
-              style={{ margin: '0 auto', width: '200px', marginBottom: '0px'}}
+              variant="text"
+              style={{
+                color: 'black',
+                margin: '0 auto',
+                width: '200px',
+                marginBottom: '0px',
+                border: '2mm double black',
+                // border: '2mm ridge black',
+              }}
             >
               State Budget - 2022
             </Button>
@@ -91,7 +98,7 @@ export default function LoginPage({setId}) {
         </Container>
       </StyledRoot>
 
-      {isClicked && <OldBudget tableData={tableData} totalBudget={totalBudget}/>}
+      {isClicked && <OldBudget tableData={tableData} totalBudget={totalBudget} />}
     </>
   );
 }

@@ -10,11 +10,12 @@ import UserContext from './contexts/UserContext';
 
 export default function App() {
   const [id, setId] = useState('');
+
   return (
-    <UserContext.Provider value={id}>
+    <UserContext.Provider value={ id }>
       <ThemeProvider>
         <ScrollToTop />
-        <Router setId={setId}/>
+        <Router setId={setId} />
       </ThemeProvider>
     </UserContext.Provider>
   );
