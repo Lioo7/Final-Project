@@ -125,18 +125,6 @@ export default function LoginForm({ setId }) {
       </Stack>
 
       <LoadingButton
-        id="loginBtn"
-        sx={{ my: 1, fontSize: '1rem'}}
-        fullWidth
-        size="large"
-        type="submit"
-        variant="contained"
-        onClick={handleClick}
-      >
-        Login
-      </LoadingButton>
-
-      <LoadingButton
         id="loginGuest"
         sx={{  '&:hover': { border: 'solid 2 black' } }}
         size="small"
@@ -146,6 +134,18 @@ export default function LoginForm({ setId }) {
         onClick={handleClickGuest}
       >
         guest mode
+      </LoadingButton>
+
+      <LoadingButton
+        id="loginBtn"
+        sx={{ my: 1, fontSize: '1rem'}}
+        fullWidth
+        size="large"
+        type="submit"
+        variant="contained"
+        onClick={handleClick}
+      >
+        Login
       </LoadingButton>
     </>
   );

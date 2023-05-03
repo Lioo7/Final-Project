@@ -88,8 +88,8 @@ export default function LoginPage({ setId }) {
                 margin: '0 auto',
                 width: '200px',
                 marginBottom: '0px',
-                border: '2mm double black',
-                // border: '2mm ridge black',
+                border: '2mm double rgb(51, 102, 255, 0.65)',
+                // border: '3mm ridge rgb(51, 102, 255)',
               }}
             >
               State Budget - 2022
