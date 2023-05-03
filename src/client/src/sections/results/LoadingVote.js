@@ -1,14 +1,3 @@
-// import * as React from 'react';
-// import CircularProgress from '@mui/material/CircularProgress';
-// import Box from '@mui/material/Box';
-
-// export default function LoadingVote() {
-//   return (
-//     <Box  marginTop={15} sx={{ display: 'flex', gap: 2, justifyContent: 'center'}} >
-//       <CircularProgress size={60}/>
-//     </Box>
-//   );
-// }
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';

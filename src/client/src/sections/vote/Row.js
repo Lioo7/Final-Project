@@ -20,7 +20,19 @@ export default function Row(props) {
   const [budget, setBudget] = useState(Number(row.allocated_budget_amount));
   const [childs, setChilds] = useState(row.children);
   const [checkBox, setCheckBox] = useState(row.checked);
-  // console.log('Row:', row)
+
+  function formatNumber(num) {
+    if (num >= 1000000000) {
+      return `${(num / 1000000000).toFixed(1)} B`;
+    }
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)} M`;
+    }
+    if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)} K`;
+    }
+    return num.toString();
+  }
 
   useEffect(() => {
     setRow(props.row);
@@ -114,12 +126,10 @@ export default function Row(props) {
             id={`slider${row.id}`}
             value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
             onChange={handleChangeSlider}
-            // step={10000}
-            // marks
             valueLabelDisplay="auto"
-            // getAriaValueText={abbreviate(Number(row.allocated_budget_amount))}
             aria-label="Default"
             max={props.maxBudget}
+            valueLabelFormat={(value) => formatNumber(value)}
             sx={{ mt: 1.2 }}
           /> 
          </TableCell> 
@@ -139,7 +149,7 @@ export default function Row(props) {
                   childrens={childs}
                   parent={row.children}
                   maxBudget={Number(row.allocated_budget_amount)}
-                  updateBudget={Number(props.updateBudget)}
+                  updateBudget={props.updateBudget}
                   handleCheckBox={props.handleCheckBox}
                   handleVote={props.handleVote}
                 />
