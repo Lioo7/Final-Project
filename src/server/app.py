@@ -3,6 +3,8 @@ import logging
 import sys
 sys.path.append("..")
 from datetime import datetime
+from threading import Thread
+import time
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -26,6 +28,45 @@ sys.path.append("..")
 
 app = Flask(__name__)
 CORS(app)
+
+
+# Batch calculate results
+algorithms_results = None
+
+def calculte_results():
+    while True:
+        time.sleep(10)
+        database.handler.connect()
+        votes = database.handler.load_user_votes()
+
+        if not isinstance(votes, list):
+            return jsonify({"status": "Faild to load from DB"})
+
+        voted_dict = unite_votes(votes)
+
+        # Algo 1:
+        median_algorithm_result: dict = median_algorithm(voted_dict)
+
+        # Algo 2:
+        # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+
+        # Get current budget
+        tree = database.handler.build_tree_from_current_budget()
+        current_budget = tree.to_dict()
+        # updates the 'total' values in the budget dictionary
+        calculate_totals(current_budget)
+        count = Counter()
+        update_dict_ids(count, current_budget)
+        converted_current_budget = convert_structure(current_budget)
+
+        database.handler.disconnect()
+        global algorithms_results
+        algorithms_results = {
+            "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
+            "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
+            "time": datetime.now()
+        }
+    
 
 # DB
 database = data_handler(SQL_database(SQL_database.create_config()))
@@ -100,7 +141,6 @@ def signup():
 
     database.handler.connect()
     valid_email = new_user.is_the_email_valid(email)
-    print(valid_email)
     check_mail = database.handler.user_mail_exeisting(new_user)
     # check_age = User.is_over_18()
 
@@ -269,35 +309,8 @@ def voting_tree():
 
 @app.route("/peoples_budget/results", methods=["GET"])
 def algorithms_results():
-    database.handler.connect()
-    votes = database.handler.load_user_votes()
-
-    if not isinstance(votes, list):
-        return jsonify({"status": "Faild to load from DB"})
-
-    voted_dict = unite_votes(votes)
-
-    # Algo 1:
-    median_algorithm_result: dict = median_algorithm(voted_dict)
-
-    # Algo 2:
-    # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
-
-    # Get current budget
-    tree = database.handler.build_tree_from_current_budget()
-    current_budget = tree.to_dict()
-    # updates the 'total' values in the budget dictionary
-    calculate_totals(current_budget)
-    count = Counter()
-    update_dict_ids(count, current_budget)
-    converted_current_budget = convert_structure(current_budget)
-
-    database.handler.disconnect()
-
-    return {
-        "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
-        "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
-    }
+    global algorithms_results
+    return algorithms_results
 
 
 # dev or prod
@@ -305,7 +318,9 @@ mode = "dev"
 
 if __name__ == "__main__":
     
-    #calculte_results()
+    batch = Thread(target=calculte_results)
+    batch.daemon = True
+    batch.start()
     
     if mode == "dev":
         app.run(port=5000, debug=True)
