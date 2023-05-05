@@ -50,7 +50,7 @@ export default function SignUpForm() {
       return;
     }
 
-    if (id.length !== '000000000') {
+    if (id === '000000000') {
       setIdError('Invalid ID: This ID belongs to guest user.');
       console.log(typeof id);
       return;
@@ -85,6 +85,7 @@ export default function SignUpForm() {
     }
     setPasswordError('');
 
+    console.log(firstName, lastName,id, birthDate, gender, email, password);
     try {
       const response = await fetch(url, {
         method: 'POST',
