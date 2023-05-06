@@ -487,8 +487,8 @@ def _find_median_with_constant_functions(
     constants = _compute_constants(votes_by_project, c, n, t)
 
     sum_medians = 0
-    for project, values in votes_by_project.items():
-        values_with_constants = values + constants
+    for _project, values in votes_by_project.items():
+        values_with_constants = _combine_lists(values, constants)
         # sort the values and constants
         sorted_values_with_constants = sorted(values_with_constants)
         # find the median of the sorted values and constants
@@ -499,8 +499,7 @@ def _find_median_with_constant_functions(
     # print('sum_medians: ', sum_medians)
 
     EPSILON = 0.0001  # a threshold value
-    # base case: if the diff of the sum is amall enough 
-    # or the search range is sufficiently small 
+    # base case: if the diff of the sum is small enough 
     # or the maximum number of iterations is reached, 
     # return the current constants
     if (
@@ -529,6 +528,15 @@ def _find_median_with_constant_functions(
             max_search=max_search,
             max_iterations=max_iterations - 1,
         )
+
+
+def _combine_lists(list1, list2) -> list:
+    """
+    Combine two lists into a new list.
+    """
+    result = list1.copy()
+    result.extend(list2)
+    return result
 
 
 def _compute_constants(votes_by_project: dict, c: float, n: int, t: float) -> list[float]:
