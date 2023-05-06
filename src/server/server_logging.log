@@ -1,17 +1,16 @@
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 404-997-780
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:53:53] "OPTIONS /peoples_budget/login HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:53:57] "POST /peoples_budget/login HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:53:58] "OPTIONS /peoples_budget/home?user_id=123123123 HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:53:58] "GET /peoples_budget/home?user_id=123123123 HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:54:05] "OPTIONS /peoples_budget/results HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:54:06] "[35m[1mGET /peoples_budget/results HTTP/1.1[0m" 500 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:54:08] "[35m[1mGET /peoples_budget/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:54:35] "OPTIONS /peoples_budget/information HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:54:36] "GET /peoples_budget/information HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:54:46] "OPTIONS /peoples_budget/voting?user_id=123123123 HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:55:10] "GET /peoples_budget/voting?user_id=123123123 HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:55:26] "OPTIONS /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:55:27] "POST /peoples_budget/voting HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:55:27] "OPTIONS /peoples_budget/results HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [05/May/2023 11:55:27] "GET /peoples_budget/results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:13] "OPTIONS /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:14] "POST /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:14] "OPTIONS /peoples_budget/home?user_id=123123123 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:14] "GET /peoples_budget/home?user_id=123123123 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:31] "OPTIONS /peoples_budget/information HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:32] "GET /peoples_budget/information HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:36] "OPTIONS /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:36] "GET /peoples_budget/dashboard HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:46] "OPTIONS /peoples_budget/results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:33:46] "GET /peoples_budget/results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:34:26] "OPTIONS /peoples_budget/information HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:34:27] "GET /peoples_budget/information HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:34:29] "OPTIONS /peoples_budget/results HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/May/2023 14:34:29] "GET /peoples_budget/results HTTP/1.1" 200 -
