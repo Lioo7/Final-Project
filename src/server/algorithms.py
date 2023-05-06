@@ -3,6 +3,7 @@ This file contains the algorithms that will be used in the project for calculati
 """
 import logging
 import numpy as np
+import statistics
 
 from counter import Counter
 from tree import Tree
@@ -427,8 +428,7 @@ def _calculate_median(
         if key not in median_values:
             median_values[key] = []
         # sort the list of values
-        sorted_values = sorted(values + constants)
-        median = _find_median(sorted_values)
+        median = statistics.median(values + constants)
         median_values[key] = median
 
     return median_values
@@ -464,7 +464,7 @@ def _find_median_with_constant_functions(
     min_search: float = 0,
     max_search: float = 1,
     max_iterations: int = 50,
-) -> np.ndarray:
+) -> list[float]:
     """
     Find the median of a list of values by adding constant functions.
 
@@ -478,7 +478,7 @@ def _find_median_with_constant_functions(
         max_iterations (int, optional): The maximum number of iterations. Defaults to 1000.
 
     Returns:
-        constants (np.ndarray): An array of all the constants values, or None if the maximum number of iterations is reached.
+        constants list[float]: A list of all the constants values, or None if the maximum number of iterations is reached.
     """
 
     # calculate the midpoint of the search range
@@ -490,10 +490,8 @@ def _find_median_with_constant_functions(
     # use a generator expression to avoid creating a list of all items in memory at once
     for _project, values in (item for item in votes_by_project.items()):
         values_with_constants = _combine_lists(values, constants)
-        # sort the values and constants
-        sorted_values_with_constants = sorted(values_with_constants)
-        # find the median of the sorted values and constants
-        median = _find_median(sorted_values_with_constants)
+        # find the median 
+        median = statistics.median(values_with_constants)
         sum_medians += median
         
     # print('max_iterations: ', max_iterations)
