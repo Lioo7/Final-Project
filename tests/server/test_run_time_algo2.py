@@ -1,15 +1,19 @@
-from algorithms import _find_median_with_constant_functions
+import sys
+
+sys.path.append("../..")
+
+from src.server.algorithms import _find_median_with_constant_functions
 import time
 import numpy as np
 
 # each key represents a project and the value is a list of budget votes for that project by all the users.
 votes_by_project = {}
 # The total budget
-c = 1000000000
+c = 100000
 # The number of leaves (projects)
 n = 5000
 # num of users
-u = 2000
+u = 20
 
 
 votes_by_user = []

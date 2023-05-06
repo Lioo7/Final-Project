@@ -1,7 +1,6 @@
 """
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
-from ast import main
 import logging
 import numpy as np
 
@@ -458,7 +457,6 @@ def _find_median(lst: list[float]) -> float:
 
     return median
 
-
 def _find_median_with_constant_functions(
     votes_by_project: dict,
     c: float,
@@ -485,21 +483,8 @@ def _find_median_with_constant_functions(
 
     # calculate the midpoint of the search range
     t = (min_search + max_search) / 2
-    # create an empty list to store the constants
-    constants = []
-
-    # loop 'n' - 1 times to create 'n-1' constants
-    for i in range(1, n):
-        # create a new variable name for each constant
-        var_name = "f_" + str(i)
-        constants.append(var_name)
-
-    # calculate the value of each constant using the following formula: f_i = c * min{1, i * t}
-    for i in range(1, n):
-        const = c * min(1, i * t)
-        constants[i - 1] = round(const, 3)
-    
-    # constants = c*min(1, i*t)
+   
+    constants = _compute_constants(votes_by_project, c, n, t)
 
     sum_medians = 0
     for project, values in votes_by_project.items():
@@ -544,6 +529,31 @@ def _find_median_with_constant_functions(
             max_search=max_search,
             max_iterations=max_iterations - 1,
         )
+
+
+def _compute_constants(votes_by_project: dict, c: float, n: int, t: float) -> list[float]:
+    """
+    Compute the constants for the `_find_median_with_constant_functions` function,
+    according to the formula: f_i = c * min{1, i * t}.
+
+    Args:
+        votes_by_project (dict): A dictionary where each key represents a project and the value is a list of budget votes
+            for that project by all the users.
+        c (float): The total budget.
+        n (int): The number of leaves (projects).
+        t (float): The midpoint of the search range.
+
+    Returns:
+        list[float]: A list of `n-1` constants computed using the formula `f_i = c * min(1, i * t)`, rounded to 3 decimal places.
+    """
+    # an empty list to store the constants
+    constants = []
+    # loop 'n' - 1 times to create 'n-1' constants
+    for i in range(1, n):
+        # calculate the value of each constant using the following formula: f_i = c * min{1, i * t}
+        const = c * min(1, i * t)
+        constants.append(round(const, 3))
+    return constants
 
 
 def _create_result(votes: dict, new_values: list[float]) -> dict:
