@@ -35,7 +35,6 @@ algorithms_results = None
 
 def calculte_results():
     while True:
-        time.sleep(10)
         database.handler.connect()
         votes = database.handler.load_user_votes()
 
@@ -66,6 +65,9 @@ def calculte_results():
             "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
             "time": datetime.now()
         }
+        
+        time.sleep(10)
+        
     
 
 # DB
@@ -244,10 +246,13 @@ def dashboard():
 
 @app.route("/peoples_budget/voting", methods=["GET"])
 def subjects_and_projects_tree():
+    
     database.handler.connect()
-
-    user_id = request.args.get("user_id")
-
+    try:
+        user_id = request.args.get("user_id")
+    except:
+        return jsonify({"status": "Did not receive a user id"})
+        
     # Check if user can vote
     check_result = database.handler.check_voting_option(user_id=user_id)
 
@@ -263,10 +268,11 @@ def subjects_and_projects_tree():
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
+    
     count = Counter()
     update_dict_ids(count, dictionary)
+    
     json_tree = json.dumps(dictionary, ensure_ascii=False)
-
     database.handler.disconnect()
     return json_tree
 
