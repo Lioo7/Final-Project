@@ -31,3 +31,13 @@ if __name__ == '__main__':
     # get the execution time
     elapsed_time = et - st
     print('Execution time:', elapsed_time, 'seconds')
+
+#     print('Multi')
+#   # get the start time
+#     st = time.time()
+#     _find_median_with_constant_functions_multithreaded(votes_by_project, c, n)
+#     # get the end time
+#     et = time.time()
+#     # get the execution time
+#     elapsed_time = et - st
+#     print('Execution time:', elapsed_time, 'seconds')
