@@ -464,7 +464,7 @@ def _find_median_with_constant_functions(
     min_search: float = 0,
     max_search: float = 1,
     max_iterations: int = 50,
-) -> list[float]:
+) -> np.ndarray:
     """
     Find the median of a list of values by adding constant functions.
 
@@ -478,7 +478,7 @@ def _find_median_with_constant_functions(
         max_iterations (int, optional): The maximum number of iterations. Defaults to 1000.
 
     Returns:
-        constants (list[float]): A list of all the constants values, or None if the maximum number of iterations is reached.
+        constants (np.ndarray): An array of all the constants values, or None if the maximum number of iterations is reached.
     """
 
     # calculate the midpoint of the search range
@@ -555,14 +555,12 @@ def _compute_constants(votes_by_project: dict, c: float, n: int, t: float) -> li
     Returns:
         list[float]: A list of `n-1` constants computed using the formula `f_i = c * min(1, i * t)`, rounded to 3 decimal places.
     """
-    # an empty list to store the constants
-    constants = []
-    # loop 'n' - 1 times to create 'n-1' constants
-    for i in range(1, n):
-        # calculate the value of each constant using the following formula: f_i = c * min{1, i * t}
-        const = c * min(1, i * t)
-        constants.append(round(const, 3))
-    return constants
+    # create a 1D numpy array containing the values 1 to n-1
+    i_arr = np.arange(1, n, dtype=float)
+    # compute the constants using the vectorized expression: c * np.minimum(1, i_arr * t)
+    constants = np.round(c * np.minimum(1, i_arr * t), 3)
+    # convert the numpy array to a Python list and return it
+    return constants.tolist()
 
 
 def _create_result(votes: dict, new_values: list[float]) -> dict:
