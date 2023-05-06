@@ -529,6 +529,87 @@ def _find_median_with_constant_functions(
         )
 
 
+# import multiprocessing
+
+# def _compute_median(values_with_constants):
+#     """Helper function to compute the median of a list of values with constants."""
+#     return statistics.median(values_with_constants)
+
+
+# def _find_median_with_constant_functions_multiprocessing(
+#     votes_by_project: dict,
+#     c: float,
+#     n: int,
+#     min_search: float = 0,
+#     max_search: float = 1,
+#     max_iterations: int = 10,
+#     num_processes: int = None,
+# ) -> list[float]:
+#     """
+#     Find the median of a list of values by adding constant functions using multiprocessing.
+
+#     Args:
+#         votes_by_project (dict): A dictionary where each key represents a project and the value is a list of budget votes
+#             for that project by all the users.
+#         c (float): The total budget.
+#         n (int): The number of leaves (projects).
+#         min_search (float, optional): The minimum value of the search range. Defaults to 0.
+#         max_search (float, optional): The maximum value of the search range. Defaults to 1.
+#         max_iterations (int, optional): The maximum number of iterations. Defaults to 50.
+#         num_processes (int, optional): The number of processes to use for parallelization. Defaults to None (use all available cores).
+
+#     Returns:
+#         constants list[float]: A list of all the constants values, or None if the maximum number of iterations is reached.
+#     """
+
+#     # calculate the midpoint of the search range
+#     t = (min_search + max_search) / 2
+   
+#     constants = _compute_constants(votes_by_project, c, n, t)
+
+#     sum_medians = 0
+#     pool = multiprocessing.Pool(processes=num_processes)
+#     # use a generator expression to avoid creating a list of all items in memory at once
+#     results = pool.map_async(_compute_median, (_combine_lists(values, constants) for values in votes_by_project.values()))
+#     pool.close()
+#     pool.join()
+#     # iterate over the completed results to retrieve the medians and accumulate their sum
+#     for median in results.get():
+#         sum_medians += median
+
+#     EPSILON = 0.0001  # a threshold value
+#     # base case: if the diff of the sum is small enough 
+#     # or the maximum number of iterations is reached, 
+#     # return the current constants
+#     if (
+#         abs(sum_medians - c) < EPSILON * c
+#         or max_iterations <= 0
+#     ):
+#         return constants
+#     # if the sum of the medians is greater than or equal to the total budget, search the lower half of the range
+#     elif sum_medians >= c:
+#         return _find_median_with_constant_functions(
+#             votes_by_project=votes_by_project,
+#             c=c,
+#             n=n,
+#             min_search=min_search,
+#             max_search=t,
+#             max_iterations=max_iterations - 1,
+#             num_processes=num_processes,
+#         )
+#     # if the sum of the medians is less than the total budget, search the upper half of the range
+#     elif sum_medians < c:
+#         return _find_median_with_constant_functions(
+#             votes_by_project=votes_by_project,
+#             c=c,
+#             n=n,
+#             min_search=t,
+#             max_search=max_search,
+#             max_iterations=max_iterations - 1,
+#             num_processes=num_processes,
+#         )
+
+
 def _combine_lists(list1, list2) -> list:
     """
     Combine two lists into a new list.
