@@ -487,7 +487,8 @@ def _find_median_with_constant_functions(
     constants = _compute_constants(votes_by_project, c, n, t)
 
     sum_medians = 0
-    for _project, values in votes_by_project.items():
+    # use a generator expression to avoid creating a list of all items in memory at once
+    for _project, values in (item for item in votes_by_project.items()):
         values_with_constants = _combine_lists(values, constants)
         # sort the values and constants
         sorted_values_with_constants = sorted(values_with_constants)
