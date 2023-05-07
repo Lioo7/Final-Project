@@ -49,7 +49,7 @@ def calculte_results():
 
         # Algo 1:
         median_algorithm_result: dict = median_algorithm(voted_dict)
-
+        # TODO: remove the comments from lines 54 and 69 and test if the generalized_median_algorithm works   
         # Algo 2:
         # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
 
@@ -66,6 +66,7 @@ def calculte_results():
         global algorithms_results
         algorithms_results = {
             "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
+            # "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
             "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
             "time": datetime.now()
         }
@@ -152,7 +153,8 @@ def signup():
     database.handler.connect()
     valid_email = new_user.is_the_email_valid(email)
     check_mail = database.handler.user_mail_exeisting(new_user)
-    # check_age = User.is_over_18()
+    # TODO: remove the comments from the lines below and test if the function works 
+    # check_age = new_user.is_over_18(birth_date) 
 
     # # check if the user is 18+
     # if not check_age:
