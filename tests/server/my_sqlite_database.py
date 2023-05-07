@@ -45,16 +45,14 @@ class my_sqlite_database(Abstract_Database):
 
 
     def get_row_count_by_gender(self, table_name: str) -> list[int]:
-        male_query = (
-            f"SELECT COUNT(*) FROM {table_name} WHERE gender=1 AND allowed_to_vote=0"
-        )
-        female_query = (
-            f"SELECT COUNT(*) FROM {table_name} WHERE gender=2 AND allowed_to_vote=0"
-        )
-
+        male_query = (f"SELECT COUNT(*) FROM {table_name} WHERE gender=1 AND allowed_to_vote=0")
+        
+        female_query = (f"SELECT COUNT(*) FROM {table_name} WHERE gender=2 AND allowed_to_vote=0")
+       
         try:
             self.cursor.execute(male_query)
             male_result = self.cursor.fetchone()
+            
             self.cursor.execute(female_query)
             female_result = self.cursor.fetchone()
 
