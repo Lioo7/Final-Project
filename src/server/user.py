@@ -246,14 +246,14 @@ class User:
         """
         # convert the input string to a datetime object
         try:
-            dob = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+            dob = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y").date()
         except ValueError:
             # if the input string is not in the correct format, raise an error
             raise ValueError("Incorrect date format, should be DD/MM/YYYY")
 
         # calculate the person's age
         today = datetime.datetime.today()
-        age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+        age = today.year - dob.year - ((today.month, today.day) <= (dob.month, dob.day))
 
         # check if the person is an adult (18 years or older)
         if age >= 18:
