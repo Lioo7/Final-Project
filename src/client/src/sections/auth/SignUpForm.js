@@ -49,6 +49,12 @@ export default function SignUpForm() {
       console.log(typeof id);
       return;
     }
+
+    if (id === '000000000') {
+      setIdError('Invalid ID: This ID belongs to guest user.');
+      console.log(typeof id);
+      return;
+    }
     setIdError('');
 
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
@@ -79,6 +85,7 @@ export default function SignUpForm() {
     }
     setPasswordError('');
 
+    console.log(firstName, lastName,id, birthDate, gender, email, password);
     try {
       const response = await fetch(url, {
         method: 'POST',

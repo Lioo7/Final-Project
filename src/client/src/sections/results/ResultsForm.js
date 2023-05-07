@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Button } from '@mui/material';
 import Loading from './Loading';
 import Algo from './Algo';
+import LoadingVote from './LoadingVote';
 
 export default function ResultsForm() {
   const [loading, setLoading] = useState(false);
@@ -10,9 +11,12 @@ export default function ResultsForm() {
   const [clicked1, setClicked1] = useState(false);
   const [clicked2, setClicked2] = useState(false);
 
+  // const [loadingPage, setLoadingPage] = useState(true);
+
   const [oldBudget, setOldBudget] = useState({});
   const [algo1, setAlgo1] = useState({});
   const [algo2, setAlgo2] = useState({});
+  const [lastTime, setLastTime] = useState('');
   const url = 'http://localhost:5000/peoples_budget/results';
 
   const fetchData = async () => {
@@ -23,9 +27,13 @@ export default function ResultsForm() {
       });
       const information = await response.json();
       console.log('information', information);
-      
+      console.log('time', information.time);
+      console.log(typeof information.time);
+
       setOldBudget(JSON.parse(information.current_budget));
       setAlgo1(JSON.parse(information.median_algorithm));
+      setLastTime(information.time);
+
       // setAlgo2(information.average_algorithm);
     } catch (error) {
       console.error(error);
@@ -34,6 +42,9 @@ export default function ResultsForm() {
 
   useEffect(() => {
     fetchData();
+    // setTimeout(() => {
+    //   setLoadingPage(false);
+    // }, 15000);
   }, []);
 
   const handleButtonClick = (number) => {
@@ -51,13 +62,15 @@ export default function ResultsForm() {
     }
   };
 
-  return (
+  return Object.keys(oldBudget).length === 0 ? (
+    <LoadingVote />
+  ) : (
     <div>
       <Typography variant="h3" align="center" marginBottom={5}>
         Select an option:
       </Typography>
 
-      <Box marginBottom={5} gap={12} align="center">
+      <Box marginBottom={1} gap={12} align="center">
         <Box>
           <Button
             id="algo1"
@@ -78,13 +91,19 @@ export default function ResultsForm() {
             variant={clicked2 ? 'contained' : 'outlined'}
             onClick={() => handleButtonClick(1)}
           >
-             Average Algorithm
+            Average Algorithm
           </Button>
         </Box>
       </Box>
+
+      {(displayGraph1 || displayGraph2) && (
+        <Typography variant="h6" align="center" marginBottom={2}>
+          {lastTime}
+        </Typography>
+      )}
       {loading && <Loading />}
-      {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1}/>}
-      {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo1}/>}
+      {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1} />}
+      {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo1} />}
     </div>
   );
 }

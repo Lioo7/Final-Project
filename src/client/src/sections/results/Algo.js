@@ -30,7 +30,7 @@ export default function Algo(props) {
                 New Budget
               </TableCell>
               <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
-                Precent
+                Difference
               </TableCell>
             </TableRow>
           </TableHead>

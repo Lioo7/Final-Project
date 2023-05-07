@@ -25,15 +25,14 @@ export default function AlgoChild(props) {
               <TableCell align="center">Subject</TableCell>
               <TableCell align="center">Old Budget</TableCell>
               <TableCell align="center">New Budget</TableCell>
-              <TableCell align="center">Precent</TableCell>
+              <TableCell align="center">Difference</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.keys(tableChilds).map(
-              (key, index) =>
-                key !== 'total' ? (
-                  <AlgoRow key={index} name={key} row={tableChilds[key]} rowAlgo={tableChildsAlgo[key]} />
-                ) : null
+            {Object.keys(tableChilds).map((key, index) =>
+              key !== 'total' ? (
+                <AlgoRow key={index} name={key} row={tableChilds[key]} rowAlgo={tableChildsAlgo[key]} />
+              ) : null
             )}
           </TableBody>
         </Table>

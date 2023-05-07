@@ -11,7 +11,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
-import LoadingVote from './LoadingVote';
 import UserContext from '../../contexts/UserContext';
 
 function PaperComponent(props) {
@@ -26,8 +25,8 @@ export default function PopCardSubmit(props) {
   const id = useContext(UserContext);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = useState(false);
-  const [table, setTable] = useState({ ...props.allData, children: props.tableData });
+  const [display, setDisplay] = useState(true);
+  const [table] = useState({ ...props.allData, children: props.tableData });
   const url = 'http://localhost:5000/peoples_budget/voting';
 
   const handleClickOpen = () => {
@@ -41,23 +40,17 @@ export default function PopCardSubmit(props) {
   const handleSubmit = async () => {
     // removed the table
     props.setDisplay(false);
-    setLoading(true);
+    setDisplay(false);
+
     try {
-      console.log(id)
-      console.log(table)
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, table }),
       });
-
       const responseData = await response.json();
-
       if (responseData.status === 'Succeeded') {
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/peoples_budget/results', { replace: true });
-        }, 8000);
+        navigate('/peoples_budget/results', { replace: true });
       } else {
         throw new Error('Error sending user vote.');
       }
@@ -69,9 +62,7 @@ export default function PopCardSubmit(props) {
 
   return (
     <div>
-      {loading && <LoadingVote />}
-
-      {!loading && (
+      {display && (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
           <Button
             id="voteSubmit"
@@ -84,7 +75,7 @@ export default function PopCardSubmit(props) {
         </Box>
       )}
 
-      {!loading && (
+      {display && (
         <Dialog
           open={open}
           onClose={handleClose}
@@ -102,10 +93,12 @@ export default function PopCardSubmit(props) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleClose}>
+            <Button id="cancel" autoFocus onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button id="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </DialogActions>
         </Dialog>
       )}
@@ -115,5 +108,5 @@ export default function PopCardSubmit(props) {
 
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-

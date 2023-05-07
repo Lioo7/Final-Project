@@ -9,7 +9,7 @@ class Tree:
         self._node_amount = 0
 
         if self._root is not None:
-            self.node_amount = 1
+            self._node_amount = 1
 
     def get_root(self) -> Node:
         """
@@ -173,7 +173,7 @@ class Tree:
         # Remove node from beeing child of his parent
         parent_id = node.get_parent_id()
         parent_node = self.get_node(parent_id)
-        parent_node.remove_child(node.get_id())
+        parent_node.remove_child_by_id_and_name(node_id,node_name)
 
         # Remove parent id from this node
         node.set_parent_id(None)
@@ -317,9 +317,13 @@ class Tree:
     ) -> float:
         if current_node is None:
             return total_budget
-
+        
+        if not current_node.get_children():
+            return current_node.get_allocated_budget_amount()
+            
+        
         for child in current_node.get_children():
-            total_budget += self._get_budget_amount_recursive(child, total_budget)
+            total_budget += self._get_budget_amount_recursive(child, child.get_allocated_budget_amount())
 
         return total_budget
 
@@ -361,7 +365,7 @@ class Tree:
 
         return True
 
-    def node_exists(self, node_id: int, node_name: str) -> bool:
+    def node_exists_by_id_and_name(self, node_id: int, node_name: str) -> bool:
         if self.get_node_by_name_and_id(node_id, node_name) is None:
             return False
 

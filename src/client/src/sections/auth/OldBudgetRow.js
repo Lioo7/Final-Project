@@ -15,6 +15,19 @@ export default function OldBudgetRow(props) {
   const [open, setOpen] = useState(false);
   const [childs] = useState(row.children);
 
+  function formatNumber(num) {
+    if (num >= 1000000000) {
+      return `${(num / 1000000000).toFixed(1)} B`;
+    }
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)} M`;
+    }
+    if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)} K`;
+    }
+    return num.toString();
+  }
+
   return (
     <>
       <TableRow key={row.id} sx={{ backgroundColor: row.checked ? '#F4F6F8' : 'white' }}>
@@ -32,7 +45,7 @@ export default function OldBudgetRow(props) {
         <TableCell align="center" component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="center">{row.allocated_budget_amount}</TableCell>
+        <TableCell align="center">{formatNumber(row.allocated_budget_amount)}</TableCell>
         <TableCell align="center">
           {props.totalBudget === 0
             ? 0

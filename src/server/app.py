@@ -4,6 +4,8 @@ import sys
 
 sys.path.append("..")
 from datetime import datetime
+from threading import Thread
+import time
 
 from algorithms import (
     calculate_totals,
@@ -30,6 +32,47 @@ sys.path.append("..")
 
 app = Flask(__name__)
 CORS(app)
+
+
+# Batch calculate results
+algorithms_results = None
+
+def calculte_results():
+    while True:
+        database.handler.connect()
+        votes = database.handler.load_user_votes()
+
+        if not isinstance(votes, list):
+            return jsonify({"status": "Faild to load from DB"})
+
+        voted_dict = unite_votes(votes)
+
+        # Algo 1:
+        median_algorithm_result: dict = median_algorithm(voted_dict)
+
+        # Algo 2:
+        # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+
+        # Get current budget
+        tree = database.handler.build_tree_from_current_budget()
+        current_budget = tree.to_dict()
+        # updates the 'total' values in the budget dictionary
+        calculate_totals(current_budget)
+        count = Counter()
+        update_dict_ids(count, current_budget)
+        converted_current_budget = convert_structure(current_budget)
+
+        database.handler.disconnect()
+        global algorithms_results
+        algorithms_results = {
+            "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
+            "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
+            "time": datetime.now()
+        }
+        
+        time.sleep(10)
+        
+    
 
 # DB
 database = data_handler(SQL_database(SQL_database.create_config()))
@@ -107,7 +150,7 @@ def signup():
     )
 
     database.handler.connect()
-    valid_email = User.is_the_email_valid(email)
+    valid_email = new_user.is_the_email_valid(email)
     check_mail = database.handler.user_mail_exeisting(new_user)
     # check_age = User.is_over_18()
 
@@ -215,10 +258,13 @@ def dashboard():
 
 @app.route("/peoples_budget/voting", methods=["GET"])
 def subjects_and_projects_tree():
+    
     database.handler.connect()
-
-    user_id = request.args.get("user_id")
-
+    try:
+        user_id = request.args.get("user_id")
+    except:
+        return jsonify({"status": "Did not receive a user id"})
+        
     # Check if user can vote
     check_result = database.handler.check_voting_option(user_id=user_id)
 
@@ -234,10 +280,11 @@ def subjects_and_projects_tree():
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
+    
     count = Counter()
     update_dict_ids(count, dictionary)
+    
     json_tree = json.dumps(dictionary, ensure_ascii=False)
-
     database.handler.disconnect()
     return json_tree
 
@@ -285,44 +332,19 @@ def voting_tree():
 
 @app.route("/peoples_budget/results", methods=["GET"])
 def algorithms_results():
-    database.handler.connect()
-    votes = database.handler.load_user_votes()
-
-    if not isinstance(votes, list):
-        return jsonify({"status": "Faild to load from DB"})
-
-    voted_dict = unite_votes(votes)
-
-    # Algo 1:
-    median_algorithm_result: dict = median_algorithm(voted_dict)
-
-    # Algo 2:
-    # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
-
-    # Get current budget
-    tree = database.handler.build_tree_from_current_budget()
-    current_budget = tree.to_dict()
-    # updates the 'total' values in the budget dictionary
-    calculate_totals(current_budget)
-    count = Counter()
-    update_dict_ids(count, current_budget)
-    converted_current_budget = convert_structure(current_budget)
-
-    database.handler.disconnect()
-
-    return {
-        "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
-        "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
-    }
+    global algorithms_results
+    return algorithms_results
 
 
 # dev or prod
 mode = "dev"
 
 if __name__ == "__main__":
-
-    calculte_results()
-
+    
+    batch = Thread(target=calculte_results)
+    batch.daemon = True
+    batch.start()
+    
     if mode == "dev":
         app.run(port=5000, debug=True)
 
