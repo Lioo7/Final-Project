@@ -11,17 +11,16 @@ class Test_tree(unittest.TestCase):
         root = Node(0, "Ministry of Defence", "description", None, 100)
         tree = Tree(root)
         child = Node(1, "node", "description", 0, 50)
-        tree.add_node_by_id_and_name(root.get_id(),root.get_name(), child)
+        tree.add_node_by_id_and_name(root.get_id(), root.get_name(), child)
 
         self.assertEqual(len(tree.get_node(0).get_children()), 1)
         self.assertEqual(tree.get_size(), 2)
 
         for i in range(2, 100):
             node = Node(i, "node", "description", None, 10)
-            tree.add_node_by_id_and_name(i - 1,"node", node)
+            tree.add_node_by_id_and_name(i - 1, "node", node)
 
         self.assertEqual(tree.get_size(), 100)
-
 
     def test_get_size(self):
         root = Node(0, "Root", "This is the root node", None, 100)
@@ -40,9 +39,9 @@ class Test_tree(unittest.TestCase):
         child2 = Node(2, "Child2", "This is another child node", 0, 25)
         grandchild = Node(3, "Grandchild", "This is a grandchild node", 1, 10)
         tree.add_node_by_id_and_name(root.get_id(), root.get_name(), child1)
-        
+
         tree.add_node_by_id_and_name(root.get_id(), root.get_name(), child2)
-        
+
         tree.add_node_by_id_and_name(child1.get_id(), child1.get_name(), grandchild)
         self.assertEqual(tree.get_budget_amount(), 185)
 

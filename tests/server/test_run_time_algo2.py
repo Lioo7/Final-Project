@@ -1,10 +1,15 @@
 import sys
+
 sys.path.append("../..")
-from src.server.algorithms import _find_median_with_constant_functions, _find_median_with_constant_functions_multithreaded
 import time
+
 import numpy as np
 
-if __name__ == '__main__':
+from src.server.algorithms import (
+    _find_median_with_constant_functions,
+    _find_median_with_constant_functions_multithreaded)
+
+if __name__ == "__main__":
     # each key represents a project and the value is a list of budget votes for that project by all the users.
     votes_by_project = {}
     # The total budget
@@ -22,8 +27,8 @@ if __name__ == '__main__':
 
     for i in range(n):
         votes_by_project[i] = [vote[i] for vote in votes_by_user]
-        
-    print('Singlethread')
+
+    print("Singlethread")
     # get the start time
     st = time.time()
     _find_median_with_constant_functions(votes_by_project, c, n)
@@ -31,14 +36,14 @@ if __name__ == '__main__':
     et = time.time()
     # get the execution time
     elapsed_time = et - st
-    print('Execution time:', elapsed_time, 'seconds')
+    print("Execution time:", elapsed_time, "seconds")
 
-    print('Multithreaded')
-  # get the start time
+    print("Multithreaded")
+    # get the start time
     st = time.time()
     _find_median_with_constant_functions_multithreaded(votes_by_project, c, n)
     # get the end time
     et = time.time()
     # get the execution time
     elapsed_time = et - st
-    print('Execution time:', elapsed_time, 'seconds')
+    print("Execution time:", elapsed_time, "seconds")
