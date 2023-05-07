@@ -45,7 +45,7 @@ def calculte_results():
 
         # Algo 1:
         median_algorithm_result: dict = median_algorithm(voted_dict)
-        # TODO: remove the comments from lines 54 and 69 and test if the generalized_median_algorithm works
+        # TODO: remove the comments from lines 50 and 65 and test if the generalized_median_algorithm works
         # Algo 2:
         # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
 
