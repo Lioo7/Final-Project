@@ -45,55 +45,35 @@ class Test_calculator(unittest.TestCase):
                 f"""INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
                     allowed_to_vote) VALUES ({i}, "ofir", "ovadia", "01/01/1990", "ofir_ovadia@example.com",
                     "password123", 1, 0, 1);""")
-             #  self.sqlite.execute_query("""CREATE TABLE IF NOT EXISTS USERS (user_id INTEGER PRIMARY KEY, 
-        #                            first_name, last_name, birth_date , mail,
-        #             password, gender, is_admin, allowed_to_vote)""")
-            # self.cursor.execute(
-            #     f"""INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-            #         allowed_to_vote) VALUES ({i}, "ofir", "ovadia", "01/01/1990", "ofir_ovadia@example.com",
-            #         "password123", "male", 0, 1);"""
-            # )
 
     def tearDown(self):
         self.sqlite.execute_query("DELETE FROM USERS")
-        #self.cursor.execute("DELETE FROM USERS")
 
     
     # ----------------------------------- Tests ------------------------------------------
 
     def test_get_voter_count(self):
-        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 0)
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 0)
         
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 50)
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
-        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 50)
 
         
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 51)
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
-        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 51)
-
 
 
     def test_get_voter_count_by_gender(self):
         
         self.sqlite.execute_query("UPDATE USERS SET gender = 2 WHERE user_id < 50")
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [0, 0])  # [male,female]
-        # self.cursor.execute("UPDATE USERS SET gender = 'female' WHERE user_id < 50")
-        # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [0, 0])  # [male,female]
 
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [0, 50])  # [male,female]
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
-        # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [0, 50])  # [male,female]
 
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [1, 50])  # [male,female]
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
-        # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [1, 50])  # [male,female]
+
 
     def test_get_voter_count_by_age(self):
         current_time = datetime.datetime.now()
