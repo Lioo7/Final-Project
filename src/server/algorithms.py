@@ -2,9 +2,9 @@
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
 import logging
-import numpy as np
 import statistics
 
+import numpy as np
 from counter import Counter
 from tree import Tree
 
@@ -14,7 +14,7 @@ __all__ = [
     "calculate_totals",
     "update_dict_ids",
     "convert_structure",
-    "unite_votes"
+    "unite_votes",
 ]
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
@@ -457,6 +457,7 @@ def _find_median(lst: list[float]) -> float:
 
     return median
 
+
 def _find_median_with_constant_functions(
     votes_by_project: dict,
     c: float,
@@ -483,23 +484,23 @@ def _find_median_with_constant_functions(
 
     # calculate the midpoint of the search range
     t = (min_search + max_search) / 2
-   
+
     constants = _compute_constants(votes_by_project, c, n, t)
 
     sum_medians = 0
     # use a generator expression to avoid creating a list of all items in memory at once
     for _project, values in (item for item in votes_by_project.items()):
         values_with_constants = _combine_lists(values, constants)
-        # find the median 
+        # find the median
         median = statistics.median(values_with_constants)
         sum_medians += median
-        
+
     # print('max_iterations: ', max_iterations)
     # print('sum_medians: ', sum_medians)
 
     EPSILON = 0.0001  # a threshold value
-    # base case: if the diff of the sum is small enough 
-    # or the maximum number of iterations is reached, 
+    # base case: if the diff of the sum is small enough
+    # or the maximum number of iterations is reached,
     # return the current constants
     if (
         abs(sum_medians - c) < EPSILON * c
@@ -536,6 +537,7 @@ def _compute_median(values_with_constants):
 
 import concurrent.futures
 
+
 def _find_median_with_constant_functions_multithreaded(
     votes_by_project: dict,
     c: float,
@@ -564,25 +566,25 @@ def _find_median_with_constant_functions_multithreaded(
 
     # calculate the midpoint of the search range
     t = (min_search + max_search) / 2
-   
+
     constants = _compute_constants(votes_by_project, c, n, t)
 
     sum_medians = 0
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         # use a generator expression to avoid creating a list of all items in memory at once
-        futures = [executor.submit(_compute_median, _combine_lists(values, constants)) for values in votes_by_project.values()]
+        futures = [
+            executor.submit(_compute_median, _combine_lists(values, constants))
+            for values in votes_by_project.values()
+        ]
         # iterate over the completed futures to retrieve the medians and accumulate their sum
         for future in concurrent.futures.as_completed(futures):
             sum_medians += future.result()
 
     EPSILON = 0.0001  # a threshold value
-    # base case: if the diff of the sum is small enough 
-    # or the maximum number of iterations is reached, 
+    # base case: if the diff of the sum is small enough
+    # or the maximum number of iterations is reached,
     # return the current constants
-    if (
-        abs(sum_medians - c) < EPSILON * c
-        or max_iterations <= 0
-    ):
+    if abs(sum_medians - c) < EPSILON * c or max_iterations <= 0:
         return constants
     # if the sum of the medians is greater than or equal to the total budget, search the lower half of the range
     elif sum_medians >= c:
@@ -617,7 +619,9 @@ def _combine_lists(list1, list2) -> list:
     return result
 
 
-def _compute_constants(votes_by_project: dict, c: float, n: int, t: float) -> list[float]:
+def _compute_constants(
+    votes_by_project: dict, c: float, n: int, t: float
+) -> list[float]:
     """
     Compute the constants for the `_find_median_with_constant_functions` function,
     according to the formula: f_i = c * min{1, i * t}.
@@ -735,5 +739,3 @@ def _calculate_total(budget: dict) -> float:
     budget["total"] = total
 
     return total
-
-
