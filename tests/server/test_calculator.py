@@ -5,9 +5,9 @@ sys.path.append("../..")
 import datetime
 from my_sqlite_database import my_sqlite_database
 
-from src.server.calculator import Calculator
 from src.database.data_handler import data_handler
 from src.database.sql_database import SQL_database
+from src.server.calculator import Calculator
 
 
 class Test_calculator(unittest.TestCase):

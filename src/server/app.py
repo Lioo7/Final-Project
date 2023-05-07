@@ -1,24 +1,28 @@
 import json
 import logging
 import sys
+
 sys.path.append("..")
 from datetime import datetime
 from threading import Thread
 import time
 
+from algorithms import (
+    calculate_totals,
+    convert_structure,
+    generalized_median_algorithm,
+    median_algorithm,
+    unite_votes,
+    update_dict_ids,
+)
+from calculator import Calculator
+from counter import Counter
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from waitress import serve
-
-from calculator import Calculator
-from user import User
 from node import Node
 from tree import Tree
-from counter import Counter
-from algorithms import (calculate_totals, convert_structure,
-                        generalized_median_algorithm, median_algorithm,
-                        unite_votes, update_dict_ids)
-
+from user import User
+from waitress import serve
 
 from database.abstract_Database import Abstract_Database
 from database.data_handler import data_handler
@@ -76,6 +80,7 @@ database = data_handler(SQL_database(SQL_database.create_config()))
 
 #  ----------------- Login ----------------------
 
+
 @app.route("/peoples_budget/login", methods=["POST"])
 def login():
     try:
@@ -114,6 +119,7 @@ def table_tree():
 
 # ----------------- Sign up ----------------------
 
+
 @app.route("/peoples_budget/sign_up", methods=["POST"])
 def signup():
     try:
@@ -139,7 +145,9 @@ def signup():
         # FEMALE
         gender = 2
 
-    new_user = User(id, first_name, last_name, converted_date, email, password, gender, False)
+    new_user = User(
+        id, first_name, last_name, converted_date, email, password, gender, False
+    )
 
     database.handler.connect()
     valid_email = new_user.is_the_email_valid(email)
@@ -181,6 +189,7 @@ def signup():
 
 # --------------------- Home --------------------------
 
+
 @app.route("/peoples_budget/home", methods=["GET"])
 def home():
     try:
@@ -213,6 +222,7 @@ def home():
 
 # ------------------- Information ---------------------------
 
+
 @app.route("/peoples_budget/information", methods=["GET"])
 def information():
     database.handler.connect()
@@ -229,6 +239,7 @@ def information():
 
 # ---------------------- Dashborad ----------------------------
 
+
 @app.route("/peoples_budget/dashboard", methods=["GET"])
 def dashboard():
     database.handler.connect()
@@ -243,6 +254,7 @@ def dashboard():
 
 
 # ----------------------- Voting ---------------------------
+
 
 @app.route("/peoples_budget/voting", methods=["GET"])
 def subjects_and_projects_tree():
@@ -286,7 +298,9 @@ def voting_tree():
         vote = data["table"]
 
         # update user option voting
-        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
+        update_result = database.handler.update_voting_option(
+            user_id=user_id, is_allowed=False
+        )
         if not update_result:
             database.handler.disconnect()
             return jsonify(
@@ -300,7 +314,9 @@ def voting_tree():
 
         if not result:
             # update user option voting
-            update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=True)
+            update_result = database.handler.update_voting_option(
+                user_id=user_id, is_allowed=True
+            )
             database.handler.disconnect()
             return jsonify({"status": "Error!, voting does not saved"})
 
@@ -312,6 +328,7 @@ def voting_tree():
 
 
 # ----------------------- Results ------------------------------
+
 
 @app.route("/peoples_budget/results", methods=["GET"])
 def algorithms_results():
