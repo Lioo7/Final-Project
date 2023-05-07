@@ -3,17 +3,17 @@ import unittest
 
 sys.path.append("../..")
 import datetime
+
 from my_sqlite_database import my_sqlite_database
 
-from src.server.calculator import Calculator
 from src.database.data_handler import data_handler
 from src.database.sql_database import SQL_database
+from src.server.calculator import Calculator
 
 
 class Test_calculator(unittest.TestCase):
-    
     # ------------------------------------ Set ups --------------------------------------------------
-    
+
     @classmethod
     def setUpClass(self):
         self.sqlite = my_sqlite_database()
@@ -60,10 +60,9 @@ class Test_calculator(unittest.TestCase):
 
     
     # ----------------------------------- Tests ------------------------------------------
-    
+
     def test_get_voter_count(self):
-        
-        #self.assertEqual(Calculator.get_voter_count(self.db_connector), 0)
+        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 0)
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 0)
         
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
@@ -95,7 +94,6 @@ class Test_calculator(unittest.TestCase):
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [1, 50])  # [male,female]
         # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
         # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [1, 50])  # [male,female]
-
 
     def test_get_voter_count_by_age(self):
         current_time = datetime.datetime.now()
@@ -159,17 +157,15 @@ class Test_calculator(unittest.TestCase):
         # self.cursor.execute("UPDATE USERS SET birth_date = '"+ sixtysix_years_ago.strftime("%d/%m/%Y")
         #                     + "' WHERE user_id BETWEEN 80 AND 100")
 
-
-
-        self.assertEqual(Calculator.get_voter_count_by_age(self.sqlite), [0, 0, 0, 0, 0, 0])
+        self.assertEqual(
+            Calculator.get_voter_count_by_age(self.sqlite), [0, 0, 0, 0, 0, 0]
+        )
         # self.assertEqual(Calculator.get_voter_count_by_age(self.db_connector), [0, 0, 0, 0, 0, 0])
-
 
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0")
         self.assertEqual(Calculator.get_voter_count_by_age(self.sqlite),[10, 15, 5, 20, 30, 20],)
         # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0")
         # self.assertEqual(Calculator.get_voter_count_by_age(self.db_connector),[10, 15, 5, 20, 30, 20],)
-
 
 
 if __name__ == "__main__":

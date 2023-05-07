@@ -1,24 +1,23 @@
 import json
 import logging
 import sys
+
 sys.path.append("..")
+import time
 from datetime import datetime
 from threading import Thread
-import time
 
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-from waitress import serve
-
-from calculator import Calculator
-from user import User
-from node import Node
-from tree import Tree
-from counter import Counter
 from algorithms import (calculate_totals, convert_structure,
                         generalized_median_algorithm, median_algorithm,
                         unite_votes, update_dict_ids)
-
+from calculator import Calculator
+from counter import Counter
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from node import Node
+from tree import Tree
+from user import User
+from waitress import serve
 
 from database.abstract_Database import Abstract_Database
 from database.data_handler import data_handler
@@ -33,6 +32,7 @@ CORS(app)
 # Batch calculate results
 algorithms_results = None
 
+
 def calculte_results():
     while True:
         database.handler.connect()
@@ -45,7 +45,7 @@ def calculte_results():
 
         # Algo 1:
         median_algorithm_result: dict = median_algorithm(voted_dict)
-
+        # TODO: remove the comments from lines 50 and 65 and test if the generalized_median_algorithm works
         # Algo 2:
         # generalized_median_result: dict = generalized_median_algorithm(voted_dict)
 
@@ -62,19 +62,20 @@ def calculte_results():
         global algorithms_results
         algorithms_results = {
             "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
+            # "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
             "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
-            "time": datetime.now()
+            "time": datetime.now(),
         }
-        
+
         time.sleep(10)
-        
-    
+
 
 # DB
 database = data_handler(SQL_database(SQL_database.create_config()))
 
 
 #  ----------------- Login ----------------------
+
 
 @app.route("/peoples_budget/login", methods=["POST"])
 def login():
@@ -114,6 +115,7 @@ def table_tree():
 
 # ----------------- Sign up ----------------------
 
+
 @app.route("/peoples_budget/sign_up", methods=["POST"])
 def signup():
     try:
@@ -139,12 +141,15 @@ def signup():
         # FEMALE
         gender = 2
 
-    new_user = User(id, first_name, last_name, converted_date, email, password, gender, False)
+    new_user = User(
+        id, first_name, last_name, converted_date, email, password, gender, False
+    )
 
     database.handler.connect()
     valid_email = new_user.is_the_email_valid(email)
     check_mail = database.handler.user_mail_exeisting(new_user)
-    # check_age = User.is_over_18()
+    # TODO: remove the comments from the lines below and test if the function works
+    # check_age = new_user.is_over_18(birth_date)
 
     # # check if the user is 18+
     # if not check_age:
@@ -181,6 +186,7 @@ def signup():
 
 # --------------------- Home --------------------------
 
+
 @app.route("/peoples_budget/home", methods=["GET"])
 def home():
     try:
@@ -213,6 +219,7 @@ def home():
 
 # ------------------- Information ---------------------------
 
+
 @app.route("/peoples_budget/information", methods=["GET"])
 def information():
     database.handler.connect()
@@ -229,6 +236,7 @@ def information():
 
 # ---------------------- Dashborad ----------------------------
 
+
 @app.route("/peoples_budget/dashboard", methods=["GET"])
 def dashboard():
     database.handler.connect()
@@ -244,15 +252,15 @@ def dashboard():
 
 # ----------------------- Voting ---------------------------
 
+
 @app.route("/peoples_budget/voting", methods=["GET"])
 def subjects_and_projects_tree():
-    
     database.handler.connect()
     try:
         user_id = request.args.get("user_id")
     except:
         return jsonify({"status": "Did not receive a user id"})
-        
+
     # Check if user can vote
     check_result = database.handler.check_voting_option(user_id=user_id)
 
@@ -268,10 +276,10 @@ def subjects_and_projects_tree():
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
-    
+
     count = Counter()
     update_dict_ids(count, dictionary)
-    
+
     json_tree = json.dumps(dictionary, ensure_ascii=False)
     database.handler.disconnect()
     return json_tree
@@ -286,7 +294,9 @@ def voting_tree():
         vote = data["table"]
 
         # update user option voting
-        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
+        update_result = database.handler.update_voting_option(
+            user_id=user_id, is_allowed=False
+        )
         if not update_result:
             database.handler.disconnect()
             return jsonify(
@@ -300,7 +310,9 @@ def voting_tree():
 
         if not result:
             # update user option voting
-            update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=True)
+            update_result = database.handler.update_voting_option(
+                user_id=user_id, is_allowed=True
+            )
             database.handler.disconnect()
             return jsonify({"status": "Error!, voting does not saved"})
 
@@ -313,6 +325,7 @@ def voting_tree():
 
 # ----------------------- Results ------------------------------
 
+
 @app.route("/peoples_budget/results", methods=["GET"])
 def algorithms_results():
     global algorithms_results
@@ -323,11 +336,10 @@ def algorithms_results():
 mode = "dev"
 
 if __name__ == "__main__":
-    
     batch = Thread(target=calculte_results)
     batch.daemon = True
     batch.start()
-    
+
     if mode == "dev":
         app.run(port=5000, debug=True)
 

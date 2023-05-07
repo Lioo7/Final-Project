@@ -1,5 +1,6 @@
 from node import Node
 
+
 class Tree:
     """This class present the tree of subjects and projects (container of Nodes)"""
 
@@ -172,7 +173,7 @@ class Tree:
         # Remove node from beeing child of his parent
         parent_id = node.get_parent_id()
         parent_node = self.get_node(parent_id)
-        parent_node.remove_child_by_id_and_name(node_id,node_name)
+        parent_node.remove_child_by_id_and_name(node_id, node_name)
 
         # Remove parent id from this node
         node.set_parent_id(None)
@@ -316,13 +317,14 @@ class Tree:
     ) -> float:
         if current_node is None:
             return total_budget
-        
+
         if not current_node.get_children():
             return current_node.get_allocated_budget_amount()
-            
-        
+
         for child in current_node.get_children():
-            total_budget += self._get_budget_amount_recursive(child, child.get_allocated_budget_amount())
+            total_budget += self._get_budget_amount_recursive(
+                child, child.get_allocated_budget_amount()
+            )
 
         return total_budget
 
