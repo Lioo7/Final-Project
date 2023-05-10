@@ -74,10 +74,12 @@ class SQL_database(Abstract_Database):
 
         return Tree(root_node)
 
+
     def get_row_count(self, table_name: str) -> int:
         query = f"SELECT COUNT(*) FROM {table_name} WHERE allowed_to_vote=0"
         result = self.execute_query(query)
         return result[0][0]
+
 
     def get_row_count_by_gender(self, table_name: str) -> list[int]:
         male_query = (
@@ -97,6 +99,7 @@ class SQL_database(Abstract_Database):
             print(f"An error occurred while executing the query: {err}")
 
         return [male_result[0], female_result[0]]
+
 
     @staticmethod
     def get_date_years_ago(years_ago):
@@ -372,9 +375,7 @@ class SQL_database(Abstract_Database):
             bool: True if the vote was successfully stored, False otherwise.
         """
         # create the query to insert the vote data into the database
-        query = (
-            f"""INSERT INTO USERS_VOTES (user_id, vote) VALUES ({user_id}, '{vote}')"""
-        )
+        query = (f"""INSERT INTO USERS_VOTES (user_id, vote) VALUES ({user_id}, '{vote}')""")
 
         try:
             """
@@ -483,3 +484,32 @@ class SQL_database(Abstract_Database):
             return "Faild"
 
         return [result[0][0], result[0][1]]
+
+
+    def get_user_vote(self,user_id):
+        query = f"SELECT vote FROM USERS_VOTES WHERE user_id ={user_id}"
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+
+        except:
+            return ["Error!"]
+
+        if not result:
+            return "Faild"
+
+        return [result[0][0]]
+    
+    
+    def update_user_vote(self, user_id:int, vote):
+        query = f"UPDATE USERS_VOTES SET vote = {vote} WHERE user_id={user_id}"
+        try:
+            self.cursor.execute(query)
+            self.db.commit()
+
+        except mysql.connector.Error as err:
+            # if an error occurred, print the error message and return False
+            print(f"An error occurred while storing the vote: {err}")
+            return False
+
+        return True

@@ -18,18 +18,10 @@ class Test_calculator(unittest.TestCase):
     def setUpClass(self):
         self.sqlite = my_sqlite_database()
         self.sqlite.connect()
-        # self.sqlite.execute_query("""CREATE TABLE IF NOT EXISTS USERS (user_id INTEGER PRIMARY KEY, first_name, last_name, birth_date , mail,
-        #             password, gender, is_admin, allowed_to_vote)""")
         self.sqlite.execute_query('''CREATE TABLE IF NOT EXISTS USERS
         (user_id INT PRIMARY KEY, first_name VARCHAR(255),
                             last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                             gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255))''',)
-        # self.db_connector = sqlite3.connect("tests.db")
-        # self.cursor = self.db_connector.cursor()
-        # self.cursor.execute(
-        #     """CREATE TABLE IF NOT EXISTS Users (user_id INTEGER PRIMARY KEY, first_name, last_name, birth_date , mail,
-        #             password, gender, is_admin, allowed_to_vote)"""
-        # )
         
 
     @classmethod
@@ -42,58 +34,39 @@ class Test_calculator(unittest.TestCase):
     def setUp(self):
         for i in range(0, 100):
             self.sqlite.execute_query(
-                f"""INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
+                f"""INSERT INTO USERS (user_id , first_name, last_name, birth_date, mail, password, gender, is_admin,
                     allowed_to_vote) VALUES ({i}, "ofir", "ovadia", "01/01/1990", "ofir_ovadia@example.com",
                     "password123", 1, 0, 1);""")
-             #  self.sqlite.execute_query("""CREATE TABLE IF NOT EXISTS USERS (user_id INTEGER PRIMARY KEY, 
-        #                            first_name, last_name, birth_date , mail,
-        #             password, gender, is_admin, allowed_to_vote)""")
-            # self.cursor.execute(
-            #     f"""INSERT INTO USERS (user_id, first_name, last_name, birth_date, mail, password, gender, is_admin,
-            #         allowed_to_vote) VALUES ({i}, "ofir", "ovadia", "01/01/1990", "ofir_ovadia@example.com",
-            #         "password123", "male", 0, 1);"""
-            # )
 
     def tearDown(self):
         self.sqlite.execute_query("DELETE FROM USERS")
-        #self.cursor.execute("DELETE FROM USERS")
+        self.sqlite.db.commit()
 
     
     # ----------------------------------- Tests ------------------------------------------
 
     def test_get_voter_count(self):
-        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 0)
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 0)
         
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 50)
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
-        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 50)
 
         
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
         self.assertEqual(Calculator.get_voter_count(self.sqlite), 51)
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
-        # self.assertEqual(Calculator.get_voter_count(self.db_connector), 51)
-
 
 
     def test_get_voter_count_by_gender(self):
         
         self.sqlite.execute_query("UPDATE USERS SET gender = 2 WHERE user_id < 50")
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [0, 0])  # [male,female]
-        # self.cursor.execute("UPDATE USERS SET gender = 'female' WHERE user_id < 50")
-        # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [0, 0])  # [male,female]
 
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [0, 50])  # [male,female]
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id < 50")
-        # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [0, 50])  # [male,female]
 
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
         self.assertEqual(Calculator.get_voter_count_by_gender(self.sqlite), [1, 50])  # [male,female]
-        # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = 99")
-        # self.assertEqual(Calculator.get_voter_count_by_gender(self.db_connector), [1, 50])  # [male,female]
+
 
     def test_get_voter_count_by_age(self):
         current_time = datetime.datetime.now()
@@ -157,13 +130,21 @@ class Test_calculator(unittest.TestCase):
         # self.cursor.execute("UPDATE USERS SET birth_date = '"+ sixtysix_years_ago.strftime("%d/%m/%Y")
         #                     + "' WHERE user_id BETWEEN 80 AND 100")
 
-        self.assertEqual(
-            Calculator.get_voter_count_by_age(self.sqlite), [0, 0, 0, 0, 0, 0]
-        )
+        
+        self.assertEqual(Calculator.get_voter_count_by_age(self.sqlite), [0, 0, 0, 0, 0, 0])
         # self.assertEqual(Calculator.get_voter_count_by_age(self.db_connector), [0, 0, 0, 0, 0, 0])
 
         self.sqlite.execute_query("UPDATE USERS SET allowed_to_vote = 0")
+
+        # self.sqlite.cursor.execute("SELECT * FROM USERS")
+        # result = self.sqlite.cursor.fetchall()
+        # for row in result:
+        #     print(row)
+        
         self.assertEqual(Calculator.get_voter_count_by_age(self.sqlite),[10, 15, 5, 20, 30, 20],)
+        
+        
+        
         # self.cursor.execute("UPDATE USERS SET allowed_to_vote = 0")
         # self.assertEqual(Calculator.get_voter_count_by_age(self.db_connector),[10, 15, 5, 20, 30, 20],)
 

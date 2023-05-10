@@ -261,12 +261,15 @@ def subjects_and_projects_tree():
     except:
         return jsonify({"status": "Did not receive a user id"})
 
-    # Check if user can vote
+    # Check if user already voted
     check_result = database.handler.check_voting_option(user_id=user_id)
 
     if check_result == "false":
+        
+        user_vote = database.handler.get_user_vote(user_id)
         database.handler.disconnect()
-        return jsonify({"status": "Is not allowed to vote"})
+        return user_vote
+        #return jsonify({"status": "Is not allowed to vote"})
 
     elif check_result == "Error!":
         database.handler.disconnect()
@@ -293,19 +296,36 @@ def voting_tree():
         user_id = data["id"]
         vote = data["table"]
 
+        vote_str = json.dumps(vote, ensure_ascii=False).replace("'", "''")
+        
+        # Check if user already voted
+        check_result = database.handler.check_voting_option(user_id=user_id)
+        
+        if check_result == "false":
+            result = database.handler.update_user_vote(user_id,vote_str)
+            
+            if not result:
+                database.handler.disconnect()
+                return jsonify({"status": "Error!, voting does not saved"})
+            
+            else:
+                database.handler.disconnect()
+                return jsonify({"status": "The user vote has been updated"})
+            
+        
+        elif check_result == "Error!":
+            database.handler.disconnect()
+            return jsonify({"status": "Error!, check_voting_option function faild to execute query"})
+
         # update user option voting
-        update_result = database.handler.update_voting_option(
-            user_id=user_id, is_allowed=False
-        )
+        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
+        
         if not update_result:
             database.handler.disconnect()
-            return jsonify(
-                {
-                    "status": "Error!, Voting permission has not been updated, vote not saved"
-                }
-            )
+            return jsonify({"status": "Error!, Voting permission has not been updated, vote not saved"})
+        
+        
 
-        vote_str = json.dumps(vote, ensure_ascii=False).replace("'", "''")
         result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
 
         if not result:
