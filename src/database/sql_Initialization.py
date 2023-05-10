@@ -206,29 +206,6 @@ class SQL_init:
 
         return tree
 
-    @staticmethod
-    def write_tree_to_csv(tree, filename):
-        with open(filename, mode="w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(
-                ["node_id", "name", "description", "parent_id", "budget_amount"]
-            )
-            SQL_init.write_node_to_csv(tree.get_root(), writer)
-
-    @staticmethod
-    def write_node_to_csv(node, writer):
-        writer.writerow(
-            [
-                node.get_id(),
-                node.get_name(),
-                node.get_description(),
-                node.get_parent_id(),
-                node.get_allocated_budget_amount(),
-            ]
-        )
-        for child in node.get_children():
-            SQL_init.write_node_to_csv(child, writer)
-
 
 if __name__ == "__main__":
     # Connect server
@@ -262,5 +239,6 @@ if __name__ == "__main__":
     # Load datasets
     # SQL_init.load_information_to_information_table(cursor, db)
     # SQL_init.load_and_insert_to_current_budget_table(cursor, db)
-    # Clean
+    
+    # Clean database
     # SQL_init.clean_database(cursor)

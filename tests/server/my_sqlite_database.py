@@ -42,6 +42,7 @@ class my_sqlite_database(Abstract_Database):
         result = self.execute_query(query)
         return result[0][0]
 
+
     def get_row_count_by_gender(self, table_name: str) -> list[int]:
         male_query = (f"SELECT COUNT(*) FROM {table_name} WHERE gender=1 AND allowed_to_vote=0")
         
@@ -58,6 +59,7 @@ class my_sqlite_database(Abstract_Database):
             print(f"An error occurred while executing the query: {err}")
 
         return [male_result[0], female_result[0]]
+
 
     def get_row_count_by_age(self, table_name: str) -> list[int]:
         # get the dates
@@ -79,41 +81,31 @@ class my_sqlite_database(Abstract_Database):
         eighteen_twentyfive_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN '{twentyfive_years_ago}' AND '{eighteen_years_ago}'
                                     AND allowed_to_vote = '0' """
-        eighteen_twentyfive_years_ago_result = self.execute_query(
-            eighteen_twentyfive_years_ago_query
-        )
-
+        eighteen_twentyfive_years_ago_result = self.execute_query(eighteen_twentyfive_years_ago_query)
+        
         # 26-35
         twentysix_thirtyfive_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN '{thirtyfive_years_ago}' AND '{twentysix_years_ago}'
                                     AND allowed_to_vote = '0' """
-        twentysix_thirtyfive_years_ago_result = self.execute_query(
-            twentysix_thirtyfive_years_ago_query
-        )
+        twentysix_thirtyfive_years_ago_result = self.execute_query(twentysix_thirtyfive_years_ago_query)
 
         # 36-45
         thirtysix_fourtyfive_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN '{fourtyfive_years_ago}' AND '{thirtysix_years_ago}'
                                     AND allowed_to_vote = '0' """
-        thirtysix_fourtyfive_years_ago_result = self.execute_query(
-            thirtysix_fourtyfive_years_ago_query
-        )
+        thirtysix_fourtyfive_years_ago_result = self.execute_query(thirtysix_fourtyfive_years_ago_query)
 
         # 46-55
         fourtysix_fiftyfive_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN '{fiftyfive_years_ago}' AND '{fourtysix_years_ago}'
                                     AND allowed_to_vote = '0' """
-        fourtysix_fiftyfive_years_ago_result = self.execute_query(
-            fourtysix_fiftyfive_years_ago_query
-        )
+        fourtysix_fiftyfive_years_ago_result = self.execute_query(fourtysix_fiftyfive_years_ago_query)
 
         # 55-65
         fiftysix_sixtyfive_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN '{sixtyfive_years_ago}' AND '{fiftysix_years_ago}'
                                     AND allowed_to_vote = '0' """
-        fiftysix_sixtyfive_years_ago_result = self.execute_query(
-            fiftysix_sixtyfive_years_ago_query
-        )
+        fiftysix_sixtyfive_years_ago_result = self.execute_query(fiftysix_sixtyfive_years_ago_query)
 
         # 60+
         sixtysix_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
@@ -184,4 +176,10 @@ class my_sqlite_database(Abstract_Database):
         pass
 
     def get_user_full_name(self, user_id: int) -> list[str]:
+        pass
+    
+    def get_user_vote(self, user_id:int):
+        pass
+    
+    def update_user_vote(self, user_id:int,vote):
         pass
