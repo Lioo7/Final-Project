@@ -8,6 +8,7 @@ import csv
 import mysql.connector
 import pandas
 from sql_database import SQL_database
+from dotenv import load_dotenv
 
 from server.node import Node
 from server.tree import Tree
@@ -29,6 +30,21 @@ class SQL_init:
             database="db_budget_system",
         )
         return db
+
+    # this function is for connecting to the database using env file
+
+    # # load the environment variables from the .env file
+    # load_dotenv(dotenv_path='db.env')
+
+    # @staticmethod
+    # def connect_database():
+    #     db = mysql.connector.connect(
+    #         host=os.getenv("MYSQL_HOST"),
+    #         user=os.getenv("MYSQL_USER"),
+    #         password=os.getenv("MYSQL_PASSWORD"),
+    #         database=os.getenv("MYSQL_DATABASE")
+    #     )
+    #     return db
 
     @staticmethod
     def create_database(cursor, database_name: str) -> None:
