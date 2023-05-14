@@ -3,8 +3,6 @@ import sys
 
 sys.path.append("..")
 
-import csv
-
 import mysql.connector
 import pandas
 from sql_database import SQL_database
@@ -26,7 +24,7 @@ class SQL_init:
             host="localhost",
             user=os.environ.get("user_budget_system"),
             password=os.environ.get("system_budget_password"),
-            database="db_budget_system",
+            database="db_budget_system"
         )
         return db
 
@@ -76,12 +74,12 @@ class SQL_init:
         df = pandas.read_csv(path + "national_budget.csv", encoding="utf-8")
         # remove double quotes from relevant columns
         cols_to_clean = [
-            "×©× ×¨××” 1",
-            "×©× ×¨××” 2",
-            "×©× ×¡×¢×™×£",
-            "×©× ×ª×—×•×",
-            "×©× ×ª×›× ×™×ª",
-            "×©× ×ª×§× ×”",
+            "ùí øîä 1",
+            "ùí øîä 2",
+            "ùí ñòéó",
+            "ùí úçåí",
+            "ùí úëğéú",
+            "ùí ú÷ğä",
         ]
         df[cols_to_clean] = df[cols_to_clean].apply(lambda x: x.str.replace('"', ""))
         num_rows = len(df)

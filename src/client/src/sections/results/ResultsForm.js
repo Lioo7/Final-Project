@@ -42,10 +42,12 @@ export default function ResultsForm() {
 
   useEffect(() => {
     fetchData();
-    // setTimeout(() => {
-    //   setLoadingPage(false);
-    // }, 15000);
   }, []);
+
+  useEffect(() => {
+    console.log('oldBudget', oldBudget);
+    console.log('algo1', algo1);
+  }, [algo1]);
 
   const handleButtonClick = (number) => {
     if (!loading) {

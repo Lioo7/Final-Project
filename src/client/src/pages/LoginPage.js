@@ -24,10 +24,11 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function LoginPage({ setId }) {
   const navigate = useNavigate();
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem('table')) ?? []);
   const [totalBudget, setTotalBudget] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
   const url = 'http://localhost:5000/peoples_budget/login';
+  console.log("sssss",localStorage.getItem('table'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +40,7 @@ export default function LoginPage({ setId }) {
         const information = JSON.parse(await response.json());
         setTableData(information.children);
         setTotalBudget(information.children.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
+        localStorage.setItem('table', JSON.stringify(information.children));
       } catch (error) {
         console.error(error);
       }
@@ -70,7 +72,7 @@ export default function LoginPage({ setId }) {
             <LoginForm setId={setId} />
 
             <Typography variant="body2" sx={{ mb: 3 }}>
-              Don’t have an account?
+              Don?t have an account?
               <br />
               <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
                 Sign up

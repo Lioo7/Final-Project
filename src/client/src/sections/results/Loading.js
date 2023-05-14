@@ -8,7 +8,7 @@ export default function Loading() {
   return (
     <Box marginTop={15} sx={{ display: 'flex', gap: 2, justifyContent: 'center'}}>
       <Button startDecorator={<CircularProgress variant="solid" thickness={2} />}>
-        Loading…
+        Loading...
       </Button>
       <IconButton >
         <CircularProgress thickness={2} />

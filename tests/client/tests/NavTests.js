@@ -11,7 +11,7 @@ const { Builder, By, until } = require('selenium-webdriver');
     // Navigate to Voting page
     let votingLink = await driver.wait(until.elementLocated(By.linkText('Voting')), 10000);
     await votingLink.click();
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     // Wait for page to load
     await driver.wait(until.urlIs('http://localhost:3000/peoples_budget/voting'), 10000);
@@ -26,7 +26,7 @@ const { Builder, By, until } = require('selenium-webdriver');
 
     // Navigate to Information page
     await driver.findElement(By.linkText('Information')).click();
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     // Wait for page to load
     await driver.wait(until.urlIs('http://localhost:3000/peoples_budget/information'), 10000);
@@ -41,7 +41,7 @@ const { Builder, By, until } = require('selenium-webdriver');
 
     // Navigate to Dashboard page
     await driver.findElement(By.linkText('Dashboard')).click();
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     // Wait for page to load
     await driver.wait(until.urlIs('http://localhost:3000/peoples_budget/dashboard'), 10000);
@@ -56,7 +56,7 @@ const { Builder, By, until } = require('selenium-webdriver');
 
     // Navigate to Results page
     await driver.findElement(By.linkText('Results')).click();
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Wait for page to load
     await driver.wait(until.urlIs('http://localhost:3000/peoples_budget/results'), 10000);
@@ -71,7 +71,7 @@ const { Builder, By, until } = require('selenium-webdriver');
 
     // Navigate to Home page
     await driver.findElement(By.linkText('Home')).click();
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Wait for page to load
     await driver.wait(until.urlIs('http://localhost:3000/peoples_budget/home'), 10000);

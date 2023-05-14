@@ -23,7 +23,7 @@ export default function VotingForm() {
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
   const [isVoted, setIsVoted] = useState(false);
-  const id = useContext(UserContext);
+  const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
 
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
@@ -330,14 +330,14 @@ export default function VotingForm() {
                         id="clearAll"
                         variant="outlined"
                         onClick={clearAll}
-                        sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px', flexDirection: 'column'}}
+                        sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px', flexDirection: 'column' }}
                       >
                         <Typography variant="subtitle1" sx={{ lineHeight: '1' }}>
                           Fixed budget
                         </Typography>
-                          <Typography variant="subtitle2" sx={{ fontSize: '10px', fontWeight: 'bold', lineHeight: '1' }}>
-                            (Clear All)
-                          </Typography>
+                        <Typography variant="subtitle2" sx={{ fontSize: '10px', fontWeight: 'bold', lineHeight: '1' }}>
+                          (Clear All)
+                        </Typography>
                       </Button>
                     </TableCell>
                     <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">

@@ -38,8 +38,9 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
-  const [name, setName] = useState('');
-  const id = useContext(UserContext);
+  const [name, setName] = useState(JSON.stringify.apply(localStorage.getItem('name') ?? ''));
+  // const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
+  const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
 
   const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
 
@@ -52,6 +53,7 @@ export default function Nav({ openNav, onCloseNav }) {
       const information = await response.json();
       if(id === '000000000') {
         setName(account.displayName);
+        // localStorage.setItem('name', name);
       } else {
         setName(`${information.first_name} ${information.last_name}`);
       }

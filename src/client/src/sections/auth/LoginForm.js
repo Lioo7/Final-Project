@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -10,16 +10,20 @@ import account from '../../_mock/account';
 export default function LoginForm({ setId }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  // const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   const [idError, setIdError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const id = useContext(UserContext);
+  const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
+
+  useEffect(() => {
+    localStorage.setItem('id', id);
+  }, [id]);
 
   const handleClick = async () => {
     const url = 'http://localhost:5000/peoples_budget/login';
+    localStorage.setItem('id', id); // Set the user id in localStorage
 
     // Validate the input fields
     if (id.length !== 9) {
@@ -58,6 +62,7 @@ export default function LoginForm({ setId }) {
     const url = 'http://localhost:5000/peoples_budget/login';
     setId(account.id);
     setPassword(account.password);
+    localStorage.setItem('id', id); // Set the user id in localStorage
 
     try {
       const response = await fetch(url, {
@@ -126,7 +131,7 @@ export default function LoginForm({ setId }) {
 
       <LoadingButton
         id="loginGuest"
-        sx={{  '&:hover': { border: 'solid 2 black' } }}
+        sx={{ '&:hover': { border: 'solid 2 black' } }}
         size="small"
         fullWidth
         type="submit"
@@ -138,7 +143,7 @@ export default function LoginForm({ setId }) {
 
       <LoadingButton
         id="loginBtn"
-        sx={{ my: 1, fontSize: '1rem'}}
+        sx={{ my: 1, fontSize: '1rem' }}
         fullWidth
         size="large"
         type="submit"
