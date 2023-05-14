@@ -27,6 +27,7 @@ export default function VotingForm() {
 
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
+  console.log(tableData);
 
   const fetchData = async () => {
     try {

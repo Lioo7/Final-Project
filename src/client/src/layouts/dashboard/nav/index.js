@@ -39,7 +39,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const isDesktop = useResponsive('up', 'lg');
   const [name, setName] = useState(JSON.stringify.apply(localStorage.getItem('name') ?? ''));
-  // const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
+  const [profilePhoto, setProfilePhoto] = useState('');
   const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
 
   const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
@@ -88,7 +88,7 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={account.photoURL1} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>

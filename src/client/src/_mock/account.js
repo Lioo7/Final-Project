@@ -1,10 +1,13 @@
 
-const randomNum = Math.floor(Math.random() * 25) + 1;
+const randomNumW = Math.floor(Math.random() * 10) + 1;
+const randomNumM = 11 + Math.floor(Math.random() * 13) + 1;
 const account = {
   displayName: 'Guest User',
   id: '000000000',
   password: '00000',  
-  photoURL: `/assets/images/avatars/avatar_${randomNum}.jpg`,
+  photoURL1: `/assets/images/avatars/avatar_${randomNumM}.jpg`,
+  photoURL2: `/assets/images/avatars/avatar_${randomNumW}.jpg`,
+  photoURL3: `/assets/images/avatars/avatar_default.jpg`,
 };
 
 export default account;

@@ -1,2 +1,16 @@
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 708-654-055
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 19:33:10] "OPTIONS /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 19:34:01] "GET /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:21:44] "OPTIONS /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:21:44] "POST /peoples_budget/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:21:45] "OPTIONS /peoples_budget/home?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:21:45] "GET /peoples_budget/home?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:21:46] "OPTIONS /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:22:09] "GET /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:23:29] "OPTIONS /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:23:39] "OPTIONS /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:23:48] "OPTIONS /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:24:19] "[35m[1mGET /peoples_budget/voting?user_id=000000000 HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:25:01] "GET /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [14/May/2023 20:25:18] "GET /peoples_budget/voting?user_id=000000000 HTTP/1.1" 200 -
