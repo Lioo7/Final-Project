@@ -38,7 +38,8 @@ export default function OldBudgetRow(props) {
             size="small"
             onClick={() => {
               setOpen(childs && childs.length > 0 ? !open : false);
-            }}>
+            }}
+          >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
@@ -56,7 +57,9 @@ export default function OldBudgetRow(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>{childs && <OldBudgetChild childrens={childs} parent={row.children} />}</Box>
+            <Box sx={{ margin: 1 }}>
+              {childs && <OldBudgetChild childrens={childs} parent={row.children} totalBudget={props.totalBudget} />}
+            </Box>
           </Collapse>
         </TableCell>
       </TableRow>
