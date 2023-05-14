@@ -51,11 +51,16 @@ export default function Nav({ openNav, onCloseNav }) {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      if(id === '000000000') {
+      if (id === '000000000') {
         setName(account.displayName);
-        // localStorage.setItem('name', name);
+        setProfilePhoto(account.photoURL3);
       } else {
         setName(`${information.first_name} ${information.last_name}`);
+        if (information.gender === 'Male') {
+          setProfilePhoto(account.photoURL1);
+        } else {
+          setProfilePhoto(account.photoURL2);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -88,7 +93,7 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL1} alt="photoURL" />
+            <Avatar src={profilePhoto} alt="profilePhoto" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>

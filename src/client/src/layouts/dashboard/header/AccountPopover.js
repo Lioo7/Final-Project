@@ -1,16 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
+import UserContext from '../../../contexts/UserContext';
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState('');
+  const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
   const navigate = useNavigate();
 
+  const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const information = await response.json();
+      if (id === '000000000') {
+        setProfilePhoto(account.photoURL3);
+      } else if (information.gender === 'Male') {
+        setProfilePhoto(account.photoURL1);
+      } else {
+        setProfilePhoto(account.photoURL2);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return {};
+  };
+
+  useEffect(() => {
+    fetchData(); // fetch data asynchronously
+  }, []);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -43,11 +70,11 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL1} alt="photoURL" />
+        <Avatar src={profilePhoto} alt="profilePhoto" />
       </IconButton>
 
       <Popover
-        id='popWindow'
+        id="popWindow"
         open={Boolean(open)}
         anchorEl={open}
         onClose={handleClose}
@@ -67,12 +94,10 @@ export default function AccountPopover() {
           },
         }}
       >
-
-        <MenuItem id='logout' onClick={handleClick} sx={{ m: 1 }} >
+        <MenuItem id="logout" onClick={handleClick} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </Popover>
-
     </>
   );
 }
