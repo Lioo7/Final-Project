@@ -36,9 +36,10 @@ export default function VotingForm() {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      if (information === 'Is not allowed to vote') {
-        setIsVoted(true);
-      }
+      // if (information === 'Is not allowed to vote') {
+      //   setIsVoted(true);
+      // }
+      console.log(information)
       setAllData(information);
       setTableData(information.children);
     } catch (error) {

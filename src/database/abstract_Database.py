@@ -94,3 +94,7 @@ class Abstract_Database(ABC):
     @abstractmethod
     def update_user_vote(self, user_id:int,vote):
         pass
+    
+    @abstractmethod
+    def get_user_gender(self,user_id:int):
+        pass

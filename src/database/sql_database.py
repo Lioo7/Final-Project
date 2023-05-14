@@ -410,14 +410,11 @@ class SQL_database(Abstract_Database):
     def update_voting_option(self, user_id: str, is_allowed: bool) -> bool:
         update_query = ""
         if is_allowed:
-            update_query = (
-                f"UPDATE USERS SET allowed_to_vote = 1 WHERE user_id = '{user_id}'"
-            )
+            update_query = (f"UPDATE USERS SET allowed_to_vote = 1 WHERE user_id = '{user_id}'")
         else:
-            update_query = (
-                f"UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = '{user_id}'"
-            )
+            update_query = (f"UPDATE USERS SET allowed_to_vote = 0 WHERE user_id = '{user_id}'")
 
+       
         try:
             self.cursor.execute(update_query)
             self.db.commit()
@@ -434,7 +431,7 @@ class SQL_database(Abstract_Database):
             return "Error!"
 
         result = self.cursor.fetchall()
-        if result == "0":
+        if result[0][0] == "0":
             return "false"
 
         return "true"
@@ -488,17 +485,18 @@ class SQL_database(Abstract_Database):
 
     def get_user_vote(self,user_id):
         query = f"SELECT vote FROM USERS_VOTES WHERE user_id ={user_id}"
+        
         try:
             self.cursor.execute(query)
             result = self.cursor.fetchall()
 
         except:
-            return ["Error!"]
+            return "Error!"
 
         if not result:
             return "Faild"
-
-        return [result[0][0]]
+        print(result[0][0])
+        return result[0][0]
     
     
     def update_user_vote(self, user_id:int, vote):
@@ -513,3 +511,17 @@ class SQL_database(Abstract_Database):
             return False
 
         return True
+    
+    def get_user_gender(self,user_id:int):
+        query = f"SELECT gender FROM USERS WHERE user_id={user_id}"
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+
+        except:
+            return "Error!"
+
+        if not result:
+            return "Faild"
+        
+        return result[0][0]
