@@ -88,6 +88,12 @@ def login():
         return jsonify({"status": "Faild"})
 
     database.handler.connect()
+    
+    # Guest user
+    if id == "000000000":
+        return jsonify({"status": "Succeeded"})
+        
+    
     result = database.handler.check_if_user_exists(id, password)
 
     if result:
@@ -213,8 +219,24 @@ def home():
 
     last_name = full_name[1]
 
+    user_gender = database.handler.get_user_gender(user_id=id)
+    
+    if user_gender == "Error!":
+        return jsonify({"status": "Error!, Faild to execute get user gender query"})
+    
+    if user_gender == "Faild":
+        return jsonify({"status": f"There is no user in db with id: {id}"})
+    
+    print(user_gender)
+    
+    if user_gender == '1':
+        user_gender = 'Male'
+        
+    if user_gender == '2':
+        user_gender = 'Female'
+            
     database.handler.disconnect()
-    return {"first_name": first_name, "last_name": last_name}
+    return {"first_name": first_name, "last_name": last_name, "gender": user_gender}
 
 
 # ------------------- Information ---------------------------
@@ -260,29 +282,42 @@ def subjects_and_projects_tree():
         user_id = request.args.get("user_id")
     except:
         return jsonify({"status": "Did not receive a user id"})
-
-    # Check if user already voted
-    check_result = database.handler.check_voting_option(user_id=user_id)
-
-    if check_result == "false":
+    
+    # Guest user
+    if user_id != "000000000":
         
-        user_vote = database.handler.get_user_vote(user_id)
-        database.handler.disconnect()
-        return user_vote
-        #return jsonify({"status": "Is not allowed to vote"})
+        # Check if user already voted
+        check_result = database.handler.check_voting_option(user_id=user_id)
+        
+        if check_result == "false":
+            user_vote = database.handler.get_user_vote(user_id)
+            
+            if user_vote == "ERROR!":
+                return jsonify({"status": "Faild to get old user_vote"})
+            
+            print("here if")
+            print("#################################################################")
+            print("#################################################################")
+            print("#################################################################")
+            print("#################################################################")
+            print("#################################################################")
+            print(user_vote)
+            database.handler.disconnect()
+            return user_vote
 
-    elif check_result == "Error!":
-        database.handler.disconnect()
-        return jsonify({"status": "Error!, check_voting_option execute query"})
+        elif check_result == "Error!":
+            
+            database.handler.disconnect()
+            return jsonify({"status": "Error!, check_voting_option execute query"})
 
     tree = database.handler.build_tree_from_current_budget()
+    
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
 
     count = Counter()
     update_dict_ids(count, dictionary)
-
     json_tree = json.dumps(dictionary, ensure_ascii=False)
     database.handler.disconnect()
     return json_tree
@@ -295,49 +330,49 @@ def voting_tree():
         data = request.json
         user_id = data["id"]
         vote = data["table"]
-
-        vote_str = json.dumps(vote, ensure_ascii=False).replace("'", "''")
-        
-        # Check if user already voted
-        check_result = database.handler.check_voting_option(user_id=user_id)
-        
-        if check_result == "false":
-            result = database.handler.update_user_vote(user_id,vote_str)
-            
-            if not result:
-                database.handler.disconnect()
-                return jsonify({"status": "Error!, voting does not saved"})
-            
-            else:
-                database.handler.disconnect()
-                return jsonify({"status": "The user vote has been updated"})
-            
-        
-        elif check_result == "Error!":
-            database.handler.disconnect()
-            return jsonify({"status": "Error!, check_voting_option function faild to execute query"})
-
-        # update user option voting
-        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
-        
-        if not update_result:
-            database.handler.disconnect()
-            return jsonify({"status": "Error!, Voting permission has not been updated, vote not saved"})
-        
-        
-
-        result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
-
-        if not result:
-            # update user option voting
-            update_result = database.handler.update_voting_option(
-                user_id=user_id, is_allowed=True
-            )
-            database.handler.disconnect()
-            return jsonify({"status": "Error!, voting does not saved"})
-
     except:
         return jsonify({"status": "failed"})
+    
+    # Guest user
+    if user_id == "000000000":
+        return jsonify({"status": "Succeeded"})
+    
+    
+    vote_str = json.dumps(vote, ensure_ascii=False).replace("'", "''")
+        
+    # Check if user already voted
+    check_result = database.handler.check_voting_option(user_id=user_id)
+        
+    if check_result == "false":
+        result = database.handler.update_user_vote(user_id,vote_str)
+        
+        if not result:
+            database.handler.disconnect()
+            return jsonify({"status": "Error!, voting does not saved"})
+            
+        else:
+            database.handler.disconnect()
+            return jsonify({"status": "The user vote has been updated"})
+            
+        
+    elif check_result == "Error!":
+        database.handler.disconnect()
+        return jsonify({"status": "Error!, check_voting_option function faild to execute query"})
+
+    # update user option voting
+    update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
+    
+    if not update_result:
+        database.handler.disconnect()
+        return jsonify({"status": "Error!, Voting permission has not been updated, vote not saved"})
+        
+    result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
+
+    if not result:
+        # update user option voting
+        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=True)
+        database.handler.disconnect()
+        return jsonify({"status": "Error!, voting does not saved"})
 
     database.handler.disconnect()
     return jsonify({"status": "Succeeded"})
