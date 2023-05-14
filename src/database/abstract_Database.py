@@ -86,3 +86,11 @@ class Abstract_Database(ABC):
     @abstractmethod
     def get_user_full_name(self, user_id: int) -> list[str]:
         pass
+    
+    @abstractmethod
+    def get_user_vote(self, user_id:int):
+        pass
+    
+    @abstractmethod
+    def update_user_vote(self, user_id:int,vote):
+        pass

@@ -1,9 +1,11 @@
-"""
+ï»¿"""
 This file contains the algorithms that will be used in the project for calculating the budget.
 """
-import datetime
+import concurrent.futures
 import logging
-import re
+import statistics
+
+import numpy as np
 from counter import Counter
 from tree import Tree
 
@@ -14,13 +16,12 @@ __all__ = [
     "update_dict_ids",
     "convert_structure",
     "unite_votes",
-    "is_the_email_valid",
-    "is_able_to_vote",
 ]
 
-LOGÿ¹_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
+LOGÖ¹_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
-logging.basicConfig(filename="server_logging.log", level=logging.DEBUG, filemode="w")
+logging.basicConfig(filename="server_logging.log",
+                    level=logging.DEBUG, filemode="w")
 logger = logging.getLogger()
 
 
@@ -96,7 +97,7 @@ def median_algorithm(votes: dict) -> dict:
 
 def generalized_median_algorithm(votes: dict) -> dict:
     """
-    Calculate the budget according to the median algorithm of Hervÿ© Moulin, using linear functions by using the given votes.
+    Calculate the budget according to the median algorithm of HervÃ© Moulin, using linear functions by using the given votes.
 
     Args
     ----
@@ -104,11 +105,11 @@ def generalized_median_algorithm(votes: dict) -> dict:
 
     Returns
     -------
-    final_budget (dict): A nested dictionary representing the budget according to the median algorithm of Hervÿ© Moulin.
+    final_budget (dict): A nested dictionary representing the budget according to the median algorithm of HervÃ© Moulin.
 
     References
     ----------
-    Hervÿ© Moulin. "Fair Division and Collective Welfare". MIT Press, 2003.
+    HervÃ© Moulin. "Fair Division and Collective Welfare". MIT Press, 2003.
 
     Example
     -------
@@ -185,8 +186,6 @@ def generalized_median_algorithm(votes: dict) -> dict:
     return final_budget
 
 
-
-
 def calculate_totals(node: dict) -> int:
     """
     Recursively calculates the total value of a nested dictionary by summing up all the values of keys named "allocated_budget_amount".
@@ -237,7 +236,8 @@ def update_dict_ids(counter: Counter, input_dict: dict, parent_id=None):
     num_children = len(children)
     for i in range(num_children):
         counter.current_id += 1
-        children[i] = update_dict_ids(counter, children[i], parent_id=input_dict["id"])
+        children[i] = update_dict_ids(
+            counter, children[i], parent_id=input_dict["id"])
         counter.current_id += len(children[i].get("children", []))
     input_dict["children"] = children
 
@@ -411,7 +411,8 @@ def _calculate_median(
 
     votes_by_project = {}  # {leaf_number (project): its_values (budget)}
     median_values = {}  # {leaf_number (project): its_median_value}
-    constants = []  # the constants values (will be only used for the 2nd algorithm)
+    # the constants values (will be only used for the 2nd algorithm)
+    constants = []
 
     # add each value of project (leave) to the dictionary
     for user in votes_by_user.keys():
@@ -431,8 +432,7 @@ def _calculate_median(
         if key not in median_values:
             median_values[key] = []
         # sort the list of values
-        sorted_values = sorted(values + constants)
-        median = _find_median(sorted_values)
+        median = statistics.median(values + constants)
         median_values[key] = median
 
     return median_values
@@ -443,7 +443,7 @@ def _find_median(lst: list[float]) -> float:
     A utility function that returns the median value.
 
     Args:
-        lst (List of floats): a list of integers.
+        lst (List of floats): a list of floats.
 
     Returns:
         The median number.
@@ -468,7 +468,7 @@ def _find_median_with_constant_functions(
     n: int,
     min_search: float = 0,
     max_search: float = 1,
-    max_iterations: int = 10000,
+    max_iterations: int = 50,
 ) -> list[float]:
     """
     Find the median of a list of values by adding constant functions.
@@ -477,49 +477,38 @@ def _find_median_with_constant_functions(
         votes_by_project (dict): A dictionary where each key represents a project and the value is a list of budget votes
             for that project by all the users.
         c (float): The total budget.
-        n (int): The number of leaves (project).
+        n (int): The number of leaves (projects).
         min_search (float, optional): The minimum value of the search range. Defaults to 0.
-        min_search (float, optional): The maximum value of the search range. Defaults to 1.
+        max_search (float, optional): The maximum value of the search range. Defaults to 1.
         max_iterations (int, optional): The maximum number of iterations. Defaults to 1000.
 
     Returns:
-        constants (list[float]): A list of all the constants values, or None if the maximum number of iterations is reached.
+        constants list[float]: A list of all the constants values, or None if the maximum number of iterations is reached.
     """
 
     # calculate the midpoint of the search range
     t = (min_search + max_search) / 2
-    # create an empty list to store the constants
-    constants = []
 
-    # loop 'n' - 1 times to create 'n-1' constants
-    for i in range(1, n):
-        # lreate a new variable name for the constant
-        var_name = "f_" + str(i)
-        constants.append(var_name)
-
-    # calculate the value of each constant using the following formula: f_i = c * min{1, i * t}
-    for i in range(1, n):
-        const = c * min(1, i * t)
-        constants[i - 1] = round(const, 3)
+    constants = _compute_constants(votes_by_project, c, n, t)
 
     sum_medians = 0
-    for project, values in votes_by_project.items():
-        values_with_constants = values + constants
-        # sort the values and constants
-        sorted_values_with_constants = sorted(values_with_constants)
-        # find the median of the sorted values and constants
-        median = _find_median(sorted_values_with_constants)
+    # use a generator expression to avoid creating a list of all items in memory at once
+    for _project, values in (item for item in votes_by_project.items()):
+        values_with_constants = _combine_lists(values, constants)
+        # find the median
+        median = statistics.median(values_with_constants)
         sum_medians += median
 
-    EPSILON = 0.00000000000000000000000000000000000000001  # a threshold value
-    # base case: if the search range is sufficiently small or maximum number of iterations is reached, return the current constants
-    if max_iterations <= 0:
-        print("max_iterations <= 0")
-    if max_search - min_search < EPSILON:
-        print("max_search - min_search < EPSILON")
+    # print('max_iterations: ', max_iterations)
+    # print('sum_medians: ', sum_medians)
+
+    EPSILON = 0.0001  # a threshold value
+    # base case: if the diff of the sum is small enough
+    # or the maximum number of iterations is reached,
+    # return the current constants
     if (
-        abs(sum_medians - c) < EPSILON
-        or max_search - min_search < EPSILON
+        abs(sum_medians - c) < EPSILON * c
+        # or max_search - min_search < EPSILON
         or max_iterations <= 0
     ):
         return constants
@@ -533,7 +522,7 @@ def _find_median_with_constant_functions(
             max_search=t,
             max_iterations=max_iterations - 1,
         )
-    # If the sum of the medians is less than the total budget, search the upper half of the range
+    # if the sum of the medians is less than the total budget, search the upper half of the range
     elif sum_medians < c:
         return _find_median_with_constant_functions(
             votes_by_project=votes_by_project,
@@ -543,6 +532,117 @@ def _find_median_with_constant_functions(
             max_search=max_search,
             max_iterations=max_iterations - 1,
         )
+
+
+def _compute_median(values_with_constants):
+    """Helper function to compute the median of a list of values with constants."""
+    return statistics.median(values_with_constants)
+
+
+def _find_median_with_constant_functions_multithreaded(
+    votes_by_project: dict,
+    c: float,
+    n: int,
+    min_search: float = 0,
+    max_search: float = 1,
+    max_iterations: int = 50,
+    num_threads: int = None,
+) -> list[float]:
+    """
+    Find the median of a list of values by adding constant functions using multithreading.
+
+    Args:
+        votes_by_project (dict): A dictionary where each key represents a project and the value is a list of budget votes
+            for that project by all the users.
+        c (float): The total budget.
+        n (int): The number of leaves (projects).
+        min_search (float, optional): The minimum value of the search range. Defaults to 0.
+        max_search (float, optional): The maximum value of the search range. Defaults to 1.
+        max_iterations (int, optional): The maximum number of iterations. Defaults to 50.
+        num_threads (int, optional): The number of threads to use for parallelization. Defaults to None (use all available cores).
+
+    Returns:
+        constants list[float]: A list of all the constants values, or None if the maximum number of iterations is reached.
+    """
+
+    # calculate the midpoint of the search range
+    t = (min_search + max_search) / 2
+
+    constants = _compute_constants(votes_by_project, c, n, t)
+
+    sum_medians = 0
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+        # use a generator expression to avoid creating a list of all items in memory at once
+        futures = [
+            executor.submit(_compute_median, _combine_lists(values, constants))
+            for values in votes_by_project.values()
+        ]
+        # iterate over the completed futures to retrieve the medians and accumulate their sum
+        for future in concurrent.futures.as_completed(futures):
+            sum_medians += future.result()
+
+    EPSILON = 0.0001  # a threshold value
+    # base case: if the diff of the sum is small enough
+    # or the maximum number of iterations is reached,
+    # return the current constants
+    if abs(sum_medians - c) < EPSILON * c or max_iterations <= 0:
+        return constants
+    # if the sum of the medians is greater than or equal to the total budget, search the lower half of the range
+    elif sum_medians >= c:
+        return _find_median_with_constant_functions_multithreaded(
+            votes_by_project=votes_by_project,
+            c=c,
+            n=n,
+            min_search=min_search,
+            max_search=t,
+            max_iterations=max_iterations - 1,
+            num_threads=num_threads,
+        )
+    # if the sum of the medians is less than the total budget, search the upper half of the range
+    elif sum_medians < c:
+        return _find_median_with_constant_functions_multithreaded(
+            votes_by_project=votes_by_project,
+            c=c,
+            n=n,
+            min_search=t,
+            max_search=max_search,
+            max_iterations=max_iterations - 1,
+            num_threads=num_threads,
+        )
+
+
+def _combine_lists(list1, list2) -> list:
+    """
+    Combine two lists into a new list.
+    """
+    result = list1.copy()
+    result.extend(list2)
+    return result
+
+
+def _compute_constants(
+    votes_by_project: dict, c: float, n: int, t: float
+) -> list[float]:
+    """
+    Compute the constants for the `_find_median_with_constant_functions` function,
+    according to the formula: f_i = c * min{1, i * t}.
+
+    Args:
+        votes_by_project (dict): A dictionary where each key represents a project and the value is a list of budget votes
+            for that project by all the users.
+        c (float): The total budget.
+        n (int): The number of leaves (projects).
+        t (float): The midpoint of the search range.
+
+    Returns:
+        list[float]: A list of `n-1` constants computed using the formula `f_i = c * min(1, i * t)`, rounded to 3 decimal places.
+    """
+    # create a 1D numpy array containing the values 1 to n-1
+    i_arr = np.arange(1, n, dtype=float)
+    # compute the constants using the vectorized expression: c * np.minimum(1, i_arr * t)
+    constants = np.round(c * np.minimum(1, i_arr * t), 3)
+    # convert the numpy array to a Python list and return it
+    return constants.tolist()
 
 
 def _create_result(votes: dict, new_values: list[float]) -> dict:
@@ -601,7 +701,8 @@ def _building_nested_dict(
     for key, value in votes.items():
         # if the current value is a nested dictionary, recursively call the function
         if isinstance(value, dict):
-            nested_result[key] = _building_nested_dict(value, new_values, index, result)
+            nested_result[key] = _building_nested_dict(
+                value, new_values, index, result)
         else:
             # if the current key is "total", leave empty
             if key == "total":

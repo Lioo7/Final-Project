@@ -1,15 +1,15 @@
 import os
 import sys
+
 sys.path.append("..")
 
 import mysql.connector
-from sql_database import SQL_database
-
-import csv
 import pandas
+from sql_database import SQL_database
 
 from server.node import Node
 from server.tree import Tree
+
 
 class SQL_init:
 
@@ -24,7 +24,7 @@ class SQL_init:
             host="localhost",
             user=os.environ.get("user_budget_system"),
             password=os.environ.get("system_budget_password"),
-            database="db_budget_system",
+            database="db_budget_system"
         )
         return db
 
@@ -74,12 +74,12 @@ class SQL_init:
         df = pandas.read_csv(path + "national_budget.csv", encoding="utf-8")
         # remove double quotes from relevant columns
         cols_to_clean = [
-            "ÿ©ÿ ÿ¨ÿÿ” 1",
-            "ÿ©ÿ ÿ¨ÿÿ” 2",
-            "ÿ©ÿ ÿÿÿ¢ÿ™ÿ£",
-            "ÿ©ÿ ÿ×ÿ—ÿ•ÿ",
-            "ÿ©ÿ ÿ×ÿ›ÿ ÿ™ÿ×",
-            "ÿ©ÿ ÿ×ÿ§ÿ ÿ”",
+            "שם רמה 1",
+            "שם רמה 2",
+            "שם סעיף",
+            "שם תחום",
+            "שם תכנית",
+            "שם תקנה",
         ]
         df[cols_to_clean] = df[cols_to_clean].apply(lambda x: x.str.replace('"', ""))
         num_rows = len(df)
@@ -204,29 +204,6 @@ class SQL_init:
 
         return tree
 
-    @staticmethod
-    def write_tree_to_csv(tree, filename):
-        with open(filename, mode="w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(
-                ["node_id", "name", "description", "parent_id", "budget_amount"]
-            )
-            SQL_init.write_node_to_csv(tree.get_root(), writer)
-
-    @staticmethod
-    def write_node_to_csv(node, writer):
-        writer.writerow(
-            [
-                node.get_id(),
-                node.get_name(),
-                node.get_description(),
-                node.get_parent_id(),
-                node.get_allocated_budget_amount(),
-            ]
-        )
-        for child in node.get_children():
-            SQL_init.write_node_to_csv(child, writer)
-
 
 if __name__ == "__main__":
     # Connect server
@@ -260,5 +237,6 @@ if __name__ == "__main__":
     # Load datasets
     # SQL_init.load_information_to_information_table(cursor, db)
     # SQL_init.load_and_insert_to_current_budget_table(cursor, db)
-    # Clean
-    SQL_init.clean_database(cursor)
+    
+    # Clean database
+    # SQL_init.clean_database(cursor)

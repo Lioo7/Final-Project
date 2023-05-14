@@ -23,7 +23,7 @@ export default function VotingForm() {
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
   const [isVoted, setIsVoted] = useState(false);
-  const id = useContext(UserContext);
+  const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
 
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
