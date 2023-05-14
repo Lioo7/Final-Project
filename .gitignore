@@ -211,6 +211,7 @@ pyrightconfig.json
 logs
 **/*.backup.*
 **/*.back.*
+*.pyc
 
 node_modules
 bower_components

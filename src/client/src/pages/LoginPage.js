@@ -25,7 +25,6 @@ const StyledContent = styled('div')(({ theme }) => ({
 export default function LoginPage({ setId }) {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem('table')) ?? []);
-  const [totalBudget, setTotalBudget] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
   const url = 'http://localhost:5000/peoples_budget/login';
   console.log("sssss",localStorage.getItem('table'));
@@ -39,7 +38,6 @@ export default function LoginPage({ setId }) {
         });
         const information = JSON.parse(await response.json());
         setTableData(information.children);
-        setTotalBudget(information.children.reduce((total, item) => total + Number(item.allocated_budget_amount), 0));
         localStorage.setItem('table', JSON.stringify(information.children));
       } catch (error) {
         console.error(error);
@@ -100,7 +98,7 @@ export default function LoginPage({ setId }) {
         </Container>
       </StyledRoot>
 
-      {isClicked && <OldBudget tableData={tableData} totalBudget={totalBudget} />}
+      {isClicked && <OldBudget tableData={tableData} />}
     </>
   );
 }
