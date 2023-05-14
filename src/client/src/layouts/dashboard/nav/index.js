@@ -43,10 +43,6 @@ export default function Nav({ openNav, onCloseNav }) {
   const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
 
   const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
-  console.log(localStorage.getItem('name'));
-  console.log(typeof localStorage.getItem('name'));
-  console.log(localStorage.getItem('id'));
-  console.log(typeof localStorage.getItem('id'));
 
   const fetchData = async () => {
     try {
