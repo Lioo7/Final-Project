@@ -59,7 +59,8 @@ class Tree:
         else:
             parent_node = self.get_node(parent_id)
             if parent_node is None:
-                print(f"Error!, There is no Node with id ''{parent_id}'' in the tree")
+                print(
+                    f"Error!, There is no Node with id ''{parent_id}'' in the tree")
                 return False
 
         parent_node.add_child(new_node)
@@ -121,7 +122,8 @@ class Tree:
         node = self.get_node(node_id)
 
         if node is None:
-            print(f"Error!, There is no node in the tree that has the id {node_id}")
+            print(
+                f"Error!, There is no node in the tree that has the id {node_id}")
             return False
 
         # Remove children
@@ -160,10 +162,12 @@ class Tree:
         >>> tree.get_node(3,root)
         None
         """
-        node = self.get_node_by_name_and_id(node_id=node_id, node_name=node_name)
+        node = self.get_node_by_name_and_id(
+            node_id=node_id, node_name=node_name)
 
         if node is None:
-            print(f"Error!, There is no node in the tree that has the id {node_id}")
+            print(
+                f"Error!, There is no node in the tree that has the id {node_id}")
             return False
 
         # Remove children
@@ -323,8 +327,7 @@ class Tree:
 
         for child in current_node.get_children():
             total_budget += self._get_budget_amount_recursive(
-                child, child.get_allocated_budget_amount()
-            )
+                child, child.get_allocated_budget_amount())
 
         return total_budget
 

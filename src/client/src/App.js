@@ -9,7 +9,7 @@ import ScrollToTop from './components/scroll-to-top/ScrollToTop';
 import UserContext from './contexts/UserContext';
 
 export default function App() {
-  const [id, setId] = useState('');
+  const [id, setId] = useState(localStorage.getItem('id') ?? '');
 
   return (
     <UserContext.Provider value={ id }>
