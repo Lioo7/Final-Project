@@ -74,12 +74,12 @@ class SQL_init:
         df = pandas.read_csv(path + "national_budget.csv", encoding="utf-8")
         # remove double quotes from relevant columns
         cols_to_clean = [
-            "×©× ×¨××” 1",
-            "×©× ×¨××” 2",
-            "×©× ×¡×¢×™×£",
-            "×©× ×ª×—×•×",
-            "×©× ×ª×›× ×™×ª",
-            "×©× ×ª×§× ×”",
+            "ÿ©ÿ ÿ¨ÿÿ” 1",
+            "ÿ©ÿ ÿ¨ÿÿ” 2",
+            "ÿ©ÿ ÿÿÿ¢ÿ™ÿ£",
+            "ÿ©ÿ ÿªÿ—ÿ•ÿ",
+            "ÿ©ÿ ÿªÿ›ÿ ÿ™ÿª",
+            "ÿ©ÿ ÿªÿ§ÿ ÿ”",
         ]
         df[cols_to_clean] = df[cols_to_clean].apply(lambda x: x.str.replace('"', ""))
         num_rows = len(df)

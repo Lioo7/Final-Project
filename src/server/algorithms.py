@@ -18,7 +18,7 @@ __all__ = [
     "is_able_to_vote",
 ]
 
-LOGÖ¹_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
+LOGÿ¹_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
 logging.basicConfig(filename="server_logging.log", level=logging.DEBUG, filemode="w")
 logger = logging.getLogger()
@@ -96,7 +96,7 @@ def median_algorithm(votes: dict) -> dict:
 
 def generalized_median_algorithm(votes: dict) -> dict:
     """
-    Calculate the budget according to the median algorithm of HervÃ© Moulin, using linear functions by using the given votes.
+    Calculate the budget according to the median algorithm of Hervÿ© Moulin, using linear functions by using the given votes.
 
     Args
     ----
@@ -104,11 +104,11 @@ def generalized_median_algorithm(votes: dict) -> dict:
 
     Returns
     -------
-    final_budget (dict): A nested dictionary representing the budget according to the median algorithm of HervÃ© Moulin.
+    final_budget (dict): A nested dictionary representing the budget according to the median algorithm of Hervÿ© Moulin.
 
     References
     ----------
-    HervÃ© Moulin. "Fair Division and Collective Welfare". MIT Press, 2003.
+    Hervÿ© Moulin. "Fair Division and Collective Welfare". MIT Press, 2003.
 
     Example
     -------

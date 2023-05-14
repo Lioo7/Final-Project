@@ -1,5 +1,6 @@
 from node import Node
 
+
 class Tree:
     """This class present the tree of subjects and projects (container of Nodes)"""
 
@@ -58,7 +59,8 @@ class Tree:
         else:
             parent_node = self.get_node(parent_id)
             if parent_node is None:
-                print(f"Error!, There is no Node with id ''{parent_id}'' in the tree")
+                print(
+                    f"Error!, There is no Node with id ''{parent_id}'' in the tree")
                 return False
 
         parent_node.add_child(new_node)
@@ -120,7 +122,8 @@ class Tree:
         node = self.get_node(node_id)
 
         if node is None:
-            print(f"Error!, There is no node in the tree that has the id {node_id}")
+            print(
+                f"Error!, There is no node in the tree that has the id {node_id}")
             return False
 
         # Remove children
@@ -159,10 +162,12 @@ class Tree:
         >>> tree.get_node(3,root)
         None
         """
-        node = self.get_node_by_name_and_id(node_id=node_id, node_name=node_name)
+        node = self.get_node_by_name_and_id(
+            node_id=node_id, node_name=node_name)
 
         if node is None:
-            print(f"Error!, There is no node in the tree that has the id {node_id}")
+            print(
+                f"Error!, There is no node in the tree that has the id {node_id}")
             return False
 
         # Remove children
@@ -172,7 +177,7 @@ class Tree:
         # Remove node from beeing child of his parent
         parent_id = node.get_parent_id()
         parent_node = self.get_node(parent_id)
-        parent_node.remove_child_by_id_and_name(node_id,node_name)
+        parent_node.remove_child_by_id_and_name(node_id, node_name)
 
         # Remove parent id from this node
         node.set_parent_id(None)
@@ -316,13 +321,13 @@ class Tree:
     ) -> float:
         if current_node is None:
             return total_budget
-        
+
         if not current_node.get_children():
             return current_node.get_allocated_budget_amount()
-            
-        
+
         for child in current_node.get_children():
-            total_budget += self._get_budget_amount_recursive(child, child.get_allocated_budget_amount())
+            total_budget += self._get_budget_amount_recursive(
+                child, child.get_allocated_budget_amount())
 
         return total_budget
 
