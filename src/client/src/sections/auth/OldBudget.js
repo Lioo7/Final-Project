@@ -11,6 +11,7 @@ import OldBudgetRow from './OldBudgetRow';
 import LoadingTable from './LoadingTable';
 
 export default function OldBudget(props) {
+  const totalBudget = 596770415;
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
       {props.tableData.length === 0 ? (
@@ -34,7 +35,7 @@ export default function OldBudget(props) {
             </TableHead>
             <TableBody>
               {props.tableData.map((row) => (
-                <OldBudgetRow key={row.id} row={row} totalBudget={props.totalBudget} />
+                <OldBudgetRow key={row.id} row={row} totalBudget={totalBudget} />
               ))}
             </TableBody>
           </Table>

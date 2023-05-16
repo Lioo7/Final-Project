@@ -70,14 +70,12 @@ export default function LoginForm({ setId }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, password }),
       });
-      navigate('/peoples_budget/home', { replace: true });
-
-      // const responseData = await response.json();
-      // if (responseData.status === 'Succeeded') {
-      //   navigate('/peoples_budget/home', { replace: true });
-      // } else {
-      //   throw new Error('User does not exist. Please register first.');
-      // }
+      const responseData = await response.json();
+      if (responseData.status === 'Succeeded') {
+        navigate('/peoples_budget/home', { replace: true });
+      } else {
+        alert('Error, please refresh the page and try again.');
+      }
     } catch (error) {
       console.log(error);
       alert(error.message);
