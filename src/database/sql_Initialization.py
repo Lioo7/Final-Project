@@ -74,12 +74,12 @@ class SQL_init:
         df = pandas.read_csv(path + "national_budget.csv", encoding="utf-8")
         # remove double quotes from relevant columns
         cols_to_clean = [
-            "�� ��� 1",
-            "�� ��� 2",
-            "�� ����",
-            "�� ����",
-            "�� �����",
-            "�� ����",
+            "שם רמה 1",
+            "שם רמה 2",
+            "שם סעיף",
+            "שם תחום",
+            "שם תכנית",
+            "שם תקנה",
         ]
         df[cols_to_clean] = df[cols_to_clean].apply(lambda x: x.str.replace('"', ""))
         num_rows = len(df)
@@ -235,8 +235,8 @@ if __name__ == "__main__":
     )
 
     # Load datasets
-    # SQL_init.load_information_to_information_table(cursor, db)
-    # SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    #SQL_init.load_information_to_information_table(cursor, db)
+    #SQL_init.load_and_insert_to_current_budget_table(cursor, db)
     
     # Clean database
-    # SQL_init.clean_database(cursor)
+    #SQL_init.clean_database(cursor)
