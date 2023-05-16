@@ -227,8 +227,6 @@ def home():
     if user_gender == "Faild":
         return jsonify({"status": f"There is no user in db with id: {id}"})
     
-    print(user_gender)
-    
     if user_gender == '1':
         user_gender = 'Male'
         
@@ -295,13 +293,6 @@ def subjects_and_projects_tree():
             if user_vote == "ERROR!":
                 return jsonify({"status": "Faild to get old user_vote"})
             
-            print("here if")
-            print("#################################################################")
-            print("#################################################################")
-            print("#################################################################")
-            print("#################################################################")
-            print("#################################################################")
-            print(user_vote)
             database.handler.disconnect()
             return user_vote
 

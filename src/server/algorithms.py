@@ -345,7 +345,7 @@ def _run_algorithm(votes: dict, algorithm_number: int) -> dict:
 
     # edge case: empty dictionary (no votes)
     if not bool(votes):
-        print("The dictionary is empty")
+        # print("The dictionary is empty")
         return votes
 
     num_of_users = len(votes)
