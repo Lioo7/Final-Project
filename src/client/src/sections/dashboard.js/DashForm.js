@@ -18,7 +18,6 @@ export default function DashForm() {
           headers: { 'Content-Type': 'application/json' },
         });
         const information = await response.json();
-        console.log(information);
         setData(information);
       } catch (error) {
         console.error(error);
@@ -30,7 +29,6 @@ export default function DashForm() {
 
   useEffect(() => {
     setData(data)
-    console.log('data',  data)
   }, [data]);
 
 

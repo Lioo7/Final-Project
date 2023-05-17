@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -60,3 +61,11 @@ export default function InfoCards(props) {
     </div>
   );
 }
+
+InfoCards.propTypes = {
+  keys: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  styleCards: PropTypes.object.isRequired,
+};  
+

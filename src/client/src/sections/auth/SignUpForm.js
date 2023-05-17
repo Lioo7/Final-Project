@@ -46,13 +46,11 @@ export default function SignUpForm() {
 
     if (id.length !== 9) {
       setIdError('Invalid ID: Please enter a 9 digit number.');
-      console.log(typeof id);
       return;
     }
 
     if (id === '000000000') {
       setIdError('Invalid ID: This ID belongs to guest user.');
-      console.log(typeof id);
       return;
     }
     setIdError('');
@@ -85,7 +83,6 @@ export default function SignUpForm() {
     }
     setPasswordError('');
 
-    console.log(firstName, lastName,id, birthDate, gender, email, password);
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -94,7 +91,6 @@ export default function SignUpForm() {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/login', { replace: true });
       } else if (responseData.status === 'The email already exists in the system - try another email') {

@@ -15,7 +15,7 @@ export default function ResultsForm() {
 
   const [oldBudget, setOldBudget] = useState({});
   const [algo1, setAlgo1] = useState({});
-  const [algo2, setAlgo2] = useState({});
+  // const [algo2, setAlgo2] = useState({});
   const [lastTime, setLastTime] = useState('');
   const url = 'http://localhost:5000/peoples_budget/results';
 
@@ -27,8 +27,6 @@ export default function ResultsForm() {
       });
       const information = await response.json();
       console.log('information', information);
-      console.log('time', information.time);
-      console.log(typeof information.time);
 
       setOldBudget(JSON.parse(information.current_budget));
       setAlgo1(JSON.parse(information.median_algorithm));
@@ -43,11 +41,6 @@ export default function ResultsForm() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log('oldBudget', oldBudget);
-    console.log('algo1', algo1);
-  }, [algo1]);
 
   const handleButtonClick = (number) => {
     if (!loading) {
