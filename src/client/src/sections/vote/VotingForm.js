@@ -15,19 +15,19 @@ import Row from './Row';
 import UserContext from '../../contexts/UserContext';
 import PopCardSubmit from './PopCardSubmit';
 import LoadingTable from './LoadingTable';
-import ThankYou from './ThankYou';
+// import ThankYou from './ThankYou';
 
 export default function VotingForm() {
   const [tableData, setTableData] = useState([]);
   const [allData, setAllData] = useState({});
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
-  const [isVoted, setIsVoted] = useState(false);
+  // const [isVoted, setIsVoted] = useState(false);
   const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
 
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
-  console.log(tableData);
+  console.log('tableData', tableData);
 
   const fetchData = async () => {
     try {
@@ -36,10 +36,7 @@ export default function VotingForm() {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      // if (information === 'Is not allowed to vote') {
-      //   setIsVoted(true);
-      // }
-      console.log(information)
+      console.log('information', information);
       setAllData(information);
       setTableData(information.children);
     } catch (error) {
@@ -50,6 +47,7 @@ export default function VotingForm() {
 
   useEffect(() => {
     fetchData(); // fetch data asynchronously
+    // eslint-disable-next-line
   }, []);
 
   const findPathById = (idToFind, data, path = []) => {
@@ -315,9 +313,7 @@ export default function VotingForm() {
 
   return (
     <>
-      {isVoted ? (
-        <ThankYou />
-      ) : tableData.length === 0 ? (
+      {tableData.length === 0 ? (
         <LoadingTable />
       ) : (
         <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
@@ -375,7 +371,7 @@ export default function VotingForm() {
             </TableContainer>
           )}
 
-          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} isVoted={isVoted} />
+          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} />
         </Stack>
       )}
     </>

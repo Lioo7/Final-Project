@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import InfoCards from './InfoCards';
 
@@ -34,7 +34,6 @@ export default function InfoForm() {
           headers: { 'Content-Type': 'application/json' },
         });
         const information = JSON.parse(await response.json());
-        console.log(information);
         setTable(information);
       } catch (error) {
         console.error(error);
@@ -45,10 +44,11 @@ export default function InfoForm() {
   }, []);
 
   return (
-    <Grid container >
-    {Object.keys(table).map((key, index) => (
-      <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
-    ))}
+    <Grid container>
+      {Object.keys(table).map((key, index) => (
+        // eslint-disable-next-line react/jsx-key
+        <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
+      ))}
     </Grid>
   );
 }
