@@ -51,11 +51,11 @@ def calculte_results():
         median_algorithm_result: dict = median_algorithm(voted_dict)
         # TODO: remove the comments from lines 50 and 65 and test if the generalized_median_algorithm works
         # Algo 2:
-        #generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+        generalized_median_result: dict = generalized_median_algorithm(voted_dict)
 
         # Get current budget
         global converted_current_budget
-        if converted_current_budget != None:
+        if converted_current_budget == None:
             tree = database.handler.build_tree_from_current_budget()
             current_budget = tree.to_dict()
             # updates the 'total' values in the budget dictionary
@@ -68,7 +68,7 @@ def calculte_results():
         global algorithms_results
         algorithms_results = {
             "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
-            #"generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
+            "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
             "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
             "time": datetime.now(),
         }
@@ -342,14 +342,14 @@ def voting_tree():
         
     if check_result == "false":
         result = database.handler.update_user_vote(user_id=user_id,vote=vote_str)
-        
         if not result:
             #database.handler.disconnect()
             return jsonify({"status": "Error!, voting does not saved"})
             
         else:
+            
             #database.handler.disconnect()
-            return jsonify({"status": "The user vote has been updated"})
+            return jsonify({"status": "Succeeded"})
             
         
     elif check_result == "Error!":

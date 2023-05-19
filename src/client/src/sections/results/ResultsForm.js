@@ -15,7 +15,7 @@ export default function ResultsForm() {
 
   const [oldBudget, setOldBudget] = useState({});
   const [algo1, setAlgo1] = useState({});
-  // const [algo2, setAlgo2] = useState({});
+  const [algo2, setAlgo2] = useState({});
   const [lastTime, setLastTime] = useState('');
   const url = 'http://localhost:5000/peoples_budget/results';
 
@@ -30,12 +30,11 @@ export default function ResultsForm() {
 
       setOldBudget(JSON.parse(information.current_budget));
       setAlgo1(JSON.parse(information.median_algorithm));
+      setAlgo2(JSON.parse(information.generalized_median_algorithm));
       setLastTime(information.time);
-
-      // setAlgo2(information.average_algorithm);
     } catch (error) {
       console.error(error);
-      alert(error.message); 
+      alert(error.message);
     }
   };
 
@@ -72,22 +71,23 @@ export default function ResultsForm() {
             id="algo1"
             sx={{
               marginRight: '180px',
-              width: '200px',
+              width: '222px',
               height: '80px',
               fontSize: '20px',
             }}
             variant={clicked1 ? 'contained' : 'outlined'}
             onClick={() => handleButtonClick(0)}
           >
-            Median Algorithm
+            Average <br />
+            Algorithm
           </Button>
           <Button
             id="algo2"
-            sx={{ width: '200px', height: '80px', fontSize: '20px', color: clicked2 ? 'primary' : 'default' }}
+            sx={{ width: '222px', height: '80px', fontSize: '20px', color: clicked2 ? 'primary' : 'default' }}
             variant={clicked2 ? 'contained' : 'outlined'}
             onClick={() => handleButtonClick(1)}
           >
-            Average Algorithm
+            generalized median algorithm
           </Button>
         </Box>
       </Box>
@@ -99,7 +99,7 @@ export default function ResultsForm() {
       )}
       {loading && <Loading />}
       {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1} />}
-      {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo1} />}
+      {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo2} />}
     </div>
   );
 }
