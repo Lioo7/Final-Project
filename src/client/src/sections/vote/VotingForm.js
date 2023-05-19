@@ -371,7 +371,7 @@ export default function VotingForm() {
             </TableContainer>
           )}
 
-          <PopCardSubmit setDisplay={setDisplay} tableData={tableData} allData={allData} />
+          <PopCardSubmit setDisplay={setDisplay} allData={{ ...allData, children: tableData }} />
         </Stack>
       )}
     </>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
@@ -26,8 +26,13 @@ export default function PopCardSubmit(props) {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [display, setDisplay] = useState(true);
-  const [table] = useState({ ...props.allData, children: props.tableData });
+  const [table, setTable] = useState(props.allData);
+  // const [table] = useState({ ...props.allData, children: [...props.tableData] });
   const url = 'http://localhost:5000/peoples_budget/voting';
+
+  useEffect(() => {
+    setTable(props.allData);
+  }, [props.allData]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,6 +54,7 @@ export default function PopCardSubmit(props) {
         body: JSON.stringify({ id, table }),
       });
       const responseData = await response.json();
+      console.log(table);
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/results', { replace: true });
       } else {
@@ -108,5 +114,5 @@ export default function PopCardSubmit(props) {
 
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
-  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allData: PropTypes.arrayOf(PropTypes.object).isRequired,  
 };
