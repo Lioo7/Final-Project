@@ -54,7 +54,6 @@ export default function PopCardSubmit(props) {
         body: JSON.stringify({ id, table }),
       });
       const responseData = await response.json();
-      console.log(table);
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/results', { replace: true });
       } else {
