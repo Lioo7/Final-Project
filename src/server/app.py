@@ -55,7 +55,7 @@ def calculte_results():
 
         # Get current budget
         global converted_current_budget
-        if converted_current_budget != None:
+        if converted_current_budget == None:
             tree = database.handler.build_tree_from_current_budget()
             current_budget = tree.to_dict()
             # updates the 'total' values in the budget dictionary
@@ -342,14 +342,14 @@ def voting_tree():
         
     if check_result == "false":
         result = database.handler.update_user_vote(user_id=user_id,vote=vote_str)
-        
         if not result:
             #database.handler.disconnect()
             return jsonify({"status": "Error!, voting does not saved"})
             
         else:
+            
             #database.handler.disconnect()
-            return jsonify({"status": "The user vote has been updated"})
+            return jsonify({"status": "Succeeded"})
             
         
     elif check_result == "Error!":
