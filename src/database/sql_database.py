@@ -28,8 +28,8 @@ class SQL_database(Abstract_Database):
         self.cursor = self.db.cursor()
 
     def disconnect(self):
-        self.cursor.close()
         self.db.close()
+        
 
     def reconnect(self):
         self.disconnect()
@@ -298,7 +298,7 @@ class SQL_database(Abstract_Database):
     def build_tree_from_current_budget(self) -> Tree:
         self.cursor.execute("SELECT * FROM CURRENT_BUDGET")
         rows = self.cursor.fetchall()
-
+        self.disconnect()
         root = Node(
             id=0, name="root", description="I am root", parent=None, budget_amount=0
         )
@@ -495,12 +495,12 @@ class SQL_database(Abstract_Database):
 
         if not result:
             return "Faild"
-        print(result[0][0])
+        
         return result[0][0]
     
     
     def update_user_vote(self, user_id:int, vote):
-        query = f"UPDATE USERS_VOTES SET vote = {vote} WHERE user_id={user_id}"
+        query = f"UPDATE USERS_VOTES SET vote='{vote}' WHERE user_id='{user_id}'"
         try:
             self.cursor.execute(query)
             self.db.commit()

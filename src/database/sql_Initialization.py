@@ -10,6 +10,16 @@ from sql_database import SQL_database
 from server.node import Node
 from server.tree import Tree
 
+import logging
+
+
+LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
+# Create and configure logger
+logging.basicConfig(filename="database_logging.log",
+                    level=logging.DEBUG, filemode="w")
+logger = logging.getLogger()
+
+
 # -*- coding: utf-8 -*-
 
 class SQL_init:
@@ -236,8 +246,8 @@ if __name__ == "__main__":
     )
     
     # Load datasets
-    SQL_init.load_information_to_information_table(cursor, db)
-    SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    #SQL_init.load_information_to_information_table(cursor, db)
+    #SQL_init.load_and_insert_to_current_budget_table(cursor, db)
 
     # Clean database
-    # SQL_init.clean_database(cursor)
+    #SQL_init.clean_database(cursor)

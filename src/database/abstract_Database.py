@@ -72,7 +72,7 @@ class Abstract_Database(ABC):
         pass
 
     @abstractmethod
-    def check_voting_option(self, user_id: str) -> bool:
+    def check_voting_option(self, user_id: str) -> str:
         pass
 
     @abstractmethod
