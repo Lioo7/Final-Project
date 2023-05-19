@@ -500,7 +500,7 @@ class SQL_database(Abstract_Database):
     
     
     def update_user_vote(self, user_id:int, vote):
-        query = f"UPDATE USERS_VOTES SET vote = {vote} WHERE user_id={user_id}"
+        query = f"UPDATE USERS_VOTES SET vote='{vote}' WHERE user_id='{user_id}'"
         try:
             self.cursor.execute(query)
             self.db.commit()
