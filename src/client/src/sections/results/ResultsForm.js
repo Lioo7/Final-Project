@@ -35,6 +35,7 @@ export default function ResultsForm() {
       // setAlgo2(information.average_algorithm);
     } catch (error) {
       console.error(error);
+      alert(error.message); 
     }
   };
 

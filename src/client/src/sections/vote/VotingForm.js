@@ -27,7 +27,6 @@ export default function VotingForm() {
 
   const maxBudget = 596770415;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
-  console.log('tableData', tableData);
 
   const fetchData = async () => {
     try {
@@ -36,7 +35,6 @@ export default function VotingForm() {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      console.log('information', information);
       setAllData(information);
       setTableData(information.children);
     } catch (error) {
@@ -68,7 +66,6 @@ export default function VotingForm() {
   const clearAll = () => {
     const tableClear = clear(tableData);
     setTableData(tableClear);
-    console.log(tableData);
   };
 
   const clear = (data) => {
@@ -158,7 +155,6 @@ export default function VotingForm() {
     // Update siblings/childs1 budget
     const maxBudget = TotalBudget(data);
     let updatedTableData = updateBudget(data, id, value, diff, maxBudget, 0);
-    // console.log('totalBudget', maxBudget);
 
     // Update childs2 budget
     updatedTableData = handleChildBudget(updatedTableData, id, value);
