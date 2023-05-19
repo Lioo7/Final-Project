@@ -51,7 +51,7 @@ def calculte_results():
         median_algorithm_result: dict = median_algorithm(voted_dict)
         # TODO: remove the comments from lines 50 and 65 and test if the generalized_median_algorithm works
         # Algo 2:
-        #generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+        generalized_median_result: dict = generalized_median_algorithm(voted_dict)
 
         # Get current budget
         global converted_current_budget
