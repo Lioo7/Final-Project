@@ -49,7 +49,7 @@ export default function AlgoRow(props) {
       return `${(num / 1000).toFixed(1)} K`;
     }
     if (num < 1000) {
-      return `${(num / 1000).toFixed(1)}`;
+      return `${(num).toFixed(1)}`;
     }
     return num.toString();
   }
@@ -78,7 +78,7 @@ export default function AlgoRow(props) {
         <LightTooltip title={`${percent(newBudget)} %`} placement="left" followCursor>
           <TableCell align="center">{formatNumber(newBudget)}</TableCell>
         </LightTooltip>
-        <LightTooltip title={`${percent(diff)} %`} placement="left" followCursor>
+        <LightTooltip title={`${percent(Math.abs(diff))} %`} placement="left" followCursor>
           <TableCell align="center" sx={{ color: diff > 0 ? 'red' : 'green' }}>
           {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
           </TableCell>
