@@ -96,17 +96,8 @@ export default function AlgoRow(props) {
 }
 
 AlgoRow.propTypes = {
-  row: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    budget: PropTypes.number.isRequired,
-    children: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        budget: PropTypes.number.isRequired,
-      })
-    ),
-  }).isRequired,
-  totalBudget: PropTypes.number.isRequired,
+  row: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
+  rowAlgo: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
+  name: PropTypes.string.isRequired,
+  key: PropTypes.number.isRequired,
 };
