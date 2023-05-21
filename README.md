@@ -1,4 +1,4 @@
-<h1 align = "center"> Pepole's budget :dollar: </h1>
+<h1 align = "center"> People's budget :dollar: </h1>
 
 <details open="open">
   <summary>Contents</summary>
