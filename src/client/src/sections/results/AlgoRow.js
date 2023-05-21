@@ -49,17 +49,17 @@ export default function AlgoRow(props) {
       return `${(num / 1000).toFixed(1)} K`;
     }
     if (num < 1000) {
-      return `${(num).toFixed(1)}`;
+      return `${num.toFixed(1)}`;
     }
     return num.toString();
   }
 
   return (
     <>
-      <TableRow key={props.key}>
+      <TableRow key={props.keys}>
         <TableCell align="center">
           <IconButton
-            id={`iconTree${props.key}`}
+            id={`iconTree${props.name}`}
             aria-label="expand row"
             size="small"
             onClick={() => {
@@ -80,14 +80,16 @@ export default function AlgoRow(props) {
         </LightTooltip>
         <LightTooltip title={`${percent(Math.abs(diff))} %`} placement="left" followCursor>
           <TableCell align="center" sx={{ color: diff > 0 ? 'red' : 'green' }}>
-          {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
+            {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
           </TableCell>
         </LightTooltip>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>{childs && <AlgoChild childrens={childs} childrensAlgo={childsAlgo} />}</Box>
+            <Box sx={{ margin: 1 }}>
+              {childs && <AlgoChild childrens={childs} childrensAlgo={childsAlgo} keys={props.keys} />}
+            </Box>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -99,5 +101,5 @@ AlgoRow.propTypes = {
   row: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
   rowAlgo: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
   name: PropTypes.string.isRequired,
-  key: PropTypes.number.isRequired,
+  keys: PropTypes.number.isRequired,
 };

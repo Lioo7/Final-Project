@@ -4,15 +4,25 @@ const { Builder, By } = require("selenium-webdriver");
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
-    // Navigate to results page
-    await driver.get("http://localhost:3000/peoples_budget/results");
+    // Navigate to Login page
+    await driver.get("http://localhost:3000/peoples_budget/login");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    await new Promise((resolve) => setTimeout(resolve, 20000));
+    // Navigate to Home page
+    await driver.findElement(By.id("loginGuest")).click();
+
+    await new Promise((resolve) => setTimeout(resolve, 3200));
+
+    // Navigate to Results page
+    await driver.findElement(By.linkText("Results")).click();
+    await new Promise((resolve) => setTimeout(resolve, 2500));
 
     // Click on Algo 1 button
-    await driver
-      .findElement(By.xpath("//button[contains(text(), 'Median Algorithm')]"))
-      .click();
+    await driver.findElement(By.id("algo1")).click();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    // await driver.findElement(By.id("iconTree)).click();
+    // await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Verify graph 1 is displayed
     let graph1 = await driver.findElement(By.id("algo1"));
@@ -27,9 +37,8 @@ const { Builder, By } = require("selenium-webdriver");
     await new Promise((resolve) => setTimeout(resolve, 4000));
 
     // Click on Algo 2 button
-    await driver
-      .findElement(By.xpath("//button[contains(text(), 'Average Algorithm')]"))
-      .click();
+    await driver.findElement(By.id("algo2")).click();
+
 
     // Verify graph 2 is displayed
     let graph2 = await driver.findElement(By.id("algo2"));
@@ -41,7 +50,7 @@ const { Builder, By } = require("selenium-webdriver");
     }
 
     // Wait for graph to load
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 4000));
   } finally {
     await driver.quit();
   }

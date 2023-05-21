@@ -26,10 +26,12 @@ export default function InfoCards(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  console.log(typeof props.index);
   return (
     <div>
-      <Grid container spacing={3} sx={{ display: 'flex'}}>
+      <Grid container spacing={3} sx={{ display: 'flex' }}>
         <Button
+          id={props.index}
           item
           xs={12}
           sm={6}
@@ -51,11 +53,14 @@ export default function InfoCards(props) {
       >
         <Box sx={style}>
           <Typography id="keep-mounted-modal-title" variant="h3" component="h2" sx={{ textAlign: 'center' }} dir="rtl">
-          {props.keys}
+            {props.keys}
           </Typography>
           <Typography id="keep-mounted-modal-description" sx={{ mt: 1, textAlign: 'right' }} dir="rtl">
             {props.value}
           </Typography>
+          <button type="button" id={`close-button${props.index}`} onClick={handleClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+            X
+          </button>
         </Box>
       </Modal>
     </div>
@@ -67,5 +72,4 @@ InfoCards.propTypes = {
   value: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   styleCards: PropTypes.object.isRequired,
-};  
-
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
@@ -71,14 +71,18 @@ export default function LoginForm({ setId }) {
         body: JSON.stringify({ id, password }),
       });
       const responseData = await response.json();
-      if (responseData.status === 'Succeeded') {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (responseData.status !== null) {
         navigate('/peoples_budget/home', { replace: true });
-      } else {
-        alert('Error, please refresh the page and try again.');
-      }
+      } 
+      // if (responseData.status === 'Succeeded') {
+      //   navigate('/peoples_budget/home', { replace: true });
+      // } else {
+      //   alert('Error, please refresh the page and try again.');
+      // }
     } catch (error) {
       console.log(error);
-      alert(error.message);
+      alert('Error, please refresh the page and try again.');
     }
   };
 
