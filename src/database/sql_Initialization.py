@@ -101,20 +101,8 @@ class SQL_init:
                             kod_two, name_two, kod_three, name_three, kod_four, name_four, kod_five, name_five,
                             kod_six, name_six, takziv)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                (
-                    int(row[0]),
-                    row[1],
-                    int(row[2]),
-                    row[3],
-                    int(row[4]),
-                    row[5],
-                    int(row[6]),
-                    row[7],
-                    int(row[8]),
-                    row[9],
-                    int(row[10]),
-                    row[11],
-                    str(row[12]),
+                (int(row[0]),row[1],int(row[2]),row[3],int(row[4]),row[5],int(row[6]),row[7],int(row[8]),
+                    row[9],int(row[10]),row[11],str(row[12])+"00",
                 ),
             )
         db.commit()
@@ -246,8 +234,8 @@ if __name__ == "__main__":
     )
     
     # Load datasets
-    #SQL_init.load_information_to_information_table(cursor, db)
-    #SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    SQL_init.load_information_to_information_table(cursor, db)
+    SQL_init.load_and_insert_to_current_budget_table(cursor, db)
 
     # Clean database
     #SQL_init.clean_database(cursor)
