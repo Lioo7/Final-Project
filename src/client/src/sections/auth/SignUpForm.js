@@ -63,6 +63,11 @@ export default function SignUpForm() {
       setBirthDateError('Invalid Birth Date: You are under 18 - you can not sign up.');
       return;
     }
+
+    if (age > 120) {
+      setBirthDateError('Invalid Birth Date: You are over 120 years old.');
+      return;
+    }
     setBirthDateError('');
 
     if (gender === '') {
@@ -91,6 +96,8 @@ export default function SignUpForm() {
       });
 
       const responseData = await response.json();
+      console.log('responseData:', responseData);
+      console.log('responseData.status', responseData.status);
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/login', { replace: true });
       } else if (responseData.status === 'The email already exists in the system - try another email') {

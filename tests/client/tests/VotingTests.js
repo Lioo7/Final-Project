@@ -5,9 +5,29 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
   let ids = ["1", "1178", "4885", "6802", "9707", "10696", "10793"];
 
   try {
-    // Navigate to voting page
-    await driver.get("http://localhost:3000/peoples_budget/voting");
-    await new Promise((resolve) => setTimeout(resolve, 32000));
+    // Navigate to Login page
+    await driver.get("http://localhost:3000/peoples_budget/login");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Navigate to Home page
+    await driver.findElement(By.id("loginGuest")).click();
+
+    await new Promise((resolve) => setTimeout(resolve, 3200));
+
+    // Navigate to Voting page
+    let votingLink = await driver.wait(
+      until.elementLocated(By.linkText("Voting")),
+      10000
+    );
+
+    await votingLink.click();
+    await new Promise((resolve) => setTimeout(resolve, 45000));
+
+    // Wait for page to load
+    await driver.wait(
+      until.urlIs("http://localhost:3000/peoples_budget/voting"),
+      10000
+    );
 
     // Move slider1
     let slider1 = await driver.findElement(By.id("slider1"));
@@ -191,22 +211,24 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     await driver.findElement(By.id("voteSubmit")).click();
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    await driver.findElement(By.id("cancel")).click();
+    await driver.findElement(By.id("submit")).click();
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // // Wait for voting to complete
-    // await driver.wait(
-    //   until.urlIs("http://localhost:3000/peoples_budget/results"),
-    //   1000
-    // );
+    // Wait for voting to complete
+    await driver.wait(
+      until.urlIs("http://localhost:3000/peoples_budget/results"),
+      1000
+    );
 
-    // // Changed screen successfully
-    // let title = await driver.getTitle();
-    // if (title === "Results") {
-    //   console.log("------------ Voting test passed  ------------");
-    // } else {
-    //   console.log("------------ Voting test failed ------------");
-    // }
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // Changed screen successfully
+    let title = await driver.getTitle();
+    if (title === "Results") {
+      console.log("------------ Voting test passed  ------------");
+    } else {
+      console.log("------------ Voting test failed ------------");
+    }
   } finally {
     await driver.quit();
   }

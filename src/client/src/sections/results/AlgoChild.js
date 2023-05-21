@@ -30,9 +30,7 @@ export default function AlgoChild(props) {
           </TableHead>
           <TableBody>
             {Object.keys(tableChilds).map((key, index) =>
-              key !== 'total' ? (
-                <AlgoRow key={index} name={key} row={tableChilds[key]} rowAlgo={tableChildsAlgo[key]} />
-              ) : null
+              key !== 'total' ? <AlgoRow keys={index} name={key} row={tableChilds[key]} rowAlgo={tableChildsAlgo[key]} /> : null
             )}
           </TableBody>
         </Table>
@@ -43,4 +41,5 @@ export default function AlgoChild(props) {
 
 AlgoChild.propTypes = {
   childrens: PropTypes.arrayOf(PropTypes.object).isRequired,
+  childrensAlgo: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

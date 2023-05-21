@@ -13,7 +13,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
     await new Promise(resolve => setTimeout(resolve, 500));
     await driver.findElement(By.id('lName')).sendKeys('Levy');
     await new Promise(resolve => setTimeout(resolve, 500));
-    await driver.findElement(By.id('signId')).sendKeys('315649877');
+    await driver.findElement(By.id('signId')).sendKeys('159159159');
     await new Promise(resolve => setTimeout(resolve, 500));
     await driver.findElement(By.id('date')).sendKeys('03/06/1999');
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -21,13 +21,14 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
     await new Promise(resolve => setTimeout(resolve, 500));
     await driver.findElement(By.css("li[data-value='male']")).click();
     await new Promise(resolve => setTimeout(resolve, 500));
-    await driver.findElement(By.id('email')).sendKeys('EliLevy@gmail.com');
+    await driver.findElement(By.id('email')).sendKeys('eli11@gmail.com');
     await new Promise(resolve => setTimeout(resolve, 500));
-    await driver.findElement(By.id('signPassword')).sendKeys('Password123', Key.RETURN);
+    await driver.findElement(By.id('signPassword')).sendKeys('Pass123', Key.RETURN);
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Navigate to Home page
     await driver.findElement(By.id('signBtn')).click();
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Wait for signup to complete
     await driver.wait(until.urlIs('http://localhost:3000/peoples_budget/login'), 10000);
@@ -40,7 +41,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
       console.log('------------ Signup test failed ------------');
     }
 
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
   } finally {
     await driver.quit();

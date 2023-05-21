@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Link, Container, Typography, Button } from '@mui/material';
+import PropTypes from 'prop-types';
 import LoginForm from '../sections/auth/LoginForm';
 import OldBudget from '../sections/auth/OldBudget';
 
@@ -101,3 +102,7 @@ export default function LoginPage({ setId }) {
     </>
   );
 }
+
+LoginPage.propTypes = {
+  setId: PropTypes.func.isRequired,
+};

@@ -4,20 +4,25 @@ const { Builder, By, until } = require("selenium-webdriver");
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
-    // Navigate to home page
-    await driver.get("http://localhost:3000/peoples_budget/home");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Navigate to Login page
+    await driver.get("http://localhost:3000/peoples_budget/login");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Navigate to Home page
+    await driver.findElement(By.id("loginGuest")).click();
+
+    await new Promise((resolve) => setTimeout(resolve, 4000));
 
     // Click on header image
-    await driver.findElement(By.css('img[alt="photoURL"]')).click();
+    await driver.findElement(By.css('img[alt="profilePhoto"]')).click();
 
     // Wait for popup to appear
-    await driver.wait(until.elementLocated(By.id("popWindow")), 10000);
+    await driver.wait(until.elementLocated(By.id("popWindow")), 2000);
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Click on logout button
     await driver.findElement(By.id("logout")).click();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Wait for page to load
     await driver.wait(
@@ -28,15 +33,10 @@ const { Builder, By, until } = require("selenium-webdriver");
     // Verify navigation to Login page
     let title = await driver.getTitle();
     if (title !== "Login") {
-      console.log(
-        "------------ Header test failed ------------"
-      );
+      console.log("------------ Header test failed ------------");
     } else {
-      console.log(
-        "------------ Header test passed ------------"
-      );
+      console.log("------------ Header test passed ------------");
     }
-
   } finally {
     await driver.quit();
   }
