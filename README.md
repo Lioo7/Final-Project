@@ -1,5 +1,8 @@
 <h1 align = "center"> People's budget :dollar: </h1>
 
+<p align="center">
+  <img src="https://i.ibb.co/Z8c1yfJ/cover.png" width="600" title="hover text">
+</p>
 <details open="open">
   <summary>Contents</summary>
   <ol>
