@@ -13,7 +13,7 @@
 </details>
 
 
-<h2> Introduction </h2>
+<h2 align = "center"> Introduction </h2>
 
 <p>Today, the connection between the taxes that the citizens pay and what the government does with them is quite loose. That is, the influence of the citizen is small and it is almost impossible to influence certain sections of the budget agreements.
 The purpose of our system is to solve the problem, with the help of giving the citizen a direct influence on the budget agreements.
