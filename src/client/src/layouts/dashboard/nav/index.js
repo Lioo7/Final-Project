@@ -87,10 +87,12 @@ export default function Nav({ openNav, onCloseNav }) {
       }}
     >
       <Box sx={{ py: 3, textAlign: 'center' }}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: '22px' }}>People's Budget</Typography>
+        {/* <Typography sx={{ fontWeight: 'bold', fontSize: '22px' }}>People's Budget</Typography> */}
+        <img src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`} alt="Logo" 
+        style={{marginTop: '-30px'}}/>
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
+      <Box sx={{ mb: 4, mx: 2.5, marginTop: '-15px'}}>
         <Link underline="none">
           <StyledAccount>
             <Avatar src={profilePhoto} alt="profilePhoto" />

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,9 +12,10 @@ import OldBudgetRow from './OldBudgetRow';
 import LoadingTable from './LoadingTable';
 
 export default function OldBudget(props) {
-  const totalBudget = 596770415;
+  const totalBudget = 59677041500;
   return (
-    <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
+    // <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
+    <Stack sx={{ justifyItems: 'end', display: 'inline-block'}}>
       {props.tableData.length === 0 ? (
         <LoadingTable />
       ) : (
@@ -44,3 +46,21 @@ export default function OldBudget(props) {
     </Stack>
   );
 }
+
+OldBudget.propTypes = {
+
+  tableData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      allocated_budget_amount: PropTypes.number.isRequired,
+      children: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          allocated_budget_amount: PropTypes.number.isRequired,
+        })
+      ),
+    })
+  ).isRequired,
+};

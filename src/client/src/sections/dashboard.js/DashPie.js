@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 
 export default function DashPie() {
-  const [chartData, setChartData] = useState({
+  const [chartData, _setChartData] = useState({
     series: [44, 55, 13, 43, 22],
     options: {
       chart: {

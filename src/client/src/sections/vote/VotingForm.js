@@ -24,8 +24,7 @@ export default function VotingForm() {
   const [display, setDisplay] = useState(true);
   // const [isVoted, setIsVoted] = useState(false);
   const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
-
-  const maxBudget = 596770415;
+  const maxBudget = 59677041500;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
 
   const fetchData = async () => {
@@ -340,6 +339,7 @@ export default function VotingForm() {
                     <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                       Budget
                     </TableCell>
+                    
                     <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
                       Vote
                     </TableCell>
