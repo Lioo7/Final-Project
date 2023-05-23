@@ -45,8 +45,6 @@ const PreviousBudget = () => {
       labels: {
         rotate: -45,
       },
-      // categories: ['חולון', 'אשדוד', 'בני-ברק', 'אילת', 'באר-שבע', 'ירושלים',
-      //   'תל-אביב', 'חיפה', 'ראשון-לציון', 'פתח תקוה', 'אשקלון', 'בית-שמש', 'נתניה'
       categories: [
         'תשתיות',
         'החזרי חוב',
@@ -60,7 +58,7 @@ const PreviousBudget = () => {
     },
     yaxis: {
       title: {
-        text: 'מיליארד',
+        text: 'Billion',
       },
     },
     fill: {

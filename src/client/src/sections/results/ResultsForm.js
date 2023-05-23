@@ -61,35 +61,59 @@ export default function ResultsForm() {
     <LoadingVote />
   ) : (
     <div>
-      <Typography variant="h3" align="center" marginBottom={5}>
+      <Typography variant="h3" align="center" style={{ fontFamily: 'Ubuntu', marginBottom: '10' }}>
         Select an option:
       </Typography>
 
-      <Box marginBottom={1} gap={12} align="center">
-        <Box>
+      {/* <div style={{marginTop: '-10', display: 'flex', justifyContent: 'center' }}>
+        <img src={`${process.env.PUBLIC_URL}/img_bg/home2.png`} alt="Logo" style={{marginTop: '-10', width: '250px' }} />
+      </div> */}
+
+      <Box marginBottom={1} marginTop={7} gap={12} align="center">
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            
+          }}
+        >
           <Button
             id="algo1"
             sx={{
-              marginRight: '180px',
+              // marginRight: '180px',
+              minWidth: '222px',
               width: '222px',
               height: '80px',
               fontSize: '20px',
+              fontFamily: 'Ubuntu',
             }}
             variant={clicked1 ? 'contained' : 'outlined'}
             onClick={() => handleButtonClick(0)}
           >
-            Average <br />
+            Median <br />
             Algorithm
           </Button>
+          <img
+            src={`${process.env.PUBLIC_URL}/img_bg/results.png`}
+            alt="Logo"
+            style={{ marginLeft: '40px', marginTop: '-95px', width: '300px' }}
+          />
           <Button
             id="algo2"
-            sx={{ width: '222px', height: '80px', fontSize: '20px', color: clicked2 ? 'primary' : 'default' }}
+            sx={{
+              minWidth: '222px',
+              width: '222px',
+              height: '80px',
+              fontSize: '20px',
+              color: clicked2 ? 'primary' : 'default',
+              fontFamily: 'Ubuntu',
+            }}
             variant={clicked2 ? 'contained' : 'outlined'}
             onClick={() => handleButtonClick(1)}
           >
             generalized median algorithm
           </Button>
-        </Box>
+        </div>
       </Box>
 
       {(displayGraph1 || displayGraph2) && (

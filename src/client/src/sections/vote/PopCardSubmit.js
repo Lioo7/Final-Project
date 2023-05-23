@@ -32,6 +32,7 @@ export default function PopCardSubmit(props) {
 
   useEffect(() => {
     setTable(props.allData);
+    console.log('PopCardSubmit table:', table);
   }, [props.allData]);
 
   const handleClickOpen = () => {
@@ -90,13 +91,14 @@ export default function PopCardSubmit(props) {
           <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
             Confirm Vote Submission
           </DialogTitle>
-          <DialogContent>
+          <DialogContent >
             <DialogContentText>
               Are you sure you want to submit your vote?
-              <br />
-              Please note that you can only vote once.
+              {/* <br />
+              Please note that you can only vote once. */}
             </DialogContentText>
           </DialogContent>
+
           <DialogActions>
             <Button id="cancel" autoFocus onClick={handleClose}>
               Cancel

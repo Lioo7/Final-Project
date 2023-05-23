@@ -238,4 +238,4 @@ if __name__ == "__main__":
     SQL_init.load_and_insert_to_current_budget_table(cursor, db)
 
     # Clean database
-    #SQL_init.clean_database(cursor)
+    # SQL_init.clean_database(cursor)

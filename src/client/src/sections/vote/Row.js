@@ -11,6 +11,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
+import InputAdornment from '@mui/material/InputAdornment';
 import { debounce } from 'lodash';
 import Childs from './Childs';
 
@@ -20,6 +21,23 @@ export default function Row(props) {
   const [budget, setBudget] = useState(Number(row.allocated_budget_amount));
   const [childs, setChilds] = useState(row.children);
   const [checkBox, setCheckBox] = useState(row.checked);
+
+  // function printMoney(num) {
+  //   const formatter = new Intl.NumberFormat('en-US');
+  //   const formattedNumber = formatter.format(num);
+  //   return formattedNumber;
+  // }
+
+  // // Helper function to format the budget for display
+  // function formatBudgetForDisplay(budget) {
+  //   // return Number((budget / 1000).toFixed(1));
+  //   return (budget / 1000).toFixed(1);
+  // }
+
+  // // Helper function to parse the budget back to its original value
+  // function parseBudgetFromDisplay(displayValue) {
+  //   return Number(displayValue) * 1000;
+  // }
 
   function formatNumber(num) {
     if (num >= 1000000000) {
@@ -61,14 +79,14 @@ export default function Row(props) {
   }, 250);
 
   const handleChangeText = (event) => {
-    const { value } = event.target;
+    const { value } = event.target*1000 ;
     if (value > props.maxBudget) {
       event.target.value = props.maxBudget;
-    } else if (value < 0) {
+    } else if (value < 0 || Number.isNaN(value)) {
       event.target.value = 0;
     }
 
-    event.target.value = parseInt(event.target.value, 10);
+    event.target.value = parseInt(event.target.value*1000, 10);
     // If delete the value without setting a new one
     if (!event.target.value) {
       event.target.value = 0;
@@ -80,6 +98,7 @@ export default function Row(props) {
     }
   };
 
+  
   return (
     <>
       <TableRow key={row.id} sx={{ backgroundColor: row.checked ? '#F4F6F8' : 'white' }}>
@@ -112,27 +131,40 @@ export default function Row(props) {
         <TableCell align="center">
           <TextField
             id={`budgetText${row.id}`}
+            // label={'k'}
             type="number"
             variant="outlined"
-            value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
+            // value={Number(formatBudgetForDisplay(row.allocated_budget_amount))}
+            // value={formatBudgetForDisplay(row.allocated_budget_amount)}
+            value={Number((Number(row.allocated_budget_amount)/1000).toFixed(1))}
             defaultValue={Number(budget)}
-            InputProps={{ inputProps: { min: 0, max: 1000000000 } }}
+            InputProps={{
+              inputProps: { min: 0, max: 100000000 },
+              
+              endAdornment: <InputAdornment position="end">k
+          </InputAdornment>,
+            }}
             onChange={handleChangeText}
+            // onChange={(event) => {
+            //   const { value } = event.target;
+            //   handleChangeText(event);
+            //   event.target.value = formatBudgetForDisplay(parseBudgetFromDisplay(value));
+            // }}
           />
         </TableCell>
         <TableCell align="center">
           {/* {' '} */}
           <Slider
             id={`slider${row.id}`}
-            value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
+            value={(Math.round(Number(row.allocated_budget_amount) * 10) / 10)}
             onChange={handleChangeSlider}
             valueLabelDisplay="auto"
             aria-label="Default"
             max={props.maxBudget}
             valueLabelFormat={(value) => formatNumber(value)}
             sx={{ mt: 1.2 }}
-          /> 
-         </TableCell> 
+          />
+        </TableCell>
         <TableCell align="center">
           {props.totalBudget === 0
             ? 0
@@ -144,7 +176,7 @@ export default function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              {childs.length >0 && (
+              {childs.length > 0 && (
                 <Childs
                   childrens={childs}
                   parent={row.children}

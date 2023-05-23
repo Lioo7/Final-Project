@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Link, Container, Typography, Button } from '@mui/material';
 import PropTypes from 'prop-types';
+import useResponsive from '../hooks/useResponsive';
 import LoginForm from '../sections/auth/LoginForm';
 import OldBudget from '../sections/auth/OldBudget';
 
@@ -13,6 +14,19 @@ const StyledRoot = styled('div')(({ theme }) => ({
   },
 }));
 
+const StyledSection = styled('div')(({ theme }) => ({
+  width: '100%',
+  height: '100vh',
+  maxWidth: 480,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  boxShadow: theme.customShadows.card,
+  backgroundColor: theme.palette.background.default,
+  position: 'fixed',
+
+}));
+
 const StyledContent = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
@@ -20,11 +34,21 @@ const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(5, 0),
+  padding: theme.spacing(10, 0),
+  objectFit: 'cover',
+  position: 'relative', // Set the position to relative
+  zIndex: 1, // Set a higher z-index value to make it appear above the background
 }));
+
+const StyledImageContainer = styled('div')({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+});
 
 export default function LoginPage({ setId }) {
   const navigate = useNavigate();
+  const mdUp = useResponsive('up', 'md');
   const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem('table')) ?? []);
   const [isClicked, setIsClicked] = useState(false);
   const url = 'http://localhost:5000/peoples_budget/login';
@@ -61,7 +85,23 @@ export default function LoginPage({ setId }) {
       </Helmet>
 
       <StyledRoot>
-        <Container maxWidth="sm">
+        {mdUp && (
+          <StyledSection>
+            <StyledImageContainer>
+              <Typography variant="h3" sx={{ px: 0, mt: 0, mb: -5 }}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`}
+                  alt="Logo"
+                  style={{ alignSelf: 'flex-start', width: '400px' }}
+                />
+              </Typography>
+              <img src={`${process.env.PUBLIC_URL}/img_bg/login.png`} alt="login" />
+            </StyledImageContainer>
+          </StyledSection>
+        )}
+
+        <Container maxWidth="sm" style={{ marginRight: '100px' }}
+>
           <StyledContent>
             <Typography variant="h4" gutterBottom sx={{ display: 'flex', justifyContent: 'center' }}>
               Login to People's Budget
@@ -87,18 +127,17 @@ export default function LoginPage({ setId }) {
                 color: 'black',
                 margin: '0 auto',
                 width: '200px',
-                marginBottom: '0px',
+                marginBottom: '30px',
                 border: '2mm double rgb(51, 102, 255, 0.65)',
                 // border: '3mm ridge rgb(51, 102, 255)',
               }}
             >
               State Budget - 2022
             </Button>
+            {isClicked && <OldBudget tableData={tableData} />}
           </StyledContent>
         </Container>
       </StyledRoot>
-
-      {isClicked && <OldBudget tableData={tableData} />}
     </>
   );
 }

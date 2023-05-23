@@ -8,7 +8,7 @@ export default function Cards(props) {
     <div>
           <Grid container spacing={3} display="flex" >
             <Grid item xs={12} sm={6} md={3} >
-              <CardStructure title="Total budget" icon={'mdi:money'} val={'501.B'} />
+              <CardStructure title="Total budget" icon={'mdi:money'} val={'59.B'} />
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
