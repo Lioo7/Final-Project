@@ -1,6 +1,6 @@
 
-const randomNumW = Math.floor(Math.random() * 10) + 1;
-const randomNumM = 11 + Math.floor(Math.random() * 14) ;
+const randomNumW = Math.floor(Math.random() *14) ;
+const randomNumM = 14 + Math.floor(Math.random() * 17) ;
 const account = {
   displayName: 'Guest User',
   id: '000000000',
