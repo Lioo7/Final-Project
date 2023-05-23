@@ -97,8 +97,8 @@ export default function Nav({ openNav, onCloseNav }) {
           <StyledAccount>
             <Avatar src={profilePhoto} alt="profilePhoto" />
 
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+            <Box sx={{ margin: 'auto' }}>
+              <Typography variant="subtitle2" sx={{fontSize: '16px' , color: 'text.primary' }}>
                 {name}
               </Typography>
 
