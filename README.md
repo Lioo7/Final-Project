@@ -6,6 +6,8 @@
   <img src="https://img.shields.io/badge/pytest-0A9EDC?style=flat&logo=pytest&logoColor=white" alt="pytest">
   <img src="https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white" alt="Flask">
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Statistics-FF8000?style=flat&logo=python&logoColor=white" alt="Statistics">
+  <img src="https://img.shields.io/badge/Selenium-43B02A?style=flat&logo=selenium&logoColor=white" alt="Selenium">
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white" alt="React">
 </p>
@@ -27,6 +29,12 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+- [Testing](#testing)
+- [User Guide](#user-guide)
+  - [Getting Started](#getting-started)
+  - [Navigating the Application](#navigating-the-application)
+  - [Revoting](#revoting)
+  - [Additional Tips](#additional-tips)
 - [License](#license)
 - [Contributing](#contributing)
 - [Team Information](#team-information)
@@ -90,6 +98,46 @@ To set up the People's Budget web application locally, follow these steps:
 7. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
 8. Open the client-side application in your web browser.
 9. You're ready to actively participate in the budget voting process!
+
+## Testing
+
+The project includes a dedicated test directory with subdirectories for client and server tests. These tests are designed to ensure the functionality and reliability of the application components. 
+
+To execute the tests, follow these steps:
+
+1. **Client Tests**: Navigate to the `test/client` directory and run the command to execute the client-side tests:
+   `npm test`
+2. **Server Tests: Navigate to the `test/server` directory and run the command to execute the server-side tests:
+   `pytest`
+   
+## User Guide
+
+### Getting Started
+
+1. **Accessing the Web Application**: Open your web browser and enter the URL of the People's Budget application.
+2. **Creating an Account**: Click on the "Sign Up" button and follow the on-screen instructions to create your account.
+   ![Create Account](screenshots/create-account.png)
+3. **Logging In**: After creating your account, click on the "Log In" button and enter your credentials to access the system.
+   ![Log In](screenshots/login.png)
+
+### Navigating the Application
+
+1. **Dashboard**: Upon logging in, you will be redirected to the user dashboard. This is where you can find...
+   ![Dashboard](screenshots/dashboard.png)
+2. **Voting**: To vote for a budget proposal, click on the "Vote" button next to... A confirmation prompt will appear, and you can submit your vote by clicking "Confirm".
+   ![Vote](screenshots/vote.png)
+3. **Result Tracking**: You can track the real-time results of the voting process by accessing the "Results" section. Here, you will find visualizations and updates on the progress and outcome of the budget vote.
+   ![Results](screenshots/results.png)
+4. **Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. Use this information to make informed decisions and understand the overall participation patterns.
+   ![Voter Statistics](screenshots/voter-stats.png)
+
+### Revoting
+
+- **Revoting**: If you wish to change your vote...
+   ![Revoting](screenshots/revote.png)
+
+### Additional Features
+- **Guest Mode**: Explore the system and familiarize yourself with the features in the Guest Mode before signing up. This allows you to get a glimpse of the application's functionalities without creating an account.
 
 ## License
 
