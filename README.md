@@ -1,5 +1,3 @@
-<h1 align = "center"> People's budget :dollar: </h1>
-
 <h1 align="center">People's Budget :dollar:</h1>
 
 <p align="center">
