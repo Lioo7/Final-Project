@@ -34,7 +34,7 @@
   - [Getting Started](#getting-started)
   - [Navigating the Application](#navigating-the-application)
   - [Revoting](#revoting)
-  - [Additional Tips](#additional-tips)
+  - [Additional Features](#additional-features)
 - [License](#license)
 - [Contributing](#contributing)
 - [Team Information](#team-information)
