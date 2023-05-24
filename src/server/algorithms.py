@@ -4,7 +4,6 @@ This file contains the algorithms that will be used in the project for calculati
 import concurrent.futures
 import logging
 import statistics
-
 import numpy as np
 from counter import Counter
 from tree import Tree
