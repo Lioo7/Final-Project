@@ -3,71 +3,108 @@
 <p align="center">
   <img src="https://i.ibb.co/Z8c1yfJ/cover.png" width="600" title="hover text">
 </p>
-<details open="open">
-  <summary>Contents</summary>
-  <ol>
-    <li>
-      <a href="#Introduction">Introduction</a>
-    </li>
-   <li><a href="#Architecture & implementaion">Architecture & implementaion 👷</a></li>
-    <li><a href="#Compile & Run">Compile & Run</a></li>
-    <li><a href="#Developers">Developers</a></li>
-  </ol>
-</details>
 
+## Table of Contents
 
-<h2 align = "center"> Introduction </h2>
+- [Project Goal](#project-goal)
+- [Introduction](#introduction)
+- [Key Features](#key-features)
+- [Selected Approach](#selected-approach)
+  - [Architecture and Design Pattern](#architecture-and-design-pattern)
+  - [Application Structure](#application-structure)
+  - [Algorithms](#algorithms)
+  - [UX & UI](#ux--ui)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [License](#license)
+- [Contributing](#contributing)
+- [Team Information](#team-information)
 
-<p>Today, the connection between the taxes that the citizens pay and what the government does with them is quite loose. That is, the influence of the citizen is small and it is almost impossible to influence certain sections of the budget agreements.
-The purpose of our system is to solve the problem, with the help of giving the citizen a direct influence on the budget agreements.
+## Project Goal
 
-The "People's Budget" system is a system that allows the citizens of the state to influence the distribution of the state budget. The system gives power of influence, and a sense of belonging to all citizens and the feeling that they are a significant and influential part in the distribution of the state budget.
-In addition, one of the main advantages of this system is the prevention of personal interests of senior officials and it fulfills the interests of the majority of the country's citizens. </p>
+The goal of our web application is to enable citizens to actively participate in the voting process for the state/municipality budget, ensuring alignment with the will of the people. We aim to address the lack of influence and disconnection that citizens often feel regarding how their taxes are utilized. By providing an intuitive and transparent platform, we empower individuals to have a direct impact on budget decisions.
 
-<br>
+## Introduction
 
-<h2  align = "center"> Architecture & implementaion 👷 </h2>
+Are you tired of feeling like your voice doesn't matter when it comes to budget decisions? Do you want to have a say in how your taxes are spent? Look no further! The People's Budget web application is here to revolutionize citizen participation. With our platform, you can actively engage in the voting process for state and municipal budgets, making your opinions count. We believe in the power of collective decision-making and strive to create a more inclusive and democratic society.
 
+## Key Features
 
-<br>
+- **Online Voting for Budget Proposals**: Our web application allows users to vote online for the budget proposal. 
+- **Revoting Capability for Updated Decisions**: Our system enables users to revise their votes accordingly.
+- **Real-time Result Tracking for Transparency**: Transparency is crucial to us. We provide real-time tracking of voting results, allowing citizens to stay informed about the progress and outcomes of budget decisions.
+- **Comprehensive Voter Statistics Dashboard**: To encourage informed participation, we offer a comprehensive voter statistics dashboard. It provides insights into the overall voting trends, demographics, and other relevant data.
 
-<h2  align = "center"> Compile & Run ⬇️ </h2>
+## Selected Approach
 
-<h3>Dependencies</h3>
+To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), application layer (server), and data layer (database).
 
-* [Python](https://www.python.org/)  <img src=https://user-images.githubusercontent.com/25181517/183423507-c056a6f9-1ba8-4312-a350-19bcbc5a8697.png align=cetner width=24>
-* [Flask](https://flask.palletsprojects.com/en/2.3.x/)  <img src=https://user-images.githubusercontent.com/25181517/183423775-2276e25d-d43d-4e58-890b-edbc88e915f7.png align=cetner width=30>
-* [React](https://react.dev/) <img src=https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png align=cetner width=24>
-* [MySQL](https://www.mysql.com/) <img src=https://user-images.githubusercontent.com/25181517/183896128-ec99105a-ec1a-4d85-b08b-1aa1620b2046.png align=cetner width=24>
+### Architecture and Design Pattern
 
+To facilitate seamless communication between the client and server, we employ a client-server pattern with RESTful APIs. This architecture enables efficient data exchange and supports a smooth user experience. Additionally, we utilize the strategy pattern to ensure flexible interaction between the server and database. The system architecture is robust and scalable, with clear component separation for easier maintenance and future enhancements.
 
-<h3> Download: </h3>
+### Application Structure
 
-   ```sh
-   git clone
-   ```
+- **Client**: The client-side of our application is built using JavaScript and the React library. This choice ensures an optimal user experience, with responsive and interactive interfaces.
+- **Server**: The server-side logic and information services are implemented using Python and the Flask library. This combination allows for efficient processing and handling of requests.
+- **Database**: We utilize MySQL as the database management system, providing robust and reliable storage for our application data.
 
+### Algorithms
 
-<h3>Getting Started:</h3>
+Our web application incorporates powerful algorithms to guarantee fairness, truth-telling, and anonymity in the voting process. These algorithms are designed to ensure that every vote is counted accurately and that user privacy is protected.
 
-* Open 2 terminals
+### UX & UI
 
-<h4> Server: </h4>
+User experience and user interface design are essential aspects of our project. We prioritize simplicity and ease of use, ensuring that citizens of all technical backgrounds can navigate the application effortlessly. Our design philosophy revolves around creating an intuitive interface that encourages active participation. We also provide a Guest Mode that allows users to explore the system before signing up.
 
-   ```sh
-   python app.py
-   ```
-<h4> Client: </h4>
-  
-   ```
-    npm start
-   ```
- 
-<br>
+## Getting Started
 
-<h2  align = "center">  Developers 💻 </h2>
-    
+### Prerequisites
 
+To run the People's Budget web application, you need to have the following installed on your system:
+
+- Docker
+- Python (version X.X.X)
+
+### Installation
+
+To set up the People's Budget web application locally, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/ElhaiMansbach/Final-Project`
+2. Navigate to the project directory: `cd peoples-budget`
+3. Install the required Python dependencies: `pip install -r requirements.txt`
+4. Set up the necessary environment variables.
+5. Run the MySQL database using Docker Compose by navigating to the database directory and running the command: `docker-compose up -d`.
+6. Start the server by navigating to the server directory and running the command: `python app.py`.
+7. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+8. Open the client-side application in your web browser.
+9. You're ready to actively participate in the budget voting process!
+
+## License
+
+This project is licensed under the [Creative Commons Attribution-NonCommercial (CC BY-NC) License](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+
+## Contributing
+
+We welcome contributions to the People's Budget project! If you would like to contribute, please follow these guidelines:
+
+1. Fork the repository and create your branch from `main`.
+2. Make your desired changes and improvements to the codebase.
+3. Ensure that your code adheres to the project's coding style and conventions.
+4. Test your changes thoroughly to ensure they function as intended.
+5. Commit your changes with clear and descriptive commit messages.
+6. Push your changes to your forked repository.
+7. Submit a pull request, detailing the changes you have made.
+
+We will review the pull request and provide feedback or merge it into the main codebase if appropriate. We appreciate your contributions and look forward to collaborating with you!
+
+Please note that by contributing to this project, you agree to license your contributions under the [Creative Commons Attribution-NonCommercial (CC BY-NC) License](https://creativecommons.org/licenses/by-nc-nd/4.0/). Your contributions must align with the license terms and restrictions.
+
+If you have any questions or need further assistance with the contribution process, feel free to reach out to us.
+
+## Team Information
+This project was developed by:
 <table align = "center">
   <tr>
     <td align="center"><a href="https://github.com/ElhaiMansbach"><img src="https://i.ibb.co/tsyV1FL/elhai-photo.jpg" width="150px;" alt=""/><br /><sub><b>Elhai Mansbach</b></sub></a><br /> </td>
@@ -75,3 +112,5 @@ In addition, one of the main advantages of this system is the prevention of pers
     <td align="center"><a href="https://github.com/Lioo7"><img src="https://i.ibb.co/2MCYM0m/lioz-photo.jpg" width="150px;" alt=""/><br /><sub><b>Lioz Akirav</b></sub></a><br /> </td>
   </tr>
 </table>
+Under the supervision of <a href="https://github.com/erelsgl">Dr. Erel Segal Halevi</a>.
+
