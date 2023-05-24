@@ -7,7 +7,8 @@ import numpy as np
 
 from src.server.algorithms import (
     _find_median_with_constant_functions,
-    _find_median_with_constant_functions_multithreaded)
+    _find_median_with_constant_functions_multithreaded,
+)
 
 if __name__ == "__main__":
     # each key represents a project and the value is a list of budget votes for that project by all the users.

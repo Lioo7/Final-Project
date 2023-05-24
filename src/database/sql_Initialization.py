@@ -3,6 +3,8 @@ import sys
 
 sys.path.append("..")
 
+import logging
+
 import mysql.connector
 import pandas
 from sql_database import SQL_database
@@ -10,17 +12,14 @@ from sql_database import SQL_database
 from server.node import Node
 from server.tree import Tree
 
-import logging
-
-
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
-logging.basicConfig(filename="database_logging.log",
-                    level=logging.DEBUG, filemode="w")
+logging.basicConfig(filename="database_logging.log", level=logging.DEBUG, filemode="w")
 logger = logging.getLogger()
 
 
 # -*- coding: utf-8 -*-
+
 
 class SQL_init:
 
@@ -35,7 +34,7 @@ class SQL_init:
             host="localhost",
             user=os.environ.get("user_budget_system"),
             password=os.environ.get("system_budget_password"),
-            database="db_budget_system"
+            database="db_budget_system",
         )
         return db
 
@@ -101,8 +100,20 @@ class SQL_init:
                             kod_two, name_two, kod_three, name_three, kod_four, name_four, kod_five, name_five,
                             kod_six, name_six, takziv)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                (int(row[0]),row[1],int(row[2]),row[3],int(row[4]),row[5],int(row[6]),row[7],int(row[8]),
-                    row[9],int(row[10]),row[11],str(row[12])+"00",
+                (
+                    int(row[0]),
+                    row[1],
+                    int(row[2]),
+                    row[3],
+                    int(row[4]),
+                    row[5],
+                    int(row[6]),
+                    row[7],
+                    int(row[8]),
+                    row[9],
+                    int(row[10]),
+                    row[11],
+                    str(row[12]) + "00",
                 ),
             )
         db.commit()
@@ -232,7 +243,7 @@ if __name__ == "__main__":
     SQL_init.create_table(
         cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
     )
-    
+
     # Load datasets
     SQL_init.load_information_to_information_table(cursor, db)
     SQL_init.load_and_insert_to_current_budget_table(cursor, db)
