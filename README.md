@@ -107,7 +107,7 @@ To execute the tests, follow these steps:
 
 1. **Client Tests**: Navigate to the `test/client` directory and run the command to execute the client-side tests:
    `npm test`
-2. **Server Tests: Navigate to the `test/server` directory and run the command to execute the server-side tests:
+2. **Server Tests**: Navigate to the `test/server` directory and run the command to execute the server-side tests:
    `pytest`
    
 ## User Guide
