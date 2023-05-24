@@ -65,7 +65,7 @@ User experience and user interface design are essential aspects of our project. 
 To run the People's Budget web application, you need to have the following installed on your system:
 
 - Docker
-- Python (version X.X.X)
+- Python
 
 ### Installation
 
