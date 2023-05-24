@@ -7,9 +7,14 @@ import time
 from datetime import datetime
 from threading import Thread
 
-from algorithms import (calculate_totals, convert_structure,
-                        generalized_median_algorithm, median_algorithm,
-                        unite_votes, update_dict_ids)
+from algorithms import (
+    calculate_totals,
+    convert_structure,
+    generalized_median_algorithm,
+    median_algorithm,
+    unite_votes,
+    update_dict_ids,
+)
 from calculator import Calculator
 from counter import Counter
 from flask import Flask, jsonify, request
@@ -35,6 +40,7 @@ database = data_handler(SQL_database(SQL_database.create_config()))
 # Batch calculate results
 algorithms_results = None
 converted_current_budget = None
+
 
 def calculte_results():
     global database
@@ -64,17 +70,18 @@ def calculte_results():
             update_dict_ids(count, current_budget)
             converted_current_budget = convert_structure(current_budget)
 
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         global algorithms_results
         algorithms_results = {
             "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
-            "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
+            "generalized_median_algorithm": json.dumps(
+                generalized_median_result, ensure_ascii=False
+            ),
             "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
             "time": datetime.now(),
         }
 
         time.sleep(10)
-
 
 
 #  ----------------- Login ----------------------
@@ -91,20 +98,19 @@ def login():
         return jsonify({"status": "Faild"})
 
     database.handler.connect()
-    
+
     # Guest user
     if id == "000000000":
         return jsonify({"status": "Succeeded"})
-        
-    
+
     result = database.handler.check_if_user_exists(id, password)
 
     if result:
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": "Succeeded"})
 
     else:
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": "Faild"})
 
 
@@ -117,7 +123,7 @@ def table_tree():
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
-    #database.handler.disconnect()
+    # database.handler.disconnect()
 
     return jsonify(json_tree)
 
@@ -169,26 +175,26 @@ def signup():
 
     # check if the structure of the email is valid
     if not valid_email:
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": "Invalid email - Please insert a valid email"})
 
     if check_mail:
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify(
             {"status": "The email already exists in the system - try another email"}
         )
 
     check_id = database.handler.user_id_exeisting(new_user)
     if check_id:
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": "The ID already exists in the system"})
 
     insert_result = database.handler.insert_new_user(new_user)
     if insert_result:
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": "Succeeded"})
 
-    #database.handler.disconnect()
+    # database.handler.disconnect()
 
     return jsonify({"status": "Faild"})
 
@@ -213,30 +219,30 @@ def home():
     first_name = full_name[0]
 
     if first_name == "Faild":
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": f"There is no user in db with id: {id}"})
 
     if first_name == "Error!":
-        #database.handler.disconnect()
+        # database.handler.disconnect()
         return jsonify({"status": "Error!, Faild to execute get full name query"})
 
     last_name = full_name[1]
 
     user_gender = database.handler.get_user_gender(user_id=id)
-    
+
     if user_gender == "Error!":
         return jsonify({"status": "Error!, Faild to execute get user gender query"})
-    
+
     if user_gender == "Faild":
         return jsonify({"status": f"There is no user in db with id: {id}"})
-    
-    if user_gender == '1':
-        user_gender = 'Male'
-        
-    if user_gender == '2':
-        user_gender = 'Female'
-            
-    #database.handler.disconnect()
+
+    if user_gender == "1":
+        user_gender = "Male"
+
+    if user_gender == "2":
+        user_gender = "Female"
+
+    # database.handler.disconnect()
     return {"first_name": first_name, "last_name": last_name, "gender": user_gender}
 
 
@@ -253,7 +259,7 @@ def information():
 
     json_information = json.dumps(dictionary, ensure_ascii=False)
 
-    #database.handler.disconnect()
+    # database.handler.disconnect()
     return jsonify(json_information)
 
 
@@ -268,7 +274,7 @@ def dashboard():
     ages = Calculator.get_voter_count_by_age(database.handler)
     genders = Calculator.get_voter_count_by_gender(database.handler)
 
-    #database.handler.disconnect()
+    # database.handler.disconnect()
 
     return jsonify({"voter_count": voter_count, "ages": ages, "genders": genders})
 
@@ -283,32 +289,29 @@ def subjects_and_projects_tree():
         user_id = request.args.get("user_id")
     except:
         return jsonify({"status": "Did not receive a user id"})
-    
+
     # Guest user
     if user_id != "000000000":
-        
         # Check if user already voted
         check_result = database.handler.check_voting_option(user_id=user_id)
-        
+
         if check_result == "false":
-            
             user_vote = database.handler.get_user_vote(user_id)
-            
+
             if user_vote == "ERROR!":
                 return jsonify({"status": "Faild to get old user_vote"})
-            
-            #database.handler.disconnect()
+
+            # database.handler.disconnect()
             logging.info(user_vote)
-            
+
             return user_vote
 
         elif check_result == "Error!":
-            
-            #database.handler.disconnect()
+            # database.handler.disconnect()
             return jsonify({"status": "Error!, check_voting_option execute query"})
 
     tree = database.handler.build_tree_from_current_budget()
-    
+
     dictionary = tree.to_dict()
     # updates the 'total' values in the budget dictionary
     calculate_totals(dictionary)
@@ -316,7 +319,7 @@ def subjects_and_projects_tree():
     count = Counter()
     update_dict_ids(count, dictionary)
     json_tree = json.dumps(dictionary, ensure_ascii=False)
-    #database.handler.disconnect()
+    # database.handler.disconnect()
     return json_tree
 
 
@@ -329,50 +332,55 @@ def voting_tree():
         vote = data["table"]
     except:
         return jsonify({"status": "failed"})
-    
+
     # Guest user
     if user_id == "000000000":
         return jsonify({"status": "Succeeded"})
-    
-    
+
     vote_str = json.dumps(vote, ensure_ascii=False).replace("'", "''")
-        
+
     # Check if user already voted
     check_result = database.handler.check_voting_option(user_id=user_id)
-        
+
     if check_result == "false":
-        result = database.handler.update_user_vote(user_id=user_id,vote=vote_str)
+        result = database.handler.update_user_vote(user_id=user_id, vote=vote_str)
         if not result:
-            #database.handler.disconnect()
+            # database.handler.disconnect()
             return jsonify({"status": "Error!, voting does not saved"})
-            
+
         else:
-            
-            #database.handler.disconnect()
+            # database.handler.disconnect()
             return jsonify({"status": "Succeeded"})
-            
-        
+
     elif check_result == "Error!":
-        #database.handler.disconnect()
-        return jsonify({"status": "Error!, check_voting_option function faild to execute query"})
+        # database.handler.disconnect()
+        return jsonify(
+            {"status": "Error!, check_voting_option function faild to execute query"}
+        )
 
     # update user option voting
-    update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=False)
-    
+    update_result = database.handler.update_voting_option(
+        user_id=user_id, is_allowed=False
+    )
+
     if not update_result:
-        #database.handler.disconnect()
-        return jsonify({"status": "Error!, Voting permission has not been updated, vote not saved"})
-    
+        # database.handler.disconnect()
+        return jsonify(
+            {"status": "Error!, Voting permission has not been updated, vote not saved"}
+        )
+
     logging.info(vote_str)
     result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
 
     if not result:
         # update user option voting
-        update_result = database.handler.update_voting_option(user_id=user_id, is_allowed=True)
-        #database.handler.disconnect()
+        update_result = database.handler.update_voting_option(
+            user_id=user_id, is_allowed=True
+        )
+        # database.handler.disconnect()
         return jsonify({"status": "Error!, voting does not saved"})
 
-    #database.handler.disconnect()
+    # database.handler.disconnect()
     return jsonify({"status": "Succeeded"})
 
 
@@ -381,7 +389,7 @@ def voting_tree():
 
 @app.route("/peoples_budget/results", methods=["GET"])
 def get_algorithms_results():
-    #global algorithms_results
+    # global algorithms_results
     return jsonify(algorithms_results)
 
 

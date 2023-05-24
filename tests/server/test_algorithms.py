@@ -5,10 +5,14 @@ sys.path.append("../..")
 
 import pytest
 
-from src.server.algorithms import (calculate_totals, convert_structure,
-                                   generalized_median_algorithm,
-                                   median_algorithm, unite_votes,
-                                   update_dict_ids)
+from src.server.algorithms import (
+    calculate_totals,
+    convert_structure,
+    generalized_median_algorithm,
+    median_algorithm,
+    unite_votes,
+    update_dict_ids,
+)
 from src.server.counter import Counter
 
 
