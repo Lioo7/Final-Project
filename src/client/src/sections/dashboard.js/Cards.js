@@ -6,7 +6,7 @@ import CardStructure from './CardStructure';
 export default function Cards(props) {
   return (
     <div>
-          <Grid container spacing={3} display="flex" >
+          <Grid container spacing={3} display="flex" marginTop={-4.5}>
             <Grid item xs={12} sm={6} md={3} >
               <CardStructure title="Total budget" icon={'mdi:money'} val={'59.B'} />
             </Grid>

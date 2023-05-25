@@ -34,9 +34,9 @@ const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(6, 0),
   objectFit: 'cover',
-  position: 'relative', // Set the position to relative
+  position: 'relative', 
   zIndex: 1, // Set a higher z-index value to make it appear above the background
 }));
 
@@ -127,6 +127,7 @@ export default function LoginPage({ setId }) {
                 color: 'black',
                 margin: '0 auto',
                 width: '200px',
+                marginTop: '43px',  
                 marginBottom: '30px',
                 border: '2mm double rgb(51, 102, 255, 0.65)',
                 // border: '3mm ridge rgb(51, 102, 255)',

@@ -22,23 +22,6 @@ export default function Row(props) {
   const [childs, setChilds] = useState(row.children);
   const [checkBox, setCheckBox] = useState(row.checked);
 
-  // function printMoney(num) {
-  //   const formatter = new Intl.NumberFormat('en-US');
-  //   const formattedNumber = formatter.format(num);
-  //   return formattedNumber;
-  // }
-
-  // // Helper function to format the budget for display
-  // function formatBudgetForDisplay(budget) {
-  //   // return Number((budget / 1000).toFixed(1));
-  //   return (budget / 1000).toFixed(1);
-  // }
-
-  // // Helper function to parse the budget back to its original value
-  // function parseBudgetFromDisplay(displayValue) {
-  //   return Number(displayValue) * 1000;
-  // }
-
   function formatNumber(num) {
     if (num >= 1000000000) {
       return `${(num / 1000000000).toFixed(1)} B`;

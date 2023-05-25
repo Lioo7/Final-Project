@@ -28,15 +28,20 @@ export default function Gender(props) {
   });
 
   useEffect(() => {
-    setChartData(prevChartData => ({
+    setChartData((prevChartData) => ({
       ...prevChartData,
-      series: props.gender, 
+      series: props.gender,
     }));
   }, [props.gender]);
 
   return (
     <>
-      <Chart options={chartData.options} series={chartData.series ? chartData.series : [1, 1] } type="pie" width={props.width} />
+      <Chart
+        options={chartData.options}
+        series={chartData.series ? chartData.series : [1, 1]}
+        type="pie"
+        width={props.width}
+      />
     </>
   );
 }

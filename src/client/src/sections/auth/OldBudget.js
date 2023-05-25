@@ -15,7 +15,7 @@ export default function OldBudget(props) {
   const totalBudget = 59677041500;
   return (
     // <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
-    <Stack sx={{ justifyItems: 'end', display: 'inline-block'}}>
+    <Stack sx={{ justifyItems: 'end', display: 'inline-block', alignItems: 'center'}}>
       {props.tableData.length === 0 ? (
         <LoadingTable />
       ) : (

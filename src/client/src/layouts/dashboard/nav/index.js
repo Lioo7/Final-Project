@@ -92,7 +92,7 @@ export default function Nav({ openNav, onCloseNav }) {
         style={{marginTop: '-30px'}}/>
       </Box>
 
-      <Box sx={{ mb: 4, mx: 2.5, marginTop: '-15px'}}>
+      <Box sx={{ width: '94%' ,mb: 4, mx: 1.1, marginTop: '-15px'}}>
         <Link underline="none">
           <StyledAccount>
             <Avatar src={profilePhoto} alt="profilePhoto" />
@@ -102,9 +102,9 @@ export default function Nav({ openNav, onCloseNav }) {
                 {name}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {/* <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}
-              </Typography>
+              </Typography> */}
             </Box>
           </StyledAccount>
         </Link>
