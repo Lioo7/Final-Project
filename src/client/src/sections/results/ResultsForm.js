@@ -11,8 +11,6 @@ export default function ResultsForm() {
   const [clicked1, setClicked1] = useState(false);
   const [clicked2, setClicked2] = useState(false);
 
-  // const [loadingPage, setLoadingPage] = useState(true);
-
   const [oldBudget, setOldBudget] = useState({});
   const [algo1, setAlgo1] = useState({});
   const [algo2, setAlgo2] = useState({});
@@ -61,30 +59,35 @@ export default function ResultsForm() {
     <LoadingVote />
   ) : (
     <div>
-      <Typography variant="h3" align="center" style={{ fontFamily: 'Ubuntu', marginBottom: '10' }}>
+      <Typography
+        align="center"
+        style={{
+          textAlign: 'center',
+          fontFamily: 'Ubuntu',
+          fontWeight: 'bold',
+          fontSize: '35px',
+          marginTop: '-35px',
+          marginBottom: '20px',
+          color: 'rgba(0, 0, 75, 0.95)',
+        }}
+      >
         Select an option:
       </Typography>
-
-      {/* <div style={{marginTop: '-10', display: 'flex', justifyContent: 'center' }}>
-        <img src={`${process.env.PUBLIC_URL}/img_bg/home2.png`} alt="Logo" style={{marginTop: '-10', width: '250px' }} />
-      </div> */}
 
       <Box marginBottom={1} marginTop={7} gap={12} align="center">
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
-            
           }}
         >
           <Button
             id="algo1"
             sx={{
-              // marginRight: '180px',
-              minWidth: '222px',
-              width: '222px',
+              minWidth: '180px',
+              width: '180px',
               height: '80px',
-              fontSize: '20px',
+              fontSize: '17px',
               fontFamily: 'Ubuntu',
             }}
             variant={clicked1 ? 'contained' : 'outlined'}
@@ -101,10 +104,10 @@ export default function ResultsForm() {
           <Button
             id="algo2"
             sx={{
-              minWidth: '222px',
-              width: '222px',
+              minWidth: '180px',
+              width: '180px',
               height: '80px',
-              fontSize: '20px',
+              fontSize: '17px',
               color: clicked2 ? 'primary' : 'default',
               fontFamily: 'Ubuntu',
             }}
@@ -117,7 +120,7 @@ export default function ResultsForm() {
       </Box>
 
       {(displayGraph1 || displayGraph2) && (
-        <Typography variant="h6" align="center" marginBottom={2}>
+        <Typography variant="h6" align="center" marginBottom={3}>
           {lastTime}
         </Typography>
       )}

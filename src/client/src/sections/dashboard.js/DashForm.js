@@ -35,20 +35,20 @@ export default function DashForm() {
   return (
     <>
       <Cards voters={data.voter_count}/>
-      <Box display="flex" gap={30} ali gnItems="center" marginTop={5}>
+      <Box display="flex" gap={25} ali gnItems="center" marginTop={8}>
         <Stack>
-          <Typography variant="h6">Ages: </Typography>
-          <Ages width={350} ages={data.ages} />
+          <Typography variant="h6" style={{marginLeft: '340px'}}>Ages </Typography>
+          <Ages width={400} ages={data.ages} />
         </Stack>
 
         <Stack>
-          <Typography variant="h6">Gender: </Typography>
-          <Gender width={350} gender={data.genders}/>
+          <Typography variant="h6" style={{marginLeft: '340px'}}>Gender </Typography>
+          <Gender width={400} gender={data.genders}/>
         </Stack>
       </Box>
 
-      <Stack marginTop={5}>
-        <Typography variant="h6">Previous budget: </Typography>
+      <Stack marginTop={8}>
+        <Typography variant="h6" style={{marginLeft: '890px'}}>Previous budget </Typography>
         <PreviousBudget />
       </Stack>
     </>
