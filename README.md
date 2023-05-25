@@ -84,6 +84,7 @@ To run the People's Budget web application, you need to have the following insta
 
 - Docker
 - Python
+- Node.js
 
 ### Installation
 
