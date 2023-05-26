@@ -246,10 +246,6 @@ class SQL_init:
             cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
         )
         
-        SQL_init.create_table(
-            cursor, "LAST_VOTE", "unique_key VARCHAR(255),date DATE"
-        )
-        
         # Load datasets
         SQL_init.Load_datasets(cursor,db)
 
