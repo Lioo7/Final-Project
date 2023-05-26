@@ -214,7 +214,11 @@ class SQL_init:
 
         return tree
 
-
+    def Load_datasets(cursor,db):
+        SQL_init.load_information_to_information_table(cursor, db)
+        SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+        
+    
 if __name__ == "__main__":
     # Connect server
     db = SQL_init.connect_database()
@@ -245,8 +249,7 @@ if __name__ == "__main__":
     )
 
     # Load datasets
-    SQL_init.load_information_to_information_table(cursor, db)
-    SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    SQL_init.Load_datasets(cursor,db)
 
     # Clean database
-    # SQL_init.clean_database(cursor)
+    #SQL_init.clean_database(cursor)
