@@ -258,6 +258,7 @@ class SQL_init:
         cursor = db.cursor()
         return db ,cursor
     
+    
 if __name__ == "__main__":
     
     # Connect server
@@ -268,4 +269,5 @@ if __name__ == "__main__":
     
     #create & build database
     SQL_init.create_and_build_DB(cursor,db)
+    
     

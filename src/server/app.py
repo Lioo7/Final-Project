@@ -46,6 +46,11 @@ converted_current_budget = None
 current_budget_voting_page = None
 current_budget_login_page = None
 
+
+# Last vote
+last_change = None
+last_calculate_time = None
+
 def calculte_results():
     
     while True:
@@ -73,13 +78,16 @@ def calculte_results():
             count = Counter()
             update_dict_ids(count, current_budget)
             converted_current_budget = convert_structure(current_budget)
-
+            
+        global last_calculate_time
         global algorithms_results
+        
+        last_calculate_time = datetime.now()
         algorithms_results = {
             "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
             "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
             "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
-            "time": datetime.now(),
+            "time": last_calculate_time,
         }
 
         time.sleep(10)
@@ -322,12 +330,15 @@ def voting_tree():
     # Check if user already voted
     check_result = database.handler.check_voting_option(user_id=user_id)
 
+    global last_change
+    
     if check_result == "false":
         result = database.handler.update_user_vote(user_id=user_id, vote=vote_str)
         if not result:
             return jsonify({"status": "Error!, voting does not saved"})
 
         else:
+            last_change = datetime.now()
             return jsonify({"status": "Succeeded"})
 
     elif check_result == "Error!":
@@ -355,6 +366,7 @@ def voting_tree():
         )
         return jsonify({"status": "Error!, voting does not saved"})
 
+    last_change = datetime.now()
     return jsonify({"status": "Succeeded"})
 
 
