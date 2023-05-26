@@ -25,6 +25,7 @@ class Calculator:
         """
         return db.get_row_count("USERS")
 
+
     @staticmethod
     def get_voter_count_by_gender(db: Abstract_Database) -> list[int]:  # [male,female]
         """
@@ -39,6 +40,7 @@ class Calculator:
         [2,0]
         """
         return db.get_row_count_by_gender("USERS")
+
 
     @staticmethod
     def get_voter_count_by_age(db: Abstract_Database) -> list[int]:
