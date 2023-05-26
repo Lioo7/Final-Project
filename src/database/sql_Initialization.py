@@ -214,42 +214,60 @@ class SQL_init:
 
         return tree
 
+
     def Load_datasets(cursor,db):
         SQL_init.load_information_to_information_table(cursor, db)
         SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+    
+    
+    def create_and_build_DB(cursor,db):
         
+        # Create and build database
+        SQL_init.create_database(cursor, SQL_init.data_base_name)
+        SQL_init.create_table(
+            cursor,
+            "CURRENT_BUDGET",
+            """kod_one INT, name_one VARCHAR(1000),
+                                kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
+                                kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
+                                kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)""",
+        )
+        SQL_init.create_table(
+            cursor,
+            "USERS",
+            """user_id INT PRIMARY KEY, first_name VARCHAR(255),
+                                last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
+                                gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)""",
+        )
+        SQL_init.create_table(
+            cursor, "USERS_VOTES", "user_id VARCHAR(255), vote TEXT(4294967295)"
+        )
+        SQL_init.create_table(
+            cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
+        )
+        
+        SQL_init.create_table(
+            cursor, "LAST_VOTE", "unique_key VARCHAR(255),date DATE"
+        )
+        
+        # Load datasets
+        SQL_init.Load_datasets(cursor,db)
+
+    def connect_server():
+        db = SQL_init.connect_database()
+        cursor = db.cursor()
+        return db ,cursor
+    
     
 if __name__ == "__main__":
+    
     # Connect server
-    db = SQL_init.connect_database()
-    cursor = db.cursor()
-
-    # Create and build database
-    SQL_init.create_database(cursor, SQL_init.data_base_name)
-    SQL_init.create_table(
-        cursor,
-        "CURRENT_BUDGET",
-        """kod_one INT, name_one VARCHAR(1000),
-                            kod_two INT, name_two VARCHAR(1000), kod_three INT, name_three VARCHAR(1000),
-                            kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
-                            kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)""",
-    )
-    SQL_init.create_table(
-        cursor,
-        "USERS",
-        """user_id INT PRIMARY KEY, first_name VARCHAR(255),
-                            last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
-                            gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)""",
-    )
-    SQL_init.create_table(
-        cursor, "USERS_VOTES", "user_id VARCHAR(255), vote TEXT(4294967295)"
-    )
-    SQL_init.create_table(
-        cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
-    )
-
-    # Load datasets
-    SQL_init.Load_datasets(cursor,db)
+    db, cursor = SQL_init.connect_server()
 
     # Clean database
-    #SQL_init.clean_database(cursor)
+    SQL_init.clean_database(cursor)
+    
+    #create & build database
+    SQL_init.create_and_build_DB(cursor,db)
+    
+    
