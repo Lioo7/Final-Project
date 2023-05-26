@@ -48,52 +48,56 @@ current_budget_login_page = None
 
 
 # Last vote
-last_change = None
-last_calculate_time = None
+last_voting_change = None
+last_calculate_results_time = None
 
 def calculte_results():
+    global last_calculate_results_time
+    global algorithms_results
+    
+    last_calculate_results_time = datetime.now() # Occurs once outside the loop for when setting up the system
     
     while True:
-        batch_database.handler.connect()
-        votes = batch_database.handler.load_user_votes()
+        # Check if there is a new votes
+        if last_calculate_results_time < last_voting_change:
+            batch_database.handler.connect()
+            votes = batch_database.handler.load_user_votes()
 
-        if not isinstance(votes, list):
-            return jsonify({"status": "Faild to load from DB"})
+            if not isinstance(votes, list):
+                return jsonify({"status": "Faild to load from DB"})
 
-        voted_dict = unite_votes(votes)
+            voted_dict = unite_votes(votes)
 
-        # Algo 1:
-        median_algorithm_result: dict = median_algorithm(voted_dict)
-        # TODO: remove the comments from lines 50 and 65 and test if the generalized_median_algorithm works
-        # Algo 2:
-        generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+            # Algo 1:
+            median_algorithm_result: dict = median_algorithm(voted_dict)
 
-        # Get current budget
-        global converted_current_budget
-        if converted_current_budget == None:
-            tree = batch_database.handler.build_tree_from_current_budget()
-            current_budget = tree.to_dict()
-            # updates the 'total' values in the budget dictionary
-            calculate_totals(current_budget)
-            count = Counter()
-            update_dict_ids(count, current_budget)
-            converted_current_budget = convert_structure(current_budget)
+            # Algo 2:
+            generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+
+            # Get current budget
+            global converted_current_budget
+            if converted_current_budget == None:
+                tree = batch_database.handler.build_tree_from_current_budget()
+                current_budget = tree.to_dict()
+                # updates the 'total' values in the budget dictionary
+                calculate_totals(current_budget)
+                count = Counter()
+                update_dict_ids(count, current_budget)
+                converted_current_budget = convert_structure(current_budget)
+                
             
-        global last_calculate_time
-        global algorithms_results
-        
-        last_calculate_time = datetime.now()
-        algorithms_results = {
-            "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
-            "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
-            "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
-            "time": last_calculate_time,
-        }
+            last_calculate_results_time = datetime.now()
+            algorithms_results = {
+                "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
+                "generalized_median_algorithm": json.dumps(generalized_median_result, ensure_ascii=False),
+                "current_budget": json.dumps(converted_current_budget, ensure_ascii=False),
+                "time": last_calculate_results_time,
+            }
 
-        time.sleep(10)
+        time.sleep(100)
 
 
-#  ----------------- Login ----------------------
+#  -------------------------------- Login -----------------------------------------------------
 
 
 @app.route("/peoples_budget/login", methods=["POST"])
@@ -138,7 +142,7 @@ def table_tree():
     return jsonify(current_budget_login_page)
 
 
-# ----------------- Sign up ----------------------
+# ------------------------------ Sign up -------------------------------------
 
 
 @app.route("/peoples_budget/sign_up", methods=["POST"])
@@ -194,7 +198,7 @@ def signup():
     return jsonify({"status": "Faild"})
 
 
-# --------------------- Home --------------------------
+# --------------------------------- Home ---------------------------------------------
 
 
 @app.route("/peoples_budget/home", methods=["GET"])
@@ -238,7 +242,7 @@ def home():
     return {"first_name": first_name, "last_name": last_name, "gender": user_gender}
 
 
-# ------------------- Information ---------------------------
+# -------------------------------- Information ---------------------------------------
 
 
 @app.route("/peoples_budget/information", methods=["GET"])
@@ -254,7 +258,7 @@ def information():
     return jsonify(json_information)
 
 
-# ---------------------- Dashborad ----------------------------
+# ---------------------------------- Dashborad --------------------------------------------
 
 
 @app.route("/peoples_budget/dashboard", methods=["GET"])
@@ -268,7 +272,7 @@ def dashboard():
     return jsonify({"voter_count": voter_count, "ages": ages, "genders": genders})
 
 
-# ----------------------- Voting ---------------------------
+# ------------------------------------ Voting -------------------------------------------
 
 
 @app.route("/peoples_budget/voting", methods=["GET"])
@@ -330,7 +334,7 @@ def voting_tree():
     # Check if user already voted
     check_result = database.handler.check_voting_option(user_id=user_id)
 
-    global last_change
+    global last_voting_change
     
     if check_result == "false":
         result = database.handler.update_user_vote(user_id=user_id, vote=vote_str)
@@ -338,7 +342,7 @@ def voting_tree():
             return jsonify({"status": "Error!, voting does not saved"})
 
         else:
-            last_change = datetime.now()
+            last_voting_change = datetime.now()
             return jsonify({"status": "Succeeded"})
 
     elif check_result == "Error!":
@@ -366,11 +370,11 @@ def voting_tree():
         )
         return jsonify({"status": "Error!, voting does not saved"})
 
-    last_change = datetime.now()
+    last_voting_change = datetime.now()
     return jsonify({"status": "Succeeded"})
 
 
-# ----------------------- Results ------------------------------
+# --------------------------------- Results -------------------------------------------
 
 
 @app.route("/peoples_budget/results", methods=["GET"])
