@@ -36,17 +36,21 @@ CORS(app)
 
 # DB
 database = data_handler(SQL_database(SQL_database.create_config()))
+batch_database = data_handler(SQL_database(SQL_database.create_config()))
 
 # Batch calculate results
 algorithms_results = None
 converted_current_budget = None
+
+# Current budget 
 current_budget_voting_page = None
+current_budget_login_page = None
 
 def calculte_results():
-    global database
+    
     while True:
-        database.handler.connect()
-        votes = database.handler.load_user_votes()
+        batch_database.handler.connect()
+        votes = batch_database.handler.load_user_votes()
 
         if not isinstance(votes, list):
             return jsonify({"status": "Faild to load from DB"})
@@ -62,7 +66,7 @@ def calculte_results():
         # Get current budget
         global converted_current_budget
         if converted_current_budget == None:
-            tree = database.handler.build_tree_from_current_budget()
+            tree = batch_database.handler.build_tree_from_current_budget()
             current_budget = tree.to_dict()
             # updates the 'total' values in the budget dictionary
             calculate_totals(current_budget)
@@ -70,7 +74,6 @@ def calculte_results():
             update_dict_ids(count, current_budget)
             converted_current_budget = convert_structure(current_budget)
 
-        # database.handler.disconnect()
         global algorithms_results
         algorithms_results = {
             "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
@@ -104,26 +107,27 @@ def login():
     result = database.handler.check_if_user_exists(id, password)
 
     if result:
-        # database.handler.disconnect()
         return jsonify({"status": "Succeeded"})
 
     else:
-        # database.handler.disconnect()
         return jsonify({"status": "Faild"})
 
 
 @app.route("/peoples_budget/login", methods=["GET"])
 def table_tree():
     database.handler.connect()
-    tree = database.handler.build_tree_from_current_budget()
-    dictionary = tree.to_dict()
+    
+    global current_budget_login_page
+    
+    if current_budget_login_page == None:
+        tree = database.handler.build_tree_from_current_budget()
+        dictionary = tree.to_dict()
 
-    # updates the 'total' values in the budget dictionary
-    calculate_totals(dictionary)
-    json_tree = json.dumps(dictionary, ensure_ascii=False)
-    # database.handler.disconnect()
+        # updates the 'total' values in the budget dictionary
+        calculate_totals(dictionary)
+        current_budget_login_page = json.dumps(dictionary, ensure_ascii=False)
 
-    return jsonify(json_tree)
+    return jsonify(current_budget_login_page)
 
 
 # ----------------- Sign up ----------------------
@@ -164,11 +168,9 @@ def signup():
 
     # check if the structure of the email is valid
     if not valid_email:
-        # database.handler.disconnect()
         return jsonify({"status": "Invalid email - Please insert a valid email"})
 
     if check_mail:
-        # database.handler.disconnect()
         return jsonify(
             {"status": "The email already exists in the system - try another email"}
         )
@@ -369,6 +371,7 @@ def get_algorithms_results():
 mode = "dev"
 
 if __name__ == "__main__":
+        
     batch = Thread(target=calculte_results)
     batch.daemon = True
     batch.start()
