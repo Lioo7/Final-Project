@@ -195,3 +195,6 @@ class my_sqlite_database(Abstract_Database):
 
     def update_user_vote(self, user_id: int, vote):
         pass
+
+    def get_user_gender(self, user_id: int):
+        pass
