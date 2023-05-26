@@ -48,15 +48,13 @@ current_budget_login_page = None
 
 
 # Last vote
-last_voting_change = None
-last_calculate_results_time = None
+last_voting_change =  datetime.now()
+last_calculate_results_time =  datetime.now() 
 
 def calculte_results():
     global last_calculate_results_time
     global algorithms_results
-    
-    last_calculate_results_time = datetime.now() # Occurs once outside the loop for when setting up the system
-    
+        
     while True:
         # Check if there is a new votes
         if last_calculate_results_time < last_voting_change:
