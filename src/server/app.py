@@ -168,9 +168,7 @@ def signup():
         # FEMALE
         gender = 2
 
-    new_user = User(
-        id, first_name, last_name, converted_date, email, password, gender, False
-    )
+    new_user = User(id, first_name, last_name, converted_date, email, password, gender, False)
 
     database.handler.connect()
     valid_email = new_user.is_the_email_valid(email)
