@@ -8,17 +8,8 @@ from gender import Gender
 class User:
     """This class present regested user in the system"""
 
-    def __init__(
-        self,
-        id: int,
-        first_name: str,
-        last_name: str,
-        birth_date: date,
-        mail: str,
-        password: str,
-        gender: int,
-        is_admin: bool,
-    ):
+    def __init__(self,id:int, first_name:str, last_name:str, birth_date:date, mail:str, 
+                password:str, gender:int, is_admin:bool):
         self._id = id
         self._first_name = first_name
         self._last_name = last_name
