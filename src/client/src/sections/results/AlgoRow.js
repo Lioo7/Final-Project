@@ -35,7 +35,7 @@ export default function AlgoRow(props) {
   const diff = budget - newBudget;
 
   function percent(num) {
-    return Math.max(Math.min(((num / 59677041500) * 100).toFixed(1), 100), 0);
+    return Math.max(Math.min(((num / 596770415000) * 100).toFixed(1), 100), 0);
   }
 
   function formatNumber(num) {

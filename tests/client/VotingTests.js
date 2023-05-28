@@ -21,7 +21,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     );
 
     await votingLink.click();
-    await new Promise((resolve) => setTimeout(resolve, 45000));
+    await new Promise((resolve) => setTimeout(resolve, 4500));
 
     // Wait for page to load
     await driver.wait(

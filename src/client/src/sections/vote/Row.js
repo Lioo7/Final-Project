@@ -115,8 +115,7 @@ export default function Row(props) {
             value={Number((Number(row.allocated_budget_amount) / 1000).toFixed(1))}
             defaultValue={Number(budget)}
             InputProps={{
-              inputProps: { min: 0, max: 100000000 },
-
+              inputProps: {min: 0, max: 600000000 },
               endAdornment: <InputAdornment position="end">k</InputAdornment>,
             }}
             onChange={handleChangeText}
