@@ -55,8 +55,5 @@ class Calculator:
         >>> Calculator.get_voter_count_by_age()
         [2, 0, 0, 0, 0, 0]
         """
-        # res = db.execute_query("SELECT * FROM USERS")
-        # for row in res:
-        #     print(row)
 
         return db.get_row_count_by_age("USERS")

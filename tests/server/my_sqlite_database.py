@@ -3,6 +3,7 @@ import sys
 sys.path.append("../..")
 import sqlite3
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 from src.database.abstract_Database import Abstract_Database
 from src.server.calculator import Calculator
@@ -29,14 +30,18 @@ class my_sqlite_database(Abstract_Database):
         self.db = sqlite3.connect("tests.db")
         self.cursor = self.db.cursor()
 
-    def execute_query(self, query: str):
+    def execute_query(self, query:str):
         try:
             self.cursor.execute(query)
-            return self.cursor.fetchall()
+            results = self.cursor.fetchall()
+            self.db.commit()
+            
+            return results
 
         except:
             print(f'The query: "{query} " \n faild  ')
 
+        
     def get_row_count(self, table_name: str) -> int:
         query = f"SELECT COUNT(*) FROM {table_name} WHERE allowed_to_vote=0"
         result = self.execute_query(query)
@@ -63,6 +68,7 @@ class my_sqlite_database(Abstract_Database):
 
         return [male_result[0], female_result[0]]
 
+
     def get_row_count_by_age(self, table_name: str) -> list[int]:
         # get the dates
         eighteen_years_ago = my_sqlite_database.get_date_years_ago(18)
@@ -76,7 +82,7 @@ class my_sqlite_database(Abstract_Database):
         fiftysix_years_ago = my_sqlite_database.get_date_years_ago(56)
         sixtyfive_years_ago = my_sqlite_database.get_date_years_ago(65)
         sixtysix_years_ago = my_sqlite_database.get_date_years_ago(66)
-
+        
         # get the number of users by group age
 
         # 18-25
@@ -84,9 +90,8 @@ class my_sqlite_database(Abstract_Database):
                                     birth_date BETWEEN '{twentyfive_years_ago}' AND '{eighteen_years_ago}'
                                     AND allowed_to_vote = '0' """
         eighteen_twentyfive_years_ago_result = self.execute_query(
-            eighteen_twentyfive_years_ago_query
-        )
-
+            eighteen_twentyfive_years_ago_query)
+        
         # 26-35
         twentysix_thirtyfive_years_ago_query = f"""SELECT COUNT(*) FROM {table_name} WHERE
                                     birth_date BETWEEN '{thirtyfive_years_ago}' AND '{twentysix_years_ago}'
@@ -124,7 +129,7 @@ class my_sqlite_database(Abstract_Database):
                                     birth_date<='{sixtysix_years_ago}'
                                     AND allowed_to_vote = '0' """
         sixtysix_years_ago_result = self.execute_query(sixtysix_years_ago_query)
-
+        
         return [
             eighteen_twentyfive_years_ago_result[0][0],
             twentysix_thirtyfive_years_ago_result[0][0],
@@ -135,7 +140,7 @@ class my_sqlite_database(Abstract_Database):
         ]
 
     @staticmethod
-    def get_date_years_ago(years_ago):
+    def _get_date_years_ago(years_ago):
         """
         Calculates the date that was 'years_ago' years ago from the current date and returns it as a string in the
         format 'yyyy-mm-dd'.
@@ -148,8 +153,14 @@ class my_sqlite_database(Abstract_Database):
         """
         current_date = datetime.now().date()
         date_years_ago = current_date - timedelta(days=365 * years_ago)
-        date_years_ago_str = date_years_ago.strftime("%Y-%m-%d")
-
+        date_years_ago_str = date_years_ago.strftime("%d/%m/%Y")
+        return date_years_ago_str
+    
+    @staticmethod
+    def get_date_years_ago(years_ago):
+        current_date = datetime.now().date()
+        date_years_ago = current_date - relativedelta(years=years_ago)
+        date_years_ago_str = date_years_ago.strftime("%d/%m/%Y")
         return date_years_ago_str
 
     # ------------------------------- Redundant methods ----------------------------------------------
@@ -195,6 +206,6 @@ class my_sqlite_database(Abstract_Database):
 
     def update_user_vote(self, user_id: int, vote):
         pass
-
+    
     def get_user_gender(self, user_id: int):
         pass

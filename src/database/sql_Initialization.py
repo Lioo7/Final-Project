@@ -113,7 +113,7 @@ class SQL_init:
                     row[9],
                     int(row[10]),
                     row[11],
-                    str(row[12]) + "00",
+                    str(row[12]) + "000",
                 ),
             )
         db.commit()
