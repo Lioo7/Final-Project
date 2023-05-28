@@ -21,17 +21,29 @@ export default function Algo(props) {
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow sx={{ fontWeight: 'bold' }}>
-              <TableCell align="center" />
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+              <TableCell align="center" sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)' }} />
+              <TableCell
+                sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)', color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                align="center"
+              >
                 Subject
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+              <TableCell
+                sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)', color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                align="center"
+              >
                 Old Budget
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+              <TableCell
+                sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)', color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                align="center"
+              >
                 New Budget
               </TableCell>
-              <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+              <TableCell
+                sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)', color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                align="center"
+              >
                 Difference
               </TableCell>
             </TableRow>

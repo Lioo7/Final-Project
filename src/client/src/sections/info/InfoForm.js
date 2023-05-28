@@ -3,23 +3,18 @@ import { Grid } from '@mui/material';
 import InfoCards from './InfoCards';
 
 const styleCards = {
-  px: 10,
-  boxShadow: 3,
+  boxShadow: 20,
   textAlign: 'center',
-  marginLeft: 6,
-  marginRight: 2,
-  marginBottom: 6,
-  fontSize: '18px',
+  marginLeft: 14,
+  marginRight: 4,
+  marginTop: 14,
+  fontSize: '15px',
   borderRadius: '50%',
   backgroundColor: '#007bff',
   color: 'black',
-  width: '200px',
-  height: '200px',
+  width: '120px',
+  height: '120px',
   fontFamily: ' system-ui',
-  '&:hover': {
-    color: 'rgb(0,0,205,0.7)',
-    fontSize: '23px',
-  },
 };
 
 export default function InfoForm() {

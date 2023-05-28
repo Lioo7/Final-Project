@@ -317,33 +317,68 @@ export default function VotingForm() {
               <Table stickyHeader aria-label="collapsible table">
                 <TableHead>
                   <TableRow sx={{ fontWeight: 'bold' }}>
-                    <TableCell align="center" />
-                    <TableCell align="center">
+                    <TableCell align="center" sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)' }} />
+                    <TableCell align="center" sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)' }}>
                       <Button
                         id="clearAll"
                         variant="outlined"
                         onClick={clearAll}
                         sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px', flexDirection: 'column' }}
                       >
-                        <Typography variant="subtitle1" sx={{ lineHeight: '1' }}>
+                        <Typography variant="subtitle1" sx={{ color: 'white', lineHeight: '1' }}>
                           Fixed budget
                         </Typography>
-                        <Typography variant="subtitle2" sx={{ fontSize: '10px', fontWeight: 'bold', lineHeight: '1' }}>
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ color: '', fontSize: '10px', fontWeight: 'bold', lineHeight: '2' }}
+                        >
                           (Clear All)
                         </Typography>
                       </Button>
                     </TableCell>
-                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                    <TableCell
+                      sx={{
+                        backgroundColor: 'rgb(33, 150, 243,0.8)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                      }}
+                      align="center"
+                    >
                       Subject
                     </TableCell>
-                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                    <TableCell
+                      sx={{
+                        backgroundColor: 'rgb(33, 150, 243,0.8)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                      }}
+                      align="center"
+                    >
                       Budget
                     </TableCell>
 
-                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                    <TableCell
+                      sx={{
+                        backgroundColor: 'rgb(33, 150, 243,0.8)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                      }}
+                      align="center"
+                    >
                       Vote
                     </TableCell>
-                    <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                    <TableCell
+                      sx={{
+                        backgroundColor: 'rgb(33, 150, 243,0.8)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                      }}
+                      align="center"
+                    >
                       Precent
                     </TableCell>
                   </TableRow>

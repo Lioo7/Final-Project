@@ -25,14 +25,15 @@ export default function ResultsForm() {
       });
       const information = await response.json();
       console.log('information', information);
-
-      setOldBudget(JSON.parse(information.current_budget));
-      setAlgo1(JSON.parse(information.median_algorithm));
-      setAlgo2(JSON.parse(information.generalized_median_algorithm));
-      setLastTime(information.time);
+      // if (information.current_budget !== null) {
+        setOldBudget(JSON.parse(information.current_budget));
+        setAlgo1(JSON.parse(information.median_algorithm));
+        setAlgo2(JSON.parse(information.generalized_median_algorithm));
+        setLastTime(information.time.replace('GMT', ''));
+      // }
     } catch (error) {
       console.error(error);
-      alert(error.message);
+      alert('No results have been received. \nKindly check back later for updates.');
     }
   };
 

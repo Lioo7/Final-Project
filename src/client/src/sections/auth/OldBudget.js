@@ -15,22 +15,56 @@ export default function OldBudget(props) {
   const totalBudget = 59677041500;
   return (
     // <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
-    <Stack sx={{ justifyItems: 'end', display: 'inline-block', alignItems: 'center'}}>
+    <Stack sx={{ justifyItems: 'end', display: 'inline-block', alignItems: 'center' }}>
       {props.tableData.length === 0 ? (
         <LoadingTable />
       ) : (
-        <TableContainer id="table" sx={{ maxHeight: 'auto', maxWidth: '650PX' }} component={Paper}>
+        <TableContainer
+          id="table"
+          sx={{
+            marginLeft: '-140px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            maxHeight: 'auto',
+            width: '700px',
+          }}
+          component={Paper}
+        >
           <Table stickyHeader aria-label="collapsible table">
             <TableHead>
               <TableRow sx={{ fontWeight: 'bold' }}>
-                <TableCell align="center" />
-                <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                <TableCell align="center" sx={{ backgroundColor: 'rgb(33, 150, 243,0.8)' }} />
+                <TableCell
+                  sx={{
+                    color: 'white',
+                    backgroundColor: 'rgb(33, 150, 243,0.8)',
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
+                  align="center"
+                >
                   Subject
                 </TableCell>
-                <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                <TableCell
+                  sx={{
+                    color: 'white',
+                    backgroundColor: 'rgb(33, 150, 243,0.8)',
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
+                  align="center"
+                >
                   Old Budget
                 </TableCell>
-                <TableCell sx={{ color: 'black', fontWeight: 'bold', fontSize: '18px' }} align="center">
+                <TableCell
+                  sx={{
+                    color: 'white',
+                    backgroundColor: 'rgb(33, 150, 243,0.8)',
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
+                  align="center"
+                >
                   Precent
                 </TableCell>
               </TableRow>
@@ -48,7 +82,6 @@ export default function OldBudget(props) {
 }
 
 OldBudget.propTypes = {
-
   tableData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
