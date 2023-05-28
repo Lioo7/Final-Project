@@ -62,14 +62,14 @@ export default function Row(props) {
   }, 250);
 
   const handleChangeText = (event) => {
-    const { value } = event.target*1000 ;
+    const { value } = event.target * 1000;
     if (value > props.maxBudget) {
       event.target.value = props.maxBudget;
     } else if (value < 0 || Number.isNaN(value)) {
       event.target.value = 0;
     }
 
-    event.target.value = parseInt(event.target.value*1000, 10);
+    event.target.value = parseInt(event.target.value * 1000, 10);
     // If delete the value without setting a new one
     if (!event.target.value) {
       event.target.value = 0;
@@ -81,7 +81,6 @@ export default function Row(props) {
     }
   };
 
-  
   return (
     <>
       <TableRow key={row.id} sx={{ backgroundColor: row.checked ? '#F4F6F8' : 'white' }}>
@@ -103,9 +102,6 @@ export default function Row(props) {
             size="small"
             checked={row.checked}
             onClick={() => props.handleCheckBox(props.parent, row.id, !checkBox)}
-            // onChange={() => {
-            //   setOpen(!checkBox ? open : false);
-            // }}
           />
         </TableCell>
         <TableCell align="center" component="th" scope="row">
@@ -114,32 +110,22 @@ export default function Row(props) {
         <TableCell align="center">
           <TextField
             id={`budgetText${row.id}`}
-            // label={'k'}
             type="number"
             variant="outlined"
-            // value={Number(formatBudgetForDisplay(row.allocated_budget_amount))}
-            // value={formatBudgetForDisplay(row.allocated_budget_amount)}
-            value={Number((Number(row.allocated_budget_amount)/1000).toFixed(1))}
+            value={Number((Number(row.allocated_budget_amount) / 1000).toFixed(1))}
             defaultValue={Number(budget)}
             InputProps={{
               inputProps: { min: 0, max: 100000000 },
-              
-              endAdornment: <InputAdornment position="end">k
-          </InputAdornment>,
+
+              endAdornment: <InputAdornment position="end">k</InputAdornment>,
             }}
             onChange={handleChangeText}
-            // onChange={(event) => {
-            //   const { value } = event.target;
-            //   handleChangeText(event);
-            //   event.target.value = formatBudgetForDisplay(parseBudgetFromDisplay(value));
-            // }}
           />
         </TableCell>
         <TableCell align="center">
-          {/* {' '} */}
           <Slider
             id={`slider${row.id}`}
-            value={(Math.round(Number(row.allocated_budget_amount) * 10) / 10)}
+            value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
             onChange={handleChangeSlider}
             valueLabelDisplay="auto"
             aria-label="Default"

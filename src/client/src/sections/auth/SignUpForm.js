@@ -23,6 +23,8 @@ export default function SignUpForm() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const nameRegex = /^[\p{L}]+$/u;
+
   const dob = new Date(birthDate);
   const today = new Date();
   let age = today.getFullYear() - dob.getFullYear();
@@ -32,14 +34,26 @@ export default function SignUpForm() {
     const url = 'http://localhost:5000/peoples_budget/sign_up';
 
     // Validate the input fields
-    if (firstName === '') {
+    if (firstName.length <= 2) {
       setFirstNameError('Invalid First name: Please enter a first name.');
       return;
     }
     setFirstNameError('');
 
-    if (lastName === '') {
+    if (!nameRegex.test(firstName)) {
+      setFirstNameError('Invalid First name: Please enter a valid name without numbers or special characters.');
+      return;
+    }
+    setFirstNameError('');
+
+    if (lastName.length <= 2) {
       setLastNameError('Invalid Last name: Please enter a last name.');
+      return;
+    }
+    setLastNameError('');
+
+    if (!nameRegex.test(lastName)) {
+      setLastNameError('Invalid Last name: Please enter a valid name without numbers or special characters.');
       return;
     }
     setLastNameError('');
@@ -48,6 +62,7 @@ export default function SignUpForm() {
       setIdError('Invalid ID: Please enter a 9 digit number.');
       return;
     }
+    setIdError('');
 
     if (id === '000000000') {
       setIdError('Invalid ID: This ID belongs to guest user.');
@@ -56,13 +71,14 @@ export default function SignUpForm() {
     setIdError('');
 
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-      age-=1;
+      age -= 1;
     }
 
     if (age < 18) {
       setBirthDateError('Invalid Birth Date: You are under 18 - you can not sign up.');
       return;
     }
+    setBirthDateError('');
 
     if (age > 120) {
       setBirthDateError('Invalid Birth Date: You are over 120 years old.');
@@ -80,13 +96,13 @@ export default function SignUpForm() {
       setEmailError('Invalid Email: Please enter a correct email.');
       return;
     }
-    setEmailError('');
+    setEmailError('');  
 
     if (password.length < 5) {
       setPasswordError('Invalid password: Please enter a password with at least 5 characters.');
       return;
     }
-    setPasswordError('');
+    setPasswordError(''); 
 
     try {
       const response = await fetch(url, {

@@ -91,11 +91,14 @@ export default function PopCardSubmit(props) {
           <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
             Confirm Vote Submission
           </DialogTitle>
-          <DialogContent >
+          <DialogContent>
             <DialogContentText>
               Are you sure you want to submit your vote?
-              {/* <br />
-              Please note that you can only vote once. */}
+              {id === '000000000' && (
+                <span style={{ fontSize: '12px', display: 'block', marginTop: '10px' }}>
+                  (Please note that this vote will not be saved since you are in Guest Mode)
+                </span>
+              )}
             </DialogContentText>
           </DialogContent>
 
@@ -115,5 +118,5 @@ export default function PopCardSubmit(props) {
 
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
-  allData: PropTypes.arrayOf(PropTypes.object).isRequired,  
+  allData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

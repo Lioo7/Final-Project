@@ -20,18 +20,34 @@ export default function Childs(props) {
     setTableChilds(props.childrens);
   }, [props.childrens]);
 
+  // const getColor = (index) => {
+  //   const brightness = 0.9 - index * 0.1;
+  //   return `rgba(100, 181, 246, ${brightness})`;
+  // };
+
+  console.log(props.index);
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
       <TableContainer sx={{ maxHeight: '400px', maxWidth: '1000px' }} component={Paper}>
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
-            <TableRow>
-              <TableCell align="center" />
-              <TableCell align="center">Done</TableCell>
-              <TableCell align="center">Subject</TableCell>
-              <TableCell align="center">Budget</TableCell>
-              <TableCell align="center">Vote</TableCell>
-              <TableCell align="center">Precent</TableCell>
+            <TableRow sx={{ color: 'white' }}>
+              <TableCell align="center" sx={{ backgroundColor: 'rgb(33, 150, 243,0.7)' }} />
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Done
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Subject
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Budget
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Vote
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Precent
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

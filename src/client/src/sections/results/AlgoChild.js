@@ -21,16 +21,26 @@ export default function AlgoChild(props) {
         <Table stickyHeader aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" />
-              <TableCell align="center">Subject</TableCell>
-              <TableCell align="center">Old Budget</TableCell>
-              <TableCell align="center">New Budget</TableCell>
-              <TableCell align="center">Difference</TableCell>
+              <TableCell align="center" sx={{ backgroundColor: 'rgb(33, 150, 243,0.7)' }} />
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Subject
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Old Budget
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                New Budget
+              </TableCell>
+              <TableCell align="center" sx={{ color: 'white', backgroundColor: 'rgb(33, 150, 243,0.7)' }}>
+                Difference
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {Object.keys(tableChilds).map((key, index) =>
-              key !== 'total' ? <AlgoRow keys={index} name={key} row={tableChilds[key]} rowAlgo={tableChildsAlgo[key]} /> : null
+              key !== 'total' ? (
+                <AlgoRow keys={index} name={key} row={tableChilds[key]} rowAlgo={tableChildsAlgo[key]} />
+              ) : null
             )}
           </TableBody>
         </Table>
