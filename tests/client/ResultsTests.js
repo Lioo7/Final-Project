@@ -19,13 +19,17 @@ const { Builder, By } = require("selenium-webdriver");
 
     // Click on Algo 1 button
     await driver.findElement(By.id("algo1")).click();
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // await driver.findElement(By.id("iconTree)).click();
-    // await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 3500));
 
     // Verify graph 1 is displayed
     let graph1 = await driver.findElement(By.id("algo1"));
+
+    await driver.findElement(By.id("בטחון וסדר ציבורי")).click();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await driver.findElement(By.id("בטחון")).click();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await driver.findElement(By.id("בטחון וסדר ציבורי")).click();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     if (graph1.isDisplayed()) {
       console.log("------------ Results: Algo1 test passed ------------");
@@ -33,15 +37,22 @@ const { Builder, By } = require("selenium-webdriver");
       console.log("------------ Results: Algo1 test failed ------------");
     }
 
-    // Wait for graph to load
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+    // // Wait for graph to load
+    // await new Promise((resolve) => setTimeout(resolve, 4000));
 
     // Click on Algo 2 button
     await driver.findElement(By.id("algo2")).click();
-
+    await new Promise((resolve) => setTimeout(resolve, 3500));
 
     // Verify graph 2 is displayed
     let graph2 = await driver.findElement(By.id("algo2"));
+
+    await driver.findElement(By.id("בטחון וסדר ציבורי")).click();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await driver.findElement(By.id("בטחון")).click();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await driver.findElement(By.id("בטחון וסדר ציבורי")).click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     if (graph2.isDisplayed()) {
       console.log("------------ Results: Algo2 test passed ------------");
@@ -50,7 +61,7 @@ const { Builder, By } = require("selenium-webdriver");
     }
 
     // Wait for graph to load
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+    await new Promise((resolve) => setTimeout(resolve, 2500));
   } finally {
     await driver.quit();
   }

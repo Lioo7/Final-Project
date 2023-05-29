@@ -33,7 +33,7 @@ export default function ResultsForm() {
       // }
     } catch (error) {
       console.error(error);
-      alert('No results have been received. \nKindly check back later for updates.');
+      alert('No results have been received. \nCheck later for updates.');
     }
   };
 

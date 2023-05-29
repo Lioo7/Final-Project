@@ -53,13 +53,13 @@ export default function AlgoRow(props) {
     }
     return num.toString();
   }
-
   return (
+    console.log('row', props.name),
     <>
       <TableRow key={props.keys}>
         <TableCell align="center">
           <IconButton
-            id={`iconTree${props.name}`}
+            id={props.name}
             aria-label="expand row"
             size="small"
             onClick={() => {
