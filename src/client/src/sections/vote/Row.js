@@ -62,14 +62,14 @@ export default function Row(props) {
   }, 250);
 
   const handleChangeText = (event) => {
-    const { value } = event.target * 1000;
+    const { value } = event.target * 1000000;
     if (value > props.maxBudget) {
       event.target.value = props.maxBudget;
     } else if (value < 0 || Number.isNaN(value)) {
       event.target.value = 0;
     }
 
-    event.target.value = parseInt(event.target.value * 1000, 10);
+    event.target.value = parseInt(event.target.value * 1000000, 10);
     // If delete the value without setting a new one
     if (!event.target.value) {
       event.target.value = 0;
@@ -112,11 +112,11 @@ export default function Row(props) {
             id={`budgetText${row.id}`}
             type="number"
             variant="outlined"
-            value={Number((Number(row.allocated_budget_amount) / 1000).toFixed(1))}
+            value={Number((Number(row.allocated_budget_amount) / 1000000).toFixed(1))}
             defaultValue={Number(budget)}
             InputProps={{
-              inputProps: {min: 0, max: 600000000 },
-              endAdornment: <InputAdornment position="end">k</InputAdornment>,
+              inputProps: {min: 0, max: 6000000 },
+              endAdornment: <InputAdornment position="end">M</InputAdornment>,
             }}
             onChange={handleChangeText}
           />

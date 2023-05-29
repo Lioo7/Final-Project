@@ -51,7 +51,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
       let sliderValue = await sliderValueElement.getAttribute("value");
       sum += parseInt(sliderValue);
     }
-    if (sum > 596770410 || sum <= 596770415) {
+    if (sum > 596770400000 || sum <= 596770415000) {
       console.log("------------ Slider test 1 passed  ------------");
     } else {
       console.log("------------ Slider test 1 failed ------------");
@@ -78,7 +78,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
       let sliderValue = await sliderValueElement.getAttribute("value");
       sum += parseInt(sliderValue);
     }
-    if (sum > 596770410 || sum <= 596770415) {
+    if (sum > 596770400000 || sum <= 596770415000) {
       console.log("------------ Slider test 2 passed  ------------");
     } else {
       console.log("------------ Slider test 2 failed ------------");
@@ -101,7 +101,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
       let sliderValue = await sliderValueElement.getAttribute("value");
       sum += parseInt(sliderValue);
     }
-    if (sum > 596770410 || sum <= 596770415) {
+    if (sum > 596770400000 || sum <= 596770415000) {
       console.log("------------ Slider test 3 passed  ------------");
     } else {
       console.log("------------ Slider test 3 failed ------------");
@@ -133,7 +133,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
       let sliderValue = await sliderValueElement.getAttribute("value");
       sum += parseInt(sliderValue);
     }
-    if (sum > 596770410 || sum <= 596770415) {
+    if (sum > 596770400000 || sum <= 596770415000) {
       console.log("------------ Slider test 4 passed  ------------");
     } else {
       console.log("------------ Slider test 4 failed ------------");
@@ -201,7 +201,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
       let sliderValue = await sliderValueElement.getAttribute("value");
       sum += parseInt(sliderValue);
     }
-    if (sum > 596770410 || sum <= 596770415) {
+    if (sum > 596770400000 || sum <= 596770415000) {
       console.log("------------ Textfield test passed  ------------");
     } else {
       console.log("------------ Textfield test failed ------------");
