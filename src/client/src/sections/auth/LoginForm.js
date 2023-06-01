@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
 import Iconify from '../../components/iconify/Iconify';
 import account from '../../_mock/account';
+import ForgetPass from './ForgetPass';
 
 export default function LoginForm({ setId }) {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ export default function LoginForm({ setId }) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       if (responseData.status !== null) {
         navigate('/peoples_budget/home', { replace: true });
-      } 
+      }
       // if (responseData.status === 'Succeeded') {
       //   navigate('/peoples_budget/home', { replace: true });
       // } else {
@@ -125,11 +126,12 @@ export default function LoginForm({ setId }) {
         </Link>
       </Stack> */}
 
-      <Stack direction="row" alignItems="center" sx={{ my: 1 }}>
+      {/* <Stack direction="row" alignItems="center" sx={{ my: 1 }}>
         <Link variant="subtitle2" underline="always" alignItems="left">
           Forgot Password ?
         </Link>
-      </Stack>
+      </Stack> */}
+      <ForgetPass />
 
       <LoadingButton
         id="loginGuest"
