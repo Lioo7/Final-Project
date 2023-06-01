@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://i.ibb.co/Z8c1yfJ/cover.png" width="600" title="hover text">
+  <img src="https://i.ibb.co/JRgrS6q/cover-auto-x2-colored-toned-light-ai.jpg" width="600" title="hover text">
 </p>
 
 ## Table of Contents
