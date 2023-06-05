@@ -135,7 +135,7 @@ export default function LoginForm({ setId }) {
 
       <LoadingButton
         id="loginGuest"
-        sx={{ '&:hover': { border: 'solid 2 black' } }}
+        sx={{ '&:hover': { border: 'solid 2 black' }}}
         size="large"
         fullWidth
         type="submit"

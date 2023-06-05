@@ -96,13 +96,13 @@ export default function SignUpForm() {
       setEmailError('Invalid Email: Please enter a correct email.');
       return;
     }
-    setEmailError('');  
+    setEmailError('');
 
     if (password.length < 5) {
       setPasswordError('Invalid password: Please enter a password with at least 5 characters.');
       return;
     }
-    setPasswordError(''); 
+    setPasswordError('');
 
     try {
       const response = await fetch(url, {
