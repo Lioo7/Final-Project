@@ -251,3 +251,12 @@ class User:
             return True
         else:
             return False
+    
+    @staticmethod
+    def guest_user(id:int) -> bool:
+        guest_id = "000000000"
+        
+        if id == guest_id:
+            return True
+        
+        return False    

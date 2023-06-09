@@ -15,6 +15,7 @@ from algorithms import (
     unite_votes,
     update_dict_ids,
 )
+from component_facade import component_facade
 from calculator import Calculator
 from counter import Counter
 from flask import Flask, jsonify, request
@@ -111,8 +112,9 @@ def login():
     database.handler.connect()
 
     # Guest user
-    if id == "000000000":
+    if component_facade.is_guest_user(id):
         return jsonify({"status": "Succeeded"})
+        
 
     result = database.handler.check_if_user_exists(id, password)
 
