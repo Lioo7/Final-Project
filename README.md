@@ -129,10 +129,11 @@ To configure the required environment variables, follow the instructions below f
 
 After defining the environment variables using the instructions above, continue with the installation steps:
 5. Run the MySQL database using Docker Compose by navigating to the database directory and running the command: `docker-compose up -d`.
-6. Start the server by navigating to the server directory and running the command: `python app.py`.
-7. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-8. Open the client-side application in your web browser.
-9. You're ready to actively participate in the budget voting process!
+6. To initialize the database, run the command: `python sql_Initialization.py`.
+7. Start the server by navigating to the server directory and running the command: `python app.py`.
+8. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+9. Open the client-side application in your web browser.
+10. You're ready to actively participate in the budget voting process!
 
 ## Testing
 
