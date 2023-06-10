@@ -30,7 +30,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
      - [Environment Variable Configuration](#environment-variable-configuration)
-        - [Windows](#windoes)
+        - [Windows](#Windows)
         - [macOS](#macOS)
 - [Testing](#testing)
 - [User Guide](#user-guide)
