@@ -29,6 +29,9 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+     - [Environment Variable Configuration](#environment-variable-configuration)
+        - [Windows](windoes)
+        - [macOS](macOS)
 - [Testing](#testing)
 - [User Guide](#user-guide)
   - [Getting Started](#getting-started)
@@ -82,7 +85,7 @@ User experience and user interface design are essential aspects of our project. 
 
 To run the People's Budget web application, you need to have the following installed on your system:
 
-- Docker 
+- Docker (23.0.5)
 - Python (3.11.0)
 - Node.js (18.13.0)
 
@@ -94,6 +97,37 @@ To set up the People's Budget web application locally, follow these steps:
 2. Navigate to the project directory: `cd peoples-budget`
 3. Install the required Python dependencies: `pip install -r requirements.txt`
 4. Set up the necessary environment variables.
+
+#### Environment Variable Configuration
+
+To configure the required environment variables, follow the instructions below for your operating system:
+
+##### Windows
+
+1. Open the Start menu and search for "Environment Variables" or "Edit the system environment variables" and select the corresponding option.
+2. In the System Properties window, click on the "Environment Variables" button.
+3. In the "User variables" section, click on the "New" button.
+4. Enter the variable name, such as: `user_budget_system`, `system_budget_password`, and `MYSQL_ROOT_PASSWORD`.
+5. Enter the corresponding values for each variable. For example, you can set `user_budget_system` to the desired username for the budget system, `system_budget_password` to the password for the budget system user, and `MYSQL_ROOT_PASSWORD` to the desired password for the MySQL root user.
+6. Click "OK" to save the environment variable.
+
+##### macOS
+
+1. Open a terminal window.
+2. Run the following command to open the user's profile file in a text editor (such as nano):
+   nano ~/.bash_profile
+3. In the text editor, add the following lines for each environment variable:
+   export user_budget_system="your_username"
+   export system_budget_password="your_password"
+   export MYSQL_ROOT_PASSWORD="your_root_password"
+
+   Replace "your_username", "your_password", and "your_root_password" with the actual values you want to set.
+4. Press Ctrl + X to exit the text editor, and when prompted to save the changes, press Y followed by Enter.
+5. Back in the terminal, run the following command to apply the changes:
+   source ~/.bash_profile
+   This will reload the profile file and make the environment variables available.
+
+After defining the environment variables using the instructions above, continue with the installation steps:
 5. Run the MySQL database using Docker Compose by navigating to the database directory and running the command: `docker-compose up -d`.
 6. Start the server by navigating to the server directory and running the command: `python app.py`.
 7. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
@@ -111,7 +145,6 @@ To execute the tests, follow these steps:
    
 2. **Server Tests**: Navigate to the `test/server` directory and run the command to execute the server-side tests:
    `pytest`
-   
    
 ## User Guide
 
