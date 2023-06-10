@@ -117,9 +117,9 @@ To configure the required environment variables, follow the instructions below f
 2. Run the following command to open the user's profile file in a text editor (such as nano):
    nano ~/.bash_profile
 3. In the text editor, add the following lines for each environment variable:
-   export user_budget_system="your_username"
-   export system_budget_password="your_password"
-   export MYSQL_ROOT_PASSWORD="your_root_password"
+   <br>export user_budget_system="your_username"
+   <br>export system_budget_password="your_password"
+   <br>export MYSQL_ROOT_PASSWORD="your_root_password"
 
    Replace "your_username", "your_password", and "your_root_password" with the actual values you want to set.
 4. Press Ctrl + X to exit the text editor, and when prompted to save the changes, press Y followed by Enter.
