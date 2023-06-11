@@ -7,8 +7,7 @@ export default function InfoPage() {
       <Helmet>
         <title> Information </title>
       </Helmet>
-
-      <InfoForm/>
+      <InfoForm />
     </>
   );
 }

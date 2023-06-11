@@ -6,7 +6,6 @@ export default function VotingPage() {
     <>
       <Helmet>
         <title> Voting </title>
-
       </Helmet>
       <VotingForm />
     </>

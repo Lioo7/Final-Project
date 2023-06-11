@@ -8,25 +8,7 @@ import useResponsive from '../hooks/useResponsive';
 import LoginForm from '../sections/auth/LoginForm';
 import OldBudget from '../sections/auth/OldBudget';
 
-const StyledRoot = styled('div')(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    display: 'flex',
-  },
-}));
-
-const StyledSection = styled('div')(({ theme }) => ({
-  width: '100%',
-  height: '100vh',
-  maxWidth: 480,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  boxShadow: theme.customShadows.card,
-  backgroundColor: theme.palette.background.default,
-  position: 'fixed',
-
-}));
-
+// Styled components for custom styling
 const StyledContent = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
@@ -36,7 +18,7 @@ const StyledContent = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   padding: theme.spacing(6, 0),
   objectFit: 'cover',
-  position: 'relative', 
+  position: 'relative',
   zIndex: 1, // Set a higher z-index value to make it appear above the background
 }));
 
@@ -53,6 +35,7 @@ export default function LoginPage({ setId }) {
   const [isClicked, setIsClicked] = useState(false);
   const url = 'http://localhost:5000/peoples_budget/login';
 
+  // Fetching data of the old budget table
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,6 +53,7 @@ export default function LoginPage({ setId }) {
     fetchData();
   }, []);
 
+  // Event handlers
   const handleClick = () => {
     navigate('/peoples_budget/sign_up', { replace: true });
   };
@@ -84,9 +68,7 @@ export default function LoginPage({ setId }) {
         <title> Login </title>
       </Helmet>
 
-      <StyledRoot>
         {mdUp && (
-          <StyledSection>
             <StyledImageContainer>
               <Typography variant="h3" sx={{ px: 0, mt: 0, mb: -5 }}>
                 <img
@@ -97,11 +79,9 @@ export default function LoginPage({ setId }) {
               </Typography>
               <img src={`${process.env.PUBLIC_URL}/img_bg/login.png`} alt="login" />
             </StyledImageContainer>
-          </StyledSection>
         )}
-
-        <Container maxWidth="sm" style={{ marginRight: '100px' }}
->
+        
+        <Container maxWidth="sm" style={{ marginRight: '100px' }}>
           <StyledContent>
             <Typography variant="h4" gutterBottom sx={{ display: 'flex', justifyContent: 'center' }}>
               Login to People's Budget
@@ -127,10 +107,9 @@ export default function LoginPage({ setId }) {
                 color: 'black',
                 margin: '0 auto',
                 width: '200px',
-                marginTop: '43px',  
+                marginTop: '43px',
                 marginBottom: '30px',
                 border: '2mm double rgb(51, 102, 255, 0.65)',
-                // border: '3mm ridge rgb(51, 102, 255)',
               }}
             >
               State Budget - 2022
@@ -138,7 +117,6 @@ export default function LoginPage({ setId }) {
             {isClicked && <OldBudget tableData={tableData} />}
           </StyledContent>
         </Container>
-      </StyledRoot>
     </>
   );
 }
