@@ -13,6 +13,7 @@ import SignUPage from './pages/SignUPage';
 
 
 export default function Router({setId}) {
+  // Define the routes using the useRoutes hook from react-router-dom
   const routes = useRoutes([
     {
       path: '/peoples_budget',
@@ -27,11 +28,12 @@ export default function Router({setId}) {
       ],
     },
     {
+      path: '/peoples_budget',
       element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/peoples_budget/login" />, index: true },
-        {path: '/peoples_budget/login', element: <LoginPage setId={setId} />},
-        {path: '/peoples_budget/sign_up', element: <SignUPage />}
+        {path: 'login', element: <LoginPage setId={setId} />},
+        {path: 'sign_up', element: <SignUPage />}
       ],
     },
   ]);

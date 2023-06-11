@@ -2,15 +2,15 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
-//
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
-// ----------------------------------------------------------------------
-
+// Create a root element using ReactDOM.
+// createRoot() and find the HTML element with the id 'root' to mount the application
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+// Render the application inside the root element
 root.render(
   <HelmetProvider>
     <BrowserRouter>

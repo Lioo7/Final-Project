@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import { Typography, Box, CardContent, Card } from '@mui/material';
-// import HomeForm from '../sections/home/HomeForm';
 
 export default function HomePage() {
+  // Card design
   const contentStyles = {
     position: 'absolute',
-    right: '2%', // Adjust the value as per your preference
+    right: '2%',
     zIndex: 1,
     marginBottom: '20px',
   };
 
   return (
-    <Box >
+    <Box>
       <Helmet>
         <title> Home </title>
       </Helmet>
@@ -31,7 +31,7 @@ export default function HomePage() {
         </Typography>
       </Box>
 
-      <Box sx={{ minWidth: '860px',width: '75%', mt: '20px'}} style={contentStyles}>
+      <Box sx={{ minWidth: '860px', width: '75%', mt: '20px' }} style={contentStyles}>
         <Card
           sx={{
             backgroundColor: 'rgb(0, 150, 200, 0.99)',
@@ -42,13 +42,12 @@ export default function HomePage() {
             borderRadius: '40px',
           }}
         >
-          <CardContent >
+          <CardContent>
             <img
               src={`${process.env.PUBLIC_URL}/welcome.png`}
               alt="Logo"
               style={{
                 width: '220px',
-                // height: 'auto',
                 float: 'right',
                 marginRight: '23px',
                 zIndex: -1,
@@ -95,7 +94,6 @@ export default function HomePage() {
               alt="Logo"
               style={{
                 width: '150px',
-                // height: 'auto',
                 float: 'right',
                 marginTop: '10px',
                 marginRight: '35px',
@@ -143,7 +141,6 @@ export default function HomePage() {
               alt="Logo"
               style={{
                 width: '230px',
-                // height: 'auto',
                 float: 'right',
                 marginTop: '30px',
                 marginRight: '-10px',

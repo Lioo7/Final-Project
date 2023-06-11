@@ -7,7 +7,6 @@ export default function DashboardPage() {
       <Helmet>
         <title> Dashboard </title>
       </Helmet>
-
       <DashForm/>
     </>
   );
