@@ -6,6 +6,7 @@ import LoadingVote from './LoadingVote';
 
 export default function ResultsForm() {
   const [loading, setLoading] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(true);
   const [displayGraph1, setDisplayGraph1] = useState(false);
   const [displayGraph2, setDisplayGraph2] = useState(false);
   const [clicked1, setClicked1] = useState(false);
@@ -24,13 +25,10 @@ export default function ResultsForm() {
         headers: { 'Content-Type': 'application/json' },
       });
       const information = await response.json();
-      console.log('information', information);
-      // if (information.current_budget !== null) {
-        setOldBudget(JSON.parse(information.current_budget));
-        setAlgo1(JSON.parse(information.median_algorithm));
-        setAlgo2(JSON.parse(information.generalized_median_algorithm));
-        setLastTime(information.time.replace('GMT', ''));
-      // }
+      setOldBudget(JSON.parse(information.current_budget));
+      setAlgo1(JSON.parse(information.median_algorithm));
+      setAlgo2(JSON.parse(information.generalized_median_algorithm));
+      setLastTime(information.time.replace('GMT', ''));
     } catch (error) {
       console.error(error);
       alert('No results have been received. \nCheck later for updates.');
@@ -41,6 +39,16 @@ export default function ResultsForm() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingPage(false);
+    }, 4300);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+  
   const handleButtonClick = (number) => {
     if (!loading) {
       setDisplayGraph1(false);
@@ -56,7 +64,7 @@ export default function ResultsForm() {
     }
   };
 
-  return Object.keys(oldBudget).length === 0 ? (
+  return loadingPage ? (
     <LoadingVote />
   ) : (
     <div>

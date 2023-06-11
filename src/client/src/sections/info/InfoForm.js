@@ -39,10 +39,17 @@ export default function InfoForm() {
   }, []);
 
   return (
-    <Grid container>
+    // <Grid container>
+    //   {Object.keys(table).map((key, index) => (
+    //     // eslint-disable-next-line react/jsx-key
+    //     <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
+    //   ))}
+    // </Grid>
+    <Grid container spacing={3} >
       {Object.keys(table).map((key, index) => (
-        // eslint-disable-next-line react/jsx-key
-        <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
+        <Grid item xs={6} sm={6} md={3} key={index}>
+          <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
+        </Grid>
       ))}
     </Grid>
   );

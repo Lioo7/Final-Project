@@ -20,32 +20,12 @@ const style = {
   overflowY: 'auto',
 };
 
-// const colorText = [
-//   '#2196f3',
-//   '#1e88e5',
-//   '#1976d2',
-//   '#0d47a1',
-//   '#64b5f6',
-//   '#42a5f5',
-//   '#0288d1',
-//   '#01579b',
-//   '#0a58ca',
-//   '#82b1ff',
-//   '#4fc3f7',
-// ];
 const colorBg = [
   'rgb(100, 181, 246, 0.15)',
   'rgb(100, 181, 246, 0.35)',
   'rgb(100, 181, 246, 0.55)',
   'rgb(100, 181, 246, 0.75)',
-  // 'rgb(100, 181, 246, 0.18)',
-  // 'rgb(100, 181, 246, 0.24)',
-  // 'rgb(100, 181, 246, 0.3)',
-  // 'rgb(100, 181, 246, 0.36)',
-
 ];
-// const colors = ['rgb(255,255,255,0.4)', 'rgb(255,255,255,0.6)', 'rgb(255,255,255,0.8)', 'rgb(255,255,255,1)'];
-// const colors = ['rgb(255,0,0,0.1)', 'rgb(255,255,0,0.1)', 'rgb(0,0,255,0.1)', 'rgb(0,255,255,0.1)'];
 
 export default function InfoCards(props) {
   const [open, setOpen] = React.useState(false);
@@ -53,7 +33,7 @@ export default function InfoCards(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Grid container spacing={3} sx={{ display: 'flex',  }}>
+      <Grid container spacing={3} >
         <Button
           id={props.index}
           item
@@ -62,8 +42,7 @@ export default function InfoCards(props) {
           md={3}
           sx={{
             ...props.styleCards,
-            // color: colorText[props.index % colors.length],
-            marginTop: props.index < 4 ? 0 : 11,
+            marginTop: { xs: 2, sm: 2 },
             backgroundColor: colorBg[props.index % 4],
           }}
           onClick={handleOpen}
@@ -101,7 +80,6 @@ export default function InfoCards(props) {
             type="button"
             id={`close-button${props.index}`}
             onClick={handleClose}
-            // style={{ position: 'absolute', top: '10px', right: '10px' }}
             style={{
               position: 'absolute',
               top: '10px',
