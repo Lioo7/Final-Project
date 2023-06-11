@@ -11,7 +11,7 @@ export default function HomePage() {
   };
 
   return (
-    <>
+    <Box >
       <Helmet>
         <title> Home </title>
       </Helmet>
@@ -31,7 +31,7 @@ export default function HomePage() {
         </Typography>
       </Box>
 
-      <Box sx={{ width: '75%', mt: '20px', mb: '100px' }} style={contentStyles}>
+      <Box sx={{ minWidth: '860px',width: '75%', mt: '20px'}} style={contentStyles}>
         <Card
           sx={{
             backgroundColor: 'rgb(0, 150, 200, 0.99)',
@@ -42,13 +42,13 @@ export default function HomePage() {
             borderRadius: '40px',
           }}
         >
-          <CardContent>
+          <CardContent >
             <img
               src={`${process.env.PUBLIC_URL}/welcome.png`}
               alt="Logo"
               style={{
                 width: '220px',
-                height: 'auto',
+                // height: 'auto',
                 float: 'right',
                 marginRight: '23px',
                 zIndex: -1,
@@ -95,7 +95,7 @@ export default function HomePage() {
               alt="Logo"
               style={{
                 width: '150px',
-                height: 'auto',
+                // height: 'auto',
                 float: 'right',
                 marginTop: '10px',
                 marginRight: '35px',
@@ -171,6 +171,6 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </Box>
-    </>
+    </Box>
   );
 }

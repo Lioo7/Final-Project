@@ -313,7 +313,7 @@ export default function VotingForm() {
       ) : (
         <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
           {display && (
-            <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
+            <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px'}} component={Paper}>
               <Table stickyHeader aria-label="collapsible table">
                 <TableHead>
                   <TableRow sx={{ fontWeight: 'bold' }}>
