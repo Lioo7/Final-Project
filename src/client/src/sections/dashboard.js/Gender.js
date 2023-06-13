@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 
 export default function Gender(props) {
   const [chartData, setChartData] = useState({
-    // series: [5 ,10 ],
     series: props.gender,
     options: {
       chart: {
@@ -45,3 +45,8 @@ export default function Gender(props) {
     </>
   );
 }
+
+Gender.propTypes = {  
+  gender: PropTypes.array,
+  width: PropTypes.number,
+};

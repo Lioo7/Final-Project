@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
@@ -119,23 +119,11 @@ export default function LoginForm({ setId }) {
         />
       </Stack>
 
-      {/* <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
-        <Checkbox name="remember" label="Remember me" />
-        <Link variant="subtitle2" underline="none" color="black" alignItems="left">
-          Remember me
-        </Link>
-      </Stack> */}
-
-      {/* <Stack direction="row" alignItems="center" sx={{ my: 1 }}>
-        <Link variant="subtitle2" underline="always" alignItems="left">
-          Forgot Password ?
-        </Link>
-      </Stack> */}
       <ForgetPass />
 
       <LoadingButton
         id="loginGuest"
-        sx={{ '&:hover': { border: 'solid 2 black' }}}
+        sx={{ '&:hover': { border: 'solid 2 black' } }}
         size="large"
         fullWidth
         type="submit"

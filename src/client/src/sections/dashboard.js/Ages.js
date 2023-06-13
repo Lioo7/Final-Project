@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 
 export default function Ages(props) {
@@ -6,8 +7,7 @@ export default function Ages(props) {
   const newColors = [...originalColors, '#00BCD4'];
 
   const [chartData, setChartData] = useState({
-    // series: [5 ,13 ,15 ,18 , 24, 25],
-    series: props.ages ,
+    series: props.ages,
     options: {
       chart: {
         width: props.width,
@@ -30,17 +30,27 @@ export default function Ages(props) {
       ],
     },
   });
-  
+
   useEffect(() => {
-    setChartData(prevChartData => ({
+    setChartData((prevChartData) => ({
       ...prevChartData,
-      series: props.ages, 
+      series: props.ages,
     }));
   }, [props.ages]);
 
   return (
     <>
-      <Chart options={chartData.options} series={chartData.series ? chartData.series : [1 ,1 ,1 ,1 , 1, 1]} type="pie" width={props.width} />
+      <Chart
+        options={chartData.options}
+        series={chartData.series ? chartData.series : [1, 1, 1, 1, 1, 1]}
+        type="pie"
+        width={props.width}
+      />
     </>
   );
 }
+
+Ages.propTypes = {  
+  ages: PropTypes.array,
+  width: PropTypes.number,
+};

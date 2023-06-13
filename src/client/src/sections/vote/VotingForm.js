@@ -15,18 +15,17 @@ import Row from './Row';
 import UserContext from '../../contexts/UserContext';
 import PopCardSubmit from './PopCardSubmit';
 import LoadingTable from './LoadingTable';
-// import ThankYou from './ThankYou';
 
 export default function VotingForm() {
   const [tableData, setTableData] = useState([]);
   const [allData, setAllData] = useState({});
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
-  // const [isVoted, setIsVoted] = useState(false);
   const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
   const maxBudget = 596770415000;
   const url = `http://localhost:5000/peoples_budget/voting?user_id=${id}`;
 
+  // Receiving the budget table from the server
   const fetchData = async () => {
     try {
       const response = await fetch(url, {
@@ -44,9 +43,9 @@ export default function VotingForm() {
 
   useEffect(() => {
     fetchData(); // fetch data asynchronously
-    // eslint-disable-next-line
   }, []);
 
+  // Finding a path from the root to a specific node
   const findPathById = (idToFind, data, path = []) => {
     for (let i = 0; i < data.length; i += 1) {
       if (data[i].id === idToFind) {
@@ -62,11 +61,13 @@ export default function VotingForm() {
     return null;
   };
 
+  // Clears all clicks on the checkboxes
   const clearAll = () => {
     const tableClear = clear(tableData);
     setTableData(tableClear);
   };
 
+  // Helper function that clears all clicks on the checkboxes
   const clear = (data) => {
     const clearData = data.map((row) => {
       if (row.children.length > 0) {
@@ -77,6 +78,7 @@ export default function VotingForm() {
     return clearData;
   };
 
+  // A function that calculates the total budget for all the rows that are not checked
   const TotalBudget = (data) => {
     const newTotalBudget = data.reduce((total, item) => {
       if (item.checked) {
@@ -92,6 +94,7 @@ export default function VotingForm() {
     TotalBudget(tableData);
   }, [tableData]);
 
+  // A function that changes the status of the checkbox from the root to the same node
   const handleCheckBox = (data, id, status) => {
     const updatedTable = data.map((row) => {
       if (row.id === id) {
@@ -130,6 +133,7 @@ export default function VotingForm() {
     return { ...data, checked: true, children: newData };
   };
 
+  // Makes the status of the children to be the same as the parent's in the checkbox
   const helperHandleCheck = (table, status) =>
     table.map((row) =>
       row.children.length > 0
@@ -150,6 +154,7 @@ export default function VotingForm() {
     return { ...data, children: newData };
   };
 
+  // Updates the budget of the Kid's and siblings of the node that was clicked
   const handleVote = (data, id, value, diff) => {
     // Update siblings/childs1 budget
     const maxBudget = TotalBudget(data);
@@ -240,6 +245,7 @@ export default function VotingForm() {
     }
   };
 
+  // An helper function that updates the children's budget
   const handleChildBudget = (data, id, value) => {
     const updatedTableData = data.map((row) => {
       if (row.children.length === 0) {
@@ -253,16 +259,15 @@ export default function VotingForm() {
     return updatedTableData;
   };
 
+  // An helper function that updates the siblings budget
   const updateBudget = (data, id, value, diff, currMaxBudget, isChilds) => {
     let updatedTableData = data.slice(); // create a copy of tableData
     let countRows = isChilds ? data.length : data.length - 1; // count of rows to update
-    // const rowsIds = data.map((row) => row.id); // array of row IDs
 
     const downRows = data.filter((row) => row.checked);
     countRows -= downRows.length;
     const checkedRows = data.filter((row) => !row.checked);
     const rowsIds = checkedRows.map((row) => row.id);
-    // const checkedRows = rowsIds-downRows;
     let times = 1; // limit the while loop (not to stuck in inifinte loop)
 
     while (diff !== 0 && times < 20 && countRows > 0) {
@@ -313,7 +318,7 @@ export default function VotingForm() {
       ) : (
         <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>
           {display && (
-            <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px'}} component={Paper}>
+            <TableContainer sx={{ maxHeight: '1000px', maxWidth: '1000px' }} component={Paper}>
               <Table stickyHeader aria-label="collapsible table">
                 <TableHead>
                   <TableRow sx={{ fontWeight: 'bold' }}>

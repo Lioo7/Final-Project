@@ -39,6 +39,7 @@ export default function ResultsForm() {
     fetchData();
   }, []);
 
+  // Loading the page for 4 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingPage(false);
@@ -48,7 +49,8 @@ export default function ResultsForm() {
       clearTimeout(timer);
     };
   }, []);
-  
+
+  // Ensures that only one table is displayed at a time
   const handleButtonClick = (number) => {
     if (!loading) {
       setDisplayGraph1(false);
@@ -133,6 +135,7 @@ export default function ResultsForm() {
           {lastTime}
         </Typography>
       )}
+
       {loading && <Loading />}
       {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1} />}
       {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo2} />}

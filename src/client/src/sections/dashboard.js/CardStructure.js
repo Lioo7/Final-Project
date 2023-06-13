@@ -4,7 +4,6 @@ import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // components
 import Iconify from '../../components/iconify/Iconify';
-// ----------------------------------------------------------------------
 
 const StyledIcon = styled('div')(({ theme }) => ({
   margin: 'auto',
@@ -17,7 +16,6 @@ const StyledIcon = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(3),
 }));
 
-// ----------------------------------------------------------------------
 
 CardStructure.propTypes = {
   color: PropTypes.string,

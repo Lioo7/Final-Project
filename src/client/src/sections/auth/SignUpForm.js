@@ -23,6 +23,7 @@ export default function SignUpForm() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  // Makes sure there are only words in the name
   const nameRegex = /^[\p{L}]+$/u;
 
   const dob = new Date(birthDate);
@@ -112,8 +113,6 @@ export default function SignUpForm() {
       });
 
       const responseData = await response.json();
-      console.log('responseData:', responseData);
-      console.log('responseData.status', responseData.status);
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/login', { replace: true });
       } else if (responseData.status === 'The email already exists in the system - try another email') {

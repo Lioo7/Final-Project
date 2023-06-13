@@ -4,18 +4,20 @@ import ReactApexChart from 'react-apexcharts';
 const Cities = () => {
   const [options, _setOptions] = useState({
     annotations: {
-      points: [{
-        x: '',
-        seriesIndex: 0,
-        label: {
-          borderColor: '#775DD0',
-          offsetY: 0,
-          style: {
-            color: '#fff',
-            background: '#775DD0',
+      points: [
+        {
+          x: '',
+          seriesIndex: 0,
+          label: {
+            borderColor: '#775DD0',
+            offsetY: 0,
+            style: {
+              color: '#fff',
+              background: '#775DD0',
+            },
           },
-        }
-      }]
+        },
+      ],
     },
     chart: {
       height: 350,
@@ -25,53 +27,63 @@ const Cities = () => {
       bar: {
         borderRadius: 10,
         columnWidth: '50%',
-      }
+      },
     },
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     stroke: {
-      width: 2
+      width: 2,
     },
-    
+
     grid: {
       row: {
-        colors: ['#fff', '#f2f2f2']
-      }
+        colors: ['#fff', '#f2f2f2'],
+      },
     },
     xaxis: {
       labels: {
-        rotate: -45
+        rotate: -45,
       },
-      categories: ['חולון', 'אשדוד', 'בני-ברק', 'אילת', 'באר-שבע', 'ירושלים',
-        'תל-אביב', 'חיפה', 'ראשון-לציון', 'פתח תקוה', 'אשקלון', 'בית-שמש', 'נתניה'
+      categories: [
+        'חולון',
+        'אשדוד',
+        'בני-ברק',
+        'אילת',
+        'באר-שבע',
+        'ירושלים',
+        'תל-אביב',
+        'חיפה',
+        'ראשון-לציון',
+        'פתח תקוה',
+        'אשקלון',
+        'בית-שמש',
+        'נתניה',
       ],
-      tickPlacement: 'on'
+      tickPlacement: 'on',
     },
-    // yaxis: {
-    //   title: {
-    //     text: 'Servings',
-    //   },
-    // },
+
     fill: {
       type: 'gradient',
       gradient: {
         shade: 'light',
-        type: "horizontal",
+        type: 'horizontal',
         shadeIntensity: 0.25,
         gradientToColors: undefined,
         inverseColors: true,
         opacityFrom: 0.85,
         opacityTo: 0.85,
-        stops: [50, 0, 100]
+        stops: [50, 0, 100],
       },
-    }
+    },
   });
 
-  const [series, _setSeries] = useState([{
-    name: 'Amount',
-    data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35]
-  }]);
+  const [series, _setSeries] = useState([
+    {
+      name: 'Amount',
+      data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35],
+    },
+  ]);
 
   return (
     <div id="chart">

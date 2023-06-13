@@ -56,11 +56,7 @@ const PreviousBudget = () => {
       ],
       tickPlacement: 'on',
     },
-    // yaxis: {
-    //   title: {
-    //     text: 'Billion',
-    //   },
-    // },
+
     fill: {
       type: 'gradient',
       gradient: {
@@ -72,11 +68,9 @@ const PreviousBudget = () => {
         opacityFrom: 0.85,
         opacityTo: 0.85,
         stops: [50, 0, 100],
-        
       },
     },
   });
-  
 
   const [series] = useState([
     {
@@ -87,7 +81,7 @@ const PreviousBudget = () => {
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="bar" height={350} style={{textAlign: 'center'}} />
+      <ReactApexChart options={options} series={series} type="bar" height={350} style={{ textAlign: 'center' }} />
     </div>
   );
 };
