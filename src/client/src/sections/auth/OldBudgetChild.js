@@ -13,7 +13,7 @@ import OldBudgetRow from './OldBudgetRow';
 
 export default function OldBudgetChild(props) {
   const [tableChilds] = useState(props.childrens);
-  // const totalBudget = tableChilds.reduce((total, item) => total + Number(item.allocated_budget_amount), 0);
+
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
       <TableContainer sx={{ maxHeight: '400px', maxWidth: '1000px' }} component={Paper}>
@@ -45,4 +45,5 @@ export default function OldBudgetChild(props) {
 
 OldBudgetChild.propTypes = {
   childrens: PropTypes.arrayOf(PropTypes.object).isRequired,
+  totalBudget: PropTypes.number.isRequired,
 };

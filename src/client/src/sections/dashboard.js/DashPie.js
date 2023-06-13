@@ -31,6 +31,4 @@ export default function DashPie() {
       <Chart options={chartData.options} series={chartData.series} type="pie" width={380} />
     </>
   );
-};
-
-// export default DashPie;
+}

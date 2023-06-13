@@ -31,4 +31,5 @@ export default function Cards(props) {
     </div>
   );
 }
+
 Cards.propTypes = { voters: PropTypes.number };

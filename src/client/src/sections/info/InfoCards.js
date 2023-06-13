@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+// The design of the information card modal
 const style = {
   position: 'absolute',
   top: '50%',
@@ -20,6 +21,7 @@ const style = {
   overflowY: 'auto',
 };
 
+// The background color of the buttons
 const colorBg = [
   'rgb(100, 181, 246, 0.15)',
   'rgb(100, 181, 246, 0.35)',
@@ -33,7 +35,7 @@ export default function InfoCards(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Grid container spacing={3} >
+      <Grid container spacing={3}>
         <Button
           id={props.index}
           item

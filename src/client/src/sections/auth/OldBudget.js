@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,7 +13,6 @@ import LoadingTable from './LoadingTable';
 export default function OldBudget(props) {
   const totalBudget = 596770415000;
   return (
-    // <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
     <Stack sx={{ justifyItems: 'end', display: 'inline-block', alignItems: 'center' }}>
       {props.tableData.length === 0 ? (
         <LoadingTable />

@@ -13,7 +13,6 @@ import AlgoRow from './AlgoRow';
 export default function Algo(props) {
   const [tableOldBudget] = useState(props.oldBudget);
   const [tableAlgo] = useState(Object.keys(props.algo).length === 0 ? props.oldBudget : props.algo);
-  // const [tableAlgo] = useState(props.algo ? props.algo : props.oldBudget);
 
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center', marginRight: 2 }}>

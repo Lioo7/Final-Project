@@ -55,45 +55,47 @@ export default function AlgoRow(props) {
   }
   return (
     console.log('row', props.name),
-    <>
-      <TableRow key={props.keys}>
-        <TableCell align="center">
-          <IconButton
-            id={props.name}
-            aria-label="expand row"
-            size="small"
-            onClick={() => {
-              setOpen(childs ? !open : false);
-            }}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell align="center" component="th" scope="row">
-          {props.name}
-        </TableCell>{' '}
-        <LightTooltip title={`${percent(budget)} %`} followCursor>
-          <TableCell align="center">{formatNumber(budget)}</TableCell>
-        </LightTooltip>
-        <LightTooltip title={`${percent(newBudget)} %`} placement="left" followCursor>
-          <TableCell align="center">{formatNumber(newBudget)}</TableCell>
-        </LightTooltip>
-        <LightTooltip title={`${percent(Math.abs(diff))} %`} placement="left" followCursor>
-          <TableCell align="center" sx={{ color: diff > 0 ? 'red' : 'green' }}>
-            {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
+    (
+      <>
+        <TableRow key={props.keys}>
+          <TableCell align="center">
+            <IconButton
+              id={props.name}
+              aria-label="expand row"
+              size="small"
+              onClick={() => {
+                setOpen(childs ? !open : false);
+              }}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
           </TableCell>
-        </LightTooltip>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              {childs && <AlgoChild childrens={childs} childrensAlgo={childsAlgo} keys={props.keys} />}
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
+          <TableCell align="center" component="th" scope="row">
+            {props.name}
+          </TableCell>{' '}
+          <LightTooltip title={`${percent(budget)} %`} followCursor>
+            <TableCell align="center">{formatNumber(budget)}</TableCell>
+          </LightTooltip>
+          <LightTooltip title={`${percent(newBudget)} %`} placement="left" followCursor>
+            <TableCell align="center">{formatNumber(newBudget)}</TableCell>
+          </LightTooltip>
+          <LightTooltip title={`${percent(Math.abs(diff))} %`} placement="left" followCursor>
+            <TableCell align="center" sx={{ color: diff > 0 ? 'red' : 'green' }}>
+              {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
+            </TableCell>
+          </LightTooltip>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                {childs && <AlgoChild childrens={childs} childrensAlgo={childsAlgo} keys={props.keys} />}
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </>
+    )
   );
 }
 

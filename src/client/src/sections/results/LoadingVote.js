@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 
 function CircularProgressWithLabel(props) {
   return (
-    <Box marginTop={15} sx={{display: 'flex', gap: 2, justifyContent: 'center', position: 'relative' }}>
+    <Box marginTop={15} sx={{ display: 'flex', gap: 2, justifyContent: 'center', position: 'relative' }}>
       <CircularProgress size={120} variant="determinate" {...props} />
       <Box
         sx={{

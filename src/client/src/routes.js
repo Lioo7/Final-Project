@@ -28,12 +28,11 @@ export default function Router({setId}) {
       ],
     },
     {
-      path: '/peoples_budget',
       element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/peoples_budget/login" />, index: true },
-        {path: 'login', element: <LoginPage setId={setId} />},
-        {path: 'sign_up', element: <SignUPage />}
+        {path: '/peoples_budget/login', element: <LoginPage setId={setId} />},
+        {path: '/peoples_budget/sign_up', element: <SignUPage />}
       ],
     },
   ]);

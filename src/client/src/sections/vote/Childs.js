@@ -16,16 +16,11 @@ export default function Childs(props) {
   // Calculate the sum of the budget of the children
   const totalChildBudget = tableChilds.reduce((total, item) => total + Number(item.allocated_budget_amount), 0);
 
+  // Updates the children's table every time there is a change
   useEffect(() => {
     setTableChilds(props.childrens);
   }, [props.childrens]);
 
-  // const getColor = (index) => {
-  //   const brightness = 0.9 - index * 0.1;
-  //   return `rgba(100, 181, 246, ${brightness})`;
-  // };
-
-  console.log(props.index);
   return (
     <Stack sx={{ display: 'flex', justifyItems: 'center', alignItems: 'center' }}>
       <TableContainer sx={{ maxHeight: '400px', maxWidth: '1000px' }} component={Paper}>

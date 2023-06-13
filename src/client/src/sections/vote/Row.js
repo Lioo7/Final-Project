@@ -38,14 +38,13 @@ export default function Row(props) {
   useEffect(() => {
     setRow(props.row);
     setChilds(props.row.children);
-    // console.log('Row:', row)
   }, [props.row]);
 
   useEffect(() => {
     setCheckBox(row.checked);
-    // console.log('checkbox:', row.id, checkBox);
   }, [row.checked]);
 
+  // Updates the slider when there is a change in the budget
   const handleChangeSlider = debounce((event) => {
     const { value } = event.target;
     if (value > props.maxBudget) {
@@ -61,6 +60,7 @@ export default function Row(props) {
     }
   }, 250);
 
+  // Updates the voting text field when there is a change in the budget
   const handleChangeText = (event) => {
     const { value } = event.target * 1000000;
     if (value > props.maxBudget) {
@@ -115,7 +115,7 @@ export default function Row(props) {
             value={Number((Number(row.allocated_budget_amount) / 1000000).toFixed(1))}
             defaultValue={Number(budget)}
             InputProps={{
-              inputProps: {min: 0, max: 6000000 },
+              inputProps: { min: 0, max: 6000000 },
               endAdornment: <InputAdornment position="end">M</InputAdornment>,
             }}
             onChange={handleChangeText}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import InfoCards from './InfoCards';
 
+// The design of the information cards
 const styleCards = {
   boxShadow: 20,
   textAlign: 'center',
@@ -39,13 +40,7 @@ export default function InfoForm() {
   }, []);
 
   return (
-    // <Grid container>
-    //   {Object.keys(table).map((key, index) => (
-    //     // eslint-disable-next-line react/jsx-key
-    //     <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
-    //   ))}
-    // </Grid>
-    <Grid container spacing={3} >
+    <Grid container spacing={3}>
       {Object.keys(table).map((key, index) => (
         <Grid item xs={6} sm={6} md={3} key={index}>
           <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
