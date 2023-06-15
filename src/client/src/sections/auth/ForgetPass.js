@@ -1,105 +1,80 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link, Stack, IconButton, InputAdornment, TextField, Dialog, Button, Typography } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import Iconify from '../../components/iconify/Iconify';
 
-function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [isShow, setIsShow] = useState(true);
+export default function ForgetPass(props) {
+  const navigate = useNavigate();
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfPassword, setShowConfPassword] = useState(false);
 
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = () => {
-    // e.prevetDefault();
-    setIsShow((prev)=>!prev)
-  };
+  const [newPasswordError, setNewPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-  return (
-    <Dialog onClose={handleClose} open={open}>
-        {isShow && (<>
-      <Typography sx={{ marginTop: '10px', textAlign: 'center', fontSize: '26px', fontWeight: 'bold' }}>
-        Confirm Email
-      </Typography>
+  const handleClick = async () => {
+    const url = 'http://localhost:5000/peoples_budget/forget_password';
 
-      <Stack alignItems="center" sx={{ my: 2, mx: 13 }}>
-        <TextField
-          sx={{ my: 1, width: '350px' }}
-          id="email"
-          label="Email "
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={Boolean(emailError)}
-          helperText={emailError}
-        />
+    // Validate the input fields
+    if (newPassword.length < 5) {
+      setNewPasswordError('Invalid password: Please enter a password with at least 5 characters.');
+      return;
+    }
+    setNewPasswordError('');
 
-        <Button
-          sx={{ my: 1, fontSize: '1rem', marginBottom: '15px', width: '170px' }}
-          size="medium"
-          type="submit"
-          variant="contained"
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </Stack>
-      </>
-        )}
+    if (confirmPassword.length < 5) {
+      setConfirmPasswordError('Invalid password: Please enter a password with at least 5 characters.');
+      return;
+    }
+    setConfirmPasswordError('');
 
-        {!isShow && (<> 
-        <SimpleDialog2 open={open} onClose={handleClose} setIsShow={setIsShow} />
-        </>)}
-    </Dialog>
-    
-  );
-}
+    if (newPassword !== confirmPassword) {
+      alert('The passwords are not the same, please enter the same password.');
+      return;
+    }
+    setConfirmPasswordError('');
 
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-};
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ newPassword }),
+      });
 
-function SimpleDialog2(props) {
-  const { onClose, selectedValue, open } = props;
-  const [showPassword, setShowPassword] = useState(false);
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleSubmit = () => {
-    // e.prevetDefault();
-    props.setIsShow((prev)=>!prev)
+      const responseData = await response.json();
+      // if (responseData.status === 'Succeeded') {
+        navigate('/peoples_budget/login', { replace: true });
+        props.setIsShowed(false);
+      // }
+    } catch (error) {
+      console.error(error);
+      alert('An error was received, please refresh the page and try again');
+    }
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <Typography sx={{ marginTop: '10px', textAlign: 'center', fontSize: '26px', fontWeight: 'bold' }}>
-        Set password
+    <>
+      <Typography variant="h4" gutterBottom sx={{ marginTop: '-191px', display: 'flex', justifyContent: 'center' }}>
+        Forget Password ?
       </Typography>
-
-      <Stack alignItems="center" sx={{ my: 2, mx: 13 }}>
+      <Stack spacing={2}>
         <TextField
-          sx={{ my: 1, width: '350px' }}
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          value={password1}
-          onChange={(e) => setPassword(e.target.value)}
-          error={Boolean(passwordError)}
-          helperText={passwordError}
+          id="NewPassword"
+          label="New Password"
+          type={showNewPassword ? 'text' : 'password'}
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          error={Boolean(newPasswordError)}
+          helperText={newPasswordError}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton onClick={() => setShowNewPassword(!showNewPassword)} edge="end">
+                  <Iconify icon={showNewPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
             ),
@@ -107,71 +82,41 @@ function SimpleDialog2(props) {
         />
 
         <TextField
-          sx={{ my: 1, width: '350px' }}
+          id="ConfirmPassword"
           label="Confirm Password"
-          type={showPassword ? 'text' : 'password'}
-          value={password2}
-          onChange={(e) => setPassword(e.target.value)}
-          error={Boolean(passwordError)}
-          helperText={passwordError}
+          type={showConfPassword ? 'text' : 'password'}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          error={Boolean(confirmPasswordError)}
+          helperText={confirmPasswordError}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton onClick={() => setShowConfPassword(!showConfPassword)} edge="end">
+                  <Iconify icon={showConfPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
-
-        <Button
-          sx={{ my: 1, fontSize: '1rem', marginBottom: '15px', width: '170px' }}
-          size="medium"
+      </Stack>
+      <Stack sx={{ marginTop: 2 }}>
+        <LoadingButton
+          id="SaveBtn"
+          fullWidth
+          size="large"
           type="submit"
           variant="contained"
-          onClick={handleSubmit}
+          sx={{fontSize: '1rem' }}
+          onClick={handleClick}
         >
-          Submit
-        </Button>
+          Save
+        </LoadingButton>
       </Stack>
-    </Dialog>
+    </>
   );
 }
 
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
+ForgetPass.propTypes = {
+  setIsShowed: PropTypes.func.isRequired,
 };
-
-export default function ForgetPass() {
-  const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('');
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
-  };
-
-  return (
-    <div>
-      <Stack direction="row" alignItems="center" sx={{ my: 1 }}>
-        <Link
-          variant="subtitle2"
-          onClick={handleClickOpen}
-          underline="always"
-          alignItems="left"
-          sx={{ cursor: 'pointer' }}
-        >
-          Forgot Password ?
-        </Link>
-      </Stack>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-    </div>
-  );
-}
