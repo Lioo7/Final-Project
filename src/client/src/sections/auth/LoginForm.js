@@ -1,12 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField, Link } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
 import Iconify from '../../components/iconify/Iconify';
 import account from '../../_mock/account';
-import ForgetPass from './ForgetPass';
 
 export default function LoginForm({ setId }) {
   const navigate = useNavigate();
@@ -87,6 +86,10 @@ export default function LoginForm({ setId }) {
     }
   };
 
+  const handleForgetPass = async () => {
+    navigate('/peoples_budget/forget_password', { replace: true });
+  }
+
   return (
     <>
       <Stack spacing={3}>
@@ -119,7 +122,11 @@ export default function LoginForm({ setId }) {
         />
       </Stack>
 
-      <ForgetPass />
+      <Stack sx={{ my: 1 }}>
+        <Link variant="subtitle2" underline="always" alignItems="left" sx={{ cursor: 'pointer' }} onClick={handleForgetPass}>
+          Forgot Password ?
+        </Link>
+      </Stack>
 
       <LoadingButton
         id="loginGuest"

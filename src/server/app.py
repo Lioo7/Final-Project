@@ -43,19 +43,20 @@ batch_database = data_handler(SQL_database(SQL_database.create_config()))
 algorithms_results = None
 converted_current_budget = None
 
-# Current budget 
+# Current budget
 current_budget_voting_page = None
 current_budget_login_page = None
 
 
 # Last vote
-last_voting_change =  datetime.now()
-last_calculate_results_time =  datetime.now() 
+last_voting_change = datetime.now()
+last_calculate_results_time = datetime.now()
+
 
 def calculte_results():
     global last_calculate_results_time
     global algorithms_results
-        
+
     while True:
         # Check if there is a new votes
         if last_calculate_results_time < last_voting_change:
@@ -71,7 +72,8 @@ def calculte_results():
             median_algorithm_result: dict = median_algorithm(voted_dict)
 
             # Algo 2:
-            generalized_median_result: dict = generalized_median_algorithm(voted_dict)
+            generalized_median_result: dict = generalized_median_algorithm(
+                voted_dict)
 
             # Get current budget
             global converted_current_budget
@@ -83,8 +85,7 @@ def calculte_results():
                 count = Counter()
                 update_dict_ids(count, current_budget)
                 converted_current_budget = convert_structure(current_budget)
-                
-            
+
             last_calculate_results_time = datetime.now()
             algorithms_results = {
                 "median_algorithm": json.dumps(median_algorithm_result, ensure_ascii=False),
@@ -128,9 +129,9 @@ def login():
 @app.route("/peoples_budget/login", methods=["GET"])
 def table_tree():
     database.handler.connect()
-    
+
     global current_budget_login_page
-    
+
     if current_budget_login_page == None:
         tree = database.handler.build_tree_from_current_budget()
         dictionary = tree.to_dict()
@@ -170,7 +171,8 @@ def signup():
         # FEMALE
         gender = 2
 
-    new_user = User(id, first_name, last_name, converted_date, email, password, gender, False)
+    new_user = User(id, first_name, last_name, converted_date,
+                    email, password, gender, False)
 
     database.handler.connect()
     valid_email = new_user.is_the_email_valid(email)
@@ -194,6 +196,39 @@ def signup():
         return jsonify({"status": "Succeeded"})
 
     return jsonify({"status": "Faild"})
+
+
+# --------------------------------- Forget Password ----------------------------------
+
+
+@app.route("/peoples_budget/forget_password", methods=["POST"])
+def forgetpassword():
+    try:
+        first_name = request.json["firstName"]
+        last_name = request.json["lastName"]
+        id = request.json["id"]
+        birth_date = request.json["birthDate"]
+
+    except:
+        logging.error("ERROR! : forget password args")
+        return jsonify({"status": "Faild"})
+
+    # database.handler.connect()
+
+    return jsonify({"status": "Succeeded"})
+
+@app.route("/peoples_budget/forget_password", methods=["POST"])
+def newpassword():
+    try:
+        new_password = request.json["newPassword"]
+
+    except:
+        logging.error("ERROR! : New password args")
+        return jsonify({"status": "Faild"})
+
+    # database.handler.connect()
+
+    return jsonify({"status": "Succeeded"})
 
 
 # --------------------------------- Home ---------------------------------------------
@@ -333,9 +368,10 @@ def voting_tree():
     check_result = database.handler.check_voting_option(user_id=user_id)
 
     global last_voting_change
-    
+
     if check_result == "false":
-        result = database.handler.update_user_vote(user_id=user_id, vote=vote_str)
+        result = database.handler.update_user_vote(
+            user_id=user_id, vote=vote_str)
         if not result:
             return jsonify({"status": "Error!, voting does not saved"})
 
@@ -385,7 +421,7 @@ def get_algorithms_results():
 mode = "dev"
 
 if __name__ == "__main__":
-        
+
     batch = Thread(target=calculte_results)
     batch.daemon = True
     batch.start()

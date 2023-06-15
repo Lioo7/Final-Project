@@ -44,7 +44,7 @@ export default function HomePage() {
         >
           <CardContent>
             <img
-              src={`${process.env.PUBLIC_URL}/welcome.png`}
+              src={`${process.env.PUBLIC_URL}/img_bg/welcome.png`}
               alt="Logo"
               style={{
                 width: '220px',
@@ -90,7 +90,7 @@ export default function HomePage() {
         >
           <CardContent>
             <img
-              src={`${process.env.PUBLIC_URL}/explorer.png`}
+              src={`${process.env.PUBLIC_URL}/img_bg/explorer.png`}
               alt="Logo"
               style={{
                 width: '150px',
@@ -137,7 +137,7 @@ export default function HomePage() {
         >
           <CardContent>
             <img
-              src={`${process.env.PUBLIC_URL}/fun.png`}
+              src={`${process.env.PUBLIC_URL}/img_bg/fun.png`}
               alt="Logo"
               style={{
                 width: '230px',
