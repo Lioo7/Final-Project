@@ -202,20 +202,43 @@ def signup():
 
 
 @app.route("/peoples_budget/forget_password", methods=["POST"])
-def forgetpassword():
+def forget_password():
+    
     try:
-        first_name = request.json["firstName"]
-        last_name = request.json["lastName"]
-        id = request.json["id"]
-        birth_date = request.json["birthDate"]
-
+        request_data = request.get_json()
+        
     except:
-        logging.error("ERROR! : forget password args")
-        return jsonify({"status": "Faild"})
+                logging.error("ERROR! : in forget_password args")
+                return jsonify({"status": "Faild"})
+            
+            
+    if 'firstName' in request_data and 'lastName' in request_data and 'birthDate' in request_data and 'id' in request_data:
+        
+        first_name = request_data["firstName"]
+        last_name = request_data["lastName"]
+        id = request_data["id"]
+        birth_date = request_data["birthDate"]
 
-    # database.handler.connect()
+        database.handler.connect()
 
-    return jsonify({"status": "Succeeded"})
+        # TODO: Implement  get_user_details()
+        
+        # TODO: Implement Details matching check
+        
+        return jsonify({"status": "Succeeded"})
+        
+
+    elif 'newPassword' in request_data:
+        
+        # TODO: Implement save the new password 
+        
+        return jsonify({"status": "Succeeded"})
+
+    else:
+        # The request does not contain the appropriate details
+        return "Invalid request"
+    
+    
 
 @app.route("/peoples_budget/forget_password", methods=["POST"])
 def newpassword():

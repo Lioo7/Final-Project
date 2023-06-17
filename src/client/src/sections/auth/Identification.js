@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Stack, Button, TextField, Typography } from '@mui/material';
-  import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 
 export default function Identification(props) {
