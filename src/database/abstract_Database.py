@@ -98,3 +98,7 @@ class Abstract_Database(ABC):
     @abstractmethod
     def get_user_gender(self, user_id: int):
         pass
+    
+    @abstractmethod
+    def get_user_details(self,user_id: int) -> dict:
+        pass

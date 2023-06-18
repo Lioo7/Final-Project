@@ -524,3 +524,22 @@ class SQL_database(Abstract_Database):
             return "Faild"
 
         return result[0][0]
+
+    def get_user_details(self,user_id: int) -> dict:
+        
+        query = f"SELECT * FROM USERS WHERE user_id={user_id}"
+        
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+            
+            if not result:
+                return "There is no registered user with this ID"
+
+        except:
+            return "Error!"
+
+        if not result:
+            return "Faild"
+
+        return result[0]
