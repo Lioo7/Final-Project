@@ -223,7 +223,7 @@ def forget_password():
 
         user_details = database.handler.get_user_details(id)
         
-        if type(user_details) != list:
+        if type(user_details) != tuple:
             return jsonify({"status": "Faild"})
         
         first_name_db = user_details[1]
@@ -239,9 +239,15 @@ def forget_password():
 
     elif 'newPassword' in request_data:
         
-        # TODO: Implement save the new password 
+        new_password = request_data["newPassword"]
         
-        return jsonify({"status": "Succeeded"})
+        is_saved = database.handler.save_new_password(id,new_password)
+
+        if is_saved:
+            return jsonify({"status": "Succeeded"})
+        
+        # if not saved successfully
+        return jsonify({"status": "Faild"})
 
     else:
         # The request does not contain the appropriate details

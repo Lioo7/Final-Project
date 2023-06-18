@@ -47,8 +47,8 @@ export default function ForgetPass(props) {
 
       const responseData = await response.json();
       // if (responseData.status === 'Succeeded') {
-        navigate('/peoples_budget/login', { replace: true });
-        props.setIsShowed(false);
+      navigate('/peoples_budget/login', { replace: true });
+      props.setIsShowed(false);
       // }
     } catch (error) {
       console.error(error);
@@ -107,7 +107,7 @@ export default function ForgetPass(props) {
           size="large"
           type="submit"
           variant="contained"
-          sx={{fontSize: '1rem' }}
+          sx={{ fontSize: '1rem' }}
           onClick={handleClick}
         >
           Save

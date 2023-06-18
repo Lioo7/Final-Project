@@ -102,3 +102,8 @@ class Abstract_Database(ABC):
     @abstractmethod
     def get_user_details(self,user_id: int) -> dict:
         pass
+    
+    @abstractmethod
+    def save_new_password(self, user_id: int, new_password: str) -> bool:
+        pass
+    

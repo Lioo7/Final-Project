@@ -543,3 +543,21 @@ class SQL_database(Abstract_Database):
             return "Faild"
 
         return result[0]
+    
+    
+    def save_new_password(self, user_id: int, new_password: str) -> bool:
+        
+        query = f"UPDATE USERS SET password = {new_password} WHERE user_id = '{user_id}'"
+        
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+            print(result)
+
+        except:
+            return "Error!"
+
+        if not result:
+            return "Faild"
+
+        return result[0]
