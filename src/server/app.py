@@ -221,18 +221,33 @@ def forget_password():
 
         database.handler.connect()
 
-        # TODO: Implement  get_user_details()
+        user_details = database.handler.get_user_details(id)
         
-        # TODO: Implement Details matching check
+        if type(user_details) != tuple:
+            return jsonify({"status": "Faild"})
         
-        return jsonify({"status": "Succeeded"})
+        first_name_db = user_details[1]
+        last_name_db = user_details[2]
+        birth_date_db = str(user_details[3])
+        
+        if first_name == first_name_db and last_name == last_name_db and birth_date == birth_date_db:
+            return jsonify({"status": "Succeeded"})
+        
+                
+        return jsonify({"status": "Faild"})
         
 
     elif 'newPassword' in request_data:
         
-        # TODO: Implement save the new password 
+        new_password = request_data["newPassword"]
         
-        return jsonify({"status": "Succeeded"})
+        is_saved = database.handler.save_new_password(id,new_password)
+
+        if is_saved:
+            return jsonify({"status": "Succeeded"})
+        
+        # if not saved successfully
+        return jsonify({"status": "Faild"})
 
     else:
         # The request does not contain the appropriate details
