@@ -226,22 +226,32 @@ def forget_password():
         if type(user_details) != tuple:
             return jsonify({"status": "Faild"})
         
+        
+        # -- Verify user details --
         first_name_db = user_details[1]
         last_name_db = user_details[2]
         birth_date_db = str(user_details[3])
         
-        if first_name == first_name_db and last_name == last_name_db and birth_date == birth_date_db:
-            return jsonify({"status": "Succeeded"})
+        if first_name != first_name_db:
+            return jsonify("Invalid first name")
         
+        if last_name != last_name_db:
+            return jsonify("Invalid last name")
+        
+        if birth_date != birth_date_db:
+            return jsonify("Invalid birth date")
+            
                 
-        return jsonify({"status": "Faild"})
+        return jsonify({"status": "Succeeded"})
         
 
+    #  -- Reset password --
     elif 'newPassword' in request_data:
         
+        user_id = request_data["id"]
         new_password = request_data["newPassword"]
         
-        is_saved = database.handler.save_new_password(id,new_password)
+        is_saved = database.handler.save_new_password(user_id,new_password)
 
         if is_saved:
             return jsonify({"status": "Succeeded"})

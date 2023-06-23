@@ -551,13 +551,9 @@ class SQL_database(Abstract_Database):
         
         try:
             self.cursor.execute(query)
-            result = self.cursor.fetchall()
-            print(result)
+            self.db.commit()
 
         except:
-            return "Error!"
-
-        if not result:
-            return "Faild"
-
-        return result[0]
+            return False
+        
+        return True
