@@ -15,7 +15,7 @@ from algorithms import (
     unite_votes,
     update_dict_ids,
 )
-from component_facade import component_facade
+from utilities_component import Utilities_component
 from calculator import Calculator
 from counter import Counter
 from flask import Flask, jsonify, request
@@ -38,6 +38,9 @@ CORS(app)
 # DB
 database = data_handler(SQL_database(SQL_database.create_config()))
 batch_database = data_handler(SQL_database(SQL_database.create_config()))
+
+# Logic side
+component = Utilities_component()
 
 # Batch calculate results
 algorithms_results = None
@@ -111,11 +114,10 @@ def login():
         return jsonify({"status": "Faild"})
 
     database.handler.connect()
-
+    
     # Guest user
-    if component_facade.is_guest_user(id):
+    if component.is_guest_user(id):
         return jsonify({"status": "Succeeded"})
-        
 
     result = database.handler.check_if_user_exists(id, password)
 
@@ -128,17 +130,10 @@ def login():
 
 @app.route("/peoples_budget/login", methods=["GET"])
 def table_tree():
-    database.handler.connect()
-
     global current_budget_login_page
 
     if current_budget_login_page == None:
-        tree = database.handler.build_tree_from_current_budget()
-        dictionary = tree.to_dict()
-
-        # updates the 'total' values in the budget dictionary
-        calculate_totals(dictionary)
-        current_budget_login_page = json.dumps(dictionary, ensure_ascii=False)
+        current_budget_login_page = component.build_current_budget()
 
     return jsonify(current_budget_login_page)
 
