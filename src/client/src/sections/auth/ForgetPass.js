@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Stack, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
@@ -15,6 +15,12 @@ export default function ForgetPass(props) {
 
   const [newPasswordError, setNewPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  const [id, setId] = useState(props.id);
+
+  useEffect(() => {
+    setId(props.id);
+  }, [props.id]);
 
   const handleClick = async () => {
     const url = 'http://localhost:5000/peoples_budget/forget_password';
@@ -42,14 +48,14 @@ export default function ForgetPass(props) {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ newPassword }),
+        body: JSON.stringify({ id, newPassword }),
       });
 
       const responseData = await response.json();
-      // if (responseData.status === 'Succeeded') {
-      navigate('/peoples_budget/login', { replace: true });
-      props.setIsShowed(false);
-      // }
+      if (responseData.status === 'Succeeded') {
+        navigate('/peoples_budget/login', { replace: true });
+        props.setIsShowed(false);
+      }
     } catch (error) {
       console.error(error);
       alert('An error was received, please refresh the page and try again');

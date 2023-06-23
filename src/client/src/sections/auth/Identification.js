@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { Stack, Button, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -21,6 +21,11 @@ export default function Identification(props) {
   const today = new Date();
   let age = today.getFullYear() - dob.getFullYear();
   const monthDiff = today.getMonth() - dob.getMonth();
+
+
+  useEffect(() => {
+    props.setId(id);
+  }, [id]);
 
   const handleSubmit = async () => {
     const url = 'http://localhost:5000/peoples_budget/forget_password';
@@ -112,7 +117,7 @@ export default function Identification(props) {
       </Typography>
       <Stack spacing={2}>
         <TextField
-          id="fName"
+          id="FPfName"
           label="First name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -120,7 +125,7 @@ export default function Identification(props) {
           helperText={firstNameError}
         />
         <TextField
-          id="lName"
+          id="FPlName"
           label="Last name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -128,7 +133,7 @@ export default function Identification(props) {
           helperText={lastNameError}
         />
         <TextField
-          id="signId"
+          id="FPId"
           label="ID"
           value={id}
           onChange={(e) => setId(e.target.value)}
@@ -136,7 +141,7 @@ export default function Identification(props) {
           helperText={idError}
         />
         <TextField
-          id="date"
+          id="FPdate"
           label="Birth Date"
           type="date"
           value={birthDate}
@@ -152,7 +157,7 @@ export default function Identification(props) {
 
       <Stack sx={{ marginTop: 2 }}>
         <Button
-          id="submitBtn"
+          id="FPSubmitBtn"
           fullWidth
           size="large"
           type="submit"
