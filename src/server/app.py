@@ -113,19 +113,17 @@ def login():
         logging.error("ERROR! : login args")
         return jsonify({"status": "Faild"})
 
-    database.handler.connect()
     
     # Guest user
     if component.is_guest_user(id):
         return jsonify({"status": "Succeeded"})
 
-    result = database.handler.check_if_user_exists(id, password)
+    result = component.check_if_user_exists(id,password)
 
     if result:
         return jsonify({"status": "Succeeded"})
 
-    else:
-        return jsonify({"status": "Faild"})
+    return jsonify({"status": "Faild"})
 
 
 @app.route("/peoples_budget/login", methods=["GET"])
@@ -156,31 +154,20 @@ def signup():
         logging.error("ERROR! : sign_up args")
         return jsonify("ERROR! : sign_up args")
 
-    # Check validation with database
-    converted_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
-
-    if gender == "male":
-        # MALE
-        gender = 1
-    else:
-        # FEMALE
-        gender = 2
-
-    new_user = User(id, first_name, last_name, converted_date,
-                    email, password, gender, False)
 
     database.handler.connect()
-    valid_email = new_user.is_the_email_valid(email)
-    check_mail = database.handler.user_mail_exeisting(new_user)
 
-    # check if the structure of the email is valid
-    if not valid_email:
-        return jsonify({"status": "Invalid email - Please insert a valid email"})
-
+    new_user:User = component.create_user(id, first_name, last_name, birth_date,
+                        email, password, gender, False)
+    
+    if new_user == None:
+        return jsonify({"status": "Faild"})
+        
+    check_mail = component.is_mail_exists(new_user.get_mail())
+    
     if check_mail:
-        return jsonify(
-            {"status": "The email already exists in the system - try another email"}
-        )
+        return jsonify({"status": "The email already exists in the system - try another email"})
+
 
     check_id = database.handler.user_id_exeisting(new_user)
     if check_id:

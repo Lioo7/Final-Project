@@ -231,8 +231,9 @@ class SQL_database(Abstract_Database):
 
         return False
 
-    def user_mail_exeisting(self, user: User) -> bool:
-        query = f"""SELECT mail FROM USERS WHERE mail='{user.get_mail()}' """
+    def is_mail_exists(self, mail:str) -> bool:
+        query = f"""SELECT mail FROM USERS WHERE mail='{mail}' """
+        
         try:
             self.cursor.execute(query)
 
@@ -241,6 +242,7 @@ class SQL_database(Abstract_Database):
 
         result = self.cursor.fetchone()
         if result is not None:
+            
             return True
 
         return False

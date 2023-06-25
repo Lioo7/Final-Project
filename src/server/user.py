@@ -216,6 +216,7 @@ class User:
 
         return is_valid
 
+    
     def is_over_18(self, date_of_birth: str) -> bool:
         """
         Returns True if the person with the given date of birth is 18 years or older.

@@ -1,13 +1,12 @@
 
 import json
+import logging
+import sys
 
-from user import *
-from calculator import Calculator
-from counter import Counter
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-from node import Node
-from tree import Tree
+sys.path.append("..")
+import time
+from datetime import datetime
+from threading import Thread
 
 from algorithms import (
     calculate_totals,
@@ -17,7 +16,16 @@ from algorithms import (
     unite_votes,
     update_dict_ids,
 )
+from calculator import Calculator
+from counter import Counter
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from node import Node
+from tree import Tree
+from user import User
+from waitress import serve
 
+from database.abstract_Database import Abstract_Database
 from database.data_handler import data_handler
 from database.sql_database import SQL_database
 
@@ -39,6 +47,12 @@ class Utilities_component :
         
         return False
     
+    
+    def check_if_user_exists(self,id:str, password:str) -> bool:
+        self.database.handler.connect()
+        return self.database.handler.check_if_user_exists(id, password)
+    
+    
     def build_current_budget(self):
         self.database.handler.connect()
         tree = self.database.handler.build_tree_from_current_budget()
@@ -48,3 +62,42 @@ class Utilities_component :
         calculate_totals(dictionary)
         
         return json.dumps(dictionary, ensure_ascii=False)
+    
+    
+    def create_user(self, id:int, first_name:str, last_name:str, birth_date:str,
+                    email:str, password:str, gender:str, is_admin:bool):
+        
+        converted_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
+        if converted_date == None:
+            return None
+        
+        gender = self.gender_check(gender)
+        if gender is None:
+            return None
+
+        return User(id, first_name, last_name, converted_date,
+                        email, password, gender, False)
+        
+
+    def gender_check(self, gender):
+        if gender == "male":
+            # MALE
+            return 1
+        elif gender == "female":
+            # FEMALE
+            return 2
+        else:
+            return None
+        
+            
+    def is_mail_exists(self, mail:str):
+        """
+        >>> Return: if exsits - True
+        >>> else - False
+        """
+        self.database.handler.connect()
+        mail_exists = self.database.handler.is_mail_exists(mail)
+        if mail_exists:
+            return True
+        
+        return False
