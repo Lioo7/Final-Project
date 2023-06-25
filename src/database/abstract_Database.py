@@ -48,7 +48,7 @@ class Abstract_Database(ABC):
         pass
 
     @abstractmethod
-    def user_mail_exeisting(self, user: User) -> bool:
+    def is_mail_exists(self, mail: str) -> bool:
         pass
 
     @abstractmethod
