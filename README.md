@@ -94,10 +94,11 @@ To run the People's Budget web application, you need to have the following insta
 To set up the People's Budget web application locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/ElhaiMansbach/Final-Project`
-2. Navigate to the project directory: `cd peoples-budget`
+2. Navigate to the project directory: `cd Final-Project`
 3. Install the required Python dependencies: `pip install -r requirements.txt`
-4. Install the required npm dependencies: `npm install`
-5. Set up the necessary environment variables.
+4. Navigate to the client directory: `cd src/client`
+5. Install the required npm dependencies: `npm install`
+6. Set up the necessary environment variables.
 
 #### Environment Variable Configuration
 
@@ -142,7 +143,7 @@ The project includes a dedicated test directory with subdirectories for client a
 
 To execute the tests, follow these steps:
 
-1. **Client Tests**: Navigate to the `test/client` directory and run the command to execute the client-side tests:
+1. **Client Tests**: Navigate to the `test/client` directory, install the required npm dependencies: `npm install` and run the command to execute the client-side tests:
    `npm test`
    
 2. **Server Tests**: Navigate to the `test/server` directory and run the command to execute the server-side tests:
