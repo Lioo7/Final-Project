@@ -96,7 +96,8 @@ To set up the People's Budget web application locally, follow these steps:
 1. Clone the repository: `git clone https://github.com/ElhaiMansbach/Final-Project`
 2. Navigate to the project directory: `cd peoples-budget`
 3. Install the required Python dependencies: `pip install -r requirements.txt`
-4. Set up the necessary environment variables.
+4. Install the required npm dependencies: `npm install`
+5. Set up the necessary environment variables.
 
 #### Environment Variable Configuration
 
