@@ -30,8 +30,9 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
      - [Environment Variable Configuration](#environment-variable-configuration)
-        - [Windows](#Windows)
-        - [macOS](#macOS)
+        - [Linux](#linux)
+        - [macOS](#macos)
+        - [Windows](#windows)
 - [Testing](#testing)
 - [User Guide](#user-guide)
   - [Getting Started](#getting-started)
@@ -59,7 +60,7 @@ Are you tired of feeling like your voice doesn't matter when it comes to budget 
 
 ## Selected Approach
 
-To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), application layer (server), and data layer (database).
+To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), application layer (server), and the data layer (database).
 
 ### Architecture and Design Pattern
 
@@ -102,32 +103,22 @@ To set up the People's Budget web application locally, follow these steps:
 
 #### Environment Variable Configuration
 
-To configure the required environment variables, follow the instructions below for your operating system:
+To configure the required environment variables:
+* 'user_budget_system': This variable represents the desired username for the budget system, which can be used to authenticate and identify the user within the system.
+* 'system_budget_password': This variable represents the password for the budget system user, which is required for authentication and accessing the budget system's functionalities.
+* 'MYSQL_ROOT_PASSWORD': This variable represents the desired password for the MySQL root user, which is the highest level of access to the MySQL database system. 
+
+##### Linux
+
+For Linux users, you can refer to [this tutorial](https://www.youtube.com/watch?v=Y6_7xaxkPik) on setting environment variables.
+
+##### MacOS
+
+For Mac users, you can refer to [this tutorial](https://www.youtube.com/watch?v=dl_jgYr0rxU) on setting environment variables.
 
 ##### Windows
 
-1. Open the Start menu and search for "Environment Variables" or "Edit the system environment variables" and select the corresponding option.
-2. In the System Properties window, click on the "Environment Variables" button.
-3. In the "User variables" section, click on the "New" button.
-4. Enter the variable name, such as: `user_budget_system`, `system_budget_password`, and `MYSQL_ROOT_PASSWORD`.
-5. Enter the corresponding values for each variable. For example, you can set `user_budget_system` to the desired username for the budget system, `system_budget_password` to the password for the budget system user, and `MYSQL_ROOT_PASSWORD` to the desired password for the MySQL root user.
-6. Click "OK" to save the environment variable.
-
-##### macOS
-
-1. Open a terminal window.
-2. Run the following command to open the user's profile file in a text editor (such as nano):
-   nano ~/.bash_profile
-3. In the text editor, add the following lines for each environment variable:
-   <br>export user_budget_system="your_username"
-   <br>export system_budget_password="your_password"
-   <br>export MYSQL_ROOT_PASSWORD="your_root_password"
-
-   Replace "your_username", "your_password", and "your_root_password" with the actual values you want to set.
-4. Press Ctrl + X to exit the text editor, and when prompted to save the changes, press Y followed by Enter.
-5. Back in the terminal, run the following command to apply the changes:
-   source ~/.bash_profile
-   This will reload the profile file and make the environment variables available.
+For Windows users, you can refer to [this tutorial](https://www.youtube.com/watch?v=ow2jROvxyH4) on setting environment variables.
 
 After defining the environment variables using the instructions above, continue with the installation steps:
 <br>5. Run the MySQL database using Docker Compose by navigating to the database directory and running the command: `docker-compose up -d`.
