@@ -448,7 +448,7 @@ def get_algorithms_results():
 
 
 # dev or prod
-mode = "dev"
+mode = "PROD"
 
 if __name__ == "__main__":
 
