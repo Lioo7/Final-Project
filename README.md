@@ -125,7 +125,7 @@ After defining the environment variables using the instructions above, continue 
 <br>6. To initialize the database, run the command: `python sql_Initialization.py`.
 <br>7. Start the server by navigating to the server directory and running the command: `python app.py`.
 <br>8. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-<br>9. Open the client-side application in your web browser.
+<br>9. Open the client-side application in your web browser: `http://localhost:5000`.
 <br>10. You're ready to actively participate in the budget voting process!
 
 ## Testing
