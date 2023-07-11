@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
 
-(async function LoginTests() {
+async function LoginTests() {
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
@@ -43,4 +43,6 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
   } finally {
     await driver.quit();
   }
-})();
+};
+
+module.exports = LoginTests;

@@ -1,6 +1,6 @@
 const { Builder, By } = require("selenium-webdriver");
 
-(async function ResultsTests() {
+async function ResultsTests() {
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
@@ -15,7 +15,7 @@ const { Builder, By } = require("selenium-webdriver");
 
     // Navigate to Results page
     await driver.findElement(By.linkText("Results")).click();
-    await new Promise((resolve) => setTimeout(resolve, 2500));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     // Click on Algo 1 button
     await driver.findElement(By.id("algo1")).click();
@@ -65,4 +65,6 @@ const { Builder, By } = require("selenium-webdriver");
   } finally {
     await driver.quit();
   }
-})();
+};
+
+module.exports = ResultsTests;

@@ -1,6 +1,6 @@
 const { Builder, By, until } = require("selenium-webdriver");
 
-(async function InfoPageTests() {
+async function InfoPageTests() {
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
@@ -50,17 +50,15 @@ const { Builder, By, until } = require("selenium-webdriver");
     // Verify navigation to Information page
     const title = await driver.getTitle();
     if (title !== "Information") {
-      console.log(
-        "------------ Information tests failed ------------"
-      );
+      console.log("------------ Information tests failed ------------");
     } else {
-      console.log(
-        "------------ Information tests passed ------------"
-      );
+      console.log("------------ Information tests passed ------------");
     }
 
     // Perform additional tests or assertions on the Information page as needed
   } finally {
     await driver.quit();
   }
-})();
+};
+
+module.exports = InfoPageTests;
