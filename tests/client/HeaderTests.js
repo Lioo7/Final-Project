@@ -1,6 +1,6 @@
 const { Builder, By, until } = require("selenium-webdriver");
 
-(async function HeaderTests() {
+async function HeaderTests() {
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
@@ -40,4 +40,6 @@ const { Builder, By, until } = require("selenium-webdriver");
   } finally {
     await driver.quit();
   }
-})();
+};
+
+module.exports = HeaderTests ;

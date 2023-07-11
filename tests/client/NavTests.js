@@ -1,6 +1,6 @@
 const { Builder, By, until } = require("selenium-webdriver");
 
-(async function NavTests() {
+async function NavTests() {
   let driver = await new Builder().forBrowser("chrome").build();
 
   try {
@@ -85,7 +85,7 @@ const { Builder, By, until } = require("selenium-webdriver");
 
     // Navigate to Results page
     await driver.findElement(By.linkText("Results")).click();
-    await new Promise((resolve) => setTimeout(resolve, 2500));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     // Wait for page to load
     await driver.wait(
@@ -125,4 +125,6 @@ const { Builder, By, until } = require("selenium-webdriver");
   } finally {
     await driver.quit();
   }
-})();
+};
+
+module.exports = NavTests;

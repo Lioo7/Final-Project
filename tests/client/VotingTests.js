@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
 
-(async function VoteTests() {
+async function VoteTests() {
   let driver = await new Builder().forBrowser("chrome").build();
   let ids = ["1", "1178", "4885", "6802", "9707", "10696", "10793"];
 
@@ -232,4 +232,6 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
   } finally {
     await driver.quit();
   }
-})();
+};
+
+module.exports = VoteTests;
