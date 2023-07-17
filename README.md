@@ -134,8 +134,23 @@ The project includes a dedicated test directory with subdirectories for client a
 
 To execute the tests, follow these steps:
 
-1. **Client Tests**: Navigate to the `test/client` directory, install the required npm dependencies: `npm install` and run the command to execute the client-side tests:
-   `npm test`
+1. **Client Tests**:
+   - Navigate to the `test/client` directory.
+   - Install the required npm dependencies by running the command:
+     ```bash
+     npm install
+     ```
+   - Download and install a ChromeDriver that corresponds to your browser from [here](https://chromedriver.chromium.org/downloads).
+   - Run the command to execute the client-side tests:
+     ```bash
+     npm run tests
+     ```
+
+   This command will run all the tests.
+
+   To run a specific test, use the following command, replacing `"test name"` with the desired test name:
+   ```bash
+   node RunAllTests.js "test name"
    
 2. **Server Tests**: Navigate to the `test/server` directory and run the command to execute the server-side tests:
    `pytest`
