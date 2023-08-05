@@ -161,25 +161,24 @@ To execute the tests, follow these steps:
 
 1. **Accessing the Web Application**: Open your web browser and enter the URL of the People's Budget application.
 2. **Creating an Account**: Click on the "Sign Up" button and follow the on-screen instructions to create your account.
-   ![Create Account](screenshots/create-account.png)
+   ![Create account](https://i.ibb.co/LSxsWWH/Create-account.png)
 3. **Logging In**: After creating your account, click on the "Log In" button and enter your credentials to access the system.
-   ![Log In](screenshots/login.png)
+   ![Log In](https://i.ibb.co/gS5ZK2V/log-in.png)
 
 ### Navigating the Application
 
-1. **Dashboard**: Upon logging in, you will be redirected to the user dashboard. This is where you can find...
-   ![Dashboard](screenshots/dashboard.png)
+1. **Home page**: Upon logging in, you will be redirected to the user page home. This is where you can find...
+   ![Home](https://i.ibb.co/QFnrF0Q/home.png)
 2. **Voting**: To vote for a budget proposal, click on the "Vote" button next to... A confirmation prompt will appear, and you can submit your vote by clicking "Confirm".
-   ![Vote](screenshots/vote.png)
+   ![Vote](https://i.ibb.co/fDFWZjQ/voting.png)
 3. **Result Tracking**: You can track the real-time results of the voting process by accessing the "Results" section. Here, you will find visualizations and updates on the progress and outcome of the budget vote.
-   ![Results](screenshots/results.png)
-4. **Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. Use this information to make informed decisions and understand the overall participation patterns.
-   ![Voter Statistics](screenshots/voter-stats.png)
+   ![Results](https://i.ibb.co/px81PKF/results.png)
+4. **Dashboard - Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. Use this information to make informed decisions and understand the overall participation patterns.
+   ![Dashboard](https://i.ibb.co/W0LqVDk/dashboard.png)
 
 ### Revoting
 
-- **Revoting**: If you wish to change your vote...
-   ![Revoting](screenshots/revote.png)
+- **Revoting**: If you wish to change your vote.
 
 ### Additional Features
 - **Guest Mode**: Explore the system and familiarize yourself with the features in the Guest Mode before signing up. This allows you to get a glimpse of the application's functionalities without creating an account.
