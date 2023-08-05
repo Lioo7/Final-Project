@@ -168,12 +168,21 @@ To execute the tests, follow these steps:
 ### Navigating the Application
 
 1. **Home page**: Upon logging in, you will be redirected to the user page home. This is where you can find...
+
    ![Home](https://i.ibb.co/QFnrF0Q/home.png)
+
 2. **Voting**: To vote for a budget proposal, click on the "Vote" button next to... A confirmation prompt will appear, and you can submit your vote by clicking "Confirm".
+
    ![Vote](https://i.ibb.co/fDFWZjQ/voting.png)
+
 3. **Result Tracking**: You can track the real-time results of the voting process by accessing the "Results" section. Here, you will find visualizations and updates on the progress and outcome of the budget vote.
+
+
    ![Results](https://i.ibb.co/px81PKF/results.png)
-4. **Dashboard - Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. Use this information to make informed decisions and understand the overall participation patterns.
+
+4. **Dashboard - Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. 
+
+Use this information to make informed decisions and understand the overall participation patterns.
    ![Dashboard](https://i.ibb.co/W0LqVDk/dashboard.png)
 
 ### Revoting
