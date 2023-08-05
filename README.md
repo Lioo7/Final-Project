@@ -161,8 +161,11 @@ To execute the tests, follow these steps:
 
 1. **Accessing the Web Application**: Open your web browser and enter the URL of the People's Budget application.
 2. **Creating an Account**: Click on the "Sign Up" button and follow the on-screen instructions to create your account.
+
    ![Create account](https://i.ibb.co/LSxsWWH/Create-account.png)
+
 3. **Logging In**: After creating your account, click on the "Log In" button and enter your credentials to access the system.
+
    ![Log In](https://i.ibb.co/gS5ZK2V/log-in.png)
 
 ### Navigating the Application
