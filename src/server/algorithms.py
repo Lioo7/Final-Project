@@ -292,7 +292,7 @@ def convert_structure(vote) -> dict:
     updated_vote = _convert_recursive(vote)
     # iterate over the values in the updated budget vote and add up the total allocated budget amount in the first level
     for value in updated_vote.values():
-        total += value["total"]
+        total += float(value["total"])
     # add the total allocated budget amount to the top level of the updated dictionary
     updated_vote["total"] = total
 
