@@ -136,7 +136,7 @@ export default function Row(props) {
         <TableCell align="center">
           {props.totalBudget === 0
             ? 0
-            : Math.max(Math.min(((row.allocated_budget_amount / props.totalBudget) * 100).toFixed(1), 100), 0)}
+            : Math.max(Math.min(((row.allocated_budget_amount / 596770415000) * 100).toFixed(1), 100), 0)}
           %
         </TableCell>
       </TableRow>
