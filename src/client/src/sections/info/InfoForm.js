@@ -13,6 +13,7 @@ const styleCards = {
   borderRadius: '50%',
   backgroundColor: '#007bff',
   color: 'black',
+  minWidth: '120px',
   width: '120px',
   height: '120px',
   fontFamily: ' system-ui',
