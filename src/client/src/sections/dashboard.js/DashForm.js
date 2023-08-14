@@ -33,16 +33,16 @@ export default function DashForm() {
   return (
     <>
       <Cards voters={data.voter_count} />
-      <Box display="flex" gap={25} ali gnItems="center" marginTop={8}>
-        <Stack>
+      <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="center" marginTop={8}>
+        <Stack flex="1">
           <Typography variant="h6" style={{ marginLeft: '340px' }}>
             Ages{' '}
           </Typography>
           <Ages width={400} ages={data.ages} />
         </Stack>
 
-        <Stack>
-          <Typography variant="h6" style={{ marginLeft: '340px' }}>
+        <Stack >
+          <Typography variant="h6" style={{ marginLeft: 'auto', marginRight: '20px' }}>
             Gender{' '}
           </Typography>
           <Gender width={400} gender={data.genders} />
@@ -50,7 +50,7 @@ export default function DashForm() {
       </Box>
 
       <Stack marginTop={8}>
-        <Typography variant="h6" style={{ marginLeft: '890px' }}>
+        <Typography variant="h6" style={{ marginLeft: 'auto' }}>
           Previous budget{' '}
         </Typography>
         <PreviousBudget />
