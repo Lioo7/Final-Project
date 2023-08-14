@@ -21,7 +21,7 @@ const styleCards = {
 
 export default function InfoForm() {
   const [table, setTable] = useState({});
-  const url = 'http://localhost:5000/peoples_budget/information';
+  const url = 'http://localhost:5001/peoples_budget/information';
 
   useEffect(() => {
     const fetchData = async () => {

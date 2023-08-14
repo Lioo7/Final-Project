@@ -32,7 +32,7 @@ export default function SignUpForm() {
   const monthDiff = today.getMonth() - dob.getMonth();
 
   const handleClick = async () => {
-    const url = 'http://localhost:5000/peoples_budget/sign_up';
+    const url = 'http://localhost:5001/peoples_budget/sign_up';
 
     // Validate the input fields
     if (firstName.length <= 2) {

@@ -33,7 +33,7 @@ export default function LoginPage({ setId }) {
   const mdUp = useResponsive('up', 'md');
   const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem('table')) ?? []);
   const [isClicked, setIsClicked] = useState(false);
-  const url = 'http://localhost:5000/peoples_budget/login';
+  const url = 'http://localhost:5001/peoples_budget/login';
 
   // Fetching data of the old budget table
   useEffect(() => {

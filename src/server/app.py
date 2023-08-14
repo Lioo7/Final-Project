@@ -457,7 +457,7 @@ if __name__ == "__main__":
     batch.start()
 
     if mode == "dev":
-        app.run(port=5000, debug=True)
+        app.run(port=5001, debug=True)
 
     else:
-        serve(app, host="0.0.0.0", port=5000)
+        serve(app, host="0.0.0.0", port=5001)

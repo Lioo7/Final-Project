@@ -27,7 +27,7 @@ export default function PopCardSubmit(props) {
   const [open, setOpen] = React.useState(false);
   const [display, setDisplay] = useState(true);
   const [table, setTable] = useState(props.allData);
-  const url = 'http://localhost:5000/peoples_budget/voting';
+  const url = 'http://localhost:5001/peoples_budget/voting';
 
   useEffect(() => {
     setTable(props.allData);

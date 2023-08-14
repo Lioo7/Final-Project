@@ -22,7 +22,7 @@ export default function LoginForm({ setId }) {
   }, [id]);
 
   const handleClick = async () => {
-    const url = 'http://localhost:5000/peoples_budget/login';
+    const url = 'http://localhost:5001/peoples_budget/login';
     localStorage.setItem('id', id); // Set the user id in localStorage
 
     // Validate the input fields
@@ -59,7 +59,7 @@ export default function LoginForm({ setId }) {
   };
 
   const handleClickGuest = async () => {
-    const url = 'http://localhost:5000/peoples_budget/login';
+    const url = 'http://localhost:5001/peoples_budget/login';
     setId(account.id);
     setPassword(account.password);
     localStorage.setItem('id', id); // Set the user id in localStorage

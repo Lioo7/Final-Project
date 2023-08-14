@@ -13,7 +13,7 @@ export default function AccountPopover() {
   const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
   const navigate = useNavigate();
 
-  const url = `http://localhost:5000/peoples_budget/home?user_id=${id}`;
+  const url = `http://localhost:5001/peoples_budget/home?user_id=${id}`;
 
   const fetchData = async () => {
     try {

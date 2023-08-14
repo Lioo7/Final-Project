@@ -16,7 +16,7 @@ export default function ResultsForm() {
   const [algo1, setAlgo1] = useState({});
   const [algo2, setAlgo2] = useState({});
   const [lastTime, setLastTime] = useState('');
-  const url = 'http://localhost:5000/peoples_budget/results';
+  const url = 'http://localhost:5001/peoples_budget/results';
 
   const fetchData = async () => {
     try {

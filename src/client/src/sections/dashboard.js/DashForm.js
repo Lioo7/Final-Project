@@ -7,7 +7,7 @@ import Cards from './Cards';
 
 export default function DashForm() {
   const [data, setData] = useState({});
-  const url = 'http://localhost:5000/peoples_budget/dashboard';
+  const url = 'http://localhost:5001/peoples_budget/dashboard';
 
   useEffect(() => {
     const fetchData = async () => {
