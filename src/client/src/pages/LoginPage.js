@@ -68,55 +68,56 @@ export default function LoginPage({ setId }) {
         <title> Login </title>
       </Helmet>
 
-        {mdUp && (
-            <StyledImageContainer>
-              <Typography variant="h3" sx={{ px: 0, mt: 0, mb: -5 }}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`}
-                  alt="Logo"
-                  style={{ alignSelf: 'flex-start', width: '400px' }}
-                />
-              </Typography>
-              <img src={`${process.env.PUBLIC_URL}/img_bg/login.png`} alt="login" />
-            </StyledImageContainer>
-        )}
-        
-        <Container maxWidth="sm" style={{ marginRight: '100px' }}>
-          <StyledContent>
-            <Typography variant="h4" gutterBottom sx={{ display: 'flex', justifyContent: 'center' }}>
-              Login to People's Budget
-            </Typography>
+      {mdUp && (
+        <StyledImageContainer>
+          <Typography variant="h3" sx={{ px: 0, mt: 0, mb: -5 }}>
+            <img
+              src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`}
+              alt="Logo"
+              style={{ alignSelf: 'flex-start', width: '400px' }}
+            />
+          </Typography>
+          <img src={`${process.env.PUBLIC_URL}/img_bg/login.png`} alt="login" />
+        </StyledImageContainer>
+      )}
 
-            <LoginForm setId={setId} />
+      <Container maxWidth="sm" style={{ marginRight: '100px' }}>
+        <StyledContent>
+          <Typography variant="h4" gutterBottom sx={{ display: 'flex', justifyContent: 'center' }}>
+            Login to People's Budget
+          </Typography>
 
-            <Typography variant="body2" sx={{ mb: 3 }}>
-              Don?t have an account?
-              <br />
-              <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
-                Sign up
-              </Link>{' '}
-              here.
-            </Typography>
-            <Button
-              id="budgetBtn"
-              size="medium"
-              onClick={handleBudgetClick}
-              type="submit"
-              variant="text"
-              style={{
-                color: 'black',
-                margin: '0 auto',
-                width: '200px',
-                marginTop: '43px',
-                marginBottom: '30px',
-                border: '2mm double rgb(51, 102, 255, 0.65)',
-              }}
-            >
-              State Budget - 2022
-            </Button>
-            {isClicked && <OldBudget tableData={tableData} />}
-          </StyledContent>
-        </Container>
+          <LoginForm setId={setId} />
+
+          <Typography variant="body2" sx={{ mb: 3 }}>
+            Don't have an account?
+            <br />
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+              Sign up
+            </Link>{' '}
+            here.
+          </Typography>
+          <Button
+            id="budgetBtn"
+            size="medium"
+            onClick={handleBudgetClick}
+            type="submit"
+            variant="text"
+            style={{
+              color: 'black',
+              margin: '0 auto',
+              width: '200px',
+              marginTop: '43px',
+              marginBottom: '30px',
+              border: '2mm double rgb(51, 102, 255, 0.65)',
+            }}
+          >
+            State Budget - 2022
+          </Button>
+          {isClicked && <OldBudget tableData={tableData} />}
+        </StyledContent>
+      </Container>
     </>
   );
 }
