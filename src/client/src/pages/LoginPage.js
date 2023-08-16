@@ -90,7 +90,7 @@ export default function LoginPage({ setId }) {
             <LoginForm setId={setId} />
 
             <Typography variant="body2" sx={{ mb: 3 }}>
-              Don?t have an account?
+              Don't have an account?
               <br />
               <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
                 Sign up

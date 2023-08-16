@@ -35,7 +35,7 @@ export default function SignUpForm() {
     const url = 'http://localhost:5001/peoples_budget/sign_up';
 
     // Validate the input fields
-    if (firstName.length <= 2) {
+    if (firstName.length < 2) {
       setFirstNameError('Invalid First name: Please enter a first name.');
       return;
     }
@@ -47,7 +47,7 @@ export default function SignUpForm() {
     }
     setFirstNameError('');
 
-    if (lastName.length <= 2) {
+    if (lastName.length < 2) {
       setLastNameError('Invalid Last name: Please enter a last name.');
       return;
     }
