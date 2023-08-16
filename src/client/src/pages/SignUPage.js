@@ -66,6 +66,7 @@ export default function SignUPage() {
           <Typography variant="body2" sx={{ mb: 5 }}>
             Have an account?
             <br />
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <Link variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
               Login
             </Link>{' '}

@@ -68,26 +68,26 @@ export default function LoginPage({ setId }) {
         <title> Login </title>
       </Helmet>
 
-        {mdUp && (
-            <StyledImageContainer>
-              <Typography variant="h3" sx={{ px: 0, mt: 0, mb: -5 }}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`}
-                  alt="Logo"
-                  style={{ alignSelf: 'flex-start', width: '400px' }}
-                />
-              </Typography>
-              <img src={`${process.env.PUBLIC_URL}/img_bg/login.png`} alt="login" />
-            </StyledImageContainer>
-        )}
-        
-        <Container maxWidth="sm" style={{ marginRight: '100px' }}>
-          <StyledContent>
-            <Typography variant="h4" gutterBottom sx={{ display: 'flex', justifyContent: 'center' }}>
-              Login to People's Budget
-            </Typography>
+      {mdUp && (
+        <StyledImageContainer>
+          <Typography variant="h3" sx={{ px: 0, mt: 0, mb: -5 }}>
+            <img
+              src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`}
+              alt="Logo"
+              style={{ alignSelf: 'flex-start', width: '400px' }}
+            />
+          </Typography>
+          <img src={`${process.env.PUBLIC_URL}/img_bg/login.png`} alt="login" />
+        </StyledImageContainer>
+      )}
 
-            <LoginForm setId={setId} />
+      <Container maxWidth="sm" style={{ marginRight: '100px' }}>
+        <StyledContent>
+          <Typography variant="h4" gutterBottom sx={{ display: 'flex', justifyContent: 'center' }}>
+            Login to People's Budget
+          </Typography>
+
+          <LoginForm setId={setId} />
 
             <Typography variant="body2" sx={{ mb: 3 }}>
               Don't have an account?
