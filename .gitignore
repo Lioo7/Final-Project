@@ -260,3 +260,5 @@ $RECYCLE.BIN/
 **/.history
 
 # End of https://www.toptal.com/developers/gitignore/api/python,macos,windows,react
+# Local Netlify folder
+.netlify
