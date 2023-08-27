@@ -4,6 +4,7 @@ import { Stack, IconButton, InputAdornment, TextField, Link } from '@mui/materia
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
 import UserContext from '../../contexts/UserContext';
+import AddressContext from '../../contexts/AddressContext';
 import Iconify from '../../components/iconify/Iconify';
 import account from '../../_mock/account';
 
@@ -16,13 +17,14 @@ export default function LoginForm({ setId }) {
   const [passwordError, setPasswordError] = useState('');
 
   const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
+  const address = useContext(AddressContext);
 
   useEffect(() => {
     localStorage.setItem('id', id);
   }, [id]);
 
   const handleClick = async () => {
-    const url = 'http://localhost:5001/peoples_budget/login';
+    const url = `${address}login`;
     localStorage.setItem('id', id); // Set the user id in localStorage
 
     // Validate the input fields
@@ -59,7 +61,7 @@ export default function LoginForm({ setId }) {
   };
 
   const handleClickGuest = async () => {
-    const url = 'http://localhost:5001/peoples_budget/login';
+    const url = `${address}login`;
     setId(account.id);
     setPassword(account.password);
     localStorage.setItem('id', id); // Set the user id in localStorage
@@ -88,7 +90,7 @@ export default function LoginForm({ setId }) {
 
   const handleForgetPass = async () => {
     navigate('/peoples_budget/forget_password', { replace: true });
-  }
+  };
 
   return (
     <>
@@ -123,9 +125,36 @@ export default function LoginForm({ setId }) {
       </Stack>
 
       <Stack sx={{ my: 1 }}>
-        <Link variant="subtitle2" underline="always" alignItems="left" sx={{ cursor: 'pointer' }} onClick={handleForgetPass}>
+        <div
+          className="forgot-password-link"
+          role="button"
+          tabIndex="0"
+          onClick={handleForgetPass}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleForgetPass();
+            }
+          }}
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            color: 'blue', 
+            fontWeight: 'bold',
+            fontSize: '15px',
+          }}
+        >
+          Forgot Password?
+        </div>
+
+        {/* <Link
+          variant="subtitle2"
+          underline="always"
+          alignItems="left"
+          sx={{ cursor: 'pointer' }}
+          onClick={handleForgetPass}
+        >
           Forgot Password ?
-        </Link>
+        </Link> */}
       </Stack>
 
       <LoadingButton

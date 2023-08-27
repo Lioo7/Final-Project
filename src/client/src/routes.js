@@ -12,8 +12,7 @@ import LoginPage from './pages/LoginPage';
 import SignUPage from './pages/SignUPage';
 import ForgetPassPage from './pages/ForgetPassPage';
 
-
-export default function Router({setId}) {
+export default function Router({ setId }) {
   // Define the routes using the useRoutes hook from react-router-dom
   const routes = useRoutes([
     {
@@ -32,9 +31,9 @@ export default function Router({setId}) {
       element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/peoples_budget/login" />, index: true },
-        {path: '/peoples_budget/login', element: <LoginPage setId={setId} />},
-        {path: '/peoples_budget/sign_up', element: <SignUPage />},
-        {path: '/peoples_budget/forget_password', element: <ForgetPassPage />}
+        { path: '/peoples_budget/login', element: <LoginPage setId={setId} /> },
+        { path: '/peoples_budget/sign_up', element: <SignUPage /> },
+        { path: '/peoples_budget/forget_password', element: <ForgetPassPage /> },
       ],
     },
   ]);

@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Stack, Typography, Box } from '@mui/material';
 import Ages from './Ages';
 import Gender from './Gender';
 import PreviousBudget from './PreviousBudget';
 import Cards from './Cards';
+import AddressContext from '../../contexts/AddressContext';
 
 export default function DashForm() {
   const [data, setData] = useState({});
-  const url = 'http://localhost:5001/peoples_budget/dashboard';
+  const address = useContext(AddressContext);
+  const url = `${address}dashboard`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +35,13 @@ export default function DashForm() {
   return (
     <>
       <Cards voters={data.voter_count} />
-      <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="center" marginTop={8}>
+      <Box
+        display="flex"
+        flexDirection={{ xs: 'column', md: 'row' }}
+        alignItems="center"
+        justifyContent="center"
+        marginTop={8}
+      >
         <Stack flex="1">
           <Typography variant="h6" style={{ marginLeft: '340px' }}>
             Ages{' '}
@@ -41,7 +49,7 @@ export default function DashForm() {
           <Ages width={400} ages={data.ages} />
         </Stack>
 
-        <Stack >
+        <Stack>
           <Typography variant="h6" style={{ marginLeft: 'auto', marginRight: '20px' }}>
             Gender{' '}
           </Typography>

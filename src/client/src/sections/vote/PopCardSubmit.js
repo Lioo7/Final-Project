@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 import UserContext from '../../contexts/UserContext';
+import AddressContext from '../../contexts/AddressContext';
 
 function PaperComponent(props) {
   return (
@@ -27,7 +28,9 @@ export default function PopCardSubmit(props) {
   const [open, setOpen] = React.useState(false);
   const [display, setDisplay] = useState(true);
   const [table, setTable] = useState(props.allData);
-  const url = 'http://localhost:5001/peoples_budget/voting';
+  const address = useContext(AddressContext);
+
+  const url = `${address}voting`;
 
   useEffect(() => {
     setTable(props.allData);

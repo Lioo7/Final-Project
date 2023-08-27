@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Stack, Button, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-
+import AddressContext from '../../contexts/AddressContext';
 
 export default function Identification(props) {
   const [firstName, setFirstName] = useState('');
@@ -13,6 +13,8 @@ export default function Identification(props) {
   const [lastNameError, setLastNameError] = useState('');
   const [idError, setIdError] = useState('');
   const [birthDateError, setBirthDateError] = useState('');
+  const address = useContext(AddressContext);
+
 
   // Makes sure there are only words in the name
   const nameRegex = /^[\p{L}]+$/u;
@@ -22,13 +24,12 @@ export default function Identification(props) {
   let age = today.getFullYear() - dob.getFullYear();
   const monthDiff = today.getMonth() - dob.getMonth();
 
-
   useEffect(() => {
     props.setId(id);
   }, [id]);
 
   const handleSubmit = async () => {
-    const url = 'http://localhost:5001/peoples_budget/forget_password';
+    const url = `${address}forget_password`;
 
     // Validate the input fields
     if (firstName.length <= 2) {
@@ -174,4 +175,5 @@ export default function Identification(props) {
 
 Identification.propTypes = {
   setIsShowed: PropTypes.func.isRequired,
+  setId: PropTypes.func.isRequired,
 };

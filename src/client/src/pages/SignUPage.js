@@ -66,10 +66,27 @@ export default function SignUPage() {
           <Typography variant="body2" sx={{ mb: 5 }}>
             Have an account?
             <br />
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <Link variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+            <button
+              type="button"
+              onClick={handleClick}
+              className="login-button"
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                font: 'inherit',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                color: 'blue',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }}
+            >
               Login
-            </Link>{' '}
+            </button>{' '}
+            {/* <Link variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+              Login
+            </Link>{' '} */}
             here.
           </Typography>
         </StyledContent>

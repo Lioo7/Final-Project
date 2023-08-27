@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid } from '@mui/material';
 import InfoCards from './InfoCards';
+import AddressContext from '../../contexts/AddressContext';
 
 // The design of the information cards
 const styleCards = {
@@ -21,7 +22,10 @@ const styleCards = {
 
 export default function InfoForm() {
   const [table, setTable] = useState({});
-  const url = 'http://localhost:5001/peoples_budget/information';
+  const address = useContext(AddressContext);
+
+  const url = `${address}information`;
+  // const url = 'https://peoples-budget.onrender.com/peoples_budget/information';
 
   useEffect(() => {
     const fetchData = async () => {

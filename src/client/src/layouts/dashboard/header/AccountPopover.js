@@ -6,14 +6,16 @@ import { MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
 import UserContext from '../../../contexts/UserContext';
+import AddressContext from '../../../contexts/AddressContext';
+
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState('');
-  const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
   const navigate = useNavigate();
-
-  const url = `http://localhost:5001/peoples_budget/home?user_id=${id}`;
+  const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
+  const address = useContext(AddressContext);
+  const url = `${address}home?user_id=${id}`;
 
   const fetchData = async () => {
     try {
