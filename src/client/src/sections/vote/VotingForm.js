@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 
 import Row from './Row';
 import UserContext from '../../contexts/UserContext';
+import AddressContext from '../../contexts/AddressContext';
 import PopCardSubmit from './PopCardSubmit';
 import LoadingTable from './LoadingTable';
 
@@ -21,9 +22,12 @@ export default function VotingForm() {
   const [allData, setAllData] = useState({});
   const [newMaxBudget, setNewMaxBudget] = useState(0);
   const [display, setDisplay] = useState(true);
-  const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
   const maxBudget = 596770415000;
-  const url = `http://localhost:5001/peoples_budget/voting?user_id=${id}`;
+
+  const id = useContext(UserContext || JSON.stringify(localStorage.getItem('id')));
+  const address = useContext(AddressContext);
+  const url = `${address}voting?user_id=${id}`;
+
 
   // Receiving the budget table from the server
   const fetchData = async () => {

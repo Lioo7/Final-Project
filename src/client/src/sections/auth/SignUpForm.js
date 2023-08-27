@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Stack, IconButton, InputAdornment, TextField, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Iconify from '../../components/iconify/Iconify';
+import AddressContext from '../../contexts/AddressContext';
 
 export default function SignUpForm() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function SignUpForm() {
   const [genderError, setGenderError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const address = useContext(AddressContext);
 
   // Makes sure there are only words in the name
   const nameRegex = /^[\p{L}]+$/u;
@@ -32,7 +34,7 @@ export default function SignUpForm() {
   const monthDiff = today.getMonth() - dob.getMonth();
 
   const handleClick = async () => {
-    const url = 'http://localhost:5001/peoples_budget/sign_up';
+    const url = `${address}sign_up`;
 
     // Validate the input fields
     if (firstName.length < 2) {

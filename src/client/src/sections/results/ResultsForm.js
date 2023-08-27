@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Typography, Box, Button } from '@mui/material';
 import Loading from './Loading';
 import Algo from './Algo';
 import LoadingVote from './LoadingVote';
+import AddressContext from '../../contexts/AddressContext';
 
 export default function ResultsForm() {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,9 @@ export default function ResultsForm() {
   const [algo1, setAlgo1] = useState({});
   const [algo2, setAlgo2] = useState({});
   const [lastTime, setLastTime] = useState('');
-  const url = 'http://localhost:5001/peoples_budget/results';
+  const address = useContext(AddressContext);
+
+  const url = `${address}results`;
 
   const fetchData = async () => {
     try {

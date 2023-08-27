@@ -52,15 +52,22 @@ export default function ForgetPassPage() {
             />
           </Typography>
 
-          <div style={{ marginLeft: '30px',display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <img src={`${process.env.PUBLIC_URL}/img_bg/QuestionMarks.png`} alt="" style={{marginTop: '50px', width: '250px' }} />
-            <img src={`${process.env.PUBLIC_URL}/img_bg/ForgetPass.png`} alt="" style={{marginTop: '-100px', width: '440px' }} />
+          <div style={{ marginLeft: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={`${process.env.PUBLIC_URL}/img_bg/QuestionMarks.png`}
+              alt=""
+              style={{ marginTop: '50px', width: '250px' }}
+            />
+            <img
+              src={`${process.env.PUBLIC_URL}/img_bg/ForgetPass.png`}
+              alt=""
+              style={{ marginTop: '-100px', width: '440px' }}
+            />
           </div>
-
         </StyledImageContainer>
       )}
 
-      <Container maxWidth="sm" style={{ marginRight: '100px',  }}>
+      <Container maxWidth="sm" style={{ marginRight: '100px' }}>
         <StyledContent>
           {/* <Typography variant="h4" gutterBottom sx={{ marginTop: '-50px', display: 'flex', justifyContent: 'center' }}>
             Forget Password ?
@@ -71,9 +78,27 @@ export default function ForgetPassPage() {
           <Typography variant="body2" sx={{ mb: 5 }}>
             Have an account?
             <br />
-            <Link variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+            <button
+              type="button"
+              className="login-button"
+              onClick={handleClick}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                font: 'inherit',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                color: 'blue',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }}
+            >
               Login
-            </Link>{' '}
+            </button>{' '}
+            {/* <Link variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+              Login
+            </Link>{' '} */}
             here.
           </Typography>
         </StyledContent>

@@ -14,6 +14,8 @@ import NavSection from '../../../components/nav-section/NavSection';
 //
 import navConfig from './config';
 import UserContext from '../../../contexts/UserContext';
+import AddressContext from '../../../contexts/AddressContext';
+
 
 // ----------------------------------------------------------------------
 
@@ -41,8 +43,8 @@ export default function Nav({ openNav, onCloseNav }) {
   const [name, setName] = useState(JSON.stringify.apply(localStorage.getItem('name') ?? ''));
   const [profilePhoto, setProfilePhoto] = useState('');
   const id = useContext(UserContext) ?? localStorage.getItem('id') ?? '';
-
-  const url = `http://localhost:5001/peoples_budget/home?user_id=${id}`;
+  const address = useContext(AddressContext);
+  const url = `${address}home?user_id=${id}`;
 
   const fetchData = async () => {
     try {
@@ -76,7 +78,6 @@ export default function Nav({ openNav, onCloseNav }) {
     if (openNav) {
       onCloseNav();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (
@@ -88,17 +89,16 @@ export default function Nav({ openNav, onCloseNav }) {
     >
       <Box sx={{ py: 3, textAlign: 'center' }}>
         {/* <Typography sx={{ fontWeight: 'bold', fontSize: '22px' }}>People's Budget</Typography> */}
-        <img src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`} alt="Logo" 
-        style={{marginTop: '-30px'}}/>
+        <img src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`} alt="Logo" style={{ marginTop: '-30px' }} />
       </Box>
 
-      <Box sx={{ width: '94%' ,mb: 4, mx: 1.1, marginTop: '-15px'}}>
+      <Box sx={{ width: '94%', mb: 4, mx: 1.1, marginTop: '-15px' }}>
         <Link underline="none">
           <StyledAccount>
             <Avatar src={profilePhoto} alt="profilePhoto" />
 
             <Box sx={{ margin: 'auto' }}>
-              <Typography variant="subtitle2" sx={{fontSize: '16px' , color: 'text.primary' }}>
+              <Typography variant="subtitle2" sx={{ fontSize: '16px', color: 'text.primary' }}>
                 {name}
               </Typography>
 

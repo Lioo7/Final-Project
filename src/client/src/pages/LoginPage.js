@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import useResponsive from '../hooks/useResponsive';
 import LoginForm from '../sections/auth/LoginForm';
 import OldBudget from '../sections/auth/OldBudget';
+import AddressContext from '../contexts/AddressContext';
 
 // Styled components for custom styling
 const StyledContent = styled('div')(({ theme }) => ({
@@ -33,7 +34,8 @@ export default function LoginPage({ setId }) {
   const mdUp = useResponsive('up', 'md');
   const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem('table')) ?? []);
   const [isClicked, setIsClicked] = useState(false);
-  const url = 'http://localhost:5001/peoples_budget/login';
+  const address = useContext(AddressContext);
+  const url = `${address}login`;
 
   // Fetching data of the old budget table
   useEffect(() => {
@@ -89,34 +91,53 @@ export default function LoginPage({ setId }) {
 
           <LoginForm setId={setId} />
 
-            <Typography variant="body2" sx={{ mb: 3 }}>
-              Don't have an account?
-              <br />
-              <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
-                Sign up
-              </Link>{' '}
-              here.
-            </Typography>
-            <Button
-              id="budgetBtn"
-              size="medium"
-              onClick={handleBudgetClick}
-              type="submit"
-              variant="text"
+          <Typography variant="body2" sx={{ mb: 3 }}>
+            Don't have an account?
+            <br />
+            <button
+              type="button"
+              id="toSign"
+              className="sign-up-button"
+              onClick={handleClick}
               style={{
-                color: 'black',
-                margin: '0 auto',
-                width: '200px',
-                marginTop: '43px',
-                marginBottom: '30px',
-                border: '2mm double rgb(51, 102, 255, 0.65)',
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                font: 'inherit',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                color: 'blue',
+                fontWeight: 'bold',
+                fontSize: '14px',
               }}
             >
-              State Budget - 2022
-            </Button>
-            {isClicked && <OldBudget tableData={tableData} />}
-          </StyledContent>
-        </Container>
+              Sign up
+            </button>{' '}
+            {/* <Link id="toSign" variant="subtitle2" onClick={handleClick} sx={{ cursor: 'pointer' }}>
+              Sign up
+            </Link>{' '} */}
+            here.
+          </Typography>
+          <Button
+            id="budgetBtn"
+            size="medium"
+            onClick={handleBudgetClick}
+            type="submit"
+            variant="text"
+            style={{
+              color: 'black',
+              margin: '0 auto',
+              width: '200px',
+              marginTop: '43px',
+              marginBottom: '30px',
+              border: '2mm double rgb(51, 102, 255, 0.65)',
+            }}
+          >
+            State Budget - 2022
+          </Button>
+          {isClicked && <OldBudget tableData={tableData} />}
+        </StyledContent>
+      </Container>
     </>
   );
 }

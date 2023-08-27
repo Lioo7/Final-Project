@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Stack, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Iconify from '../../components/iconify/Iconify';
+import AddressContext from '../../contexts/AddressContext';
+
 
 export default function ForgetPass(props) {
   const navigate = useNavigate();
@@ -17,13 +19,14 @@ export default function ForgetPass(props) {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const [id, setId] = useState(props.id);
+  const address = useContext(AddressContext);
 
   useEffect(() => {
     setId(props.id);
   }, [props.id]);
 
   const handleClick = async () => {
-    const url = 'http://localhost:5001/peoples_budget/forget_password';
+    const url = `${address}forget_password`;
 
     // Validate the input fields
     if (newPassword.length < 5) {
@@ -125,4 +128,5 @@ export default function ForgetPass(props) {
 
 ForgetPass.propTypes = {
   setIsShowed: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
