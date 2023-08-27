@@ -102,6 +102,9 @@ def calculte_results():
 
 #  -------------------------------- Login -----------------------------------------------------
 
+@app.route("/", methods=["GET"])
+def welcome():
+    return jsonify({"status": "Hello From Server :)"})
 
 @app.route("/peoples_budget/login", methods=["POST"])
 def login():
