@@ -106,8 +106,7 @@ To set up the People's Budget web application locally, follow these steps:
 To configure the required environment variables for the database:
 * 'user_budget_system': This variable represents the desired username for the budget system, which can be used to authenticate and identify the user within the system.
 * 'system_budget_password': This variable represents the password for the budget system user, which is required for authentication and accessing the budget system's functionalities.
-* 'MYSQL_ROOT_PASSWORD': This variable represents the desired password for the MySQL root user, which is the highest level of access to the MySQL database system. 
-
+ 
 ##### Linux
 
 For Linux users, you can refer to [this tutorial](https://www.youtube.com/watch?v=Y6_7xaxkPik) on setting environment variables.
@@ -121,13 +120,15 @@ For Mac users, you can refer to [this tutorial](https://www.youtube.com/watch?v=
 For Windows users, you can refer to [this tutorial](https://www.youtube.com/watch?v=ow2jROvxyH4) on setting environment variables.
 
 After defining the environment variables using the instructions above, continue with the installation steps:
-<br>7. Navigate to the client directory: `cd ../database`
-<br>8. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
-<br>9. To initialize the database, run the command: `python sql_Initialization.py`.
-<br>10. Start the server by navigating to the server directory and running the command: `python app.py`.
-<br>11. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-<br>12. Open the client-side application in your web browser: `http://localhost:5000`.
-<br>13. You're ready to actively participate in the budget voting process!
+<br>7. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
+<br>8. Open MySQL terminal: Launch the MySQL terminal with the following command:: `mysql -u root -p`
+<br>9. Create a new user in the database: `CREATE USER 'budget_user'@'localhost' IDENTIFIED BY 'budget_password';`
+<br>10. Navigate to the database directory: `cd ../database`
+<br>11. To initialize the database, run the command: `python sql_Initialization.py`.
+<br>12. Start the server by navigating to the server directory and running the command: `python app.py`.
+<br>13. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+<br>14. Open the client-side application in your web browser: `http://localhost:5001`.
+<br>15. You're ready to actively participate in the budget voting process!
 
 ## Testing
 
