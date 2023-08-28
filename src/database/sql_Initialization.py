@@ -20,15 +20,15 @@ logger = logging.getLogger()
 
 # -*- coding: utf-8 -*-
 
-class SQL_init:
+class SQLInitializer:
 
     """A class that initializes the database"""
 
     # Static var
-    data_base_name = "db_budget_system"
+    database_name = "db_budget_system"
 
     @staticmethod
-    def first_connect_database():
+    def initialize_database_connection():
         load_dotenv()
 
         db = mysql.connector.connect(
@@ -39,7 +39,7 @@ class SQL_init:
         return db
 
     @staticmethod
-    def connect_database():
+    def establish_database_connection():
         db = mysql.connector.connect(
             host="localhost",
             user=os.environ.get("ADMIN_USER"),
@@ -68,10 +68,10 @@ class SQL_init:
     @staticmethod
     def clean_database(cursor) -> None:
         # Clean database
-        SQL_init.delete_table(cursor, "CURRENT_BUDGET")
-        SQL_init.delete_table(cursor, "USERS_VOTES")
-        SQL_init.delete_table(cursor, "USERS")
-        SQL_init.delete_table(cursor, "INFORMATION")
+        SQLInitializer.delete_table(cursor, "CURRENT_BUDGET")
+        SQLInitializer.delete_table(cursor, "USERS_VOTES")
+        SQLInitializer.delete_table(cursor, "USERS")
+        SQLInitializer.delete_table(cursor, "INFORMATION")
 
     @staticmethod
     def insert_to_current_budget_table(mycursor, node: Node) -> None:
@@ -87,7 +87,7 @@ class SQL_init:
             ),
         )
         for child in node.get_children():
-            SQL_init.insert_to_current_budget_table(mycursor, child)
+            SQLInitializer.insert_to_current_budget_table(mycursor, child)
 
     @staticmethod
     def load_and_insert_to_current_budget_table(cursor, db) -> None:
@@ -227,14 +227,14 @@ class SQL_init:
 
 
     def Load_datasets(cursor,db):
-        SQL_init.load_information_to_information_table(cursor, db)
-        SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+        SQLInitializer.load_information_to_information_table(cursor, db)
+        SQLInitializer.load_and_insert_to_current_budget_table(cursor, db)
     
     
     def build_DB(cursor,db):
         
         # Build database
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor,
             "CURRENT_BUDGET",
             """kod_one INT, name_one VARCHAR(1000),
@@ -242,41 +242,52 @@ class SQL_init:
                                 kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
                                 kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)""",
         )
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor,
             "USERS",
             """user_id INT PRIMARY KEY, first_name VARCHAR(255),
                                 last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                                 gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)""",
         )
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor, "USERS_VOTES", "user_id VARCHAR(255), vote TEXT(4294967295)"
         )
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
         )
         
         # Load datasets
-        SQL_init.Load_datasets(cursor,db)
+        SQLInitializer.Load_datasets(cursor,db)
 
-    def connect_server():
-        db = SQL_init.first_connect_database()
-        cursor = db.cursor()
-        SQL_init.create_database(cursor, SQL_init.data_base_name)
-        db.disconnect()
+    @staticmethod
+    def setup_database_environment():
+        """Establishes a connection to the server, creates the database, and disconnects."""
+        try:
+            db = SQLInitializer.initialize_database_connection()
+            cursor = db.cursor()
+            SQLInitializer.create_database(cursor, SQLInitializer.database_name)
+        except Exception as e:
+            logger.error(f"Error setting up database environment: {e}")
+            raise
+        finally:
+            try:
+                db.disconnect() 
+            except Exception as e:
+                logger.error(f"Error closing database connection: {e}")
+                raise
     
     
 if __name__ == "__main__":
     
     # Connect server
-    SQL_init.connect_server()
+    SQLInitializer.setup_database_environment()
 
-    db, cursor = SQL_init.connect_database()
+    db, cursor = SQLInitializer.establish_database_connection()
 
     # Clean database
-    SQL_init.clean_database(cursor)
+    SQLInitializer.clean_database(cursor)
     
     #create & build database
-    SQL_init.build_DB(cursor,db)
+    SQLInitializer.build_DB(cursor,db)
     
     
