@@ -7,7 +7,7 @@ import logging
 
 import mysql.connector
 import pandas
-from sql_database import SQL_database
+from dotenv import load_dotenv
 
 from server.node import Node
 from server.tree import Tree
@@ -20,7 +20,6 @@ logger = logging.getLogger()
 
 # -*- coding: utf-8 -*-
 
-
 class SQL_init:
 
     """A class that initializes the database"""
@@ -30,22 +29,25 @@ class SQL_init:
 
     @staticmethod
     def first_connect_database():
+        load_dotenv()
+
         db = mysql.connector.connect(
             host="localhost",
-            user=os.environ.get("user_budget_system"),
-            password=os.environ.get("system_budget_password"),
+            user=os.environ.get("ADMIN_USER"),
+            password=os.environ.get("ADMIN_PASSWORD"),
         )
         return db
 
-    # @staticmethod
-    # def connect_database():
-    #     db = mysql.connector.connect(
-    #         host="localhost",
-    #         user=os.environ.get("user_budget_system"),
-    #         password=os.environ.get("system_budget_password"),
-    #         database="db_budget_system",
-    #     )
-    #     return db
+    @staticmethod
+    def connect_database():
+        db = mysql.connector.connect(
+            host="localhost",
+            user=os.environ.get("ADMIN_USER"),
+            password=os.environ.get("ADMIN_PASSWORD"),
+            database="db_budget_system",
+        )
+        cursor = db.cursor()
+        return db, cursor
 
     @staticmethod
     def create_database(cursor, database_name: str) -> None:
@@ -260,15 +262,16 @@ class SQL_init:
     def connect_server():
         db = SQL_init.first_connect_database()
         cursor = db.cursor()
-        return db ,cursor
+        SQL_init.create_database(cursor, SQL_init.data_base_name)
+        db.disconnect()
     
     
 if __name__ == "__main__":
     
     # Connect server
-    db, cursor = SQL_init.connect_server()
+    SQL_init.connect_server()
 
-    SQL_init.create_database(cursor, SQL_init.data_base_name)
+    db, cursor = SQL_init.connect_database()
 
     # Clean database
     SQL_init.clean_database(cursor)

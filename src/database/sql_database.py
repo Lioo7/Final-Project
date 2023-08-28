@@ -7,6 +7,7 @@ import os
 from datetime import date, datetime, timedelta
 
 import mysql.connector
+from dotenv import load_dotenv
 
 from src.database.abstract_Database import Abstract_Database
 from src.server.node import Node
@@ -193,10 +194,12 @@ class SQL_database(Abstract_Database):
 
     @staticmethod
     def create_config() -> dict:
+        load_dotenv()
+        
         configuration = {
             "host": "localhost",
-            "user": os.environ.get("user_budget_system"),
-            "password": os.environ.get("system_budget_password"),
+            "user": os.environ.get("ADMIN_USER"),
+            "password": os.environ.get("ADMIN_PASSWORD"),
             "database": "db_budget_system",
             "raise_on_warnings": True,
             "charset": "utf8",
