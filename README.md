@@ -86,7 +86,6 @@ User experience and user interface design are essential aspects of our project. 
 
 To run the People's Budget web application, you need to have the following installed on your system:
 
-- Docker (23.0.5)
 - Python (3.11.0)
 - Node.js (18.13.0)
 
@@ -121,12 +120,11 @@ For Mac users, you can refer to [this tutorial](https://www.youtube.com/watch?v=
 For Windows users, you can refer to [this tutorial](https://www.youtube.com/watch?v=ow2jROvxyH4) on setting environment variables.
 
 After defining the environment variables using the instructions above, continue with the installation steps:
-<br>5. Run the MySQL database using Docker Compose by navigating to the database directory and running the command: `docker-compose up -d`.
-<br>6. To initialize the database, run the command: `python sql_Initialization.py`.
-<br>7. Start the server by navigating to the server directory and running the command: `python app.py`.
-<br>8. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-<br>9. Open the client-side application in your web browser: `http://localhost:5000`.
-<br>10. You're ready to actively participate in the budget voting process!
+<br>5. To initialize the database, run the command: `python sql_Initialization.py`.
+<br>6. Start the server by navigating to the server directory and running the command: `python app.py`.
+<br>7. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+<br>8. Open the client-side application in your web browser: `http://localhost:5000`.
+<br>9. You're ready to actively participate in the budget voting process!
 
 ## Testing
 
