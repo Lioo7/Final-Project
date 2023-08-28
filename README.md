@@ -45,7 +45,7 @@
 
 ## Project Goal
 
-The goal of our web application is to enable citizens to actively participate in the voting process for the state/municipality budget, ensuring alignment with the will of the people. We aim to address the lack of influence and disconnection that citizens often feel regarding how their taxes are utilized. By providing an intuitive and transparent platform, we empower individuals to have a direct impact on budget decisions.
+Our web application aims to foster active citizen participation in the state/municipality budget voting process, ensuring alignment with the will of the people. We seek to address the lack of influence and disconnection that citizens often feel regarding how their taxes are utilized. Through our intuitive and transparent platform, we empower individuals to have a direct impact on budget decisions.
 
 ## Introduction
 
@@ -60,7 +60,7 @@ Are you tired of feeling like your voice doesn't matter when it comes to budget 
 
 ## Selected Approach
 
-To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), application layer (server), and the data layer (database).
+To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), the application layer (server), and the data layer (database).
 
 ### Architecture and Design Pattern
 
@@ -158,30 +158,28 @@ To execute the tests, follow these steps:
 
 ### Navigating the Application
 
-1. **Home page**: Upon logging in, you will be redirected to the user page home. This is where you can find...
+1. **Home page**: Upon logging in, you will be redirected to the home page. This page provides information about the system.
 
    ![Home](https://i.ibb.co/QFnrF0Q/home.png)
 
-2. **Voting**: To vote for a budget proposal, click on the "Vote" button next to... A confirmation prompt will appear, and you can submit your vote by clicking "Confirm".
+2. **Voting**: You can easily modify the budget as per your preferences by casting your vote for a budget proposal. To vote, simply click on the "Vote" button at the bottom of the page and confirm your selection when prompted.
 
    ![Vote](https://i.ibb.co/fDFWZjQ/voting.png)
 
-3. **Result Tracking**: You can track the real-time results of the voting process by accessing the "Results" section. Here, you will find visualizations and updates on the progress and outcome of the budget vote.
-
+3. **Result Tracking**: You can monitor the progress and outcome of the budget vote in real-time by accessing the "Results" section. Our sophisticated algorithms calculate and present visualizations and updates on the voting process.
 
    ![Results](https://i.ibb.co/px81PKF/results.png)
 
-4. **Dashboard - Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. 
-
-Use this information to make informed decisions and understand the overall participation patterns.
+4. **Dashboard**: Explore our comprehensive voter statistics dashboard to gain valuable insights into voting trends, demographics, and other relevant data. Utilize this information to make informed decisions and gain a better understanding of overall participation patterns.
+   
    ![Dashboard](https://i.ibb.co/W0LqVDk/dashboard.png)
 
 ### Revoting
 
-- **Revoting**: If you wish to change your vote.
+- **Revoting**: If you have already cast your vote but have since changed your mind, don't worry! Our system allows you to modify your vote by simply casting a new vote before the voting period ends.
 
 ### Additional Features
-- **Guest Mode**: Explore the system and familiarize yourself with the features in the Guest Mode before signing up. This allows you to get a glimpse of the application's functionalities without creating an account.
+- **Guest Mode**: Before signing up, we recommend exploring the system and familiarizing yourself with the features in Guest Mode. This allows you to preview the application's functionalities without the need to create an account.
 
 ## License
 
