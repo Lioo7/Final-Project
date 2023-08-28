@@ -94,7 +94,7 @@ To run the People's Budget web application, you need to have the following insta
 To set up the People's Budget web application locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/ElhaiMansbach/Final-Project`
-2. Navigate to the project directory: `cd Final-Project`
+2. Navigate to the server directory: `cd Final-Project/src/server`
 3. Install the required Python dependencies: `pip install -r requirements.txt`
 4. Navigate to the client directory: `cd src/client`
 5. Install the required npm dependencies: `npm install`
@@ -102,7 +102,7 @@ To set up the People's Budget web application locally, follow these steps:
 
 #### Environment Variable Configuration
 
-To configure the required environment variables:
+To configure the required environment variables for the database:
 * 'user_budget_system': This variable represents the desired username for the budget system, which can be used to authenticate and identify the user within the system.
 * 'system_budget_password': This variable represents the password for the budget system user, which is required for authentication and accessing the budget system's functionalities.
 * 'MYSQL_ROOT_PASSWORD': This variable represents the desired password for the MySQL root user, which is the highest level of access to the MySQL database system. 
@@ -120,11 +120,12 @@ For Mac users, you can refer to [this tutorial](https://www.youtube.com/watch?v=
 For Windows users, you can refer to [this tutorial](https://www.youtube.com/watch?v=ow2jROvxyH4) on setting environment variables.
 
 After defining the environment variables using the instructions above, continue with the installation steps:
-<br>5. To initialize the database, run the command: `python sql_Initialization.py`.
-<br>6. Start the server by navigating to the server directory and running the command: `python app.py`.
-<br>7. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-<br>8. Open the client-side application in your web browser: `http://localhost:5000`.
-<br>9. You're ready to actively participate in the budget voting process!
+<br>7. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
+<br>8. To initialize the database, run the command: `python sql_Initialization.py`.
+<br>9. Start the server by navigating to the server directory and running the command: `python app.py`.
+<br>10. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+<br>11. Open the client-side application in your web browser: `http://localhost:5000`.
+<br>12. You're ready to actively participate in the budget voting process!
 
 ## Testing
 
