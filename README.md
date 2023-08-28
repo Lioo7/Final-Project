@@ -86,6 +86,7 @@ User experience and user interface design are essential aspects of our project. 
 
 To run the People's Budget web application, you need to have the following installed on your system:
 
+- MySql (8.1.0)
 - Python (3.11.0)
 - Node.js (18.13.0)
 
@@ -96,7 +97,7 @@ To set up the People's Budget web application locally, follow these steps:
 1. Clone the repository: `git clone https://github.com/ElhaiMansbach/Final-Project`
 2. Navigate to the server directory: `cd Final-Project/src/server`
 3. Install the required Python dependencies: `pip install -r requirements.txt`
-4. Navigate to the client directory: `cd src/client`
+4. Navigate to the client directory: `cd ../client`
 5. Install the required npm dependencies: `npm install`
 6. Set up the necessary environment variables.
 
