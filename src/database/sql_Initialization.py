@@ -29,14 +29,23 @@ class SQL_init:
     data_base_name = "db_budget_system"
 
     @staticmethod
-    def connect_database():
+    def first_connect_database():
         db = mysql.connector.connect(
             host="localhost",
             user=os.environ.get("user_budget_system"),
             password=os.environ.get("system_budget_password"),
-            database="db_budget_system",
         )
         return db
+
+    # @staticmethod
+    # def connect_database():
+    #     db = mysql.connector.connect(
+    #         host="localhost",
+    #         user=os.environ.get("user_budget_system"),
+    #         password=os.environ.get("system_budget_password"),
+    #         database="db_budget_system",
+    #     )
+    #     return db
 
     @staticmethod
     def create_database(cursor, database_name: str) -> None:
@@ -220,10 +229,9 @@ class SQL_init:
         SQL_init.load_and_insert_to_current_budget_table(cursor, db)
     
     
-    def create_and_build_DB(cursor,db):
+    def build_DB(cursor,db):
         
-        # Create and build database
-        SQL_init.create_database(cursor, SQL_init.data_base_name)
+        # Build database
         SQL_init.create_table(
             cursor,
             "CURRENT_BUDGET",
@@ -250,7 +258,7 @@ class SQL_init:
         SQL_init.Load_datasets(cursor,db)
 
     def connect_server():
-        db = SQL_init.connect_database()
+        db = SQL_init.first_connect_database()
         cursor = db.cursor()
         return db ,cursor
     
@@ -260,10 +268,12 @@ if __name__ == "__main__":
     # Connect server
     db, cursor = SQL_init.connect_server()
 
+    SQL_init.create_database(cursor, SQL_init.data_base_name)
+
     # Clean database
     SQL_init.clean_database(cursor)
     
     #create & build database
-    SQL_init.create_and_build_DB(cursor,db)
+    SQL_init.build_DB(cursor,db)
     
     
