@@ -121,12 +121,13 @@ For Mac users, you can refer to [this tutorial](https://www.youtube.com/watch?v=
 For Windows users, you can refer to [this tutorial](https://www.youtube.com/watch?v=ow2jROvxyH4) on setting environment variables.
 
 After defining the environment variables using the instructions above, continue with the installation steps:
-<br>7. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
-<br>8. To initialize the database, run the command: `python sql_Initialization.py`.
-<br>9. Start the server by navigating to the server directory and running the command: `python app.py`.
-<br>10. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-<br>11. Open the client-side application in your web browser: `http://localhost:5000`.
-<br>12. You're ready to actively participate in the budget voting process!
+<br>7. Navigate to the client directory: `cd ../database`
+<br>8. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
+<br>9. To initialize the database, run the command: `python sql_Initialization.py`.
+<br>10. Start the server by navigating to the server directory and running the command: `python app.py`.
+<br>11. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+<br>12. Open the client-side application in your web browser: `http://localhost:5000`.
+<br>13. You're ready to actively participate in the budget voting process!
 
 ## Testing
 
