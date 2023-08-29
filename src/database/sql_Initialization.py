@@ -7,7 +7,7 @@ import logging
 
 import mysql.connector
 import pandas
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 from server.node import Node
 from server.tree import Tree
@@ -29,8 +29,9 @@ class SQLInitializer:
 
     @staticmethod
     def initialize_database_connection():
-        load_dotenv()
-
+        dotenv_file = find_dotenv('.env')
+        load_dotenv(dotenv_file)
+        
         db = mysql.connector.connect(
             host="localhost",
             user=os.environ.get("ADMIN_USER"),
