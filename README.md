@@ -29,7 +29,12 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-     - [Environment Variable Configuration](#environment-variable-configuration)
+     - [Server Installation](#server-installation)
+        - [Environment Variable Configuration for the Server and Database](#environment-variable-configuration-for-the-server-and-database)
+        - [Database Initialization and Running the Server](#database-initialization-and-running-the-server)
+     - [Client Installation](#client-installation)
+        - [Environment Variable Configuration for the Client](#environment-variable-configuration-for-the-client)
+        - [Running the Client](#running-the-client)
 - [Testing](#testing)
 - [User Guide](#user-guide)
   - [Getting Started](#getting-started)
@@ -92,33 +97,33 @@ To run the People's Budget web application, you need to have the following insta
 To set up the People's Budget application locally, follow the steps below for both the Client and Server components:
 
 #### Server Installation
-1. Clone the repository: ```bash git clone https://github.com/ElhaiMansbach/Final-Project```
-2. Navigate to the server directory: ```bash cd Final-Project/src/server```
-3. Install the required Python dependencies: ```bash pip install -r requirements.txt```
+1. Clone the repository: ```git clone https://github.com/ElhaiMansbach/Final-Project```
+2. Navigate to the server directory: ```cd Final-Project/src/server```
+3. Install the required Python dependencies: ```pip install -r requirements.txt```
 4. Set up the necessary environment variables.
 
 ##### Environment Variable Configuration for the Server and Database
 1. Create an '.env' file: Use the '.env.example' file in the server directory as a template.
-```bash cp .env.example .env```
+```cp .env.example .env```
 2. Edit the '.env' file: Open the '.env' file you've just created and modify the values if necessary.
 
-###### Database Initialization and Running the Server
-1. Install MySQL server and client packages: ```bash sudo apt install mysql-server mysql-client```
-2. To initialize the database, navigate to the database directory and run the command: ```bash python3 sql_Initialization.py```
-3. Navigate back to the server directory and start the server by running the command: ```bash python3 app.py```
+##### Database Initialization and Running the Server
+1. Install MySQL server and client packages: ```sudo apt install mysql-server mysql-client```
+2. To initialize the database, navigate to the database directory and run the command: ```python3 sql_Initialization.py```
+3. Navigate back to the server directory and start the server by running the command: ```python3 app.py```
 
 #### Client Installation
-1. On a new terminal, navigate to the client directory: ```bash cd src/client```
-2. Install the required npm dependencies: ```bash npm install```
+1. On a new terminal, navigate to the client directory: ```cd src/client```
+2. Install the required npm dependencies: ```npm install```
 3. Set up the necessary environment variables.
 
 ##### Environment Variable Configuration for the Client
 1. Create an '.env' file: Use the '.env.example' file in the client directory as a template.
-```bash cp .env.example .env```
+```cp .env.example .env```
 2. Edit the '.env' file: Open the '.env' file you've just created and modify the values if necessary.
 
-###### Running the Client
-1. Start the client by running the command: ```bash npm start```
+##### Running the Client
+1. Start the client by running the command: ```npm start```
 2. The web browser will automatically initiate the client-side application.
 3. You're ready to actively participate in the budget voting process!
 
