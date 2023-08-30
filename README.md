@@ -97,17 +97,18 @@ To set up the People's Budget web application locally, follow these steps:
 4. Navigate to the client directory: `cd ../client`
 5. Install the required npm dependencies: `npm install`
 6. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
-7. Navigate to the database directory: `cd ../database`
+7. Navigate to the src directory: `cd ..`
 8. Set up the necessary environment variables.
 
 #### Environment Variable Configuration
 
 To configure the required environment variables for the database:
-1. Create an '.env' file: Use the '.env.example' file in the database directory as a template. You can copy and rename it to '.env':
-`cp ../database/.env.example ../database/.env`
+1. Create an '.env' file: Use the '.env.example' file in the src directory as a template. You can copy and rename it to '.env':
+`cp ../src/.env.example ../src/.env`
 2. Edit the '.env' file: Open the '.env' file you've just created and modify the values accordingly, if necessary.
+3. If you modified the port in the env file, you should also modify it in src/client/src/App.js so that the port is consistent.
 
-<br>9. To initialize the database, run the command: `python sql_Initialization.py`.
+<br>9. To initialize the database, nevigate to the database directory and run the command: `python sql_Initialization.py`.
 <br>10. Start the server by navigating to the server directory and running the command: `python app.py`.
 <br>11. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
 <br>12. Open the client-side application in your web browser: `http://localhost:5001`.
