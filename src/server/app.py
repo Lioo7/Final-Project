@@ -17,19 +17,15 @@ from algorithms import (
     unite_votes,
     update_dict_ids,
 )
-from utilities_component import Utilities_component
+from utilities_component import UtilitiesComponent
 from calculator import Calculator
 from counter import Counter
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from node import Node
-from tree import Tree
 from user import User
 from waitress import serve
-
 from server.database.data_handler import data_handler
 from server.database.sql_database import SQL_database
-
 sys.path.append("..")
 
 app = Flask(__name__)
@@ -41,7 +37,7 @@ database = data_handler(SQL_database(SQL_database.create_config()))
 batch_database = data_handler(SQL_database(SQL_database.create_config()))
 
 # Logic side
-component = Utilities_component()
+component = UtilitiesComponent()
 
 # Batch calculate results
 algorithms_results = None

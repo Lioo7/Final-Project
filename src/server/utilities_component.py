@@ -31,7 +31,7 @@ from database.sql_database import SQL_database
 
 
 
-class Utilities_component :
+class UtilitiesComponent :
     '''This class implements the Facade software design
     This class uses all subsystems and classes and exposes to server the functions cleanly
     For loose coupling between the server and the logical side'''
