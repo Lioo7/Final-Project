@@ -27,9 +27,8 @@ from tree import Tree
 from user import User
 from waitress import serve
 
-from database.abstract_Database import Abstract_Database
-from database.data_handler import data_handler
-from database.sql_database import SQL_database
+from server.database.data_handler import data_handler
+from server.database.sql_database import SQL_database
 
 sys.path.append("..")
 
