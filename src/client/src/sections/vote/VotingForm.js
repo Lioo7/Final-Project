@@ -28,7 +28,6 @@ export default function VotingForm() {
   const address = useContext(AddressContext);
   const url = `${address}voting?user_id=${id}`;
 
-
   // Receiving the budget table from the server
   const fetchData = async () => {
     try {
@@ -273,7 +272,9 @@ export default function VotingForm() {
     const checkedRows = data.filter((row) => !row.checked);
     const rowsIds = checkedRows.map((row) => row.id);
     let times = 1; // limit the while loop (not to stuck in inifinte loop)
+    // let diffDist = diff
 
+    // while (diffDist !== 0 && times < 20 && countRows > 0) {
     while (diff !== 0 && times < 20 && countRows > 0) {
       times += 1;
       let removedRows = 0; // count of rows that has reached to their max/0
@@ -309,6 +310,7 @@ export default function VotingForm() {
         }
         return { ...row, allocated_budget_amount: currBudget };
       });
+      // diffDist = remain;
       diff = remain;
       countRows -= removedRows;
     }

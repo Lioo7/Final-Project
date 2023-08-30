@@ -12,8 +12,8 @@ import AddressContext from './contexts/AddressContext';
 export default function App() {
   // Define a state variable 'id' and initialize it with the value of 'localStorage.getItem('id')' or an empty string if it's not available
   const [id, setId] = useState(localStorage.getItem('id') ?? '');
-  // const [address] = useState('http://157.230.22.122:5001/peoples_budget/');
-  const [address] = useState('http://localhost:5001/peoples_budget/');
+  const [address] = useState('http://157.230.22.122:5001/peoples_budget/');
+  // const [address] = useState('http://localhost:5001/peoples_budget/');
 
   return (
     // Provide the 'id' value to the UserContext using UserContext.Provider
