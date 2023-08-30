@@ -40,7 +40,7 @@ CORS(app)
 
 # Initialize modules and variables
 load_dotenv(find_dotenv(".env"))
-port = os.environ.get("PORT")
+port = os.environ.get("PORT", 5002)
 mode = os.environ.get("MODE", "DEV")
 
 # DB
