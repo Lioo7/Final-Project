@@ -48,7 +48,7 @@ export default function InfoForm() {
     <Grid container spacing={3}>
       {Object.keys(table).map((key, index) => (
         <Grid item xs={6} sm={6} md={3} key={index}>
-          <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} />
+          <InfoCards keys={key} value={table[key]} index={index} styleCards={styleCards} scrollTargetId="myScrollTarget" />
         </Grid>
       ))}
     </Grid>

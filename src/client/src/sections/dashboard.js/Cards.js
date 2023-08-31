@@ -32,4 +32,4 @@ export default function Cards(props) {
   );
 }
 
-Cards.propTypes = { voters: PropTypes.number };
+Cards.propTypes = { voters: PropTypes.string };

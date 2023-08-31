@@ -48,6 +48,7 @@ export default function PopCardSubmit(props) {
     // removed the table
     props.setDisplay(false);
     setDisplay(false);
+    console.log(props.allData)
 
     try {
       const response = await fetch(url, {
@@ -119,5 +120,5 @@ export default function PopCardSubmit(props) {
 
 PopCardSubmit.propTypes = {
   setDisplay: PropTypes.func.isRequired,
-  allData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allData: PropTypes.object.isRequired,
 };

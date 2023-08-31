@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 // sections
 import SignUpForm from '../sections/auth/SignUpForm';
 import useResponsive from '../hooks/useResponsive';

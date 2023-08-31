@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
@@ -31,14 +32,15 @@ const colorBg = [
 
 export default function InfoCards(props) {
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   return (
     <div>
       <Grid container spacing={3}>
         <Button
           id={props.index}
-          item
           xs={12}
           sm={6}
           md={3}

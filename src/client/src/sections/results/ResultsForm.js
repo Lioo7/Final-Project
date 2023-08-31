@@ -132,13 +132,11 @@ export default function ResultsForm() {
           </Button>
         </div>
       </Box>
-
       {(displayGraph1 || displayGraph2) && (
         <Typography variant="h6" align="center" marginBottom={3}>
           {lastTime}
         </Typography>
       )}
-
       {loading && <Loading />}
       {displayGraph1 && <Algo oldBudget={oldBudget} algo={algo1} />}
       {displayGraph2 && <Algo oldBudget={oldBudget} algo={algo2} />}
