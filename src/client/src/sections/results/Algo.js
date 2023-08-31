@@ -50,7 +50,7 @@ export default function Algo(props) {
           <TableBody>
             {Object.keys(tableOldBudget).map((key, index) =>
               key !== 'total' ? (
-                <AlgoRow keys={index} name={key} row={tableOldBudget[key]} rowAlgo={tableAlgo[key]} />
+                <AlgoRow key={index} name={key} row={tableOldBudget[key]} rowAlgo={tableAlgo[key]} />
               ) : null
             )}
           </TableBody>

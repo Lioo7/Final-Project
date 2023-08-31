@@ -8,6 +8,7 @@ import AddressContext from '../../contexts/AddressContext';
 
 export default function DashForm() {
   const [data, setData] = useState({});
+  const [voters, setVoters] = useState('0');
   const address = useContext(AddressContext);
   const url = `${address}dashboard`;
 
@@ -20,6 +21,7 @@ export default function DashForm() {
         });
         const information = await response.json();
         setData(information);
+        setVoters(information.voter_count);
       } catch (error) {
         console.error(error);
       }
@@ -34,7 +36,7 @@ export default function DashForm() {
 
   return (
     <>
-      <Cards voters={data.voter_count} />
+      <Cards voters={voters.toString()} />
       <Box
         display="flex"
         flexDirection={{ xs: 'column', md: 'row' }}

@@ -30,9 +30,6 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
      - [Environment Variable Configuration](#environment-variable-configuration)
-        - [Linux](#linux)
-        - [macOS](#macos)
-        - [Windows](#windows)
 - [Testing](#testing)
 - [User Guide](#user-guide)
   - [Getting Started](#getting-started)
@@ -45,7 +42,7 @@
 
 ## Project Goal
 
-The goal of our web application is to enable citizens to actively participate in the voting process for the state/municipality budget, ensuring alignment with the will of the people. We aim to address the lack of influence and disconnection that citizens often feel regarding how their taxes are utilized. By providing an intuitive and transparent platform, we empower individuals to have a direct impact on budget decisions.
+Our web application aims to foster active citizen participation in the state/municipality budget voting process, ensuring alignment with the will of the people. We seek to address the lack of influence and disconnection that citizens often feel regarding how their taxes are utilized. Through our intuitive and transparent platform, we empower individuals to have a direct impact on budget decisions.
 
 ## Introduction
 
@@ -60,7 +57,7 @@ Are you tired of feeling like your voice doesn't matter when it comes to budget 
 
 ## Selected Approach
 
-To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), application layer (server), and the data layer (database).
+To ensure modularity, scalability, and maintainability, we adopted a layered architecture approach. The system consists of three essential components: the presentation layer (client), the application layer (server), and the data layer (database).
 
 ### Architecture and Design Pattern
 
@@ -86,7 +83,7 @@ User experience and user interface design are essential aspects of our project. 
 
 To run the People's Budget web application, you need to have the following installed on your system:
 
-- Docker (23.0.5)
+- MySql (8.1.0)
 - Python (3.11.0)
 - Node.js (18.13.0)
 
@@ -95,38 +92,27 @@ To run the People's Budget web application, you need to have the following insta
 To set up the People's Budget web application locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/ElhaiMansbach/Final-Project`
-2. Navigate to the project directory: `cd Final-Project`
+2. Navigate to the server directory: `cd Final-Project/src/server`
 3. Install the required Python dependencies: `pip install -r requirements.txt`
-4. Navigate to the client directory: `cd src/client`
+4. Navigate to the client directory: `cd ../client`
 5. Install the required npm dependencies: `npm install`
-6. Set up the necessary environment variables.
+6. Install MySQL server and client packages: `sudo apt install mysql-server mysql-client`.
+7. Navigate to the src directory: `cd ..`
+8. Set up the necessary environment variables.
 
 #### Environment Variable Configuration
 
-To configure the required environment variables:
-* 'user_budget_system': This variable represents the desired username for the budget system, which can be used to authenticate and identify the user within the system.
-* 'system_budget_password': This variable represents the password for the budget system user, which is required for authentication and accessing the budget system's functionalities.
-* 'MYSQL_ROOT_PASSWORD': This variable represents the desired password for the MySQL root user, which is the highest level of access to the MySQL database system. 
+To configure the required environment variables for the database:
+1. Create an '.env' file: Use the '.env.example' file in the src directory as a template. You can copy and rename it to '.env':
+`cp ../src/.env.example ../src/.env`
+2. Edit the '.env' file: Open the '.env' file you've just created and modify the values accordingly, if necessary.
+3. If you modified the port in the env file, you should also modify it in src/client/src/App.js so that the port is consistent.
 
-##### Linux
-
-For Linux users, you can refer to [this tutorial](https://www.youtube.com/watch?v=Y6_7xaxkPik) on setting environment variables.
-
-##### MacOS
-
-For Mac users, you can refer to [this tutorial](https://www.youtube.com/watch?v=dl_jgYr0rxU) on setting environment variables.
-
-##### Windows
-
-For Windows users, you can refer to [this tutorial](https://www.youtube.com/watch?v=ow2jROvxyH4) on setting environment variables.
-
-After defining the environment variables using the instructions above, continue with the installation steps:
-<br>5. Run the MySQL database using Docker Compose by navigating to the database directory and running the command: `docker-compose up -d`.
-<br>6. To initialize the database, run the command: `python sql_Initialization.py`.
-<br>7. Start the server by navigating to the server directory and running the command: `python app.py`.
-<br>8. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
-<br>9. Open the client-side application in your web browser: `http://localhost:5000`.
-<br>10. You're ready to actively participate in the budget voting process!
+<br>9. To initialize the database, nevigate to the database directory and run the command: `python sql_Initialization.py`.
+<br>10. Start the server by navigating to the server directory and running the command: `python app.py`.
+<br>11. On a new terminal, start the client by navigating to the client directory and running the command: `npm start`.
+<br>12. Open the client-side application in your web browser: `http://localhost:5001`.
+<br>13. You're ready to actively participate in the budget voting process!
 
 ## Testing
 
@@ -170,30 +156,28 @@ To execute the tests, follow these steps:
 
 ### Navigating the Application
 
-1. **Home page**: Upon logging in, you will be redirected to the user page home. This is where you can find...
+1. **Home page**: Upon logging in, you will be redirected to the home page. This page provides information about the system.
 
    ![Home](https://i.ibb.co/QFnrF0Q/home.png)
 
-2. **Voting**: To vote for a budget proposal, click on the "Vote" button next to... A confirmation prompt will appear, and you can submit your vote by clicking "Confirm".
+2. **Voting**: You can easily modify the budget as per your preferences by casting your vote for a budget proposal. To vote, simply click on the "Vote" button at the bottom of the page and confirm your selection when prompted.
 
    ![Vote](https://i.ibb.co/fDFWZjQ/voting.png)
 
-3. **Result Tracking**: You can track the real-time results of the voting process by accessing the "Results" section. Here, you will find visualizations and updates on the progress and outcome of the budget vote.
-
+3. **Result Tracking**: You can monitor the progress and outcome of the budget vote in real-time by accessing the "Results" section. Our sophisticated algorithms calculate and present visualizations and updates on the voting process.
 
    ![Results](https://i.ibb.co/px81PKF/results.png)
 
-4. **Dashboard - Voter Statistics**: Explore the comprehensive voter statistics dashboard to gain insights into the voting trends, demographics, and other relevant data. 
-
-Use this information to make informed decisions and understand the overall participation patterns.
+4. **Dashboard**: Explore our comprehensive voter statistics dashboard to gain valuable insights into voting trends, demographics, and other relevant data. Utilize this information to make informed decisions and gain a better understanding of overall participation patterns.
+   
    ![Dashboard](https://i.ibb.co/W0LqVDk/dashboard.png)
 
 ### Revoting
 
-- **Revoting**: If you wish to change your vote.
+- **Revoting**: If you have already cast your vote but have since changed your mind, don't worry! Our system allows you to modify your vote by simply casting a new vote before the voting period ends.
 
 ### Additional Features
-- **Guest Mode**: Explore the system and familiarize yourself with the features in the Guest Mode before signing up. This allows you to get a glimpse of the application's functionalities without creating an account.
+- **Guest Mode**: Before signing up, we recommend exploring the system and familiarizing yourself with the features in Guest Mode. This allows you to preview the application's functionalities without the need to create an account.
 
 ## License
 

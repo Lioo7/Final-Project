@@ -71,12 +71,12 @@ OldBudgetRow.propTypes = {
   row: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    budget: PropTypes.number.isRequired,
+    allocated_budget_amount: PropTypes.number.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        budget: PropTypes.number.isRequired,
+        allocated_budget_amount: PropTypes.number.isRequired,
       })
     ),
   }).isRequired,

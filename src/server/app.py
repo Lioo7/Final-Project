@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 import sys
@@ -6,6 +7,7 @@ sys.path.append("..")
 import time
 from datetime import datetime
 from threading import Thread
+from dotenv import load_dotenv, find_dotenv
 
 from algorithms import (
     calculate_totals,
@@ -103,8 +105,8 @@ def calculte_results():
 #  -------------------------------- Login -----------------------------------------------------
 
 @app.route("/", methods=["GET"])
-def welcome():
-    return jsonify({"status": "Hello From Server :)"})
+def root():
+    return jsonify({"status": "Hello from people's Budget server!"})
 
 @app.route("/peoples_budget/login", methods=["POST"])
 def login():
@@ -455,12 +457,18 @@ mode = "PROD"
 
 if __name__ == "__main__":
 
+    dotenv_file = find_dotenv('.env')
+    load_dotenv(dotenv_file)
+    port=os.environ.get("PORT")
+
     batch = Thread(target=calculte_results)
     batch.daemon = True
     batch.start()
 
+    print(f'Server started on port: {port}')
+
     if mode == "dev":
-        app.run(port=5001, debug=True)
+        app.run(port=port, debug=True)
 
     else:
-        serve(app, host="0.0.0.0", port=5001)
+        serve(app, host="0.0.0.0", port=port)

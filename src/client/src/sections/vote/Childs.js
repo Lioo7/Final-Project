@@ -70,12 +70,10 @@ Childs.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      allocated_budget_amount: PropTypes.number.isRequired,
       children: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
           name: PropTypes.string.isRequired,
-          allocated_budget_amount: PropTypes.number.isRequired,
         })
       ),
     })

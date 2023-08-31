@@ -7,7 +7,7 @@ import logging
 
 import mysql.connector
 import pandas
-from sql_database import SQL_database
+from dotenv import load_dotenv, find_dotenv
 
 from server.node import Node
 from server.tree import Tree
@@ -20,23 +20,35 @@ logger = logging.getLogger()
 
 # -*- coding: utf-8 -*-
 
-
-class SQL_init:
+class SQLInitializer:
 
     """A class that initializes the database"""
 
     # Static var
-    data_base_name = "db_budget_system"
+    database_name = "db_budget_system"
 
     @staticmethod
-    def connect_database():
+    def initialize_database_connection():
+        dotenv_file = find_dotenv('.env')
+        load_dotenv(dotenv_file)
+        
         db = mysql.connector.connect(
             host="localhost",
-            user=os.environ.get("user_budget_system"),
-            password=os.environ.get("system_budget_password"),
-            database="db_budget_system",
+            user=os.environ.get("ADMIN_USER"),
+            password=os.environ.get("ADMIN_PASSWORD"),
         )
         return db
+
+    @staticmethod
+    def establish_database_connection():
+        db = mysql.connector.connect(
+            host="localhost",
+            user=os.environ.get("ADMIN_USER"),
+            password=os.environ.get("ADMIN_PASSWORD"),
+            database="db_budget_system",
+        )
+        cursor = db.cursor()
+        return db, cursor
 
     @staticmethod
     def create_database(cursor, database_name: str) -> None:
@@ -57,10 +69,10 @@ class SQL_init:
     @staticmethod
     def clean_database(cursor) -> None:
         # Clean database
-        SQL_init.delete_table(cursor, "CURRENT_BUDGET")
-        SQL_init.delete_table(cursor, "USERS_VOTES")
-        SQL_init.delete_table(cursor, "USERS")
-        SQL_init.delete_table(cursor, "INFORMATION")
+        SQLInitializer.delete_table(cursor, "CURRENT_BUDGET")
+        SQLInitializer.delete_table(cursor, "USERS_VOTES")
+        SQLInitializer.delete_table(cursor, "USERS")
+        SQLInitializer.delete_table(cursor, "INFORMATION")
 
     @staticmethod
     def insert_to_current_budget_table(mycursor, node: Node) -> None:
@@ -76,7 +88,7 @@ class SQL_init:
             ),
         )
         for child in node.get_children():
-            SQL_init.insert_to_current_budget_table(mycursor, child)
+            SQLInitializer.insert_to_current_budget_table(mycursor, child)
 
     @staticmethod
     def load_and_insert_to_current_budget_table(cursor, db) -> None:
@@ -216,15 +228,14 @@ class SQL_init:
 
 
     def Load_datasets(cursor,db):
-        SQL_init.load_information_to_information_table(cursor, db)
-        SQL_init.load_and_insert_to_current_budget_table(cursor, db)
+        SQLInitializer.load_information_to_information_table(cursor, db)
+        SQLInitializer.load_and_insert_to_current_budget_table(cursor, db)
     
     
-    def create_and_build_DB(cursor,db):
+    def build_DB(cursor,db):
         
-        # Create and build database
-        SQL_init.create_database(cursor, SQL_init.data_base_name)
-        SQL_init.create_table(
+        # Build database
+        SQLInitializer.create_table(
             cursor,
             "CURRENT_BUDGET",
             """kod_one INT, name_one VARCHAR(1000),
@@ -232,38 +243,52 @@ class SQL_init:
                                 kod_four INT, name_four VARCHAR(1000), kod_five INT, name_five VARCHAR(1000),
                                 kod_six INT, name_six VARCHAR(1000), takziv VARCHAR(255)""",
         )
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor,
             "USERS",
             """user_id INT PRIMARY KEY, first_name VARCHAR(255),
                                 last_name VARCHAR(255), birth_date DATE, mail VARCHAR(255), password VARCHAR(255),
                                 gender VARCHAR(255), is_admin VARCHAR(255), allowed_to_vote VARCHAR(255)""",
         )
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor, "USERS_VOTES", "user_id VARCHAR(255), vote TEXT(4294967295)"
         )
-        SQL_init.create_table(
+        SQLInitializer.create_table(
             cursor, "INFORMATION", "name VARCHAR(50), details VARCHAR(1000)"
         )
         
         # Load datasets
-        SQL_init.Load_datasets(cursor,db)
+        SQLInitializer.Load_datasets(cursor,db)
 
-    def connect_server():
-        db = SQL_init.connect_database()
-        cursor = db.cursor()
-        return db ,cursor
+    @staticmethod
+    def setup_database_environment():
+        """Establishes a connection to the server, creates the database, and disconnects."""
+        try:
+            db = SQLInitializer.initialize_database_connection()
+            cursor = db.cursor()
+            SQLInitializer.create_database(cursor, SQLInitializer.database_name)
+        except Exception as e:
+            logger.error(f"Error setting up database environment: {e}")
+            raise
+        finally:
+            try:
+                db.disconnect() 
+            except Exception as e:
+                logger.error(f"Error closing database connection: {e}")
+                raise
     
     
 if __name__ == "__main__":
     
     # Connect server
-    db, cursor = SQL_init.connect_server()
+    SQLInitializer.setup_database_environment()
+
+    db, cursor = SQLInitializer.establish_database_connection()
 
     # Clean database
-    SQL_init.clean_database(cursor)
+    SQLInitializer.clean_database(cursor)
     
     #create & build database
-    SQL_init.create_and_build_DB(cursor,db)
+    SQLInitializer.build_DB(cursor,db)
     
     

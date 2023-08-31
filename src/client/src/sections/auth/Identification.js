@@ -147,7 +147,6 @@ export default function Identification(props) {
           type="date"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
-          defaultValue="yyyy-MM-dd"
           error={Boolean(birthDateError)}
           helperText={birthDateError}
           InputLabelProps={{

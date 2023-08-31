@@ -54,48 +54,43 @@ export default function AlgoRow(props) {
     return num.toString();
   }
   return (
-    console.log('row', props.name),
-    (
-      <>
-        <TableRow key={props.keys}>
-          <TableCell align="center">
-            <IconButton
-              id={props.name}
-              aria-label="expand row"
-              size="small"
-              onClick={() => {
-                setOpen(childs ? !open : false);
-              }}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
+    <React.Fragment>
+      <TableRow key={props.name}>
+        <TableCell align="center">
+          <IconButton
+            id={props.name}
+            aria-label="expand row"
+            size="small"
+            onClick={() => {
+              setOpen(childs ? !open : false);
+            }}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell align="center" component="th" scope="row">
+          {props.name}
+        </TableCell>
+        <LightTooltip title={`${percent(budget)} %`} followCursor>
+          <TableCell align="center">{formatNumber(budget)}</TableCell>
+        </LightTooltip>
+        <LightTooltip title={`${percent(newBudget)} %`} placement="left" followCursor>
+          <TableCell align="center">{formatNumber(newBudget)}</TableCell>
+        </LightTooltip>
+        <LightTooltip title={`${percent(Math.abs(diff))} %`} placement="left" followCursor>
+          <TableCell align="center" sx={{ color: diff > 0 ? 'red' : 'green' }}>
+            {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
           </TableCell>
-          <TableCell align="center" component="th" scope="row">
-            {props.name}
-          </TableCell>{' '}
-          <LightTooltip title={`${percent(budget)} %`} followCursor>
-            <TableCell align="center">{formatNumber(budget)}</TableCell>
-          </LightTooltip>
-          <LightTooltip title={`${percent(newBudget)} %`} placement="left" followCursor>
-            <TableCell align="center">{formatNumber(newBudget)}</TableCell>
-          </LightTooltip>
-          <LightTooltip title={`${percent(Math.abs(diff))} %`} placement="left" followCursor>
-            <TableCell align="center" sx={{ color: diff > 0 ? 'red' : 'green' }}>
-              {`${diff > 0 ? '-' : '+'}${formatNumber(Math.abs(diff))}`}
-            </TableCell>
-          </LightTooltip>
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                {childs && <AlgoChild childrens={childs} childrensAlgo={childsAlgo} keys={props.keys} />}
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </>
-    )
+        </LightTooltip>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>{childs && <AlgoChild childrens={childs} childrensAlgo={childsAlgo} />}</Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
   );
 }
 
@@ -103,5 +98,5 @@ AlgoRow.propTypes = {
   row: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
   rowAlgo: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
   name: PropTypes.string.isRequired,
-  keys: PropTypes.number.isRequired,
+  // keys: PropTypes.string.isRequired,
 };

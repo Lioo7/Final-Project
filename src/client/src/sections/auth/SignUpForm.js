@@ -163,10 +163,8 @@ export default function SignUpForm() {
           type="date"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
-          defaultValue="yyyy-MM-dd"
           error={Boolean(birthDateError)}
           helperText={birthDateError}
-          // sx={{ width: 220 }}
           InputLabelProps={{
             shrink: true,
           }}

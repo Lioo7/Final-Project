@@ -113,7 +113,7 @@ export default function Row(props) {
             type="number"
             variant="outlined"
             value={Number((Number(row.allocated_budget_amount) / 1000000).toFixed(1))}
-            defaultValue={Number(budget)}
+            // defaultValue={Number(budget)}
             InputProps={{
               inputProps: { min: 0, max: 6000000 },
               endAdornment: <InputAdornment position="end">M</InputAdornment>,
@@ -166,12 +166,10 @@ Row.propTypes = {
   row: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    allocated_budget_amount: PropTypes.number.isRequired,
     children: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        allocated_budget_amount: PropTypes.number.isRequired,
       })
     ),
   }).isRequired,
@@ -185,7 +183,6 @@ Row.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      allocated_budget_amount: PropTypes.number.isRequired,
     })
   ).isRequired,
 };
