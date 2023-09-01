@@ -1,9 +1,7 @@
 import sys
 
-sys.path.append("../..")
-
-from server.database.abstract_Database import Abstract_Database
-from server.database.sql_database import *
+from database.abstract_Database import Abstract_Database
+from database.sql_database import *
 
 
 class Calculator:

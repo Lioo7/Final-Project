@@ -1,10 +1,10 @@
 import sys
 
-sys.path.append("../..")
+sys.path.append("../")
 from abc import ABC, abstractmethod
 
-from src.server.tree import Tree
-from src.server.user import User
+from tree import Tree
+from user import User
 
 
 class Abstract_Database(ABC):
