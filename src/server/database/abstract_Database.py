@@ -9,7 +9,7 @@ from user import User
 
 class Abstract_Database(ABC):
 
-    """Abstruct class for handling data base"""
+    """Abstruct class for handling database"""
 
     @abstractmethod
     def connect(self):

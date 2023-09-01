@@ -207,3 +207,12 @@ class my_sqlite_database(Abstract_Database):
 
     def get_user_gender(self, user_id: int):
         pass
+
+    def get_user_details(self, user_id: int) -> dict:
+        pass
+
+    def save_new_password(self, user_id: int, new_password: str) -> bool:
+        pass
+
+    def is_mail_exists(self, mail: str) -> bool:
+        pass
