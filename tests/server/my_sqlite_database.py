@@ -5,9 +5,7 @@ import sqlite3
 from datetime import datetime, timedelta
 
 from dateutil.relativedelta import relativedelta
-from src.database.abstract_Database import Abstract_Database
-
-from src.server.calculator import Calculator
+from src.server.database.abstract_Database import Abstract_Database
 from src.server.tree import Tree
 from src.server.user import User
 

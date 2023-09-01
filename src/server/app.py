@@ -475,9 +475,9 @@ def get_algorithms_results():
     # global algorithms_results
     return jsonify(algorithms_results)
 
+start_background_thread() # Start the background thread
 
 if __name__ == "__main__":
-    start_background_thread()  # Start the background thread
     print(f"Server started on port: {port}")
     logger.info(f"Server started on port: {port} | mode: {mode}")
 
