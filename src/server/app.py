@@ -67,10 +67,12 @@ last_calculate_results_time = datetime.now()
 def calculate_results():
     global last_calculate_results_time
     global algorithms_results
+    logger.info("calculate_results")
 
     while True:
         # Check if there is a new votes
         if last_calculate_results_time < last_voting_change:
+            logger.info("New vote received")
             batch_database.handler.connect()
             votes = batch_database.handler.load_user_votes()
 
@@ -453,7 +455,6 @@ def voting_tree():
             {"status": "Error!, Voting permission has not been updated, vote not saved"}
         )
 
-    logger.error(vote_str)
     result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
 
     if not result:
