@@ -481,7 +481,7 @@ if __name__ == "__main__":
     print(f"Server started on port: {port}")
     logger.info(f"Server started on port: {port} | mode: {mode}")
 
-    if mode == "dev":
+    if mode == "DEV":
         app.run(port=port, debug=True)
     else:
         serve(app, host="0.0.0.0", port=port)
