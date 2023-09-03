@@ -26,6 +26,7 @@ export default function Identification(props) {
 
   useEffect(() => {
     props.setId(id);
+    // eslint-disable-next-line
   }, [id]);
 
   const handleSubmit = async () => {
@@ -107,7 +108,7 @@ export default function Identification(props) {
       }
     } catch (error) {
       console.error(error);
-      alert("Oops! It seems like there's an issue with the information you provided for password reset. Please double-check that you have entered the correct information associated with your account and try again. If the issue persists, contact the customer support team for further assistance.");
+      alert("Oops! It seems like there's an issue with the information you provided for password reset. \nPlease double-check that you have entered the correct information associated with your account and try again. \nIf the issue persists, contact the customer support team for further assistance.");
     }
   };
 

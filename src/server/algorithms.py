@@ -18,7 +18,6 @@ __all__ = [
     "unite_votes",
 ]
 
-
 def median_algorithm(votes: dict) -> dict:
     """
     Calculate the median of the votes for the budget and return the budget according to the median votes.
@@ -461,7 +460,7 @@ def _find_median_with_constant_functions(
     n: int,
     min_search: float = 0,
     max_search: float = 1,
-    max_iterations: int = 50,
+    max_iterations: int = 100,
 ) -> list[float]:
     """
     Find the median of a list of values by adding constant functions.
@@ -473,12 +472,11 @@ def _find_median_with_constant_functions(
         n (int): The number of leaves (projects).
         min_search (float, optional): The minimum value of the search range. Defaults to 0.
         max_search (float, optional): The maximum value of the search range. Defaults to 1.
-        max_iterations (int, optional): The maximum number of iterations. Defaults to 1000.
+        max_iterations (int, optional): The maximum number of iterations. Defaults to 100.
 
     Returns:
         constants list[float]: A list of all the constants values, or None if the maximum number of iterations is reached.
     """
-
     # calculate the midpoint of the search range
     t = (min_search + max_search) / 2
 

@@ -58,7 +58,6 @@ converted_current_budget = None
 current_budget_voting_page = None
 current_budget_login_page = None
 
-
 # Last vote
 last_voting_change = datetime.now()
 last_calculate_results_time = datetime.now()
@@ -388,8 +387,6 @@ def subjects_and_projects_tree():
 
             if user_vote == "ERROR!":
                 return jsonify({"status": "Faild to get old user_vote"})
-
-            logger.debug(user_vote)
 
             return user_vote
 
