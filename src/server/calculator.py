@@ -1,11 +1,9 @@
 import sys
 
 sys.path.append("../..")
-from tree import Tree
 
-from src.database.abstract_Database import Abstract_Database
-from src.database.data_handler import data_handler
-from src.database.sql_database import *
+from server.database.abstract_Database import Abstract_Database
+from server.database.sql_database import *
 
 
 class Calculator:
@@ -25,7 +23,6 @@ class Calculator:
         """
         return db.get_row_count("USERS")
 
-
     @staticmethod
     def get_voter_count_by_gender(db: Abstract_Database) -> list[int]:  # [male,female]
         """
@@ -40,7 +37,6 @@ class Calculator:
         [2,0]
         """
         return db.get_row_count_by_gender("USERS")
-
 
     @staticmethod
     def get_voter_count_by_age(db: Abstract_Database) -> list[int]:

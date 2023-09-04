@@ -8,8 +8,17 @@ from gender import Gender
 class User:
     """This class present regested user in the system"""
 
-    def __init__(self,id:int, first_name:str, last_name:str, birth_date:date, mail:str, 
-                password:str, gender:int, is_admin:bool):
+    def __init__(
+        self,
+        id: int,
+        first_name: str,
+        last_name: str,
+        birth_date: date,
+        mail: str,
+        password: str,
+        gender: int,
+        is_admin: bool,
+    ):
         self._id = id
         self._first_name = first_name
         self._last_name = last_name
@@ -216,7 +225,6 @@ class User:
 
         return is_valid
 
-    
     def is_over_18(self, date_of_birth: str) -> bool:
         """
         Returns True if the person with the given date of birth is 18 years or older.
@@ -252,12 +260,12 @@ class User:
             return True
         else:
             return False
-    
+
     @staticmethod
-    def guest_user(id:int) -> bool:
+    def guest_user(id: int) -> bool:
         guest_id = "000000000"
-        
+
         if id == guest_id:
             return True
-        
-        return False    
+
+        return False
