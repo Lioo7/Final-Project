@@ -18,7 +18,7 @@
 
 ## Demo
 
-[![Demo Video](https://example.com/demo_video_thumbnail.jpg)](https://www.youtube.com/watch?v=your_youtube_video_id)
+[![Demo Video](https://i.ibb.co/SX8yV3c/Screenshot-2023-09-05-at-23-11-06.png)](https://www.youtube.com/watch?v=2kalXcbpbh8)
 
 You can watch our project's demo video on YouTube to get a quick overview of how it works.
 
