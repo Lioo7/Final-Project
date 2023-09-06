@@ -52,7 +52,7 @@ export default function LoginForm({ setId }) {
       if (responseData.status === 'Succeeded') {
         navigate('/peoples_budget/home', { replace: true });
       } else {
-        throw new Error('User does not exist. Please register first.');
+        throw new Error('Please check your credentials and try again. \nIf you do not have an account, click "Sign Up" to create one.');
       }
     } catch (error) {
       console.log(error);

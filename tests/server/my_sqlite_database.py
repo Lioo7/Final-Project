@@ -5,9 +5,7 @@ import sqlite3
 from datetime import datetime, timedelta
 
 from dateutil.relativedelta import relativedelta
-from src.database.abstract_Database import Abstract_Database
-
-from src.server.calculator import Calculator
+from src.server.database.abstract_Database import Abstract_Database
 from src.server.tree import Tree
 from src.server.user import User
 
@@ -208,4 +206,13 @@ class my_sqlite_database(Abstract_Database):
         pass
 
     def get_user_gender(self, user_id: int):
+        pass
+
+    def get_user_details(self, user_id: int) -> dict:
+        pass
+
+    def save_new_password(self, user_id: int, new_password: str) -> bool:
+        pass
+
+    def is_mail_exists(self, mail: str) -> bool:
         pass

@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.append("..")
+sys.path.append("../")
 
 import logging
 
@@ -9,8 +9,8 @@ import mysql.connector
 import pandas
 from dotenv import find_dotenv, load_dotenv
 
-from server.node import Node
-from server.tree import Tree
+from node import Node
+from tree import Tree
 
 LOGֹ_FORMAT = "%(levelname)s, time: %(asctime)s , line: %(lineno)d- %(message)s "
 # Create and configure logger
@@ -93,7 +93,7 @@ class SQLInitializer:
 
     @staticmethod
     def load_and_insert_to_current_budget_table(cursor, db) -> None:
-        path = "../../dataset/"
+        path = "../../../dataset/"
         df = pandas.read_csv(path + "national_budget.csv", encoding="utf-8")
         # remove double quotes from relevant columns
         cols_to_clean = [
@@ -133,7 +133,7 @@ class SQLInitializer:
 
     @staticmethod
     def load_information_to_information_table(cursor, db) -> None:
-        path = "../../dataset/"
+        path = "../../../dataset/"
         df = pandas.read_csv(path + "information.csv", encoding="utf-8")
         num_rows = len(df)
         for i in range(0, num_rows):

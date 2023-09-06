@@ -58,7 +58,6 @@ converted_current_budget = None
 current_budget_voting_page = None
 current_budget_login_page = None
 
-
 # Last vote
 last_voting_change = datetime.now()
 last_calculate_results_time = datetime.now()
@@ -67,10 +66,12 @@ last_calculate_results_time = datetime.now()
 def calculate_results():
     global last_calculate_results_time
     global algorithms_results
+    logger.info("calculate_results")
 
     while True:
         # Check if there is a new votes
         if last_calculate_results_time < last_voting_change:
+            logger.info("New vote received")
             batch_database.handler.connect()
             votes = batch_database.handler.load_user_votes()
 
@@ -387,8 +388,6 @@ def subjects_and_projects_tree():
             if user_vote == "ERROR!":
                 return jsonify({"status": "Faild to get old user_vote"})
 
-            logger.debug(user_vote)
-
             return user_vote
 
         elif check_result == "Error!":
@@ -453,7 +452,6 @@ def voting_tree():
             {"status": "Error!, Voting permission has not been updated, vote not saved"}
         )
 
-    logger.error(vote_str)
     result = database.handler.store_vote(vote=str(vote_str), user_id=user_id)
 
     if not result:
@@ -475,13 +473,13 @@ def get_algorithms_results():
     # global algorithms_results
     return jsonify(algorithms_results)
 
+start_background_thread() # Start the background thread
 
 if __name__ == "__main__":
-    start_background_thread()  # Start the background thread
     print(f"Server started on port: {port}")
     logger.info(f"Server started on port: {port} | mode: {mode}")
 
-    if mode == "dev":
+    if mode == "DEV":
         app.run(port=port, debug=True)
     else:
         serve(app, host="0.0.0.0", port=port)
