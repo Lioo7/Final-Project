@@ -14,7 +14,7 @@ export default function App() {
 
   const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost';
   const serverPort = process.env.REACT_APP_SERVER_PORT || 5002;
-  const [address] = useState(`${serverUrl}:${serverPort}/peoples_budget/`);
+  const [address] = useState(`${serverUrl}:${serverPort}/peoples_budget/server/`);
 
   return (
     // Provide the 'id' value to the UserContext using UserContext.Provider

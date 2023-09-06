@@ -137,7 +137,7 @@ def root():
     return jsonify({"status": "Hello from people's Budget server!"})
 
 
-@app.route("/peoples_budget/login", methods=["POST"])
+@app.route("/peoples_budget/server/login", methods=["POST"])
 def login():
     try:
         id = request.json["id"]
@@ -159,7 +159,7 @@ def login():
     return jsonify({"status": "Faild"})
 
 
-@app.route("/peoples_budget/login", methods=["GET"])
+@app.route("/peoples_budget/server/login", methods=["GET"])
 def table_tree():
     global current_budget_login_page
 
@@ -172,7 +172,7 @@ def table_tree():
 # ------------------------------ Sign up -------------------------------------
 
 
-@app.route("/peoples_budget/sign_up", methods=["POST"])
+@app.route("/peoples_budget/server/sign_up", methods=["POST"])
 def signup():
     try:
         first_name = request.json["firstName"]
@@ -217,7 +217,7 @@ def signup():
 # --------------------------------- Forget Password ----------------------------------
 
 
-@app.route("/peoples_budget/forget_password", methods=["POST"])
+@app.route("/peoples_budget/server/forget_password", methods=["POST"])
 def forget_password():
     try:
         request_data = request.get_json()
@@ -278,7 +278,7 @@ def forget_password():
         return "Invalid request"
 
 
-@app.route("/peoples_budget/forget_password", methods=["POST"])
+@app.route("/peoples_budget/server/forget_password", methods=["POST"])
 def newpassword():
     try:
         new_password = request.json["newPassword"]
@@ -295,7 +295,7 @@ def newpassword():
 # --------------------------------- Home ---------------------------------------------
 
 
-@app.route("/peoples_budget/home", methods=["GET"])
+@app.route("/peoples_budget/server/home", methods=["GET"])
 def home():
     try:
         id = request.args.get("user_id")
@@ -339,7 +339,7 @@ def home():
 # -------------------------------- Information ---------------------------------------
 
 
-@app.route("/peoples_budget/information", methods=["GET"])
+@app.route("/peoples_budget/server/information", methods=["GET"])
 def information():
     database.handler.connect()
     dictionary = database.handler.get_information()
@@ -355,7 +355,7 @@ def information():
 # ---------------------------------- Dashborad --------------------------------------------
 
 
-@app.route("/peoples_budget/dashboard", methods=["GET"])
+@app.route("/peoples_budget/server/dashboard", methods=["GET"])
 def dashboard():
     database.handler.connect()
 
@@ -369,7 +369,7 @@ def dashboard():
 # ------------------------------------ Voting -------------------------------------------
 
 
-@app.route("/peoples_budget/voting", methods=["GET"])
+@app.route("/peoples_budget/server/voting", methods=["GET"])
 def subjects_and_projects_tree():
     database.handler.connect()
     try:
@@ -407,7 +407,7 @@ def subjects_and_projects_tree():
     return current_budget_voting_page
 
 
-@app.route("/peoples_budget/voting", methods=["POST"])
+@app.route("/peoples_budget/server/voting", methods=["POST"])
 def voting_tree():
     try:
         database.handler.connect()
@@ -468,7 +468,7 @@ def voting_tree():
 # --------------------------------- Results -------------------------------------------
 
 
-@app.route("/peoples_budget/results", methods=["GET"])
+@app.route("/peoples_budget/server/results", methods=["GET"])
 def get_algorithms_results():
     # global algorithms_results
     return jsonify(algorithms_results)
