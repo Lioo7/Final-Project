@@ -13,7 +13,7 @@ export default function App() {
   const [id, setId] = useState(localStorage.getItem('id') ?? '');
 
   const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost';
-  const serverPort = process.env.REACT_APP_SERVER_PORT || 5002; 
+  const serverPort = process.env.REACT_APP_SERVER_PORT || 5002;
   const [address] = useState(`${serverUrl}:${serverPort}/peoples_budget/`);
 
   return (
