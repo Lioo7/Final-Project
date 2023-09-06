@@ -16,6 +16,18 @@
   <img src="https://i.ibb.co/CHx5btZ/cover-auto-x2-colored-toned-light-ai.jpg" width="600" title="hover text">
 </p>
 
+## Demo
+
+[![Demo Video](https://i.ibb.co/SX8yV3c/Screenshot-2023-09-05-at-23-11-06.png)](https://www.youtube.com/watch?v=2kalXcbpbh8)
+
+You can watch our project's demo video on YouTube to get a quick overview of how it works.
+
+## Website URL
+
+You can access the live website by clicking the link below:
+
+[People's Budget Website](http://csariel.xyz:3001/peoples_budget/login)
+
 ## Table of Contents
 
 - [Project Goal](#project-goal)
