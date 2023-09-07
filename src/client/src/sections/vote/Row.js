@@ -121,7 +121,7 @@ export default function Row(props) {
             onChange={handleChangeText}
           />
         </TableCell>
-        <TableCell align="center" sx={{ width: '200px' }}>
+        <TableCell align="center" sx={{ width: '180px' }}>
           <Slider
             id={`slider${row.id}`}
             value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
