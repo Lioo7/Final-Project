@@ -59,9 +59,8 @@ current_budget_voting_page = None
 current_budget_login_page = None
 
 # Last vote
-last_voting_change = datetime.now()
 last_calculate_results_time = datetime.now()
-
+last_voting_change = datetime.now()
 
 def calculate_results():
     global last_calculate_results_time

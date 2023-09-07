@@ -26,7 +26,7 @@ You can watch our project's demo video on YouTube to get a quick overview of how
 
 You can access the live website by clicking the link below:
 
-[People's Budget Website](http://csariel.xyz:3001/peoples_budget/login)
+[People's Budget Website](https://budget.csariel.xyz/)
 
 ## Table of Contents
 
