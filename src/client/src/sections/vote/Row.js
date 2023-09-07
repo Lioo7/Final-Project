@@ -58,7 +58,7 @@ export default function Row(props) {
       props.handleVote(props.parent, row.id, event.target.value, diff);
       setBudget(event.target.value);
     }
-  }, 250);
+  }, 200);
 
   // Updates the voting text field when there is a change in the budget
   const handleChangeText = (event) => {
@@ -84,7 +84,7 @@ export default function Row(props) {
   return (
     <>
       <TableRow key={row.id} sx={{ backgroundColor: row.checked ? '#F4F6F8' : 'white' }}>
-        <TableCell align="center">
+        <TableCell align="center" >
           <IconButton
             id={`iconTree${row.id}`}
             aria-label="expand row"
@@ -96,7 +96,7 @@ export default function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="center" component="th" scope="row">
+        <TableCell align="center" component="th" scope="row" sx={{ width: '161px' }}>
           <Checkbox
             id={`checkbox${row.id}`}
             size="small"
@@ -104,10 +104,10 @@ export default function Row(props) {
             onClick={() => props.handleCheckBox(props.parent, row.id, !checkBox)}
           />
         </TableCell>
-        <TableCell align="center" component="th" scope="row">
+        <TableCell align="center" component="th" scope="row" >
           {row.name}
         </TableCell>
-        <TableCell align="center">
+        <TableCell align="center" >
           <TextField
             id={`budgetText${row.id}`}
             type="number"
@@ -121,7 +121,7 @@ export default function Row(props) {
             onChange={handleChangeText}
           />
         </TableCell>
-        <TableCell align="center">
+        <TableCell align="center" sx={{ width: '200px' }}>
           <Slider
             id={`slider${row.id}`}
             value={Math.round(Number(row.allocated_budget_amount) * 10) / 10}
@@ -133,7 +133,7 @@ export default function Row(props) {
             sx={{ mt: 1.2 }}
           />
         </TableCell>
-        <TableCell align="center">
+        <TableCell align="center" >
           {props.totalBudget === 0
             ? 0
             : Math.max(Math.min(((row.allocated_budget_amount / 596770415000) * 100).toFixed(1), 100), 0)}
