@@ -88,7 +88,7 @@ To facilitate seamless communication between the client and server, we employ a 
 
 ### Algorithms
 
-Our web application incorporates powerful algorithms to guarantee fairness, truth-telling, and anonymity in the voting process. These algorithms are designed to ensure that every vote is counted accurately and that user privacy is protected.
+Our web application incorporates powerful algorithms to guarantee fairness, truth-telling, Pareto-efficient, and anonymity in the voting process. These algorithms are designed to ensure that every vote is counted accurately and that user privacy is protected.
 
 ### UX & UI
 
