@@ -11,6 +11,7 @@ import ResultsPage from './pages/ResultsPage';
 import LoginPage from './pages/LoginPage';
 import SignUPage from './pages/SignUPage';
 import ForgetPassPage from './pages/ForgetPassPage';
+import AboutUs from './pages/AboutUs';
 
 export default function Router({ setId }) {
   // Define the routes using the useRoutes hook from react-router-dom
@@ -25,6 +26,7 @@ export default function Router({ setId }) {
         { path: 'information', element: <InfoPage /> },
         { path: 'dashboard', element: <DashboardPage /> },
         { path: 'results', element: <ResultsPage /> },
+        { path: 'about_us', element: <AboutUs /> },
       ],
     },
     {

@@ -30,6 +30,11 @@ const navConfig = [
     path: '/peoples_budget/results',
     icon: icon('ic_results'),
   },
+  {
+    title: 'about us',
+    path: '/peoples_budget/about_us',
+    icon: icon('ic_aboutUs'),
+  },
 ];
 
 export default navConfig;
