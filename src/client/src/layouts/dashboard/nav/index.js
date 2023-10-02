@@ -16,7 +16,6 @@ import navConfig from './config';
 import UserContext from '../../../contexts/UserContext';
 import AddressContext from '../../../contexts/AddressContext';
 
-
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
@@ -88,7 +87,6 @@ export default function Nav({ openNav, onCloseNav }) {
       }}
     >
       <Box sx={{ py: 3, textAlign: 'center' }}>
-        {/* <Typography sx={{ fontWeight: 'bold', fontSize: '22px' }}>People's Budget</Typography> */}
         <img src={`${process.env.PUBLIC_URL}/img_bg/pLogo.png`} alt="Logo" style={{ marginTop: '-30px' }} />
       </Box>
 
@@ -101,18 +99,12 @@ export default function Nav({ openNav, onCloseNav }) {
               <Typography variant="subtitle2" sx={{ fontSize: '16px', color: 'text.primary' }}>
                 {name}
               </Typography>
-
-              {/* <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
-              </Typography> */}
             </Box>
           </StyledAccount>
         </Link>
       </Box>
 
       <NavSection data={navConfig} />
-
-      {/* <Box sx={{ flexGrow: 1 }} /> */}
     </Scrollbar>
   );
 
