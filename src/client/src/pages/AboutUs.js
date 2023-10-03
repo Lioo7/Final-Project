@@ -28,7 +28,7 @@ export default function AboutUs() {
         <header style={styles.header}>
           <nav>
             <Typography variant="h3" align="center">
-              MEET OUR TEAM
+              ABOUT US
             </Typography>
           </nav>
         </header>
