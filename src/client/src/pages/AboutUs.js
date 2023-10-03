@@ -91,20 +91,20 @@ export default function AboutUs() {
             <Typography dir="rtl" variant="body1" fontFamily="Alef" textAlign={'right'} fontSize={'18px'}>
               פרויקט ״תקציב העם״ פותח על ידי צוות מסור של אנשים החולקים תשוקה לדמוקרטיה ומעורבות אזרחית.
               <br /> ●{' '}
-              <a href="https://github.com/ElhaiMansbach" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
+              <a href="https://github.com/ElhaiMansbach" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 אלחי מנצבך
               </a>
               <br /> ●{' '}
-              <a href="https://github.com/Lioo7" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
+              <a href="https://github.com/Lioo7" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 ליעוז עקירב
               </a>
               <br /> ●{' '}
-              <a href="https://github.com/OfirOvadia96" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
+              <a href="https://github.com/OfirOvadia96" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 אופיר עובדיה
               </a>
               <br /> הצוות שלנו מחויב ליצור חברה מכילה ודמוקרטית יותר שבה כל קול נשמע.
               <br /> הפיתוח נעשה תחת ההכוונה והליווי של{' '}
-              <a href="https://github.com/erelsgl-at-ariel" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
+              <a href="https://github.com/erelsgl-at-ariel" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 ד"ר אראל סגל הלוי
               </a>
               , שמילא תפקיד חיוני בעיצוב הפרויקט שלנו ובהבטחת התאמתו לעקרונות הדמוקרטיה ומעורבות האזרחים.
@@ -146,7 +146,7 @@ export default function AboutUs() {
                       image="/about/lioz.png"
                     />
                     <CardContent >
-                      <Typography variant="h6" align="center">
+                      <Typography variant="h6" align="center" fontFamily="Alef">
                         ליעוז עקירב
                       </Typography>
                     </CardContent>
