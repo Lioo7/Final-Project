@@ -91,20 +91,20 @@ export default function AboutUs() {
             <Typography dir="rtl" variant="body1" fontFamily="Alef" textAlign={'right'} fontSize={'18px'}>
               פרויקט ״תקציב העם״ פותח על ידי צוות מסור של אנשים החולקים תשוקה לדמוקרטיה ומעורבות אזרחית.
               <br /> ●{' '}
-              <a href="https://github.com/ElhaiMansbach" style={{ textDecoration: 'none' }}>
+              <a href="https://github.com/ElhaiMansbach" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
                 אלחי מנצבך
               </a>
               <br /> ●{' '}
-              <a href="https://github.com/Lioo7" style={{ textDecoration: 'none' }}>
+              <a href="https://github.com/Lioo7" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
                 ליעוז עקירב
               </a>
               <br /> ●{' '}
-              <a href="https://github.com/OfirOvadia96" style={{ textDecoration: 'none' }}>
+              <a href="https://github.com/OfirOvadia96" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
                 אופיר עובדיה
               </a>
               <br /> הצוות שלנו מחויב ליצור חברה מכילה ודמוקרטית יותר שבה כל קול נשמע.
               <br /> הפיתוח נעשה תחת ההכוונה והליווי של{' '}
-              <a href="https://github.com/erelsgl-at-ariel" style={{ textDecoration: 'none' }}>
+              <a href="https://github.com/erelsgl-at-ariel" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.9)' }}>
                 ד"ר אראל סגל הלוי
               </a>
               , שמילא תפקיד חיוני בעיצוב הפרויקט שלנו ובהבטחת התאמתו לעקרונות הדמוקרטיה ומעורבות האזרחים.
@@ -127,25 +127,25 @@ export default function AboutUs() {
       </div>
 
       <div>
-        <Container>
+        <Container >
           <Grid container spacing={4}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={4} >
               <a
                 href="https://github.com/Lioo7"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <Card>
+                <Card style={{backgroundColor: 'rgba(145, 158, 171, 0.2)'}}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                       component="img"
                       alt="Team Member 1"
                       height="150"
-                      style={{ width: '40%', borderRadius: '40%' }}
+                      style={{ width: '35%', borderRadius: '45%' }}
                       image="/about/lioz.png"
                     />
-                    <CardContent>
+                    <CardContent >
                       <Typography variant="h6" align="center">
                         ליעוז עקירב
                       </Typography>
@@ -162,13 +162,13 @@ export default function AboutUs() {
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <Card>
+                <Card style={{backgroundColor: 'rgba(145, 158, 171, 0.2)'}}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                       component="img"
                       alt="Team Member 1"
                       height="150"
-                      style={{ width: '42%', borderRadius: '40%' }}
+                      style={{ width: '35%', borderRadius: '45%' }}
                       image="/about/elhai.png"
                     />
                     <CardContent>
@@ -188,13 +188,13 @@ export default function AboutUs() {
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <Card>
+                <Card style={{backgroundColor: 'rgba(145, 158, 171, 0.2)'}}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                       component="img"
                       alt="Team Member 1"
                       height="150"
-                      style={{ width: '40%', borderRadius: '40%' }}
+                      style={{ width: '35%', borderRadius: '45%' }}
                       image="/about/ofir.png"
                     />
                     <CardContent>
