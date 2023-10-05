@@ -46,7 +46,7 @@ export default function AboutUs() {
               נלקחות בחשבון.
               <br /> הקול שלך, התקציב שלך! תאר לעצמך עולם שבו אתה יכול להשפיע ישירות על אופן הקצאת התקציבים במדינה שלך.
               עם״תקציב העם״, אתה לא צריך לדמיין יותר. אנו מציעים פלטפורמה ידידותית למשתמש המאפשרת לך להשתתף בתהליך קבלת
-              ההחלטות בתקציב בקלות.
+              החלטות התקציב בקלות.
             </Typography>
           </Paper>
         </Grid>
@@ -90,23 +90,23 @@ export default function AboutUs() {
             </Typography>
             <Typography dir="rtl" variant="body1" fontFamily="Alef" textAlign={'right'} fontSize={'18px'}>
               פרויקט ״תקציב העם״ פותח על ידי צוות מסור של אנשים החולקים תשוקה לדמוקרטיה ומעורבות אזרחית.
-              <br /> ●{' '}
-              <a href="https://github.com/ElhaiMansbach" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
+              <br /> ●
+              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 אלחי מנצבך
-              </a>
+              </spen>
               <br /> ●{' '}
-              <a href="https://github.com/Lioo7" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
+              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 ליעוז עקירב
-              </a>
+              </spen>
               <br /> ●{' '}
-              <a href="https://github.com/OfirOvadia96" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
+              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 אופיר עובדיה
-              </a>
+              </spen>
               <br /> הצוות שלנו מחויב ליצור חברה מכילה ודמוקרטית יותר שבה כל קול נשמע.
               <br /> הפיתוח נעשה תחת ההכוונה והליווי של{' '}
-              <a href="https://github.com/erelsgl-at-ariel" style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
+              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
                 ד"ר אראל סגל הלוי
-              </a>
+              </spen>
               , שמילא תפקיד חיוני בעיצוב הפרויקט שלנו ובהבטחת התאמתו לעקרונות הדמוקרטיה ומעורבות האזרחים.
             </Typography>
           </Paper>
@@ -131,7 +131,7 @@ export default function AboutUs() {
           <Grid container spacing={4}>
             <Grid item xs={12} sm={4} >
               <a
-                href="https://github.com/Lioo7"
+                href="https://lioo7.github.io/My-Personal-Website/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
@@ -157,7 +157,7 @@ export default function AboutUs() {
 
             <Grid item xs={12} sm={4}>
               <a
-                href="https://github.com/ElhaiMansbach"
+                href="https://elhaimansbach.github.io/Personal-Website/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
