@@ -90,24 +90,13 @@ export default function AboutUs() {
             </Typography>
             <Typography dir="rtl" variant="body1" fontFamily="Alef" textAlign={'right'} fontSize={'18px'}>
               פרויקט ״תקציב העם״ פותח על ידי צוות מסור של אנשים החולקים תשוקה לדמוקרטיה ומעורבות אזרחית.
-              <br /> ●
-              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
-                אלחי מנצבך
-              </spen>
-              <br /> ●{' '}
-              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
-                ליעוז עקירב
-              </spen>
-              <br /> ●{' '}
-              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
-                אופיר עובדיה
-              </spen>
+              <br /> ●<a href='#elhai' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>אלחי מנצבך</a>
+              <br /> ● <a href='#lioz' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>ליעוז עקירב</a>
+              <br /> ● <a href='#ofir' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>אופיר עובדיה</a>
               <br /> הצוות שלנו מחויב ליצור חברה מכילה ודמוקרטית יותר שבה כל קול נשמע.
               <br /> הפיתוח נעשה תחת ההכוונה והליווי של{' '}
-              <spen style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>
-                ד"ר אראל סגל הלוי
-              </spen>
-              , שמילא תפקיד חיוני בעיצוב הפרויקט שלנו ובהבטחת התאמתו לעקרונות הדמוקרטיה ומעורבות האזרחים.
+              <a style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>ד"ר אראל סגל הלוי</a>, שמילא
+              תפקיד חיוני בעיצוב הפרויקט שלנו ובהבטחת התאמתו לעקרונות הדמוקרטיה ומעורבות האזרחים.
             </Typography>
           </Paper>
         </Grid>
@@ -127,17 +116,17 @@ export default function AboutUs() {
       </div>
 
       <div>
-        <Container >
+        <Container>
           <Grid container spacing={4}>
-            <Grid item xs={12} sm={4} >
+            <Grid item xs={12} sm={4}>
               <a
                 href="https://lioo7.github.io/My-Personal-Website/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <Card style={{backgroundColor: 'rgba(145, 158, 171, 0.2)'}}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Card style={{ backgroundColor: 'rgba(145, 158, 171, 0.2)' }}>
+                  <div id= 'lioz' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                       component="img"
                       alt="Team Member 1"
@@ -145,7 +134,7 @@ export default function AboutUs() {
                       style={{ width: '35%', borderRadius: '45%' }}
                       image="/about/lioz.png"
                     />
-                    <CardContent >
+                    <CardContent>
                       <Typography variant="h6" align="center" fontFamily="Alef">
                         ליעוז עקירב
                       </Typography>
@@ -162,8 +151,8 @@ export default function AboutUs() {
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <Card style={{backgroundColor: 'rgba(145, 158, 171, 0.2)'}}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Card style={{ backgroundColor: 'rgba(145, 158, 171, 0.2)' }}>
+                  <div id= 'elhai' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                       component="img"
                       alt="Team Member 1"
@@ -188,8 +177,8 @@ export default function AboutUs() {
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <Card style={{backgroundColor: 'rgba(145, 158, 171, 0.2)'}}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Card style={{ backgroundColor: 'rgba(145, 158, 171, 0.2)' }}>
+                  <div id= 'ofir' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                       component="img"
                       alt="Team Member 1"
