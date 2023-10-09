@@ -90,7 +90,7 @@ export default function AboutUs() {
             </Typography>
             <Typography dir="rtl" variant="body1" fontFamily="Alef" textAlign={'right'} fontSize={'18px'}>
               פרויקט ״תקציב העם״ פותח על ידי צוות מסור של אנשים החולקים תשוקה לדמוקרטיה ומעורבות אזרחית.
-              <br /> ●<a href='#elhai' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>אלחי מנצבך</a>
+              <br /> ● <a href='#elhai' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>אלחי מנצבך</a>
               <br /> ● <a href='#lioz' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>ליעוז עקירב</a>
               <br /> ● <a href='#ofir' style={{ textDecoration: 'none', color: 'rgba(0, 150, 200, 0.99)' }}>אופיר עובדיה</a>
               <br /> הצוות שלנו מחויב ליצור חברה מכילה ודמוקרטית יותר שבה כל קול נשמע.
